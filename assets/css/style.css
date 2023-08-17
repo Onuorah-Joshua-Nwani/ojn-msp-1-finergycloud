@@ -44,3 +44,49 @@ a:hover {
 .navbar-brand:hover {
     color: #FFC107;
 }
+
+/* Styling the founder's image */
+.img-fluid {
+    border-radius: 20%;
+}
+
+/* Styling the card body */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Styling the card text */
+.card-text {
+    flex-grow: 1;
+}
+
+/* Hero Section Styles */
+.jumbotron {
+    color: #007BFF;
+    padding: 90px 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jumbotron h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+
+}
+
+.jumbotron p {
+    font-size: 1.5em;
+    color: white;
+}
+
+.jumbotron .btn {
+    padding: 10px 20px;
+    background-color: #0564117a;
+}
+
