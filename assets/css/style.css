@@ -14,3 +14,33 @@ a:hover {
     color: #0056b3;
     text-decoration: underline;
 }
+
+/* Styling the navigation links */
+.nav-link {
+    color: #0056b3;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+/* Changing the color of the navigation links on hover */
+.nav-link:hover {
+    color: #FFC107;
+}
+
+/* Styling the active navigation link */
+.nav-link.active {
+    color: #FFC107;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Styling the brand name */
+.navbar-brand {
+    color: hwb(273 4% 69%);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+/* Changing the color of the brand name on hover */
+.navbar-brand:hover {
+    color: #FFC107;
+}
