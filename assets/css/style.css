@@ -1,5 +1,16 @@
-h1 p {
-    color: blue;
-    text-align: center;
-    background-color: beige;
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F8F9FA;
+    color: #343A40;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
