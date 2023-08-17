@@ -135,3 +135,109 @@ a:hover {
     flex-direction: column;
 }
 
+/* Footer Styles */
+footer {
+    padding: 10px 0;
+}
+
+.btn-floating {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+.btn-floating:hover {
+    transform: translateY(-5px);
+}
+
+/* About Us Styles */
+.founder-image {
+    border-radius: 40%;
+    height: 100%;
+}
+
+.founder-section {
+    display: flex;
+    align-items: stretch;
+}
+
+.founder-message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.founder-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Services Styles */
+.card-header {
+    background-color: #F8F9FA;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+    color: #F8F9FA;
+}
+
+/* Why FinergyCloud Section */
+.container h2 {
+    color: #007BFF;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-icon {
+    font-size: 2em;
+    color: #007BFF;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    padding: 10px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #007BFF;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #343A40;
+    font-size: 1rem;
+}
