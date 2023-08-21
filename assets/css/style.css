@@ -1,148 +1,134 @@
-/* Global Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #F8F9FA;
-    color: #343A40;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40
 }
 
 a {
-    color: #007BFF;
-    text-decoration: none;
+    color: #007bff;
+    text-decoration: none
 }
 
 a:hover {
     color: #0056b3;
-    text-decoration: underline;
+    text-decoration: underline
 }
 
-/* Styling the navigation links */
 .navbar {
-    background-color: #007bff;
+    background-color: #007bff
 }
+
 .nav-link {
     color: #0056b3;
-    font-weight: bold;
-    transition: color 0.3s;
-    font-size: 18px;
+    font-weight: 700;
+    transition: color .3s;
+    font-size: 18px
 }
 
-/* Changing the color of the navigation links on hover */
 .nav-link:hover {
-    color: #FFC107;
+    color: #ffc107
 }
 
-/* Styling the active navigation link */
 .nav-link.active {
-    color: #FFC107;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffc107;
+    background-color: rgba(255, 255, 255, .1)
 }
 
-/* Styling the brand name */
 .navbar-brand {
     color: hwb(273 4% 69%);
-    font-weight: bold;
+    font-weight: 700;
     font-size: 24px;
-    transition: color 0.3s;
+    transition: color .3s
 }
 
-/* Changing the color of the brand name on hover */
 .navbar-brand:hover {
-    color: #FFC107;
+    color: #ffc107
 }
 
-/* Styling the founder's image */
 .img-fluid {
-    border-radius: 20%;
+    border-radius: 20%
 }
 
-/* Styling the card body */
 .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between
 }
 
-/* Styling the card text */
 .card-text {
-    flex-grow: 1;
+    flex-grow: 1
 }
 
-/* Hero Section Styles */
 .jumbotron {
-    color: #007BFF;
+    color: #007bff;
     padding: 90px 0;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover
 }
 
 .jumbotron h1 {
     font-size: 2.5em;
-    margin-bottom: 20px;
-
+    margin-bottom: 20px
 }
 
 .jumbotron p {
     font-size: 1.5em;
-    color: white;
+    color: #fff
 }
 
 .jumbotron .btn {
     padding: 10px 20px;
-    background-color: #0564117a;
+    background-color: #0564117a
 }
 
 .why-finergycloud p {
     align-self: flex-end;
-    color: white;
+    color: #fff
 }
 
-/* Why FinergyCloud Section */
 .container h2 {
     color: #0056b3;
-    margin-bottom: 20px;
+    margin-bottom: 20px
 }
 
-/* Card Styles */
 .card {
     border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform .2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    transition: transform .2s
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05)
 }
 
 .card-icon {
     font-size: 2em;
-    color: #007BFF;
+    color: #007bff
 }
 
-/* accordion Card Styles */
 .accordion-card {
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column
 }
 
 .accordion-body {
     flex-grow: 1;
     overflow-y: auto;
-    max-height: 150px;
+    max-height: 150px
 }
 
 .card-body {
     display: flex;
-    flex-direction: column;
+    flex-direction: column
 }
 
-/* Footer Styles */
 footer {
-    padding: 10px 0;
+    padding: 10px 0
 }
 
 .btn-floating {
@@ -153,22 +139,21 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: 1em;
-    margin-right: 10px;
+    margin-right: 10px
 }
 
 .btn-floating:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px)
 }
 
-/* About Us Styles */
 .founder-image {
     border-radius: 40%;
-    height: 100%;
+    height: 100%
 }
 
 .founder-section {
     display: flex;
-    align-items: stretch;
+    align-items: stretch
 }
 
 .founder-message {
@@ -176,88 +161,80 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
+    height: 100%
 }
 
 .founder-image-container {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center
 }
 
-/* Services Styles */
 .card-header {
-    background-color: #F8F9FA;
+    background-color: #f8f9fa
 }
 
 .carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, .5)
 }
 
 .carousel-caption h5,
 .carousel-caption p {
-    color: #F8F9FA;
+    color: #f8f9fa
 }
 
-/* Why FinergyCloud Section */
 .container h2 {
-    color: #007BFF;
+    color: #007bff;
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: 20px
 }
 
-
-
-/* Card Styles */
 .card {
     border: none;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform .2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    transition: transform .2s
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05)
 }
 
 .card-body {
-    padding: 30px;
+    padding: 30px
 }
 
 .card-icon {
     font-size: 2em;
-    color: #007BFF;
+    color: #007bff;
     background-color: #f1f1f1;
     border-radius: 50%;
     padding: 10px;
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: 20px
 }
 
 .card-title {
-    color: #007BFF;
+    color: #007bff;
     font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 10px
 }
 
 .card-text {
-    color: #343A40;
-    font-size: 1rem;
+    color: #343a40;
+    font-size: 1rem
 }
-
-
-/* Set all images in the card to have a specific width and height */
 
 .team-image {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: cover
 }
 
 .spotlight-image {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: cover
 }
