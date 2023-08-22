@@ -175,7 +175,6 @@ FinergyCloud strives to provide a comprehensive platform that showcases renewabl
 
 * [HTML5](https://en.wikipedia.org/wiki/HTML5)
 * [CSS](https://en.wikipedia.org/wiki/CSS)
-* [JavaScript] (https://en.wikipedia.org/wiki/JavaScript)
 
 ### Frameworks, Libraries and Programs Used
 
@@ -231,6 +230,8 @@ I've tested my deployed project on multiple devices to check for responsiveness 
 ### Feature testing
 
 * Each feature was tested rigorously, both manually and using automated scripts.
+
+  * ![Test Results](documentation/browser-testing/lighthouse.png)
 
 ### Bugs
 
