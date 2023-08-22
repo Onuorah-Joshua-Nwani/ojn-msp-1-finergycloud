@@ -1,6 +1,6 @@
 # FinergyCloud
 
-[View the live project here](https://finergycloud.example.com)
+[View the live project here](https://onuorah-joshua-nwani.github.io/ojn-msp-1-finergycloud/)
 
 FinergyCloud is a leading platform offering renewable energy investment opportunities. The platform aims to inform users about the potential of renewable energy and the diverse investment opportunities it presents, catering to both novice and seasoned investors.
 
@@ -180,7 +180,7 @@ FinergyCloud strives to provide a comprehensive platform that showcases renewabl
 ### Frameworks, Libraries and Programs Used
 
 * [Google Fonts](https://fonts.google.com/) was used to import the 'Arial' font family into the style.css file. This font is used on every page of the site.
-* [Bootstrap](https://getbootstrap.com/) was used as a front-end external CSS framework for modern responsiveness and pre-built components and to add icons for aesthetic purpose and UX design..
+* [Bootstrap](https://getbootstrap.com/) was used as a front-end external CSS framework for modern responsiveness and pre-built components and to add icons for aesthetic purpose and UX design.
 * [Visily.ai] (<https://app.visily.ai/login>) was used to create the wireframes during the design stages.
 * [CodeAnywhere](https://codeanywhere.com/) was used as an IDE and to commit and push to Github.
 * [Github](https://github.com/) is used as a repository for the project code after being pushed from Codeanywhere.
@@ -234,24 +234,43 @@ I've tested my deployed project on multiple devices to check for responsiveness 
 
 ### Bugs
 
-* A minor bug related to image loading on Safari was fixed by optimizing image sizes.
+* A minor bug related to image loading on Brave was fixed by optimizing image sizes.
 
-## Deployment
+# Deployment
 
-* The site is hosted on AWS, leveraging its global infrastructure for fast loading times. Continuous integration and deployment are handled through Jenkins.
+## GitHub Pages
+
+1. Log into GitHub and locate the repository.
+2. At the top locate the settings option 
+3. Scroll towards  the bottom of the page and locate GitHub Pages 
+4. Click on the link "Check it out here!"
+4. Under 'Source' dropdown, click 'Master' from the options.
+5. Click the save button.
+6. The site is now published, it may not be available immediately. 
+7. The site URL is visible on the green bar under the "Github Pages".
+
+## Github Clone 
+
+1. First you need to install the GitPod Browser Extension.
+2. Log into GitHub and locate the repository.
+3. Click the green "Gitpod" button just below the Settings.
+4. Now you created a new Gitpod workspace from the code in Github
 
 ## Credits
 
 ### Content
 
-* All content was crafted in-house by the FinergyCloud content team.
+* All content was written by Onuorah Nwani.
+* The content on the services page was loosely based on list of services on my project topic "FinergyCloud".
 
 ### Media
 
-* Images sourced from Shutterstock and Unsplash.
-* Icons from FontAwesome.
+* The icons used throughout the site were taken from [Bootstrap](https://getbootstrap.com/)
+* The fonts were imported from [Google Fonts](https"//fonts.google.com/)
+
+* All images were downloaded from [UnSplash](https://unsplash.com/)
 
 ### Acknowledgements
 
-* Special thanks to the FinergyCloud development team for their dedication.
-* Gratitude to our beta testers for their invaluable feedback.
+* I would like to thank:
+  * My Code Institute Mentor and Cohort Supervisor, [Elaine Broche](https://github.com/elainebroche-dev) and [Iris Smok](https://www.linkedin.com/in/irissmok/) respectively who have provided great advice and feedback on how to plan and execute this project.
