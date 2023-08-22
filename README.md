@@ -220,7 +220,7 @@ I've tested my deployed project on multiple browsers to check for compatibility 
 
 I've tested my deployed project on multiple devices to check for responsiveness issues.
 
-| Device | Screenshot Home | Screenshot Services | Screenshot Book Now | Screenshot Contact | Notes |
+| Device | Screenshot Home | Screenshot About Us | Screenshot Services | Screenshot Contact | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Medium Mobile (DevTools) | ![screenshot](documentation/responsiveness-testing/mobile-home.png) | ![screenshot](documentation/responsiveness-testing/mobile-about-us.png) | ![screenshot](documentation/responsiveness-testing/mobile-services.png) | ![screenshot](documentation/responsiveness-testing/mobile-contact.png) | Works as expected |
 | Tablet (DevTools) | ![screenshot](documentation/responsiveness-testing/tablet-home.png) | ![screenshot](documentation/responsiveness-testing/tablet-about-us.png) | ![screenshot](documentation/responsiveness-testing/tablet-services.png) | ![screenshot](documentation/responsiveness-testing/tablet-contact.png) | Works as expected |
