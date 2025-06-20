@@ -14,6 +14,9 @@ FinergyCloud is a leading platform offering renewable energy investment opportun
 * [Technologies Used](#technologies-used)
 * [Testing](#testing)
 * [Deployment](#deployment)
+* [AWS Deployment](#aws-deployment)
+* [Dashboard Frontend](#dashboard-frontend)
+* [Regulatory Compliance](#regulatory-compliance)
 * [Credits](#credits)
 
 ## User Experience (UX)
@@ -180,6 +183,8 @@ FinergyCloud strives to provide a comprehensive platform that showcases renewabl
 
 * [Google Fonts](https://fonts.google.com/) was used to import the 'Arial' font family into the style.css file. This font is used on every page of the site.
 * [Bootstrap](https://getbootstrap.com/) was used as a front-end external CSS framework for modern responsiveness and pre-built components and to add icons for aesthetic purpose and UX design.
+* **Flask** powers the API backend and integrates with **PostgreSQL** for data storage.
+* **React** is used for the new dashboard frontend located in the `frontend` directory.
 * [Visily.ai] (<https://app.visily.ai/login>) was used to create the wireframes during the design stages.
 * [CodeAnywhere](https://codeanywhere.com/) was used as an IDE and to commit and push to Github.
 * [Github](https://github.com/) is used as a repository for the project code after being pushed from Codeanywhere.
@@ -256,6 +261,27 @@ I've tested my deployed project on multiple devices to check for responsiveness 
 2. Log into GitHub and locate the repository.
 3. Click the green "Gitpod" button just below the Settings.
 4. Now you created a new Gitpod workspace from the code in Github
+
+## AWS Deployment
+
+The backend and frontend services can be containerized and deployed as separate
+microservices. Each service is packaged as a Docker image and pushed to Amazon
+Elastic Container Registry (ECR). These images are then run on AWS Fargate
+behind an Application Load Balancer. PostgreSQL is provided by Amazon RDS. This
+structure allows each component to scale independently.
+
+## Dashboard Frontend
+
+The `frontend/` directory now contains a lightweight React application that
+communicates with the Flask backend. Install dependencies with `npm install`
+and run `npm start` to launch the dashboard at `http://localhost:3000`.
+
+## Regulatory Compliance
+
+The backend includes a `/compliance` API that validates whether an investor is
+eligible to participate in a specific project. It checks basic age and risk
+tolerance requirements and returns any compliance issues for the requested
+project.
 
 ## Credits
 
