@@ -1,0 +1,62 @@
+
+/* FinergyCloud - About Us Page Styles */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2a4d69 !important;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #2979ff !important;
+}
+
+h2 {
+    color: #2a4d69;
+    font-weight: 600;
+}
+
+.accordion-button {
+    background-color: #e3f2fd;
+    font-weight: 500;
+}
+
+.accordion-body {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2979ff;
+}
+
+.team-image, .spotlight-image {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+footer {
+    font-size: 0.9rem;
+}
+
