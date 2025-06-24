@@ -1,56 +1,85 @@
-
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
-    background: #fff;
+    background-color: #fff;
+    line-height: 1.6;
 }
 
-header {
-    background-color: #003366;
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #004b40 !important;
+}
+
+.nav-link {
+    color: #004b40 !important;
+    font-weight: 500;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/support.jpg') center/cover no-repeat;
+    min-height: 350px;
     color: white;
-    padding: 40px 20px;
-    text-align: center;
+    padding: 60px 20px;
 }
 
-section {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: auto;
+h1, h2, h3 {
+    color: #004b40;
 }
 
-h2 {
-    color: #003366;
-    margin-top: 0;
+.timeline-section {
+    background-color: #f9f9f9;
 }
 
-ul {
-    list-style: disc;
-    padding-left: 20px;
+.timeline {
+    list-style-type: none;
+    padding: 0;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.timeline li {
+    padding: 10px 0;
+    position: relative;
+    padding-left: 25px;
 }
 
-table th, table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
+.timeline li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+    background-color: #004b40;
+    border-radius: 50%;
 }
 
-.cta {
-    background-color: #f8f9fa;
-    text-align: center;
-    padding: 40px 20px;
+.team-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-card img {
+    height: 240px;
+    object-fit: cover;
+    border-bottom: 4px solid #004b40;
+}
+
+.commitment-section {
+    background-color: #004b40;
+    color: white;
+    padding: 40px 0;
 }
 
 footer {
-    background-color: #003366;
-    color: white;
-    text-align: center;
-    padding: 20px 10px;
+    background-color: #002b2a;
+    font-size: 0.9rem;
 }
