@@ -4,7 +4,7 @@
   "description": "FinergyCloud - Revolutionary Financial Cloud Solutions",
   "main": "index.html",
   "scripts": {
-    "dev": "http_server",
+    "dev": "python3 /home/codeany/.theia/http_server.py",
     "build": "echo 'Static site - no build required'",
     "start": "echo 'Static site - serve index.html'"
   },
