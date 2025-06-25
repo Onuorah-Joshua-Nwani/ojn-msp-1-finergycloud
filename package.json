@@ -4,6 +4,7 @@
   "description": "FinergyCloud - Revolutionary Financial Cloud Solutions",
   "main": "index.html",
   "scripts": {
+    "dev": "http_server",
     "build": "echo 'Static site - no build required'",
     "start": "echo 'Static site - serve index.html'"
   },
