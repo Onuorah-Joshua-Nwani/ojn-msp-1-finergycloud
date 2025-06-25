@@ -1,0 +1,20 @@
+{
+  "name": "finergycloud-website",
+  "version": "1.0.0",
+  "description": "FinergyCloud - Revolutionary Financial Cloud Solutions",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "start": "echo 'Static site - serve index.html'"
+  },
+  "keywords": [
+    "fintech",
+    "cloud",
+    "financial-services",
+    "static-website"
+  ],
+  "author": "Onuorah Nwani",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
