@@ -146,6 +146,130 @@ p {
     margin-left: 0.5rem;
 }
 
+/* Breadcrumb Navigation */
+.breadcrumb-section {
+    background: var(--light-green);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 77, 64, 0.1);
+    margin-top: 76px; /* Account for fixed navbar */
+}
+
+.breadcrumb-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.breadcrumb-item a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--accent-teal);
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+}
+
+.breadcrumb-separator {
+    color: var(--text-muted);
+    margin: 0 0.5rem;
+    font-size: 0.8rem;
+}
+
+.page-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.page-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-meta i {
+    color: var(--accent-teal);
+}
+
+/* Breadcrumb Icons */
+.breadcrumb-icon {
+    font-size: 0.8rem;
+    margin-right: 0.25rem;
+}
+
+/* Responsive Breadcrumb */
+@media (max-width: 768px) {
+    .breadcrumb-section {
+        padding: 0.75rem 0;
+        margin-top: 70px;
+    }
+    
+    .breadcrumb-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .breadcrumb {
+        font-size: 0.8rem;
+    }
+    
+    .page-info {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+    }
+    
+    .page-meta {
+        gap: 0.25rem;
+    }
+}
+
+/* Adjust hero sections to account for breadcrumb */
+.hero-section {
+    margin-top: 0; /* Remove margin since breadcrumb handles spacing */
+}
+
+/* Special styling for home page (no breadcrumb) */
+.home-page .hero-section {
+    margin-top: 0;
+}
+
+.home-page .breadcrumb-section {
+    display: none;
+}
+
 /* Buttons */
 .btn {
     font-weight: var(--font-weight-medium);
@@ -906,7 +1030,8 @@ p {
 @media print {
     .navbar,
     .footer,
-    .cta-section {
+    .cta-section,
+    .breadcrumb-section {
         display: none;
     }
     
