@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="contact-content">
                                     <h4>Book a Demo</h4>
-                                    <p>15-minute personalized demonstration</p>
+                                    <p>15-minute personalized demonstration of our platform</p>
                                 </div>
                             </div>
                             <div class="contact-option">
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="contact-content">
                                     <h4>Get Pitch Deck</h4>
-                                    <p>Comprehensive overview and roadmap</p>
+                                    <p>Comprehensive overview, roadmap, and business case</p>
                                 </div>
                             </div>
                             <div class="contact-option">
@@ -99,7 +99,16 @@
                                 </div>
                                 <div class="contact-content">
                                     <h4>Partnership</h4>
-                                    <p>Explore collaboration opportunities</p>
+                                    <p>Explore collaboration and integration opportunities</p>
+                                </div>
+                            </div>
+                            <div class="contact-option">
+                                <div class="contact-icon">
+                                    <i class="bi bi-cash-stack"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <h4>Investment</h4>
+                                    <p>Learn about funding opportunities and growth plans</p>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +121,23 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-visual">
-                        <img src="assets/images/wind-turbine.jpg" alt="Renewable Energy Investment" class="img-fluid rounded-3 shadow-lg">
+                        <div class="contact-visual">
+                            <img src="assets/images/wind-turbine.jpg" alt="Renewable Energy Investment" class="img-fluid rounded-3 shadow-lg">
+                            <div class="contact-stats">
+                                <div class="stat-card">
+                                    <span class="stat-number">24h</span>
+                                    <span class="stat-label">Response Time</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number">15min</span>
+                                    <span class="stat-label">Demo Duration</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-number">100%</span>
+                                    <span class="stat-label">Free Consultation</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,31 +161,79 @@
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="fullname" class="form-label">Full Name *</label>
-                                        <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                        <label for="fullname" class="form-label">
+                                            <i class="bi bi-person me-2"></i>Full Name *
+                                        </label>
+                                        <input type="text" class="form-control" id="fullname" name="fullname" 
+                                               placeholder="Enter your full name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email Address *</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <label for="email" class="form-label">
+                                            <i class="bi bi-envelope me-2"></i>Email Address *
+                                        </label>
+                                        <input type="email" class="form-control" id="email" name="email" 
+                                               placeholder="your.email@company.com" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="company" class="form-label">Company/Organization</label>
-                                        <input type="text" class="form-control" id="company" name="company">
+                                        <label for="company" class="form-label">
+                                            <i class="bi bi-building me-2"></i>Company/Organization
+                                        </label>
+                                        <input type="text" class="form-control" id="company" name="company" 
+                                               placeholder="Your company name">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" id="phone" name="phone">
+                                        <label for="role" class="form-label">
+                                            <i class="bi bi-briefcase me-2"></i>Your Role
+                                        </label>
+                                        <select id="role" name="role" class="form-select">
+                                            <option value="">Select your role</option>
+                                            <option value="investor">Investor</option>
+                                            <option value="fund-manager">Fund Manager</option>
+                                            <option value="project-developer">Project Developer</option>
+                                            <option value="financial-analyst">Financial Analyst</option>
+                                            <option value="consultant">Consultant</option>
+                                            <option value="banker">Banker</option>
+                                            <option value="researcher">Researcher</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">
+                                            <i class="bi bi-telephone me-2"></i>Phone Number
+                                        </label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" 
+                                               placeholder="+1 (555) 123-4567">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="investment-size" class="form-label">
+                                            <i class="bi bi-cash-stack me-2"></i>Typical Investment Size
+                                        </label>
+                                        <select id="investment-size" name="investment-size" class="form-select">
+                                            <option value="">Select range</option>
+                                            <option value="under-1m">Under $1M</option>
+                                            <option value="1m-10m">$1M - $10M</option>
+                                            <option value="10m-50m">$10M - $50M</option>
+                                            <option value="50m-100m">$50M - $100M</option>
+                                            <option value="over-100m">Over $100M</option>
+                                            <option value="not-applicable">Not Applicable</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="interest" class="form-label">Primary Interest *</label>
+                                        <label for="interest" class="form-label">
+                                            <i class="bi bi-target me-2"></i>Primary Interest *
+                                        </label>
                                         <select id="interest" name="interest" class="form-select" required>
                                             <option value="">Select your primary interest</option>
                                             <option value="demo">Book a Product Demo</option>
@@ -169,29 +242,45 @@
                                             <option value="investment">Investment Opportunities</option>
                                             <option value="beta-access">Beta Access Request</option>
                                             <option value="consulting">Consulting Services</option>
+                                            <option value="integration">Platform Integration</option>
                                             <option value="other">Other</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="message" class="form-label">Message</label>
+                                        <label for="message" class="form-label">
+                                            <i class="bi bi-chat-text me-2"></i>Tell Us More
+                                        </label>
                                         <textarea class="form-control" id="message" name="message" rows="5" 
-                                                placeholder="Tell us about your specific needs, investment focus, or any questions you have about FinergyCloud..."></textarea>
+                                                placeholder="Tell us about your specific needs, investment focus, current challenges, or any questions you have about FinergyCloud. The more details you provide, the better we can tailor our response to your needs."></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
-                                        <label class="form-check-label" for="newsletter">
-                                            I'd like to receive updates about FinergyCloud's product development and industry insights
-                                        </label>
+                                    <div class="form-check-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                                            <label class="form-check-label" for="newsletter">
+                                                I'd like to receive updates about FinergyCloud's product development and industry insights
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="urgent" name="urgent">
+                                            <label class="form-check-label" for="urgent">
+                                                This is urgent - please prioritize my request
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-send me-2"></i>Send Message
                                     </button>
+                                    <p class="form-note mt-3">
+                                        <small class="text-muted">
+                                            We respect your privacy. Your information will never be shared with third parties.
+                                        </small>
+                                    </p>
                                 </div>
                             </div>
                         </form>
@@ -201,44 +290,76 @@
         </div>
     </section>
 
-    <!-- Contact Information Section -->
+    <!-- Contact Methods Section -->
     <section class="section-padding">
         <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="section-title">Multiple Ways to Connect</h2>
+                    <p class="section-subtitle">
+                        Choose the method that works best for you
+                    </p>
+                </div>
+            </div>
             <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon">
                             <i class="bi bi-envelope"></i>
                         </div>
-                        <h4>Email Us</h4>
-                        <p>Get in touch via email for detailed discussions</p>
+                        <h4>Email</h4>
+                        <p>For detailed discussions and document sharing</p>
                         <a href="mailto:contact@finergycloud.com" class="contact-link">
                             contact@finergycloud.com
                         </a>
+                        <div class="response-time">
+                            <small>Response within 24 hours</small>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon">
                             <i class="bi bi-linkedin"></i>
                         </div>
                         <h4>LinkedIn</h4>
-                        <p>Connect with us on LinkedIn for updates</p>
+                        <p>Professional networking and quick questions</p>
                         <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
                             Connect on LinkedIn
                         </a>
+                        <div class="response-time">
+                            <small>Same day response</small>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <div class="contact-info-icon">
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon">
                             <i class="bi bi-github"></i>
                         </div>
                         <h4>GitHub</h4>
-                        <p>Explore our open-source MVP and contribute</p>
+                        <p>Technical discussions and MVP feedback</p>
                         <a href="https://github.com/yourusername/finergycloud" target="_blank" class="contact-link">
-                            View on GitHub
+                            View Repository
                         </a>
+                        <div class="response-time">
+                            <small>Open source collaboration</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h4>Schedule Call</h4>
+                        <p>Direct conversation and screen sharing</p>
+                        <a href="#contact-form" class="contact-link">
+                            Book Meeting
+                        </a>
+                        <div class="response-time">
+                            <small>15-30 minute slots available</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,7 +389,8 @@
                                 <div class="accordion-body">
                                     FinergyCloud is an AI-driven platform that provides risk intelligence for renewable energy investments. 
                                     It combines IRR simulation, ESG scoring, and AI-powered risk profiling to help investors make data-driven 
-                                    decisions about renewable energy projects, particularly in emerging markets.
+                                    decisions about renewable energy projects, particularly in emerging markets. Our platform transforms 
+                                    complex financial modeling into intuitive, actionable insights.
                                 </div>
                             </div>
                         </div>
@@ -276,14 +398,15 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq2">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
-                                    Is the MVP available for testing?
+                                    Is the MVP available for testing right now?
                                 </button>
                             </h2>
                             <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Yes! Our MVP is live on GitHub and available for testing. It includes core features like IRR calculation, 
-                                    risk assessment, and ESG scoring. You can access it through our GitHub repository or request a 
-                                    personalized demo through this contact form.
+                                    Yes! Our MVP is live on GitHub and available for immediate testing. It includes core features like 
+                                    IRR calculation, risk assessment, and ESG scoring. You can access it through our GitHub repository 
+                                    or request a personalized demo through this contact form. We're actively seeking feedback from 
+                                    beta users to improve the platform.
                                 </div>
                             </div>
                         </div>
@@ -298,7 +421,8 @@
                                 <div class="accordion-body">
                                     FinergyCloud specifically focuses on renewable energy investments in emerging markets, integrating 
                                     ESG factors from the ground up. Our AI-first approach, combined with emerging market expertise 
-                                    and transparent algorithms, sets us apart from generic investment analysis tools.
+                                    and transparent algorithms, sets us apart from generic investment analysis tools. We understand 
+                                    the unique challenges of renewable energy projects in developing economies.
                                 </div>
                             </div>
                         </div>
@@ -313,8 +437,81 @@
                                 <div class="accordion-body">
                                     Our roadmap includes full AI engine integration with XGBoost models and NLP capabilities planned 
                                     for 2025. We're currently in the MVP phase with rule-based systems, and we're actively seeking 
-                                    partnerships and funding to accelerate development.
+                                    partnerships and funding to accelerate development. Early adopters will get priority access 
+                                    to new features as they're released.
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                    What are the pricing options?
+                                </button>
+                            </h2>
+                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We offer flexible pricing tiers from individual investors ($99/month) to enterprise solutions 
+                                    (custom pricing). All plans include a 14-day free trial with no setup fees. During our beta phase, 
+                                    we're offering special pricing for early adopters and strategic partners. Contact us for detailed 
+                                    pricing information tailored to your specific needs.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq6">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6">
+                                    Do you offer partnership opportunities?
+                                </button>
+                            </h2>
+                            <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! We're actively seeking strategic partnerships with investment firms, financial institutions, 
+                                    renewable energy developers, and technology companies. We offer various partnership models including 
+                                    white-label solutions, API integrations, and co-development opportunities. We're also open to 
+                                    investment partnerships to accelerate our growth and development.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Response Commitment Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Our Commitment to You</h2>
+                    <div class="row g-4 mt-4">
+                        <div class="col-md-4">
+                            <div class="commitment-item">
+                                <div class="commitment-icon">
+                                    <i class="bi bi-clock"></i>
+                                </div>
+                                <h4>24-Hour Response</h4>
+                                <p>We respond to all inquiries within 24 hours, often much sooner</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="commitment-item">
+                                <div class="commitment-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <h4>Privacy First</h4>
+                                <p>Your information is secure and never shared with third parties</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="commitment-item">
+                                <div class="commitment-icon">
+                                    <i class="bi bi-heart"></i>
+                                </div>
+                                <h4>No Pressure</h4>
+                                <p>We provide information and let you make the best decision for your needs</p>
                             </div>
                         </div>
                     </div>
@@ -445,6 +642,41 @@
             font-size: 0.9rem;
         }
 
+        .contact-visual {
+            position: relative;
+        }
+
+        .contact-stats {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
         .contact-form-container {
             background: var(--white);
             padding: 3rem;
@@ -461,6 +693,8 @@
             font-weight: var(--font-weight-semibold);
             color: var(--primary-green);
             margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
         }
 
         .contact-form .form-control,
@@ -478,7 +712,31 @@
             box-shadow: 0 0 0 0.25rem rgba(0, 191, 165, 0.15);
         }
 
-        .contact-info-card {
+        .form-check-group {
+            background: var(--light-green);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check {
+            margin-bottom: 1rem;
+        }
+
+        .form-check:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-check-label {
+            color: var(--text-dark);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .form-note {
+            margin-top: 1rem;
+        }
+
+        .contact-method-card {
             background: var(--white);
             padding: 2.5rem;
             border-radius: var(--radius-lg);
@@ -489,12 +747,12 @@
             height: 100%;
         }
 
-        .contact-info-card:hover {
+        .contact-method-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-xl);
         }
 
-        .contact-info-icon {
+        .contact-method-icon {
             width: 80px;
             height: 80px;
             background: var(--gradient-primary);
@@ -505,12 +763,12 @@
             margin: 0 auto 1.5rem;
         }
 
-        .contact-info-icon i {
+        .contact-method-icon i {
             font-size: 2rem;
             color: var(--white);
         }
 
-        .contact-info-card h4 {
+        .contact-method-card h4 {
             color: var(--primary-green);
             margin-bottom: 1rem;
         }
@@ -520,11 +778,24 @@
             text-decoration: none;
             font-weight: var(--font-weight-semibold);
             transition: var(--transition-fast);
+            display: block;
+            margin: 1rem 0;
         }
 
         .contact-link:hover {
             color: var(--primary-green);
             text-decoration: underline;
+        }
+
+        .response-time {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .response-time small {
+            color: var(--text-muted);
+            font-style: italic;
         }
 
         .accordion-button {
@@ -562,6 +833,32 @@
             margin-bottom: 0;
         }
 
+        .commitment-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .commitment-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .commitment-icon i {
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .commitment-item h4 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
             .contact-form-container {
                 padding: 2rem;
@@ -572,8 +869,20 @@
                 text-align: center;
             }
             
-            .contact-info-card {
+            .contact-method-card {
                 padding: 2rem;
+            }
+
+            .contact-stats {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .stat-card {
+                min-width: 80px;
+                padding: 0.75rem;
             }
         }
     </style>
