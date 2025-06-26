@@ -134,6 +134,9 @@ p {
     padding: 0.5rem 1rem;
     border-radius: var(--radius-sm);
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .nav-link:hover,
