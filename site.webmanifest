@@ -4,15 +4,15 @@
   "description": "AI-driven risk intelligence for renewable energy investors",
   "icons": [
     {
-      "src": "assets/images/finergycloud-favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "assets/images/finergycloud-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/images/finergycloud-logo.svg",
+      "src": "assets/images/finergycloud-logo.png",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ],
   "start_url": "/",
