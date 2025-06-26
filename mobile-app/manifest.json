@@ -1,0 +1,137 @@
+{
+  "name": "FinergyCloud Mobile - AI Risk Intelligence",
+  "short_name": "FinergyCloud",
+  "description": "AI-driven risk intelligence for renewable energy investors on mobile",
+  "start_url": "/mobile-app/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#004d40",
+  "background_color": "#ffffff",
+  "scope": "/mobile-app/",
+  "lang": "en",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/dashboard.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard view showing project overview and quick stats"
+    },
+    {
+      "src": "screenshots/calculator.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "IRR Calculator with real-time calculations"
+    },
+    {
+      "src": "screenshots/projects.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Projects list with detailed metrics"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "IRR Calculator",
+      "short_name": "Calculator",
+      "description": "Quick access to IRR calculation tool",
+      "url": "/mobile-app/#calculator",
+      "icons": [
+        {
+          "src": "../assets/images/finergycloud-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "View and manage your renewable energy projects",
+      "url": "/mobile-app/#projects",
+      "icons": [
+        {
+          "src": "../assets/images/finergycloud-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "ESG Scoring",
+      "short_name": "ESG",
+      "description": "Environmental, Social & Governance assessment",
+      "url": "/mobile-app/#esg",
+      "icons": [
+        {
+          "src": "../assets/images/finergycloud-logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://finergycloud.com"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
