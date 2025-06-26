@@ -1,0 +1,23 @@
+{
+  "name": "FinergyCloud - AI Risk Intelligence",
+  "short_name": "FinergyCloud",
+  "description": "AI-driven risk intelligence for renewable energy investors",
+  "icons": [
+    {
+      "src": "assets/images/finergycloud-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/finergycloud-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#004d40",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary"
+}
