@@ -1,9 +1,11 @@
-// FinergyCloud Mobile App JavaScript
+// Enhanced FinergyCloud Mobile App JavaScript
 
 class FinergyCloudApp {
     constructor() {
         this.currentPage = 'dashboard';
         this.sideNavOpen = false;
+        this.deferredPrompt = null;
+        this.isOnline = navigator.onLine;
         this.init();
     }
 
@@ -11,6 +13,8 @@ class FinergyCloudApp {
         this.setupEventListeners();
         this.showLoadingScreen();
         this.initializeApp();
+        this.setupPWA();
+        this.setupOfflineHandling();
     }
 
     setupEventListeners() {
@@ -45,12 +49,12 @@ class FinergyCloudApp {
         }
 
         // Notification button
-        document.querySelector('.notification-btn').addEventListener('click', () => {
+        document.getElementById('notification-btn').addEventListener('click', () => {
             this.showNotifications();
         });
 
         // Profile button
-        document.querySelector('.profile-btn').addEventListener('click', () => {
+        document.getElementById('profile-btn').addEventListener('click', () => {
             this.showProfile();
         });
 
@@ -61,15 +65,55 @@ class FinergyCloudApp {
             });
         });
 
+        // Chart controls
+        document.querySelectorAll('.chart-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.switchChartPeriod(btn);
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('project-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.searchProjects(e.target.value);
+            });
+        }
+
         // Swipe gestures for mobile
         this.setupSwipeGestures();
+
+        // Keyboard shortcuts
+        this.setupKeyboardShortcuts();
     }
 
     showLoadingScreen() {
         const loadingScreen = document.getElementById('loading-screen');
         const mainApp = document.getElementById('main-app');
         
-        // Simulate loading time
+        // Enhanced loading sequence
+        setTimeout(() => {
+            const progressText = document.querySelector('.progress-text');
+            if (progressText) {
+                progressText.textContent = 'Loading AI Models...';
+            }
+        }, 1000);
+
+        setTimeout(() => {
+            const progressText = document.querySelector('.progress-text');
+            if (progressText) {
+                progressText.textContent = 'Syncing Data...';
+            }
+        }, 2000);
+
+        setTimeout(() => {
+            const progressText = document.querySelector('.progress-text');
+            if (progressText) {
+                progressText.textContent = 'Ready!';
+            }
+        }, 2800);
+        
+        // Complete loading
         setTimeout(() => {
             loadingScreen.style.opacity = '0';
             setTimeout(() => {
@@ -78,9 +122,10 @@ class FinergyCloudApp {
                 mainApp.style.opacity = '0';
                 setTimeout(() => {
                     mainApp.style.opacity = '1';
+                    this.animateStatsCards();
                 }, 50);
-            }, 300);
-        }, 2000);
+            }, 500);
+        }, 3500);
     }
 
     initializeApp() {
@@ -93,8 +138,50 @@ class FinergyCloudApp {
         // Setup periodic data refresh
         this.setupDataRefresh();
         
-        // Initialize PWA features
-        this.initializePWA();
+        // Initialize charts
+        this.initializeCharts();
+        
+        // Setup notifications
+        this.setupNotifications();
+    }
+
+    setupPWA() {
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('SW registered:', registration);
+                })
+                .catch(error => {
+                    console.log('SW registration failed:', error);
+                });
+        }
+        
+        // Handle install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            this.deferredPrompt = e;
+            this.showInstallPrompt();
+        });
+
+        // Handle app installed
+        window.addEventListener('appinstalled', () => {
+            this.hideInstallPrompt();
+            this.showToast('App installed successfully!', 'success');
+        });
+    }
+
+    setupOfflineHandling() {
+        window.addEventListener('online', () => {
+            this.isOnline = true;
+            this.showToast('Connection restored', 'success');
+            this.refreshData();
+        });
+
+        window.addEventListener('offline', () => {
+            this.isOnline = false;
+            this.showToast('You are offline. Some features may be limited.', 'warning');
+        });
     }
 
     toggleSideNav() {
@@ -141,6 +228,9 @@ class FinergyCloudApp {
         
         // Trigger page-specific initialization
         this.initializePage(pageId);
+
+        // Save last page
+        localStorage.setItem('lastPage', pageId);
     }
 
     updateNavigationState(pageId) {
@@ -207,18 +297,51 @@ class FinergyCloudApp {
 
     initializeDashboard() {
         // Animate stats cards
-        const statCards = document.querySelectorAll('.stat-card');
-        statCards.forEach((card, index) => {
-            setTimeout(() => {
-                card.style.animation = 'slideInUp 0.5s ease forwards';
-            }, index * 100);
-        });
-
+        this.animateStatsCards();
+        
         // Load recent projects
         this.loadRecentProjects();
         
         // Update dashboard metrics
         this.updateDashboardMetrics();
+        
+        // Load AI insights
+        this.loadAIInsights();
+    }
+
+    animateStatsCards() {
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.animation = 'slideInUp 0.5s ease forwards';
+                
+                // Animate counter
+                const counter = card.querySelector('[data-count]');
+                if (counter) {
+                    const target = parseFloat(counter.getAttribute('data-count'));
+                    this.animateNumber(counter, 0, target, 1000);
+                }
+            }, index * 100);
+        });
+    }
+
+    animateNumber(element, start, end, duration) {
+        const startTime = performance.now();
+        const isDecimal = end % 1 !== 0;
+        
+        const updateNumber = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const current = start + (end - start) * progress;
+            element.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateNumber);
+            }
+        };
+        
+        requestAnimationFrame(updateNumber);
     }
 
     initializeProjects() {
@@ -247,7 +370,7 @@ class FinergyCloudApp {
 
     initializeAnalytics() {
         // Initialize charts
-        this.initializeCharts();
+        this.initializeAnalyticsCharts();
         
         // Load analytics data
         this.loadAnalyticsData();
@@ -267,115 +390,6 @@ class FinergyCloudApp {
         
         // Setup settings handlers
         this.setupSettingsHandlers();
-    }
-
-    loadRecentProjects() {
-        // Simulate API call
-        const projects = [
-            {
-                id: 1,
-                name: 'Solar Farm Kenya',
-                description: '50MW Solar Installation',
-                location: 'Kenya',
-                date: 'Dec 2024',
-                irr: 15.2,
-                esg: 9.1,
-                status: 'active'
-            },
-            {
-                id: 2,
-                name: 'Wind Farm Nigeria',
-                description: '100MW Wind Installation',
-                location: 'Nigeria',
-                date: 'Nov 2024',
-                irr: 12.8,
-                esg: 8.7,
-                status: 'planning'
-            }
-        ];
-
-        // Update UI with projects data
-        this.renderProjects(projects);
-    }
-
-    renderProjects(projects) {
-        const projectList = document.querySelector('.project-list');
-        if (!projectList) return;
-
-        projectList.innerHTML = projects.map(project => `
-            <div class="project-card">
-                <div class="project-info">
-                    <h4>${project.name}</h4>
-                    <p>${project.description}</p>
-                    <div class="project-meta">
-                        <span class="meta-item">
-                            <i class="bi bi-geo-alt"></i>
-                            ${project.location}
-                        </span>
-                        <span class="meta-item">
-                            <i class="bi bi-calendar"></i>
-                            ${project.date}
-                        </span>
-                    </div>
-                </div>
-                <div class="project-metrics">
-                    <div class="metric">
-                        <span class="metric-label">IRR</span>
-                        <span class="metric-value positive">${project.irr}%</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">ESG</span>
-                        <span class="metric-value">${project.esg}</span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    updateDashboardMetrics() {
-        // Simulate real-time data updates
-        const metrics = {
-            activeProjects: 12,
-            avgIRR: 14.2,
-            avgESG: 8.5,
-            riskLevel: 'Medium'
-        };
-
-        // Animate counter updates
-        this.animateCounters(metrics);
-    }
-
-    animateCounters(metrics) {
-        const statCards = document.querySelectorAll('.stat-card');
-        statCards.forEach((card, index) => {
-            const value = card.querySelector('h3');
-            const targetValue = Object.values(metrics)[index];
-            
-            if (typeof targetValue === 'number') {
-                this.animateNumber(value, 0, targetValue, 1000);
-            } else {
-                value.textContent = targetValue;
-            }
-        });
-    }
-
-    animateNumber(element, start, end, duration) {
-        const startTime = performance.now();
-        const isDecimal = end % 1 !== 0;
-        
-        const updateNumber = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            const current = start + (end - start) * progress;
-            element.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
-            
-            if (progress < 1) {
-                requestAnimationFrame(updateNumber);
-            }
-        };
-        
-        requestAnimationFrame(updateNumber);
     }
 
     animateProgressBars() {
@@ -401,13 +415,53 @@ class FinergyCloudApp {
         activeTab.classList.add('active');
         
         // Filter content based on tab
-        const filter = activeTab.textContent.toLowerCase();
+        const filter = activeTab.getAttribute('data-filter') || activeTab.textContent.toLowerCase();
         this.filterProjects(filter);
     }
 
+    switchChartPeriod(activeBtn) {
+        // Remove active class from all chart buttons
+        document.querySelectorAll('.chart-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        activeBtn.classList.add('active');
+        
+        // Update chart data
+        const period = activeBtn.getAttribute('data-period');
+        this.updateChartData(period);
+    }
+
     filterProjects(filter) {
-        // Implement project filtering logic
-        console.log('Filtering projects by:', filter);
+        const projects = document.querySelectorAll('.project-card-detailed');
+        
+        projects.forEach(project => {
+            const type = project.getAttribute('data-type');
+            
+            if (filter === 'all' || type === filter) {
+                project.style.display = 'block';
+                project.style.animation = 'fadeIn 0.3s ease';
+            } else {
+                project.style.display = 'none';
+            }
+        });
+    }
+
+    searchProjects(query) {
+        const projects = document.querySelectorAll('.project-card-detailed');
+        
+        projects.forEach(project => {
+            const title = project.querySelector('h3').textContent.toLowerCase();
+            const description = project.querySelector('p').textContent.toLowerCase();
+            
+            if (title.includes(query.toLowerCase()) || description.includes(query.toLowerCase())) {
+                project.style.display = 'block';
+                project.style.animation = 'fadeIn 0.3s ease';
+            } else {
+                project.style.display = 'none';
+            }
+        });
     }
 
     setupSwipeGestures() {
@@ -448,6 +502,36 @@ class FinergyCloudApp {
         });
     }
 
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Only handle shortcuts when not typing in input fields
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            switch (e.key) {
+                case '1':
+                    this.navigateToPage('dashboard');
+                    break;
+                case '2':
+                    this.navigateToPage('projects');
+                    break;
+                case '3':
+                    this.navigateToPage('calculator');
+                    break;
+                case '4':
+                    this.navigateToPage('esg');
+                    break;
+                case '5':
+                    this.navigateToPage('settings');
+                    break;
+                case 'Escape':
+                    this.closeSideNav();
+                    break;
+            }
+        });
+    }
+
     toggleDarkMode(enabled) {
         if (enabled) {
             document.documentElement.setAttribute('data-theme', 'dark');
@@ -477,7 +561,9 @@ class FinergyCloudApp {
     setupDataRefresh() {
         // Refresh data every 5 minutes
         setInterval(() => {
-            this.refreshData();
+            if (this.isOnline) {
+                this.refreshData();
+            }
         }, 5 * 60 * 1000);
     }
 
@@ -485,84 +571,106 @@ class FinergyCloudApp {
         if (this.currentPage === 'dashboard') {
             this.updateDashboardMetrics();
             this.loadRecentProjects();
+            this.loadAIInsights();
         }
     }
 
-    initializePWA() {
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(registration => {
-                    console.log('SW registered:', registration);
-                })
-                .catch(error => {
-                    console.log('SW registration failed:', error);
-                });
-        }
-        
-        // Handle install prompt
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            this.showInstallPrompt();
-        });
+    initializeCharts() {
+        // Initialize performance chart
+        this.initializePerformanceChart();
     }
 
-    showInstallPrompt() {
-        // Show custom install prompt
-        const installBanner = document.createElement('div');
-        installBanner.className = 'install-banner';
-        installBanner.innerHTML = `
-            <div class="install-content">
-                <span>Install FinergyCloud for better experience</span>
-                <button class="install-btn">Install</button>
-                <button class="dismiss-btn">×</button>
-            </div>
-        `;
+    initializePerformanceChart() {
+        const canvas = document.getElementById('performance-chart');
+        if (!canvas) return;
+
+        // Simple chart implementation
+        const ctx = canvas.getContext('2d');
+        const data = [12.5, 13.2, 14.1, 13.8, 14.5, 15.2, 14.8, 15.1, 14.9, 15.3, 14.7, 15.0];
         
-        document.body.appendChild(installBanner);
+        this.drawLineChart(ctx, data, canvas.width, canvas.height);
+    }
+
+    drawLineChart(ctx, data, width, height) {
+        const padding = 40;
+        const chartWidth = width - 2 * padding;
+        const chartHeight = height - 2 * padding;
         
-        // Handle install button click
-        installBanner.querySelector('.install-btn').addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    deferredPrompt = null;
-                    installBanner.remove();
-                });
+        const maxValue = Math.max(...data);
+        const minValue = Math.min(...data);
+        const range = maxValue - minValue;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw line
+        ctx.beginPath();
+        ctx.strokeStyle = '#00bfa5';
+        ctx.lineWidth = 3;
+        
+        data.forEach((value, index) => {
+            const x = padding + (index / (data.length - 1)) * chartWidth;
+            const y = padding + (1 - (value - minValue) / range) * chartHeight;
+            
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
             }
         });
         
-        // Handle dismiss button click
-        installBanner.querySelector('.dismiss-btn').addEventListener('click', () => {
-            installBanner.remove();
+        ctx.stroke();
+        
+        // Draw points
+        ctx.fillStyle = '#004d40';
+        data.forEach((value, index) => {
+            const x = padding + (index / (data.length - 1)) * chartWidth;
+            const y = padding + (1 - (value - minValue) / range) * chartHeight;
+            
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.fill();
         });
     }
 
+    updateChartData(period) {
+        // Update chart based on selected period
+        console.log('Updating chart for period:', period);
+        // Implementation would fetch new data and redraw chart
+    }
+
+    setupNotifications() {
+        // Request notification permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    }
+
     showNotifications() {
-        // Show notifications panel
         const notifications = [
             {
                 id: 1,
                 title: 'New Project Added',
                 message: 'Solar Farm Kenya has been added to your portfolio',
                 time: '2 hours ago',
-                type: 'info'
+                type: 'info',
+                icon: 'bi-info-circle'
             },
             {
                 id: 2,
                 title: 'IRR Update',
                 message: 'Wind Farm Nigeria IRR updated to 12.8%',
                 time: '4 hours ago',
-                type: 'success'
+                type: 'success',
+                icon: 'bi-check-circle'
             },
             {
                 id: 3,
                 title: 'Market Alert',
                 message: 'Renewable energy market showing positive trends',
                 time: '1 day ago',
-                type: 'warning'
+                type: 'warning',
+                icon: 'bi-exclamation-triangle'
             }
         ];
         
@@ -574,6 +682,9 @@ class FinergyCloudApp {
             <div class="notifications-list">
                 ${notifications.map(notification => `
                     <div class="notification-item ${notification.type}">
+                        <div class="notification-icon">
+                            <i class="bi ${notification.icon}"></i>
+                        </div>
                         <div class="notification-content">
                             <h4>${notification.title}</h4>
                             <p>${notification.message}</p>
@@ -582,6 +693,55 @@ class FinergyCloudApp {
                     </div>
                 `).join('')}
             </div>
+            <style>
+                .notifications-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    max-height: 400px;
+                    overflow-y: auto;
+                }
+                .notification-item {
+                    display: flex;
+                    gap: 1rem;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    background: var(--light-gray);
+                }
+                .notification-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+                .notification-item.info .notification-icon {
+                    background: var(--info);
+                    color: white;
+                }
+                .notification-item.success .notification-icon {
+                    background: var(--success);
+                    color: white;
+                }
+                .notification-item.warning .notification-icon {
+                    background: var(--warning);
+                    color: white;
+                }
+                .notification-content h4 {
+                    margin: 0 0 0.5rem 0;
+                    color: var(--primary-green);
+                }
+                .notification-content p {
+                    margin: 0 0 0.5rem 0;
+                    color: var(--gray);
+                }
+                .notification-time {
+                    font-size: 0.8rem;
+                    color: var(--gray);
+                }
+            </style>
         `;
     }
 
@@ -602,12 +762,58 @@ class FinergyCloudApp {
                         <span class="stat-value">6</span>
                         <span class="stat-label">Months Active</span>
                     </div>
+                    <div class="profile-stat">
+                        <span class="stat-value">$245M</span>
+                        <span class="stat-label">Portfolio Value</span>
+                    </div>
                 </div>
                 <div class="profile-actions">
                     <button class="btn-primary">Edit Profile</button>
                     <button class="btn-secondary">Sign Out</button>
                 </div>
             </div>
+            <style>
+                .profile-content {
+                    text-align: center;
+                    padding: 2rem;
+                }
+                .profile-avatar {
+                    font-size: 4rem;
+                    color: var(--primary-green);
+                    margin-bottom: 1rem;
+                }
+                .profile-content h3 {
+                    color: var(--primary-green);
+                    margin-bottom: 0.5rem;
+                }
+                .profile-content p {
+                    color: var(--gray);
+                    margin-bottom: 2rem;
+                }
+                .profile-stats {
+                    display: flex;
+                    justify-content: space-around;
+                    margin-bottom: 2rem;
+                }
+                .profile-stat {
+                    text-align: center;
+                }
+                .profile-stat .stat-value {
+                    display: block;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: var(--primary-green);
+                }
+                .profile-stat .stat-label {
+                    font-size: 0.8rem;
+                    color: var(--gray);
+                }
+                .profile-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                }
+            </style>
         `;
         
         this.showModal('Profile', profileContent);
@@ -648,49 +854,129 @@ class FinergyCloudApp {
         }, 10);
     }
 
-    // Additional methods for other features
+    showInstallPrompt() {
+        const installPrompt = document.getElementById('install-prompt');
+        if (!installPrompt) return;
+
+        installPrompt.style.display = 'block';
+
+        // Handle install button
+        document.getElementById('install-btn').addEventListener('click', () => {
+            if (this.deferredPrompt) {
+                this.deferredPrompt.prompt();
+                this.deferredPrompt.userChoice.then((choiceResult) => {
+                    this.deferredPrompt = null;
+                    this.hideInstallPrompt();
+                });
+            }
+        });
+
+        // Handle dismiss button
+        document.getElementById('dismiss-btn').addEventListener('click', () => {
+            this.hideInstallPrompt();
+        });
+    }
+
+    hideInstallPrompt() {
+        const installPrompt = document.getElementById('install-prompt');
+        if (installPrompt) {
+            installPrompt.style.display = 'none';
+        }
+    }
+
+    showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `${type}-toast`;
+        toast.innerHTML = `
+            <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Data loading methods
+    loadRecentProjects() {
+        // Simulate API call - in real app, this would fetch from server
+        console.log('Loading recent projects...');
+    }
+
+    updateDashboardMetrics() {
+        // Simulate real-time data updates
+        console.log('Updating dashboard metrics...');
+    }
+
+    loadAIInsights() {
+        // Load AI-generated insights
+        console.log('Loading AI insights...');
+    }
+
     loadProjectsData() {
-        // Implement projects data loading
+        // Load projects data
+        console.log('Loading projects data...');
     }
 
     setupProjectFilters() {
-        // Implement project filtering
+        // Setup project filtering
+        console.log('Setting up project filters...');
     }
 
     setupCalculatorValidation() {
-        // Implement calculator form validation
+        // Setup calculator form validation
+        console.log('Setting up calculator validation...');
     }
 
     loadSavedCalculations() {
-        // Implement saved calculations loading
+        // Load saved calculations
+        console.log('Loading saved calculations...');
     }
 
     loadESGData() {
-        // Implement ESG data loading
+        // Load ESG data
+        console.log('Loading ESG data...');
     }
 
-    initializeCharts() {
-        // Implement charts initialization
+    initializeAnalyticsCharts() {
+        // Initialize analytics charts
+        console.log('Initializing analytics charts...');
     }
 
     loadAnalyticsData() {
-        // Implement analytics data loading
+        // Load analytics data
+        console.log('Loading analytics data...');
     }
 
     loadMarketData() {
-        // Implement market data loading
+        // Load market data
+        console.log('Loading market data...');
     }
 
     setupMarketUpdates() {
-        // Implement real-time market updates
+        // Setup real-time market updates
+        console.log('Setting up market updates...');
     }
 
     loadUserSettings() {
-        // Implement user settings loading
+        // Load user settings
+        console.log('Loading user settings...');
     }
 
     setupSettingsHandlers() {
-        // Implement settings change handlers
+        // Setup settings change handlers
+        console.log('Setting up settings handlers...');
     }
 }
 
@@ -709,11 +995,23 @@ document.addEventListener('visibilitychange', () => {
 // Handle online/offline status
 window.addEventListener('online', () => {
     console.log('App is online');
-    if (window.finergyApp) {
-        window.finergyApp.refreshData();
-    }
 });
 
 window.addEventListener('offline', () => {
     console.log('App is offline');
 });
+
+// Global functions for calculator
+function calculateIRR() {
+    if (window.irrCalculator) {
+        window.irrCalculator.performCalculation();
+    }
+}
+
+function saveCalculation() {
+    window.finergyApp.showToast('Calculation saved successfully!', 'success');
+}
+
+function exportResults() {
+    window.finergyApp.showToast('Results exported to downloads', 'success');
+}

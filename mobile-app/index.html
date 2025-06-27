@@ -41,6 +41,12 @@
                 </div>
                 <div class="loading-spinner"></div>
                 <p class="loading-text">Loading FinergyCloud...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Initializing AI Engine...</p>
+                </div>
             </div>
         </div>
 
@@ -59,11 +65,11 @@
                         </div>
                     </div>
                     <div class="nav-right">
-                        <button class="notification-btn">
+                        <button class="notification-btn" id="notification-btn">
                             <i class="bi bi-bell"></i>
                             <span class="notification-badge">3</span>
                         </button>
-                        <button class="profile-btn">
+                        <button class="profile-btn" id="profile-btn">
                             <i class="bi bi-person-circle"></i>
                         </button>
                     </div>
@@ -151,8 +157,12 @@
                                 <i class="bi bi-folder"></i>
                             </div>
                             <div class="stat-content">
-                                <h3>12</h3>
+                                <h3 data-count="12">0</h3>
                                 <p>Active Projects</p>
+                                <div class="stat-trend positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>+2 this month</span>
+                                </div>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -160,8 +170,12 @@
                                 <i class="bi bi-graph-up"></i>
                             </div>
                             <div class="stat-content">
-                                <h3>14.2%</h3>
-                                <p>Avg IRR</p>
+                                <h3 data-count="14.2">0</h3>
+                                <p>Avg IRR (%)</p>
+                                <div class="stat-trend positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>+0.8% this quarter</span>
+                                </div>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -169,8 +183,12 @@
                                 <i class="bi bi-leaf"></i>
                             </div>
                             <div class="stat-content">
-                                <h3>8.5</h3>
+                                <h3 data-count="8.5">0</h3>
                                 <p>Avg ESG Score</p>
+                                <div class="stat-trend positive">
+                                    <i class="bi bi-arrow-up"></i>
+                                    <span>Excellent rating</span>
+                                </div>
                             </div>
                         </div>
                         <div class="stat-card">
@@ -180,7 +198,26 @@
                             <div class="stat-content">
                                 <h3>Medium</h3>
                                 <p>Risk Level</p>
+                                <div class="stat-trend neutral">
+                                    <i class="bi bi-dash"></i>
+                                    <span>Stable</span>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Performance Chart -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Portfolio Performance</h2>
+                            <div class="chart-controls">
+                                <button class="chart-btn active" data-period="1M">1M</button>
+                                <button class="chart-btn" data-period="3M">3M</button>
+                                <button class="chart-btn" data-period="1Y">1Y</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performance-chart"></canvas>
                         </div>
                     </div>
 
@@ -188,12 +225,15 @@
                     <div class="section">
                         <div class="section-header">
                             <h2>Recent Projects</h2>
-                            <button class="btn-secondary">View All</button>
+                            <button class="btn-secondary" data-page="projects">View All</button>
                         </div>
                         <div class="project-list">
                             <div class="project-card">
                                 <div class="project-info">
-                                    <h4>Solar Farm Kenya</h4>
+                                    <div class="project-header">
+                                        <h4>Solar Farm Kenya</h4>
+                                        <span class="status-badge active">Active</span>
+                                    </div>
                                     <p>50MW Solar Installation</p>
                                     <div class="project-meta">
                                         <span class="meta-item">
@@ -203,6 +243,10 @@
                                         <span class="meta-item">
                                             <i class="bi bi-calendar"></i>
                                             Dec 2024
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="bi bi-currency-dollar"></i>
+                                            $45M
                                         </span>
                                     </div>
                                 </div>
@@ -215,12 +259,19 @@
                                         <span class="metric-label">ESG</span>
                                         <span class="metric-value">9.1</span>
                                     </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Risk</span>
+                                        <span class="metric-value medium">Medium</span>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="project-card">
                                 <div class="project-info">
-                                    <h4>Wind Farm Nigeria</h4>
+                                    <div class="project-header">
+                                        <h4>Wind Farm Nigeria</h4>
+                                        <span class="status-badge planning">Planning</span>
+                                    </div>
                                     <p>100MW Wind Installation</p>
                                     <div class="project-meta">
                                         <span class="meta-item">
@@ -230,6 +281,10 @@
                                         <span class="meta-item">
                                             <i class="bi bi-calendar"></i>
                                             Nov 2024
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="bi bi-currency-dollar"></i>
+                                            $85M
                                         </span>
                                     </div>
                                 </div>
@@ -241,6 +296,10 @@
                                     <div class="metric">
                                         <span class="metric-label">ESG</span>
                                         <span class="metric-value">8.7</span>
+                                    </div>
+                                    <div class="metric">
+                                        <span class="metric-label">Risk</span>
+                                        <span class="metric-value high">High</span>
                                     </div>
                                 </div>
                             </div>
@@ -271,6 +330,40 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- AI Insights -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>AI Insights</h2>
+                            <span class="ai-badge">Powered by AI</span>
+                        </div>
+                        <div class="insights-container">
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="bi bi-lightbulb"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Market Opportunity</h4>
+                                    <p>Solar projects in East Africa showing 18% higher returns than regional average. Consider expanding portfolio in this region.</p>
+                                    <div class="insight-confidence">
+                                        <span>Confidence: 87%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="insight-card">
+                                <div class="insight-icon">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                </div>
+                                <div class="insight-content">
+                                    <h4>Risk Alert</h4>
+                                    <p>Currency volatility in Nigeria may impact Wind Farm project returns. Consider hedging strategies.</p>
+                                    <div class="insight-confidence">
+                                        <span>Confidence: 92%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Projects Page -->
@@ -283,17 +376,31 @@
                         </button>
                     </div>
                     
+                    <!-- Search and Filter -->
+                    <div class="search-filter-container">
+                        <div class="search-box">
+                            <i class="bi bi-search"></i>
+                            <input type="text" placeholder="Search projects..." id="project-search">
+                        </div>
+                        <div class="filter-dropdown">
+                            <button class="filter-btn">
+                                <i class="bi bi-funnel"></i>
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    
                     <!-- Filter Tabs -->
                     <div class="filter-tabs">
-                        <button class="tab active">All Projects</button>
-                        <button class="tab">Solar</button>
-                        <button class="tab">Wind</button>
-                        <button class="tab">Hydro</button>
+                        <button class="tab active" data-filter="all">All Projects</button>
+                        <button class="tab" data-filter="solar">Solar</button>
+                        <button class="tab" data-filter="wind">Wind</button>
+                        <button class="tab" data-filter="hydro">Hydro</button>
                     </div>
 
                     <!-- Projects Grid -->
                     <div class="projects-grid">
-                        <div class="project-card-detailed">
+                        <div class="project-card-detailed" data-type="solar">
                             <div class="project-header">
                                 <h3>Solar Farm Kenya</h3>
                                 <span class="status-badge active">Active</span>
@@ -303,6 +410,10 @@
                                 <div class="detail-row">
                                     <span>Investment: $45M</span>
                                     <span>Duration: 25 years</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Start Date: Jan 2024</span>
+                                    <span>Completion: 85%</span>
                                 </div>
                             </div>
                             <div class="project-metrics-detailed">
@@ -319,9 +430,13 @@
                                     <span class="value medium">Medium</span>
                                 </div>
                             </div>
+                            <div class="project-actions">
+                                <button class="btn-secondary">View Details</button>
+                                <button class="btn-primary">Analyze</button>
+                            </div>
                         </div>
 
-                        <div class="project-card-detailed">
+                        <div class="project-card-detailed" data-type="wind">
                             <div class="project-header">
                                 <h3>Wind Farm Nigeria</h3>
                                 <span class="status-badge planning">Planning</span>
@@ -331,6 +446,10 @@
                                 <div class="detail-row">
                                     <span>Investment: $85M</span>
                                     <span>Duration: 20 years</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Start Date: Mar 2025</span>
+                                    <span>Completion: 15%</span>
                                 </div>
                             </div>
                             <div class="project-metrics-detailed">
@@ -347,6 +466,46 @@
                                     <span class="value high">High</span>
                                 </div>
                             </div>
+                            <div class="project-actions">
+                                <button class="btn-secondary">View Details</button>
+                                <button class="btn-primary">Analyze</button>
+                            </div>
+                        </div>
+
+                        <div class="project-card-detailed" data-type="hydro">
+                            <div class="project-header">
+                                <h3>Hydro Plant Ghana</h3>
+                                <span class="status-badge completed">Completed</span>
+                            </div>
+                            <div class="project-details">
+                                <p>25MW Hydro Installation in Accra</p>
+                                <div class="detail-row">
+                                    <span>Investment: $30M</span>
+                                    <span>Duration: 30 years</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span>Start Date: Jun 2023</span>
+                                    <span>Completion: 100%</span>
+                                </div>
+                            </div>
+                            <div class="project-metrics-detailed">
+                                <div class="metric-item">
+                                    <span class="label">IRR</span>
+                                    <span class="value positive">16.5%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="label">ESG Score</span>
+                                    <span class="value">9.5/10</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="label">Risk</span>
+                                    <span class="value low">Low</span>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn-secondary">View Details</button>
+                                <button class="btn-primary">Analyze</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -362,12 +521,16 @@
                         <div class="input-section">
                             <h3>Project Details</h3>
                             <div class="form-group">
+                                <label>Project Name</label>
+                                <input type="text" id="project-name" placeholder="Enter project name">
+                            </div>
+                            <div class="form-group">
                                 <label>Initial Investment ($)</label>
                                 <input type="number" id="initial-investment" placeholder="Enter initial investment" value="1000000">
                             </div>
                             <div class="form-group">
                                 <label>Project Duration (years)</label>
-                                <input type="number" id="project-duration" placeholder="Enter duration" value="10">
+                                <input type="number" id="project-duration" placeholder="Enter duration" value="10" min="1" max="50">
                             </div>
                             <div class="form-group">
                                 <label>Annual Cash Flow ($)</label>
@@ -376,6 +539,10 @@
                             <div class="form-group">
                                 <label>Terminal Value ($)</label>
                                 <input type="number" id="terminal-value" placeholder="Enter terminal value" value="500000">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount Rate (%)</label>
+                                <input type="number" id="discount-rate" placeholder="Enter discount rate" value="10" min="0" max="50" step="0.1">
                             </div>
                             <button class="btn-primary calculate-btn" onclick="calculateIRR()">
                                 <i class="bi bi-calculator"></i>
@@ -398,9 +565,23 @@
                                     <span class="metric-label">Payback Period</span>
                                     <span class="metric-value" id="payback-result">--</span>
                                 </div>
+                                <div class="result-metric">
+                                    <span class="metric-label">ROI</span>
+                                    <span class="metric-value" id="roi-result">--</span>
+                                </div>
                             </div>
                             <div class="chart-container">
                                 <canvas id="cashflow-chart"></canvas>
+                            </div>
+                            <div class="calculation-actions">
+                                <button class="btn-secondary" onclick="saveCalculation()">
+                                    <i class="bi bi-bookmark"></i>
+                                    Save Calculation
+                                </button>
+                                <button class="btn-primary" onclick="exportResults()">
+                                    <i class="bi bi-download"></i>
+                                    Export Results
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -443,6 +624,13 @@
                                         </div>
                                         <span>8.0</span>
                                     </div>
+                                    <div class="metric-row">
+                                        <span>Biodiversity Impact</span>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 85%"></div>
+                                        </div>
+                                        <span>8.5</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -473,6 +661,13 @@
                                             <div class="progress" style="width: 75%"></div>
                                         </div>
                                         <span>7.5</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Local Engagement</span>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 80%"></div>
+                                        </div>
+                                        <span>8.0</span>
                                     </div>
                                 </div>
                             </div>
@@ -505,6 +700,13 @@
                                         </div>
                                         <span>9.0</span>
                                     </div>
+                                    <div class="metric-row">
+                                        <span>Board Structure</span>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 92%"></div>
+                                        </div>
+                                        <span>9.2</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -525,6 +727,228 @@
                                         <i class="bi bi-star-fill"></i>
                                         <i class="bi bi-star-half"></i>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="esg-actions">
+                                <button class="btn-secondary">
+                                    <i class="bi bi-download"></i>
+                                    Export Report
+                                </button>
+                                <button class="btn-primary">
+                                    <i class="bi bi-share"></i>
+                                    Share Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Intelligence Page -->
+                <div class="page" id="market-page">
+                    <div class="page-header">
+                        <h1>Market Intelligence</h1>
+                        <p>Real-time renewable energy market insights</p>
+                    </div>
+
+                    <div class="market-container">
+                        <!-- Market Overview -->
+                        <div class="market-overview">
+                            <h3>Market Overview</h3>
+                            <div class="market-stats">
+                                <div class="market-stat">
+                                    <span class="stat-label">Global Investment</span>
+                                    <span class="stat-value">$1.8T</span>
+                                    <span class="stat-change positive">+15%</span>
+                                </div>
+                                <div class="market-stat">
+                                    <span class="stat-label">Emerging Markets</span>
+                                    <span class="stat-value">$480B</span>
+                                    <span class="stat-change positive">+22%</span>
+                                </div>
+                                <div class="market-stat">
+                                    <span class="stat-label">Solar Growth</span>
+                                    <span class="stat-value">28%</span>
+                                    <span class="stat-change positive">YoY</span>
+                                </div>
+                                <div class="market-stat">
+                                    <span class="stat-label">Wind Growth</span>
+                                    <span class="stat-value">18%</span>
+                                    <span class="stat-change positive">YoY</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Regional Analysis -->
+                        <div class="regional-analysis">
+                            <h3>Regional Analysis</h3>
+                            <div class="region-cards">
+                                <div class="region-card">
+                                    <h4>East Africa</h4>
+                                    <div class="region-metrics">
+                                        <div class="region-metric">
+                                            <span>Avg IRR</span>
+                                            <span class="positive">16.2%</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Risk Level</span>
+                                            <span class="medium">Medium</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Investment</span>
+                                            <span>$12.5B</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="region-card">
+                                    <h4>West Africa</h4>
+                                    <div class="region-metrics">
+                                        <div class="region-metric">
+                                            <span>Avg IRR</span>
+                                            <span class="positive">14.8%</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Risk Level</span>
+                                            <span class="high">High</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Investment</span>
+                                            <span>$8.3B</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="region-card">
+                                    <h4>Southeast Asia</h4>
+                                    <div class="region-metrics">
+                                        <div class="region-metric">
+                                            <span>Avg IRR</span>
+                                            <span class="positive">13.5%</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Risk Level</span>
+                                            <span class="medium">Medium</span>
+                                        </div>
+                                        <div class="region-metric">
+                                            <span>Investment</span>
+                                            <span>$25.7B</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Market Trends -->
+                        <div class="market-trends">
+                            <h3>Market Trends</h3>
+                            <div class="trend-items">
+                                <div class="trend-item">
+                                    <div class="trend-icon positive">
+                                        <i class="bi bi-arrow-up"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <h4>Solar Technology Costs</h4>
+                                        <p>Continued decline in solar panel costs driving higher IRRs across all markets</p>
+                                        <span class="trend-impact">High Impact</span>
+                                    </div>
+                                </div>
+                                <div class="trend-item">
+                                    <div class="trend-icon warning">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <h4>Currency Volatility</h4>
+                                        <p>Emerging market currencies showing increased volatility affecting project returns</p>
+                                        <span class="trend-impact">Medium Impact</span>
+                                    </div>
+                                </div>
+                                <div class="trend-item">
+                                    <div class="trend-icon positive">
+                                        <i class="bi bi-arrow-up"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <h4>ESG Regulations</h4>
+                                        <p>Strengthening ESG requirements creating premium for high-scoring projects</p>
+                                        <span class="trend-impact">High Impact</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div class="page" id="analytics-page">
+                    <div class="page-header">
+                        <h1>Analytics</h1>
+                        <p>Deep insights into your renewable energy portfolio</p>
+                    </div>
+
+                    <div class="analytics-container">
+                        <!-- Portfolio Composition -->
+                        <div class="analytics-section">
+                            <h3>Portfolio Composition</h3>
+                            <div class="chart-container">
+                                <canvas id="portfolio-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics -->
+                        <div class="analytics-section">
+                            <h3>Performance Metrics</h3>
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <h4>Total Portfolio Value</h4>
+                                    <span class="metric-value large">$245M</span>
+                                    <span class="metric-change positive">+12.5%</span>
+                                </div>
+                                <div class="metric-card">
+                                    <h4>Weighted Avg IRR</h4>
+                                    <span class="metric-value large">14.2%</span>
+                                    <span class="metric-change positive">+0.8%</span>
+                                </div>
+                                <div class="metric-card">
+                                    <h4>Portfolio ESG Score</h4>
+                                    <span class="metric-value large">8.5</span>
+                                    <span class="metric-change positive">+0.3</span>
+                                </div>
+                                <div class="metric-card">
+                                    <h4>Risk-Adjusted Return</h4>
+                                    <span class="metric-value large">1.85</span>
+                                    <span class="metric-change positive">+0.15</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Risk Analysis -->
+                        <div class="analytics-section">
+                            <h3>Risk Analysis</h3>
+                            <div class="risk-breakdown">
+                                <div class="risk-category">
+                                    <span class="risk-label">Technology Risk</span>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill low" style="width: 25%"></div>
+                                    </div>
+                                    <span class="risk-value">Low</span>
+                                </div>
+                                <div class="risk-category">
+                                    <span class="risk-label">Market Risk</span>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill medium" style="width: 60%"></div>
+                                    </div>
+                                    <span class="risk-value">Medium</span>
+                                </div>
+                                <div class="risk-category">
+                                    <span class="risk-label">Regulatory Risk</span>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill medium" style="width: 45%"></div>
+                                    </div>
+                                    <span class="risk-value">Medium</span>
+                                </div>
+                                <div class="risk-category">
+                                    <span class="risk-label">Currency Risk</span>
+                                    <div class="risk-bar">
+                                        <div class="risk-fill high" style="width: 75%"></div>
+                                    </div>
+                                    <span class="risk-value">High</span>
                                 </div>
                             </div>
                         </div>
@@ -555,6 +979,16 @@
                                 </div>
                                 <i class="bi bi-chevron-right"></i>
                             </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Two-Factor Authentication</span>
+                                    <span class="setting-desc">Add extra security to your account</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="settings-section">
@@ -579,6 +1013,44 @@
                                     <span class="slider"></span>
                                 </label>
                             </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Auto-sync Data</span>
+                                    <span class="setting-desc">Automatically sync with cloud</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Currency</span>
+                                    <span class="setting-desc">USD</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Data & Privacy</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Data Export</span>
+                                    <span class="setting-desc">Download your data</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Analytics Sharing</span>
+                                    <span class="setting-desc">Help improve our AI models</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="settings-section">
@@ -586,7 +1058,7 @@
                             <div class="setting-item">
                                 <div class="setting-info">
                                     <span class="setting-title">Version</span>
-                                    <span class="setting-desc">1.0.0 (Beta)</span>
+                                    <span class="setting-desc">2.0.0 (Enhanced)</span>
                                 </div>
                             </div>
                             <div class="setting-item">
@@ -595,6 +1067,31 @@
                                     <span class="setting-desc">Read our privacy policy</span>
                                 </div>
                                 <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Terms of Service</span>
+                                    <span class="setting-desc">Read our terms</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <span class="setting-title">Contact Support</span>
+                                    <span class="setting-desc">Get help and support</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="settings-section danger-zone">
+                            <h3>Danger Zone</h3>
+                            <div class="setting-item danger">
+                                <div class="setting-info">
+                                    <span class="setting-title">Delete Account</span>
+                                    <span class="setting-desc">Permanently delete your account and data</span>
+                                </div>
+                                <button class="btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -629,6 +1126,23 @@
 
     <!-- Overlay for side navigation -->
     <div class="overlay" id="overlay"></div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt" style="display: none;">
+        <div class="install-content">
+            <div class="install-icon">
+                <i class="bi bi-download"></i>
+            </div>
+            <div class="install-text">
+                <h4>Install FinergyCloud</h4>
+                <p>Get the full app experience</p>
+            </div>
+            <div class="install-actions">
+                <button class="btn-primary" id="install-btn">Install</button>
+                <button class="btn-secondary" id="dismiss-btn">Later</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="scripts/app.js"></script>
