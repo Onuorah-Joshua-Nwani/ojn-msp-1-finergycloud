@@ -37,7 +37,10 @@
         <div id="loading-screen" class="loading-screen">
             <div class="loading-content">
                 <div class="app-logo">
-                    <img src="../assets/images/finergycloud-logo.png" alt="FinergyCloud" class="logo-image">
+                    <img src="../assets/images/finergycloud-logo.png" alt="FinergyCloud" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="logo-fallback" style="display: none;">
+                        <div class="logo-placeholder">FC</div>
+                    </div>
                 </div>
                 <div class="loading-spinner"></div>
                 <div class="loading-progress">
@@ -55,11 +58,12 @@
             <header class="top-nav">
                 <div class="nav-content">
                     <div class="nav-left">
-                        <button class="menu-btn" id="menu-toggle">
+                        <button class="menu-btn" id="menu-toggle" aria-label="Toggle menu">
                             <i class="bi bi-list"></i>
                         </button>
                         <div class="app-logo-nav">
-                            <img src="../assets/images/finergycloud-logo.png" alt="FinergyCloud" class="nav-logo">
+                            <img src="../assets/images/finergycloud-logo.png" alt="FinergyCloud" class="nav-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="nav-logo-fallback" style="display: none;">FC</div>
                         </div>
                         <div class="app-title">
                             <span class="title-text">FinergyCloud</span>
@@ -67,11 +71,11 @@
                         </div>
                     </div>
                     <div class="nav-right">
-                        <button class="notification-btn" id="notification-btn">
+                        <button class="notification-btn" id="notification-btn" aria-label="Notifications">
                             <i class="bi bi-bell"></i>
                             <span class="notification-badge">3</span>
                         </button>
-                        <button class="profile-btn" id="profile-btn">
+                        <button class="profile-btn" id="profile-btn" aria-label="Profile">
                             <i class="bi bi-person-circle"></i>
                         </button>
                     </div>
@@ -83,7 +87,10 @@
                 <div class="side-nav-header">
                     <div class="user-profile">
                         <div class="user-avatar">
-                            <img src="../assets/images/finergycloud-logo.png" alt="User Avatar" class="avatar-image">
+                            <img src="../assets/images/finergycloud-logo.png" alt="User Avatar" class="avatar-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="avatar-fallback" style="display: none;">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
                         </div>
                         <div class="user-info">
                             <h4>Demo User</h4>

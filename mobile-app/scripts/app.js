@@ -18,15 +18,24 @@ class FinergyCloudApp {
     }
 
     setupEventListeners() {
-        // Menu toggle
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            this.toggleSideNav();
-        });
+        // Menu toggle - CRITICAL: Fixed event listener
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Menu toggle clicked'); // Debug log
+                this.toggleSideNav();
+            });
+        }
 
         // Overlay click
-        document.getElementById('overlay').addEventListener('click', () => {
-            this.closeSideNav();
-        });
+        const overlay = document.getElementById('overlay');
+        if (overlay) {
+            overlay.addEventListener('click', () => {
+                this.closeSideNav();
+            });
+        }
 
         // Navigation links
         document.querySelectorAll('.nav-link, .nav-btn, .action-card').forEach(link => {
@@ -49,14 +58,20 @@ class FinergyCloudApp {
         }
 
         // Notification button
-        document.getElementById('notification-btn').addEventListener('click', () => {
-            this.showNotifications();
-        });
+        const notificationBtn = document.getElementById('notification-btn');
+        if (notificationBtn) {
+            notificationBtn.addEventListener('click', () => {
+                this.showNotifications();
+            });
+        }
 
         // Profile button
-        document.getElementById('profile-btn').addEventListener('click', () => {
-            this.showProfile();
-        });
+        const profileBtn = document.getElementById('profile-btn');
+        if (profileBtn) {
+            profileBtn.addEventListener('click', () => {
+                this.showProfile();
+            });
+        }
 
         // Filter tabs
         document.querySelectorAll('.tab').forEach(tab => {
@@ -85,6 +100,13 @@ class FinergyCloudApp {
 
         // Keyboard shortcuts
         this.setupKeyboardShortcuts();
+
+        // Prevent body scroll when side nav is open
+        document.addEventListener('touchmove', (e) => {
+            if (this.sideNavOpen) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     }
 
     showLoadingScreen() {
@@ -115,16 +137,20 @@ class FinergyCloudApp {
         
         // Complete loading
         setTimeout(() => {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                mainApp.style.display = 'flex';
-                mainApp.style.opacity = '0';
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
                 setTimeout(() => {
-                    mainApp.style.opacity = '1';
-                    this.animateStatsCards();
-                }, 50);
-            }, 500);
+                    loadingScreen.style.display = 'none';
+                    if (mainApp) {
+                        mainApp.style.display = 'flex';
+                        mainApp.style.opacity = '0';
+                        setTimeout(() => {
+                            mainApp.style.opacity = '1';
+                            this.animateStatsCards();
+                        }, 50);
+                    }
+                }, 500);
+            }
         }, 3500);
     }
 
@@ -188,15 +214,19 @@ class FinergyCloudApp {
         const sideNav = document.getElementById('side-nav');
         const overlay = document.getElementById('overlay');
         
+        console.log('Toggle side nav called, current state:', this.sideNavOpen); // Debug log
+        
         this.sideNavOpen = !this.sideNavOpen;
         
         if (this.sideNavOpen) {
-            sideNav.classList.add('open');
-            overlay.classList.add('active');
+            console.log('Opening side nav'); // Debug log
+            if (sideNav) sideNav.classList.add('open');
+            if (overlay) overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         } else {
-            sideNav.classList.remove('open');
-            overlay.classList.remove('active');
+            console.log('Closing side nav'); // Debug log
+            if (sideNav) sideNav.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
             document.body.style.overflow = '';
         }
     }
@@ -484,13 +514,13 @@ class FinergyCloudApp {
             
             // Horizontal swipe
             if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                if (diffX > 0) {
-                    // Swipe left - open side nav
+                if (diffX < 0) {
+                    // Swipe right - open side nav
                     if (!this.sideNavOpen) {
                         this.toggleSideNav();
                     }
                 } else {
-                    // Swipe right - close side nav
+                    // Swipe left - close side nav
                     if (this.sideNavOpen) {
                         this.closeSideNav();
                     }
@@ -861,20 +891,26 @@ class FinergyCloudApp {
         installPrompt.style.display = 'block';
 
         // Handle install button
-        document.getElementById('install-btn').addEventListener('click', () => {
-            if (this.deferredPrompt) {
-                this.deferredPrompt.prompt();
-                this.deferredPrompt.userChoice.then((choiceResult) => {
-                    this.deferredPrompt = null;
-                    this.hideInstallPrompt();
-                });
-            }
-        });
+        const installBtn = document.getElementById('install-btn');
+        if (installBtn) {
+            installBtn.addEventListener('click', () => {
+                if (this.deferredPrompt) {
+                    this.deferredPrompt.prompt();
+                    this.deferredPrompt.userChoice.then((choiceResult) => {
+                        this.deferredPrompt = null;
+                        this.hideInstallPrompt();
+                    });
+                }
+            });
+        }
 
         // Handle dismiss button
-        document.getElementById('dismiss-btn').addEventListener('click', () => {
-            this.hideInstallPrompt();
-        });
+        const dismissBtn = document.getElementById('dismiss-btn');
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', () => {
+                this.hideInstallPrompt();
+            });
+        }
     }
 
     hideInstallPrompt() {
@@ -982,6 +1018,7 @@ class FinergyCloudApp {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing app...');
     window.finergyApp = new FinergyCloudApp();
 });
 
@@ -1009,9 +1046,13 @@ function calculateIRR() {
 }
 
 function saveCalculation() {
-    window.finergyApp.showToast('Calculation saved successfully!', 'success');
+    if (window.finergyApp) {
+        window.finergyApp.showToast('Calculation saved successfully!', 'success');
+    }
 }
 
 function exportResults() {
-    window.finergyApp.showToast('Results exported to downloads', 'success');
+    if (window.finergyApp) {
+        window.finergyApp.showToast('Results exported to downloads', 'success');
+    }
 }

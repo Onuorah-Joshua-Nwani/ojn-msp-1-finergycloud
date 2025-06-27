@@ -55,7 +55,7 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     
-    /* Layout - Fixed for mobile status bar */
+    /* Layout - CRITICAL: Fixed for mobile status bar */
     --header-height: 70px;
     --bottom-nav-height: 80px;
     --side-nav-width: 280px;
@@ -153,6 +153,45 @@ body {
     height: 80px;
     border-radius: 50%;
     box-shadow: var(--shadow-lg);
+    object-fit: cover;
+}
+
+/* Logo Fallback Styles */
+.logo-fallback,
+.nav-logo-fallback,
+.avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    color: var(--white);
+    font-weight: var(--font-weight-bold);
+    border-radius: 50%;
+}
+
+.logo-placeholder {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-primary);
+    color: var(--white);
+    font-weight: var(--font-weight-bold);
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
+
+.nav-logo-fallback {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+}
+
+.avatar-fallback {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
 }
 
 .loading-spinner {
@@ -229,7 +268,7 @@ body {
     height: calc(100vh - var(--safe-area-top) - var(--safe-area-bottom));
 }
 
-/* Top Navigation - FIXED for status bar coverage */
+/* Top Navigation - CRITICAL: Fixed for status bar coverage */
 .top-nav {
     position: fixed;
     top: var(--safe-area-top);
@@ -280,7 +319,7 @@ body {
     background: var(--light-green);
 }
 
-/* Logo in Navigation - FIXED */
+/* Logo in Navigation - CRITICAL: Fixed display */
 .app-logo-nav {
     display: flex;
     align-items: center;
@@ -366,7 +405,7 @@ body {
     60% { transform: translateY(-2px); }
 }
 
-/* Side Navigation - FIXED positioning */
+/* Side Navigation - CRITICAL: Fixed positioning and z-index */
 .side-nav {
     position: fixed;
     top: 0;
@@ -381,10 +420,14 @@ body {
     /* Account for safe areas */
     padding-top: var(--safe-area-top);
     padding-left: var(--safe-area-left);
+    /* CRITICAL: Ensure menu slides in properly */
+    transform: translateX(0);
 }
 
 .side-nav.open {
     left: 0;
+    /* CRITICAL: Ensure menu is visible when open */
+    transform: translateX(0);
 }
 
 .side-nav-header {
@@ -500,7 +543,7 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* Main Content - FIXED for safe areas */
+/* Main Content - CRITICAL: Fixed for safe areas and proper spacing */
 .main-content {
     flex: 1;
     margin-top: calc(var(--header-height) + var(--safe-area-top));
@@ -1463,7 +1506,7 @@ input:checked + .slider:before {
     color: var(--danger);
 }
 
-/* Bottom Navigation - FIXED for safe areas */
+/* Bottom Navigation - CRITICAL: Fixed for safe areas */
 .bottom-nav {
     position: fixed;
     bottom: var(--safe-area-bottom);
@@ -1523,7 +1566,7 @@ input:checked + .slider:before {
     color: var(--primary-green);
 }
 
-/* Overlay - FIXED z-index */
+/* Overlay - CRITICAL: Fixed z-index to be below side nav */
 .overlay {
     position: fixed;
     top: 0;
