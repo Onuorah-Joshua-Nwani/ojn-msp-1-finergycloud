@@ -56,8 +56,8 @@
     --transition-slow: 0.5s ease;
     
     /* Layout - Fixed for mobile status bar */
-    --header-height: 60px;
-    --bottom-nav-height: 70px;
+    --header-height: 70px;
+    --bottom-nav-height: 80px;
     --side-nav-width: 280px;
     --safe-area-top: env(safe-area-inset-top, 0px);
     --safe-area-bottom: env(safe-area-inset-bottom, 0px);
@@ -85,6 +85,9 @@ html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     height: 100%;
+    /* Prevent zoom on input focus */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -99,11 +102,13 @@ body {
     height: 100%;
     /* Prevent bounce scrolling on iOS */
     overscroll-behavior: none;
-    /* Support for safe areas */
+    /* Support for safe areas - CRITICAL for status bar */
     padding-top: var(--safe-area-top);
     padding-bottom: var(--safe-area-bottom);
     padding-left: var(--safe-area-left);
     padding-right: var(--safe-area-right);
+    /* Prevent user zoom */
+    touch-action: manipulation;
 }
 
 /* App Container */
@@ -224,7 +229,7 @@ body {
     height: calc(100vh - var(--safe-area-top) - var(--safe-area-bottom));
 }
 
-/* Top Navigation - Fixed for status bar */
+/* Top Navigation - FIXED for status bar coverage */
 .top-nav {
     position: fixed;
     top: var(--safe-area-top);
@@ -236,6 +241,8 @@ body {
     z-index: 1000;
     box-shadow: var(--shadow-sm);
     transition: transform 0.3s ease;
+    /* CRITICAL: Ensure it doesn't get covered by status bar */
+    padding-top: 0;
 }
 
 .nav-content {
@@ -273,17 +280,19 @@ body {
     background: var(--light-green);
 }
 
-/* Logo in Navigation */
+/* Logo in Navigation - FIXED */
 .app-logo-nav {
     display: flex;
     align-items: center;
 }
 
 .nav-logo {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
+    /* Ensure logo is visible */
+    display: block;
 }
 
 .app-title {
@@ -357,7 +366,7 @@ body {
     60% { transform: translateY(-2px); }
 }
 
-/* Side Navigation - Fixed positioning */
+/* Side Navigation - FIXED positioning */
 .side-nav {
     position: fixed;
     top: 0;
@@ -407,6 +416,8 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    /* Ensure avatar image is visible */
+    display: block;
 }
 
 .user-info h4 {
@@ -489,7 +500,7 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* Main Content - Account for safe areas */
+/* Main Content - FIXED for safe areas */
 .main-content {
     flex: 1;
     margin-top: calc(var(--header-height) + var(--safe-area-top));
@@ -498,6 +509,8 @@ body {
     overflow-y: auto;
     /* Prevent overscroll bounce */
     overscroll-behavior: contain;
+    /* CRITICAL: Ensure content is not hidden behind navigation */
+    min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height) - var(--safe-area-top) - var(--safe-area-bottom));
 }
 
 /* Pages */
@@ -1450,7 +1463,7 @@ input:checked + .slider:before {
     color: var(--danger);
 }
 
-/* Bottom Navigation - Account for safe areas */
+/* Bottom Navigation - FIXED for safe areas */
 .bottom-nav {
     position: fixed;
     bottom: var(--safe-area-bottom);
@@ -1510,7 +1523,7 @@ input:checked + .slider:before {
     color: var(--primary-green);
 }
 
-/* Overlay */
+/* Overlay - FIXED z-index */
 .overlay {
     position: fixed;
     top: 0;
@@ -1605,6 +1618,8 @@ input:checked + .slider:before {
         --spacing-md: 12px;
         --spacing-lg: 18px;
         --spacing-xl: 24px;
+        --header-height: 60px;
+        --bottom-nav-height: 70px;
     }
     
     .stats-grid {
@@ -1647,8 +1662,8 @@ input:checked + .slider:before {
     
     /* Adjust for smaller screens */
     .nav-logo {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
     }
     
     .title-text {
