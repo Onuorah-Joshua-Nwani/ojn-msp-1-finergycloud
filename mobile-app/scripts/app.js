@@ -18,22 +18,52 @@ class FinergyCloudApp {
     }
 
     setupEventListeners() {
-        // Menu toggle - CRITICAL: Fixed event listener
+        // CRITICAL FIX: Enhanced menu toggle with multiple event handling
         const menuToggle = document.getElementById('menu-toggle');
         if (menuToggle) {
+            // Remove any existing listeners
+            menuToggle.removeEventListener('click', this.handleMenuToggle);
+            
+            // Add click listener
             menuToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Menu toggle clicked'); // Debug log
+                console.log('Menu toggle clicked - event triggered'); // Debug log
+                this.toggleSideNav();
+            });
+
+            // Add touch listener for better mobile support
+            menuToggle.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Menu toggle touched - event triggered'); // Debug log
                 this.toggleSideNav();
             });
         }
 
-        // Overlay click
+        // Enhanced overlay click handling
         const overlay = document.getElementById('overlay');
         if (overlay) {
-            overlay.addEventListener('click', () => {
+            overlay.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Overlay clicked - closing menu'); // Debug log
                 this.closeSideNav();
+            });
+
+            overlay.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Overlay touched - closing menu'); // Debug log
+                this.closeSideNav();
+            });
+        }
+
+        // Enhanced side nav click handling to prevent closing when clicking inside
+        const sideNav = document.getElementById('side-nav');
+        if (sideNav) {
+            sideNav.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event bubbling
             });
         }
 
@@ -101,12 +131,26 @@ class FinergyCloudApp {
         // Keyboard shortcuts
         this.setupKeyboardShortcuts();
 
-        // Prevent body scroll when side nav is open
+        // CRITICAL: Enhanced body scroll prevention
         document.addEventListener('touchmove', (e) => {
             if (this.sideNavOpen) {
                 e.preventDefault();
             }
         }, { passive: false });
+
+        // CRITICAL: Escape key to close menu
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.sideNavOpen) {
+                this.closeSideNav();
+            }
+        });
+
+        // CRITICAL: Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && this.sideNavOpen) {
+                this.closeSideNav();
+            }
+        });
     }
 
     showLoadingScreen() {
@@ -210,9 +254,11 @@ class FinergyCloudApp {
         });
     }
 
+    // CRITICAL FIX: Enhanced toggle function with better state management
     toggleSideNav() {
         const sideNav = document.getElementById('side-nav');
         const overlay = document.getElementById('overlay');
+        const body = document.body;
         
         console.log('Toggle side nav called, current state:', this.sideNavOpen); // Debug log
         
@@ -220,14 +266,64 @@ class FinergyCloudApp {
         
         if (this.sideNavOpen) {
             console.log('Opening side nav'); // Debug log
-            if (sideNav) sideNav.classList.add('open');
-            if (overlay) overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            
+            // Add classes
+            if (sideNav) {
+                sideNav.classList.add('open');
+                sideNav.style.transform = 'translateX(0)';
+                sideNav.style.visibility = 'visible';
+            }
+            if (overlay) {
+                overlay.classList.add('active');
+                overlay.style.display = 'block';
+            }
+            
+            // Prevent body scroll
+            body.style.overflow = 'hidden';
+            body.style.position = 'fixed';
+            body.style.width = '100%';
+            body.style.height = '100%';
+            
+            // Add class to main app for additional styling
+            const mainApp = document.getElementById('main-app');
+            if (mainApp) {
+                mainApp.classList.add('menu-open');
+            }
+            
         } else {
             console.log('Closing side nav'); // Debug log
-            if (sideNav) sideNav.classList.remove('open');
-            if (overlay) overlay.classList.remove('active');
-            document.body.style.overflow = '';
+            
+            // Remove classes
+            if (sideNav) {
+                sideNav.classList.remove('open');
+                sideNav.style.transform = 'translateX(-100%)';
+                // Don't hide visibility immediately to allow transition
+                setTimeout(() => {
+                    if (!this.sideNavOpen) {
+                        sideNav.style.visibility = 'hidden';
+                    }
+                }, 300);
+            }
+            if (overlay) {
+                overlay.classList.remove('active');
+                setTimeout(() => {
+                    if (!this.sideNavOpen) {
+                        overlay.style.display = 'none';
+                    }
+                }, 300);
+            }
+            
+            // Restore body scroll
+            body.style.overflow = '';
+            body.style.position = '';
+            body.style.width = '';
+            body.style.height = '';
+            
+            // Remove class from main app
+            const mainApp = document.getElementById('main-app');
+            if (mainApp) {
+                mainApp.classList.remove('menu-open');
+            }
         }
     }
 
@@ -497,14 +593,31 @@ class FinergyCloudApp {
     setupSwipeGestures() {
         let startX = 0;
         let startY = 0;
+        let isSwipeGesture = false;
         
         document.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
-        });
+            isSwipeGesture = false;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!startX || !startY) return;
+            
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            
+            const diffX = startX - currentX;
+            const diffY = startY - currentY;
+            
+            // Check if this is a horizontal swipe
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
+                isSwipeGesture = true;
+            }
+        }, { passive: true });
         
         document.addEventListener('touchend', (e) => {
-            if (!startX || !startY) return;
+            if (!startX || !startY || !isSwipeGesture) return;
             
             const endX = e.changedTouches[0].clientX;
             const endY = e.changedTouches[0].clientY;
@@ -517,11 +630,13 @@ class FinergyCloudApp {
                 if (diffX < 0) {
                     // Swipe right - open side nav
                     if (!this.sideNavOpen) {
+                        console.log('Swipe right detected - opening menu');
                         this.toggleSideNav();
                     }
                 } else {
                     // Swipe left - close side nav
                     if (this.sideNavOpen) {
+                        console.log('Swipe left detected - closing menu');
                         this.closeSideNav();
                     }
                 }
@@ -529,7 +644,8 @@ class FinergyCloudApp {
             
             startX = 0;
             startY = 0;
-        });
+            isSwipeGesture = false;
+        }, { passive: true });
     }
 
     setupKeyboardShortcuts() {
@@ -557,6 +673,10 @@ class FinergyCloudApp {
                     break;
                 case 'Escape':
                     this.closeSideNav();
+                    break;
+                case 'm':
+                case 'M':
+                    this.toggleSideNav();
                     break;
             }
         });

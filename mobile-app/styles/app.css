@@ -55,7 +55,7 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     
-    /* Layout - CRITICAL: Fixed for mobile status bar */
+    /* Layout - CRITICAL: Fixed for mobile status bar and full-screen */
     --header-height: 70px;
     --bottom-nav-height: 80px;
     --side-nav-width: 280px;
@@ -85,9 +85,12 @@ html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     height: 100%;
-    /* Prevent zoom on input focus */
+    /* CRITICAL: Prevent zoom on input focus */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    /* CRITICAL: Support for full-screen mobile viewing */
+    height: 100vh;
+    height: -webkit-fill-available;
 }
 
 body {
@@ -100,24 +103,36 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
-    /* Prevent bounce scrolling on iOS */
+    /* CRITICAL: Prevent bounce scrolling on iOS */
     overscroll-behavior: none;
-    /* Support for safe areas - CRITICAL for status bar */
+    /* CRITICAL: Support for safe areas and full-screen */
     padding-top: var(--safe-area-top);
     padding-bottom: var(--safe-area-bottom);
     padding-left: var(--safe-area-left);
     padding-right: var(--safe-area-right);
-    /* Prevent user zoom */
+    /* CRITICAL: Prevent user zoom and improve touch */
     touch-action: manipulation;
+    /* CRITICAL: Full height support */
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+}
+
+/* CRITICAL: Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* App Container */
 .app-container {
     position: relative;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     max-width: 100vw;
     overflow-x: hidden;
-    /* Ensure full height on mobile */
+    /* CRITICAL: Ensure full height on mobile */
     height: 100vh;
     height: -webkit-fill-available;
 }
@@ -262,13 +277,20 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     opacity: 0;
     transition: opacity 0.5s ease;
-    /* Account for safe areas */
+    /* CRITICAL: Account for safe areas */
     height: calc(100vh - var(--safe-area-top) - var(--safe-area-bottom));
+    height: calc(-webkit-fill-available - var(--safe-area-top) - var(--safe-area-bottom));
 }
 
-/* Top Navigation - CRITICAL: Fixed for status bar coverage */
+/* CRITICAL: Menu open state for main app */
+.main-app.menu-open {
+    overflow: hidden;
+}
+
+/* Top Navigation - CRITICAL: Fixed for status bar coverage and full-screen */
 .top-nav {
     position: fixed;
     top: var(--safe-area-top);
@@ -282,6 +304,9 @@ body {
     transition: transform 0.3s ease;
     /* CRITICAL: Ensure it doesn't get covered by status bar */
     padding-top: 0;
+    /* CRITICAL: Support for notch devices */
+    padding-left: max(var(--spacing-md), var(--safe-area-left));
+    padding-right: max(var(--spacing-md), var(--safe-area-right));
 }
 
 .nav-content {
@@ -298,6 +323,7 @@ body {
     gap: var(--spacing-md);
 }
 
+/* CRITICAL: Enhanced menu button for better touch */
 .menu-btn {
     background: none;
     border: none;
@@ -307,16 +333,25 @@ body {
     padding: var(--spacing-sm);
     border-radius: var(--radius-sm);
     transition: var(--transition-fast);
-    /* Improve touch target */
-    min-width: 44px;
-    min-height: 44px;
+    /* CRITICAL: Improve touch target */
+    min-width: 48px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* CRITICAL: Ensure button is always clickable */
+    position: relative;
+    z-index: 1001;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.menu-btn:hover {
+.menu-btn:hover,
+.menu-btn:active,
+.menu-btn:focus {
     background: var(--light-green);
+    transform: scale(1.05);
 }
 
 /* Logo in Navigation - CRITICAL: Fixed display */
@@ -330,7 +365,7 @@ body {
     height: 36px;
     border-radius: 50%;
     object-fit: cover;
-    /* Ensure logo is visible */
+    /* CRITICAL: Ensure logo is visible */
     display: block;
 }
 
@@ -370,12 +405,14 @@ body {
     border-radius: var(--radius-sm);
     transition: var(--transition-fast);
     position: relative;
-    /* Improve touch target */
-    min-width: 44px;
-    min-height: 44px;
+    /* CRITICAL: Improve touch target */
+    min-width: 48px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .notification-btn:hover,
@@ -405,29 +442,36 @@ body {
     60% { transform: translateY(-2px); }
 }
 
-/* Side Navigation - CRITICAL: Fixed positioning and z-index */
+/* Side Navigation - CRITICAL: Fixed positioning, z-index, and full-screen support */
 .side-nav {
     position: fixed;
     top: 0;
     left: calc(-1 * var(--side-nav-width));
     width: var(--side-nav-width);
     height: 100vh;
+    height: -webkit-fill-available;
     background: var(--white);
     box-shadow: var(--shadow-lg);
     z-index: 1001;
     transition: var(--transition-normal);
     overflow-y: auto;
-    /* Account for safe areas */
+    /* CRITICAL: Account for safe areas */
     padding-top: var(--safe-area-top);
     padding-left: var(--safe-area-left);
     /* CRITICAL: Ensure menu slides in properly */
     transform: translateX(0);
+    /* CRITICAL: Initially hidden */
+    visibility: hidden;
+    /* CRITICAL: Prevent scrolling when closed */
+    overscroll-behavior: contain;
 }
 
+/* CRITICAL: Enhanced open state */
 .side-nav.open {
     left: 0;
     /* CRITICAL: Ensure menu is visible when open */
     transform: translateX(0);
+    visibility: visible;
 }
 
 .side-nav-header {
@@ -459,7 +503,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    /* Ensure avatar image is visible */
+    /* CRITICAL: Ensure avatar image is visible */
     display: block;
 }
 
@@ -493,8 +537,10 @@ body {
     transition: var(--transition-fast);
     border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     margin-right: var(--spacing-md);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 48px;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-link:hover {
@@ -534,8 +580,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 48px;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .upgrade-btn:hover {
@@ -550,10 +598,14 @@ body {
     margin-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
     padding: var(--spacing-md);
     overflow-y: auto;
-    /* Prevent overscroll bounce */
+    /* CRITICAL: Prevent overscroll bounce */
     overscroll-behavior: contain;
     /* CRITICAL: Ensure content is not hidden behind navigation */
     min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height) - var(--safe-area-top) - var(--safe-area-bottom));
+    min-height: calc(-webkit-fill-available - var(--header-height) - var(--bottom-nav-height) - var(--safe-area-top) - var(--safe-area-bottom));
+    /* CRITICAL: Account for notch devices */
+    padding-left: max(var(--spacing-md), var(--safe-area-left));
+    padding-right: max(var(--spacing-md), var(--safe-area-right));
 }
 
 /* Pages */
@@ -700,6 +752,9 @@ body {
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition: var(--transition-fast);
+    /* CRITICAL: Better touch target */
+    min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .chart-btn.active,
@@ -732,9 +787,12 @@ body {
     gap: var(--spacing-sm);
     text-decoration: none;
     font-size: 0.9rem;
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 44px;
     justify-content: center;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .btn-primary {
@@ -742,7 +800,8 @@ body {
     color: var(--white);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:active {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -752,7 +811,8 @@ body {
     color: var(--primary-green);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary:active {
     background: var(--accent-teal);
     color: var(--white);
 }
@@ -762,7 +822,8 @@ body {
     color: var(--white);
 }
 
-.btn-danger:hover {
+.btn-danger:hover,
+.btn-danger:active {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -967,8 +1028,10 @@ body {
     border-radius: var(--radius-md);
     font-size: 1rem;
     transition: var(--transition-fast);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 44px;
+    /* CRITICAL: Prevent zoom on focus */
+    font-size: 16px;
 }
 
 .search-box input:focus {
@@ -987,9 +1050,11 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 44px;
     min-width: 44px;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .filter-btn:hover {
@@ -1018,11 +1083,14 @@ body {
     gap: var(--spacing-sm);
     text-align: center;
     border: 1px solid rgba(0, 77, 64, 0.1);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 80px;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
-.action-card:hover {
+.action-card:hover,
+.action-card:active {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
     background: var(--light-green);
@@ -1056,10 +1124,12 @@ body {
     cursor: pointer;
     transition: var(--transition-fast);
     white-space: nowrap;
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 44px;
     display: flex;
     align-items: center;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tab:hover,
@@ -1173,9 +1243,9 @@ body {
     padding: var(--spacing-md);
     border: 2px solid rgba(0, 77, 64, 0.2);
     border-radius: var(--radius-md);
-    font-size: 1rem;
+    font-size: 16px; /* CRITICAL: Prevent zoom on iOS */
     transition: var(--transition-fast);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 44px;
 }
 
@@ -1416,8 +1486,10 @@ body {
     border-bottom: 1px solid rgba(0, 77, 64, 0.1);
     cursor: pointer;
     transition: var(--transition-fast);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 60px;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .setting-item:last-child {
@@ -1506,13 +1578,13 @@ input:checked + .slider:before {
     color: var(--danger);
 }
 
-/* Bottom Navigation - CRITICAL: Fixed for safe areas */
+/* Bottom Navigation - CRITICAL: Fixed for safe areas and full-screen */
 .bottom-nav {
     position: fixed;
     bottom: var(--safe-area-bottom);
     left: var(--safe-area-left);
     right: var(--safe-area-right);
-    height: var(--bottom-nav-height);
+    height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
     background: var(--white);
     border-top: 1px solid rgba(0, 77, 64, 0.1);
     display: flex;
@@ -1520,6 +1592,10 @@ input:checked + .slider:before {
     align-items: center;
     z-index: 1000;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    /* CRITICAL: Account for safe area */
+    padding-bottom: var(--safe-area-bottom);
+    padding-left: max(var(--spacing-md), var(--safe-area-left));
+    padding-right: max(var(--spacing-md), var(--safe-area-right));
 }
 
 .nav-btn {
@@ -1534,9 +1610,11 @@ input:checked + .slider:before {
     padding: var(--spacing-sm);
     border-radius: var(--radius-sm);
     min-width: 60px;
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-height: 48px;
     justify-content: center;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-btn i {
@@ -1578,11 +1656,14 @@ input:checked + .slider:before {
     opacity: 0;
     visibility: hidden;
     transition: var(--transition-normal);
+    /* CRITICAL: Initially hidden */
+    display: none;
 }
 
 .overlay.active {
     opacity: 1;
     visibility: visible;
+    display: block;
 }
 
 /* Install Prompt */
@@ -1703,7 +1784,7 @@ input:checked + .slider:before {
         justify-content: center;
     }
     
-    /* Adjust for smaller screens */
+    /* CRITICAL: Adjust for smaller screens */
     .nav-logo {
         width: 32px;
         height: 32px;
@@ -1711,6 +1792,18 @@ input:checked + .slider:before {
     
     .title-text {
         font-size: 1rem;
+    }
+    
+    /* CRITICAL: Better touch targets on small screens */
+    .menu-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .notification-btn,
+    .profile-btn {
+        min-width: 44px;
+        min-height: 44px;
     }
 }
 
@@ -1876,6 +1969,30 @@ input:checked + .slider:before {
     opacity: 1;
 }
 
+/* Warning States */
+.warning-toast {
+    position: fixed;
+    top: calc(var(--header-height) + var(--safe-area-top) + var(--spacing-md));
+    left: calc(var(--spacing-md) + var(--safe-area-left));
+    right: calc(var(--spacing-md) + var(--safe-area-right));
+    background: var(--warning);
+    color: var(--dark-gray);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    z-index: 1003;
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.warning-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 /* Modal Styles */
 .modal-overlay {
     position: fixed;
@@ -1938,12 +2055,14 @@ input:checked + .slider:before {
     padding: var(--spacing-sm);
     border-radius: var(--radius-sm);
     transition: var(--transition-fast);
-    /* Improve touch target */
+    /* CRITICAL: Improve touch target */
     min-width: 44px;
     min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* CRITICAL: Better touch feedback */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .modal-close:hover {
@@ -2029,4 +2148,33 @@ input:checked + .slider:before {
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
     }
+}
+
+/* CRITICAL: iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .app-container {
+        height: -webkit-fill-available;
+    }
+    
+    .main-app {
+        height: -webkit-fill-available;
+    }
+    
+    .side-nav {
+        height: -webkit-fill-available;
+    }
+}
+
+/* CRITICAL: Prevent text selection on interactive elements */
+.menu-btn,
+.nav-btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.action-card,
+.tab {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
