@@ -1,0 +1,109 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Quick Setup Android",
+            "type": "shell",
+            "command": "./scripts/quick-setup.sh",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Complete Android development environment setup"
+        },
+        {
+            "label": "📱 Build Android App",
+            "type": "shell",
+            "command": "./scripts/build-android.sh",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Build Android APK and AAB for Play Store"
+        },
+        {
+            "label": "🔧 Setup Android SDK",
+            "type": "shell",
+            "command": "./scripts/setup-android.sh",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Detailed Android SDK setup"
+        },
+        {
+            "label": "📦 Install Dependencies",
+            "type": "shell",
+            "command": "npm install",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Install Node.js dependencies"
+        },
+        {
+            "label": "🏃 Run Android App",
+            "type": "shell",
+            "command": "npm run android",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Run app on Android device/emulator"
+        },
+        {
+            "label": "🧹 Clean Project",
+            "type": "shell",
+            "command": "cd android && ./gradlew clean",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Clean Android build files"
+        }
+    ]
+}
