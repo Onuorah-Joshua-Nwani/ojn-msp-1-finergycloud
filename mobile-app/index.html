@@ -73,7 +73,7 @@
                     <div class="nav-right">
                         <button class="notification-btn" id="notification-btn" aria-label="Notifications">
                             <i class="bi bi-bell"></i>
-                            <span class="notification-badge">3</span>
+                            <span class="notification-badge">4</span>
                         </button>
                         <button class="profile-btn" id="profile-btn" aria-label="Profile">
                             <i class="bi bi-person-circle"></i>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="user-info">
-                            <h4>Demo User</h4>
+                            <h4>Sarah Chen</h4>
                             <p>Investment Analyst</p>
                         </div>
                     </div>
@@ -432,6 +432,16 @@
                     </div>
                 </div>
 
+                <!-- Analytics Page -->
+                <div class="page" id="analytics-page">
+                    <!-- Content will be dynamically loaded -->
+                </div>
+
+                <!-- Market Intelligence Page -->
+                <div class="page" id="market-page">
+                    <!-- Content will be dynamically loaded -->
+                </div>
+
                 <!-- IRR Calculator Page -->
                 <div class="page" id="calculator-page">
                     <div class="page-header">
@@ -657,6 +667,17 @@
                         </div>
 
                         <div class="settings-section">
+                            <h3>Demo Users</h3>
+                            <div class="setting-item" onclick="window.finergyApp && window.finergyApp.switchDemoUser()">
+                                <div class="setting-info">
+                                    <span class="setting-title">Switch Demo User</span>
+                                    <span class="setting-desc">Experience different user perspectives</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
                             <h3>Preferences</h3>
                             <div class="setting-item">
                                 <div class="setting-info">
@@ -721,13 +742,13 @@
                     <i class="bi bi-folder"></i>
                     <span>Projects</span>
                 </button>
-                <button class="nav-btn" data-page="calculator">
-                    <i class="bi bi-calculator"></i>
-                    <span>Calculate</span>
+                <button class="nav-btn" data-page="analytics">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Analytics</span>
                 </button>
-                <button class="nav-btn" data-page="esg">
-                    <i class="bi bi-leaf"></i>
-                    <span>ESG</span>
+                <button class="nav-btn" data-page="market">
+                    <i class="bi bi-globe"></i>
+                    <span>Market</span>
                 </button>
                 <button class="nav-btn" data-page="settings">
                     <i class="bi bi-gear"></i>
