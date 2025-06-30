@@ -425,181 +425,41 @@
             <!-- Feature Tabs -->
             <div class="row mb-5">
                 <div class="col-12">
-                    <div class="mvp-tabs">
-                        <button class="mvp-tab active" data-tab="irr">
-                            <i class="bi bi-calculator"></i>
-                            <span>IRR Calculator</span>
-                        </button>
-                        <button class="mvp-tab" data-tab="esg">
-                            <i class="bi bi-leaf"></i>
-                            <span>ESG Scoring</span>
-                        </button>
-                        <button class="mvp-tab" data-tab="risk">
-                            <i class="bi bi-shield-check"></i>
-                            <span>Risk Profiling</span>
-                        </button>
-                        <button class="mvp-tab" data-tab="comparison">
-                            <i class="bi bi-bar-chart"></i>
-                            <span>Project Comparison</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="mvp-content">
-                        <!-- IRR Calculator Tab -->
-                        <div class="tab-content active" id="irr-content">
-                            <div class="mvp-badge">
-                                <i class="bi bi-calculator me-2"></i>IRR Simulation Engine
-                            </div>
-                            <h3>Advanced Financial Modeling</h3>
-                            <p>Monte Carlo simulations with 10,000+ iterations for accurate return predictions across different market scenarios.</p>
-                            
-                            <div class="mvp-features">
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Newton-Raphson IRR calculation
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    NPV and payback period analysis
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Scenario planning and stress testing
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Cash flow visualization
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ESG Scoring Tab -->
-                        <div class="tab-content" id="esg-content">
-                            <div class="mvp-badge">
-                                <i class="bi bi-leaf me-2"></i>ESG Scoring Framework
-                            </div>
-                            <h3>Sustainability Assessment</h3>
-                            <p>Comprehensive environmental, social, and governance scoring framework tailored for renewable energy projects.</p>
-                            
-                            <div class="mvp-features">
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Environmental impact scoring
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Social responsibility metrics
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Governance quality assessment
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Regulatory compliance tracking
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Risk Profiling Tab -->
-                        <div class="tab-content" id="risk-content">
-                            <div class="mvp-badge">
-                                <i class="bi bi-shield-check me-2"></i>AI Risk Profiling
-                            </div>
-                            <h3>Intelligent Risk Assessment</h3>
-                            <p>AI-driven risk assessment combining market data, regulatory factors, and project-specific variables for emerging markets.</p>
-                            
-                            <div class="mvp-features">
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Multi-dimensional risk analysis
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Market volatility assessment
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Regulatory risk monitoring
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Technology risk evaluation
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Comparison Tab -->
-                        <div class="tab-content" id="comparison-content">
-                            <div class="mvp-badge">
-                                <i class="bi bi-bar-chart me-2"></i>Project Comparison
-                            </div>
-                            <h3>Portfolio Optimization</h3>
-                            <p>Side-by-side project analysis with risk-return visualization and portfolio optimization recommendations.</p>
-                            
-                            <div class="mvp-features">
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Multi-project comparison matrix
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Risk-return visualization
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Portfolio allocation suggestions
-                                </div>
-                                <div class="mvp-feature">
-                                    <i class="bi bi-check-circle text-success me-2"></i>
-                                    Investment ranking algorithms
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mvp-actions">
-                            <a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" class="btn btn-primary" target="_blank">
-                                <i class="bi bi-github me-2"></i>View GitHub Repo
-                            </a>
-                            <button class="btn btn-outline-primary" onclick="startLiveDemo()">
-                                <i class="bi bi-play-circle me-2"></i>Live Demo
-                            </button>
+                    <div class="feature-tabs">
+                        <div class="tab-nav">
+                            <button class="tab-btn active" data-tab="irr">IRR Calculator</button>
+                            <button class="tab-btn" data-tab="esg">ESG Scoring</button>
+                            <button class="tab-btn" data-tab="risk">Risk Profiling</button>
+                            <button class="tab-btn" data-tab="comparison">Project Comparison</button>
                         </div>
                         
-                        <div class="github-stats">
-                            <div class="github-stat">
-                                <span class="stat-number">150+</span>
-                                <span class="stat-label">Commits</span>
-                            </div>
-                            <div class="github-stat">
-                                <span class="stat-number">12</span>
-                                <span class="stat-label">Releases</span>
-                            </div>
-                            <div class="github-stat">
-                                <span class="stat-number">5</span>
-                                <span class="stat-label">Contributors</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="mvp-visual">
-                        <div class="code-preview">
-                            <div class="code-header">
-                                <div class="code-dots">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                        <!-- IRR Calculator Tab -->
+                        <div class="tab-content active" id="irr-tab">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="feature-description">
+                                        <h3>IRR Simulation Engine</h3>
+                                        <p>Advanced Monte Carlo simulation with 10,000+ iterations for accurate return predictions across different market scenarios.</p>
+                                        <ul class="feature-list">
+                                            <li>Newton-Raphson IRR calculation</li>
+                                            <li>NPV analysis with multiple discount rates</li>
+                                            <li>Payback period calculation</li>
+                                            <li>Sensitivity analysis and stress testing</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <span class="code-title" id="code-title">irr-calculator.js</span>
-                            </div>
-                            <div class="code-content">
-                                <pre><code id="code-display">// IRR Calculation Engine
+                                <div class="col-lg-6">
+                                    <div class="code-preview">
+                                        <div class="code-header">
+                                            <div class="code-dots">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                            <span class="code-title">irr-calculator.js</span>
+                                        </div>
+                                        <div class="code-content">
+                                            <pre><code>// IRR Calculation Engine
 function calculateIRR(cashFlows) {
   const irr = newton(
     rate => npv(rate, cashFlows),
@@ -614,102 +474,262 @@ function runMonteCarloSimulation(params, iterations = 10000) {
   const results = [];
   for (let i = 0; i < iterations; i++) {
     const scenario = generateScenario(params);
-    const irr = calculateIRR(scenario.cashFlows);
-    results.push(irr);
+    results.push(calculateIRR(scenario.cashFlows));
   }
   return analyzeResults(results);
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ESG Scoring Tab -->
+                        <div class="tab-content" id="esg-tab">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="feature-description">
+                                        <h3>ESG Scoring Framework</h3>
+                                        <p>Comprehensive environmental, social, and governance scoring tailored for renewable energy projects with real-time updates.</p>
+                                        <ul class="feature-list">
+                                            <li>Environmental impact assessment</li>
+                                            <li>Social community benefit analysis</li>
+                                            <li>Governance structure evaluation</li>
+                                            <li>Regulatory compliance scoring</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="code-preview">
+                                        <div class="code-header">
+                                            <div class="code-dots">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                            <span class="code-title">esg-scoring.js</span>
+                                        </div>
+                                        <div class="code-content">
+                                            <pre><code>// ESG Scoring Algorithm
+function calculateESGScore(project) {
+  const environmental = assessEnvironmental(project);
+  const social = assessSocial(project);
+  const governance = assessGovernance(project);
+  
+  return weightedAverage([
+    environmental, social, governance
+  ], [0.4, 0.3, 0.3]);
 }
 
-// NPV Calculation
-function calculateNPV(cashFlows, discountRate) {
-  return cashFlows.reduce((npv, cashFlow, period) => {
-    return npv + (cashFlow / Math.pow(1 + discountRate, period));
-  }, 0);
+// Environmental Assessment
+function assessEnvironmental(project) {
+  const carbonReduction = project.co2Savings * 0.3;
+  const biodiversityImpact = project.biodiversity * 0.2;
+  const resourceEfficiency = project.efficiency * 0.5;
+  
+  return normalize(carbonReduction + biodiversityImpact + resourceEfficiency);
 }</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        
+                        <!-- Risk Profiling Tab -->
+                        <div class="tab-content" id="risk-tab">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="feature-description">
+                                        <h3>AI Risk Profiling</h3>
+                                        <p>Machine learning-powered risk assessment combining market data, regulatory factors, and project-specific variables for emerging markets.</p>
+                                        <ul class="feature-list">
+                                            <li>Political and regulatory risk analysis</li>
+                                            <li>Market volatility assessment</li>
+                                            <li>Technology risk evaluation</li>
+                                            <li>Currency and economic risk modeling</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="code-preview">
+                                        <div class="code-header">
+                                            <div class="code-dots">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                            <span class="code-title">risk-profiling.js</span>
+                                        </div>
+                                        <div class="code-content">
+                                            <pre><code>// Risk Profiling Engine
+function calculateRiskProfile(project, market) {
+  const politicalRisk = assessPoliticalRisk(market);
+  const marketRisk = assessMarketVolatility(market);
+  const techRisk = assessTechnologyRisk(project);
+  const currencyRisk = assessCurrencyRisk(market);
+  
+  const riskScore = weightedRiskScore([
+    politicalRisk, marketRisk, techRisk, currencyRisk
+  ], [0.3, 0.25, 0.25, 0.2]);
+  
+  return {
+    overall: riskScore,
+    category: categorizeRisk(riskScore),
+    recommendations: generateRecommendations(riskScore)
+  };
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project Comparison Tab -->
+                        <div class="tab-content" id="comparison-tab">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="feature-description">
+                                        <h3>Project Comparison</h3>
+                                        <p>Side-by-side analysis of multiple renewable energy projects with comprehensive metrics and visual comparisons for informed decision-making.</p>
+                                        <ul class="feature-list">
+                                            <li>Multi-project IRR comparison</li>
+                                            <li>Risk-adjusted return analysis</li>
+                                            <li>ESG score benchmarking</li>
+                                            <li>Portfolio optimization recommendations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="code-preview">
+                                        <div class="code-header">
+                                            <div class="code-dots">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                            <span class="code-title">project-comparison.js</span>
+                                        </div>
+                                        <div class="code-content">
+                                            <pre><code>// Project Comparison Engine
+function compareProjects(projects) {
+  return projects.map(project => ({
+    id: project.id,
+    name: project.name,
+    irr: calculateIRR(project.cashFlows),
+    esg: calculateESGScore(project),
+    risk: calculateRiskProfile(project, project.market),
+    sharpeRatio: calculateSharpeRatio(project),
+    recommendation: generateRecommendation(project)
+  })).sort((a, b) => b.sharpeRatio - a.sharpeRatio);
+}
+
+// Portfolio Optimization
+function optimizePortfolio(projects, constraints) {
+  const efficientFrontier = calculateEfficientFrontier(projects);
+  return findOptimalAllocation(efficientFrontier, constraints);
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Demo Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="live-demo-section">
+                        <div class="demo-header">
+                            <h3>🎬 Live Platform Demo</h3>
+                            <p>Watch our comprehensive 5-minute demo with professional voiceover showcasing all four platform features</p>
+                        </div>
+                        
+                        <div class="demo-player">
+                            <div class="video-container">
+                                <div class="video-player" id="demoPlayer">
+                                    <div class="video-content" id="videoContent">
+                                        <!-- Dynamic content will be inserted here -->
+                                    </div>
+                                    
+                                    <div class="video-controls">
+                                        <button class="play-btn" id="playBtn">
+                                            <i class="bi bi-play-fill"></i>
+                                        </button>
+                                        <div class="progress-container">
+                                            <div class="progress-bar" id="progressBar">
+                                                <div class="progress-fill" id="progressFill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="time-display">
+                                            <span id="currentTime">0:00</span> / <span id="totalTime">5:00</span>
+                                        </div>
+                                        <button class="volume-btn" id="volumeBtn">
+                                            <i class="bi bi-volume-up-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-timeline">
+                                <div class="timeline-item" data-time="0">
+                                    <span class="time">0:00</span>
+                                    <span class="title">Platform Overview</span>
+                                </div>
+                                <div class="timeline-item" data-time="60">
+                                    <span class="time">1:00</span>
+                                    <span class="title">IRR Calculator Demo</span>
+                                </div>
+                                <div class="timeline-item" data-time="120">
+                                    <span class="time">2:00</span>
+                                    <span class="title">ESG Scoring System</span>
+                                </div>
+                                <div class="timeline-item" data-time="180">
+                                    <span class="time">3:00</span>
+                                    <span class="title">Risk Profiling AI</span>
+                                </div>
+                                <div class="timeline-item" data-time="240">
+                                    <span class="time">4:00</span>
+                                    <span class="title">Project Comparison</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GitHub Stats and Actions -->
+            <div class="row mt-5">
+                <div class="col-lg-6">
+                    <div class="mvp-actions">
+                        <a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" class="btn btn-primary" target="_blank">
+                            <i class="bi bi-github me-2"></i>View GitHub Repo
+                        </a>
+                        <a href="https://onuorah-joshua-nwani.github.io/ojn-msp-1-finergycloud/" class="btn btn-outline-primary" target="_blank">
+                            <i class="bi bi-play-circle me-2"></i>Live Demo
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="github-stats">
+                        <div class="github-stat">
+                            <span class="stat-number">150+</span>
+                            <span class="stat-label">Commits</span>
+                        </div>
+                        <div class="github-stat">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Releases</span>
+                        </div>
+                        <div class="github-stat">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">Contributors</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Live Demo Modal -->
-    <div class="modal fade" id="liveDemoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">FinergyCloud Live Demo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Demo Video Player -->
-                    <div class="demo-player">
-                        <div class="demo-screen" id="demo-screen">
-                            <div class="demo-content" id="demo-content">
-                                <!-- Demo content will be dynamically loaded here -->
-                            </div>
-                        </div>
-                        
-                        <!-- Video Controls -->
-                        <div class="demo-controls">
-                            <button class="control-btn" id="playPauseBtn">
-                                <i class="bi bi-play-fill"></i>
-                            </button>
-                            <div class="progress-container">
-                                <div class="progress-bar" id="progressBar">
-                                    <div class="progress-fill" id="progressFill"></div>
-                                </div>
-                                <span class="time-display" id="timeDisplay">0:00 / 4:30</span>
-                            </div>
-                            <button class="control-btn" id="fullscreenBtn">
-                                <i class="bi bi-fullscreen"></i>
-                            </button>
-                        </div>
-
-                        <!-- Demo Timeline -->
-                        <div class="demo-timeline">
-                            <div class="timeline-item active" data-time="0">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-time">0:00</span>
-                                    <span class="timeline-title">Platform Overview</span>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-time="30">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-time">0:30</span>
-                                    <span class="timeline-title">IRR Calculator</span>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-time="90">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-time">1:30</span>
-                                    <span class="timeline-title">ESG Scoring</span>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-time="150">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-time">2:30</span>
-                                    <span class="timeline-title">Risk Profiling</span>
-                                </div>
-                            </div>
-                            <div class="timeline-item" data-time="210">
-                                <div class="timeline-marker"></div>
-                                <div class="timeline-content">
-                                    <span class="timeline-time">3:30</span>
-                                    <span class="timeline-title">Project Comparison</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Blog Preview Section -->
     <section class="section-padding">
@@ -927,85 +947,120 @@ function calculateNPV(cashFlows, discountRate) {
     <script src="assets/js/cross-platform-navigation.js"></script>
 
     <style>
-        /* MVP Tabs Styles */
-        .mvp-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .mvp-tab {
+        /* Feature Tabs Styles */
+        .feature-tabs {
             background: var(--white);
-            border: 2px solid rgba(0, 77, 64, 0.2);
             border-radius: var(--radius-lg);
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            transition: var(--transition-normal);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: var(--font-weight-medium);
-            color: var(--text-dark);
-        }
-
-        .mvp-tab:hover {
-            border-color: var(--accent-teal);
-            transform: translateY(-2px);
             box-shadow: var(--shadow-md);
+            overflow: hidden;
         }
 
-        .mvp-tab.active {
-            background: var(--gradient-primary);
-            color: var(--white);
-            border-color: var(--primary-green);
+        .tab-nav {
+            display: flex;
+            background: var(--light-green);
+            border-bottom: 1px solid rgba(0, 77, 64, 0.1);
         }
 
-        .mvp-tab i {
-            font-size: 1.2rem;
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--primary-green);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--white);
+            border-bottom-color: var(--accent-teal);
         }
 
         .tab-content {
             display: none;
+            padding: 2rem;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeInUp 0.5s ease;
         }
 
-        /* Demo Player Styles */
-        .demo-player {
+        .feature-description h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--accent-teal);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Live Demo Styles */
+        .live-demo-section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .demo-header h3 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .video-container {
             background: #000;
             border-radius: var(--radius-lg);
             overflow: hidden;
             position: relative;
+            aspect-ratio: 16/9;
+            margin-bottom: 1rem;
         }
 
-        .demo-screen {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-content {
+        .video-player {
             width: 100%;
             height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-content {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
             color: var(--white);
+            font-size: 1.5rem;
             text-align: center;
             padding: 2rem;
         }
 
-        .demo-controls {
+        .video-controls {
             background: rgba(0, 0, 0, 0.8);
             padding: 1rem;
             display: flex;
@@ -1013,7 +1068,8 @@ function calculateNPV(cashFlows, discountRate) {
             gap: 1rem;
         }
 
-        .control-btn {
+        .play-btn,
+        .volume-btn {
             background: none;
             border: none;
             color: var(--white);
@@ -1024,18 +1080,12 @@ function calculateNPV(cashFlows, discountRate) {
             transition: var(--transition-fast);
         }
 
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .play-btn:hover,
+        .volume-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .progress-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .progress-bar {
             flex: 1;
             height: 6px;
             background: rgba(255, 255, 255, 0.3);
@@ -1055,69 +1105,41 @@ function calculateNPV(cashFlows, discountRate) {
         .time-display {
             color: var(--white);
             font-size: 0.9rem;
-            min-width: 80px;
+            font-weight: var(--font-weight-medium);
         }
 
         .demo-timeline {
-            background: var(--white);
-            padding: 1rem;
             display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
-            overflow-x: auto;
+            justify-content: center;
         }
 
         .timeline-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            background: var(--light-green);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: var(--radius-sm);
             transition: var(--transition-fast);
-            white-space: nowrap;
+            text-align: center;
+            min-width: 120px;
         }
 
         .timeline-item:hover {
-            background: var(--light-green);
-        }
-
-        .timeline-item.active {
-            background: var(--light-green);
-        }
-
-        .timeline-marker {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--gray);
-            transition: var(--transition-fast);
-        }
-
-        .timeline-item.active .timeline-marker {
             background: var(--accent-teal);
+            color: var(--white);
         }
 
-        .timeline-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .timeline-time {
-            font-size: 0.8rem;
-            color: var(--gray);
-            font-weight: var(--font-weight-medium);
-        }
-
-        .timeline-title {
+        .timeline-item .time {
+            display: block;
+            font-weight: var(--font-weight-bold);
             font-size: 0.9rem;
-            color: var(--text-dark);
-            font-weight: var(--font-weight-medium);
         }
 
-        /* Code Display Updates */
-        .code-content pre {
-            max-height: 400px;
-            overflow-y: auto;
+        .timeline-item .title {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.8;
         }
 
         /* Mobile App Showcase Styles */
@@ -1321,12 +1343,8 @@ function calculateNPV(cashFlows, discountRate) {
         }
 
         @media (max-width: 768px) {
-            .mvp-tabs {
+            .tab-nav {
                 flex-direction: column;
-            }
-
-            .mvp-tab {
-                justify-content: center;
             }
 
             .mobile-actions {
@@ -1347,674 +1365,611 @@ function calculateNPV(cashFlows, discountRate) {
                 font-size: 1.5rem;
             }
 
-            .mobile-features {
-                gap: 0.75rem;
-            }
-
             .demo-timeline {
                 flex-direction: column;
-                gap: 0.5rem;
+                align-items: center;
             }
 
             .timeline-item {
-                justify-content: flex-start;
+                min-width: 200px;
             }
         }
     </style>
 
     <script>
-        // MVP Tab Functionality
+        // Tab functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.mvp-tab');
-            const contents = document.querySelectorAll('.tab-content');
-            const codeDisplay = document.getElementById('code-display');
-            const codeTitle = document.getElementById('code-title');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
 
-            const codeExamples = {
-                irr: {
-                    title: 'irr-calculator.js',
-                    code: `// IRR Calculation Engine
-function calculateIRR(cashFlows) {
-  const irr = newton(
-    rate => npv(rate, cashFlows),
-    rate => npvDerivative(rate, cashFlows),
-    0.1
-  );
-  return irr;
-}
-
-// Monte Carlo Simulation
-function runMonteCarloSimulation(params, iterations = 10000) {
-  const results = [];
-  for (let i = 0; i < iterations; i++) {
-    const scenario = generateScenario(params);
-    const irr = calculateIRR(scenario.cashFlows);
-    results.push(irr);
-  }
-  return analyzeResults(results);
-}
-
-// NPV Calculation
-function calculateNPV(cashFlows, discountRate) {
-  return cashFlows.reduce((npv, cashFlow, period) => {
-    return npv + (cashFlow / Math.pow(1 + discountRate, period));
-  }, 0);
-}`
-                },
-                esg: {
-                    title: 'esg-scoring.js',
-                    code: `// ESG Scoring Framework
-function calculateESGScore(project) {
-  const environmental = assessEnvironmental(project);
-  const social = assessSocial(project);
-  const governance = assessGovernance(project);
-  
-  return weightedAverage([
-    environmental, social, governance
-  ], [0.4, 0.3, 0.3]);
-}
-
-// Environmental Impact Assessment
-function assessEnvironmental(project) {
-  const carbonReduction = project.carbonOffset * 0.3;
-  const renewableCapacity = project.capacity * 0.25;
-  const biodiversityImpact = project.biodiversity * 0.2;
-  const waterUsage = project.waterEfficiency * 0.15;
-  const wasteManagement = project.wasteReduction * 0.1;
-  
-  return carbonReduction + renewableCapacity + 
-         biodiversityImpact + waterUsage + wasteManagement;
-}
-
-// Social Responsibility Metrics
-function assessSocial(project) {
-  const communityBenefit = project.localJobs * 0.4;
-  const stakeholderEngagement = project.engagement * 0.3;
-  const safetyRecord = project.safetyScore * 0.3;
-  
-  return communityBenefit + stakeholderEngagement + safetyRecord;
-}`
-                },
-                risk: {
-                    title: 'risk-profiling.js',
-                    code: `// AI Risk Profiling Engine
-function assessProjectRisk(project, marketData) {
-  const riskFactors = {
-    market: assessMarketRisk(project, marketData),
-    regulatory: assessRegulatoryRisk(project),
-    technology: assessTechnologyRisk(project),
-    operational: assessOperationalRisk(project),
-    financial: assessFinancialRisk(project)
-  };
-  
-  return calculateCompositeRisk(riskFactors);
-}
-
-// Market Risk Analysis
-function assessMarketRisk(project, marketData) {
-  const volatility = calculateVolatility(marketData.prices);
-  const demandForecast = analyzeDemandTrends(marketData.demand);
-  const competitionLevel = assessCompetition(project.location);
-  
-  return weightedRiskScore([volatility, demandForecast, competitionLevel]);
-}
-
-// Regulatory Risk Assessment
-function assessRegulatoryRisk(project) {
-  const policyStability = project.country.policyScore;
-  const permittingComplexity = project.permits.complexity;
-  const complianceCost = project.compliance.cost;
-  
-  return normalizeRiskScore(policyStability, permittingComplexity, complianceCost);
-}`
-                },
-                comparison: {
-                    title: 'project-comparison.js',
-                    code: `// Project Comparison Engine
-function compareProjects(projects) {
-  const scoredProjects = projects.map(project => ({
-    ...project,
-    score: calculateProjectScore(project),
-    ranking: 0
-  }));
-  
-  return rankProjects(scoredProjects);
-}
-
-// Multi-Criteria Decision Analysis
-function calculateProjectScore(project) {
-  const criteria = {
-    irr: project.irr * 0.3,
-    esg: project.esgScore * 0.25,
-    risk: (10 - project.riskScore) * 0.25,
-    strategic: project.strategicFit * 0.2
-  };
-  
-  return Object.values(criteria).reduce((sum, score) => sum + score, 0);
-}
-
-// Portfolio Optimization
-function optimizePortfolio(projects, constraints) {
-  const efficientFrontier = calculateEfficientFrontier(projects);
-  const optimalAllocation = findOptimalAllocation(
-    efficientFrontier, 
-    constraints.riskTolerance,
-    constraints.budget
-  );
-  
-  return {
-    allocation: optimalAllocation,
-    expectedReturn: calculateExpectedReturn(optimalAllocation),
-    portfolioRisk: calculatePortfolioRisk(optimalAllocation)
-  };
-}`
-                }
-            };
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
                     
-                    // Update active tab
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
+                    // Remove active class from all tabs and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
                     
-                    // Update active content
-                    contents.forEach(c => c.classList.remove('active'));
-                    document.getElementById(tabId + '-content').classList.add('active');
-                    
-                    // Update code display
-                    if (codeExamples[tabId]) {
-                        codeTitle.textContent = codeExamples[tabId].title;
-                        codeDisplay.textContent = codeExamples[tabId].code;
-                    }
+                    // Add active class to clicked tab and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(targetTab + '-tab').classList.add('active');
                 });
             });
         });
 
-        // Live Demo Functionality
-        let demoModal;
-        let isPlaying = false;
-        let currentTime = 0;
-        const totalTime = 270; // 4:30 in seconds
-        let demoInterval;
-
-        const demoScenes = {
-            0: {
-                title: "Platform Overview",
-                content: `
-                    <div class="demo-dashboard">
-                        <h2 style="color: #00bfa5; margin-bottom: 2rem;">FinergyCloud Dashboard</h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-                            <div class="metric-card-demo">
-                                <h3>Active Projects</h3>
-                                <div class="metric-value-demo" data-target="24">0</div>
-                            </div>
-                            <div class="metric-card-demo">
-                                <h3>Total Investment</h3>
-                                <div class="metric-value-demo" data-target="156">$0M</div>
-                            </div>
-                            <div class="metric-card-demo">
-                                <h3>Average IRR</h3>
-                                <div class="metric-value-demo" data-target="14.2">0%</div>
-                            </div>
-                        </div>
-                        <div class="demo-narration">
-                            <p><strong>Voiceover:</strong> "Welcome to FinergyCloud, the AI-driven platform transforming renewable energy investment decisions..."</p>
-                        </div>
-                    </div>
-                `
-            },
-            30: {
-                title: "IRR Calculator",
-                content: `
-                    <div class="demo-calculator">
-                        <h2 style="color: #00bfa5; margin-bottom: 2rem;">IRR Simulation Engine</h2>
-                        <div style="display: flex; gap: 2rem; align-items: center;">
-                            <div style="flex: 1;">
-                                <h4>Monte Carlo Simulation</h4>
-                                <div class="progress-demo">
-                                    <div class="progress-bar-demo">
-                                        <div class="progress-fill-demo" style="width: 0%; background: #00bfa5;"></div>
-                                    </div>
-                                    <span class="progress-text">0 / 10,000 iterations</span>
-                                </div>
-                                <div style="margin-top: 1rem;">
-                                    <p><strong>Expected IRR:</strong> <span class="irr-value">0%</span></p>
-                                    <p><strong>NPV:</strong> <span class="npv-value">$0</span></p>
-                                    <p><strong>Payback Period:</strong> <span class="payback-value">0 years</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-narration">
-                            <p><strong>Voiceover:</strong> "Our advanced IRR calculator uses Monte Carlo simulations to model thousands of scenarios..."</p>
-                        </div>
-                    </div>
-                `
-            },
-            90: {
-                title: "ESG Scoring",
-                content: `
-                    <div class="demo-esg">
-                        <h2 style="color: #00bfa5; margin-bottom: 2rem;">ESG Scoring System</h2>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-                            <div class="esg-component">
-                                <h4>Environmental</h4>
-                                <div class="circular-progress" data-score="85">
-                                    <div class="score-display">8.5</div>
-                                </div>
-                            </div>
-                            <div class="esg-component">
-                                <h4>Social</h4>
-                                <div class="circular-progress" data-score="78">
-                                    <div class="score-display">7.8</div>
-                                </div>
-                            </div>
-                            <div class="esg-component">
-                                <h4>Governance</h4>
-                                <div class="circular-progress" data-score="92">
-                                    <div class="score-display">9.2</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 2rem;">
-                            <h3>Overall ESG Score: <span style="color: #28a745;">8.5/10</span></h3>
-                        </div>
-                        <div class="demo-narration">
-                            <p><strong>Voiceover:</strong> "Our ESG framework evaluates environmental impact, social responsibility, and governance quality..."</p>
-                        </div>
-                    </div>
-                `
-            },
-            150: {
-                title: "Risk Profiling",
-                content: `
-                    <div class="demo-risk">
-                        <h2 style="color: #00bfa5; margin-bottom: 2rem;">AI Risk Profiling</h2>
-                        <div style="display: flex; gap: 2rem; align-items: center;">
-                            <div style="flex: 1;">
-                                <div class="risk-chart">
-                                    <div class="risk-segment" style="background: #28a745; width: 35%;">Low Risk (35%)</div>
-                                    <div class="risk-segment" style="background: #ffc107; width: 45%;">Medium Risk (45%)</div>
-                                    <div class="risk-segment" style="background: #dc3545; width: 20%;">High Risk (20%)</div>
-                                </div>
-                                <div style="margin-top: 2rem;">
-                                    <h4>Risk Factors:</h4>
-                                    <ul style="text-align: left;">
-                                        <li>Market Volatility: Medium</li>
-                                        <li>Regulatory Risk: Low</li>
-                                        <li>Technology Risk: Low</li>
-                                        <li>Operational Risk: Medium</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="demo-narration">
-                            <p><strong>Voiceover:</strong> "Our AI engine analyzes multiple risk dimensions to provide comprehensive risk profiling..."</p>
-                        </div>
-                    </div>
-                `
-            },
-            210: {
-                title: "Project Comparison",
-                content: `
-                    <div class="demo-comparison">
-                        <h2 style="color: #00bfa5; margin-bottom: 2rem;">Project Comparison & Portfolio Optimization</h2>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
-                            <div class="project-card-demo">
-                                <h4>Solar Farm Kenya</h4>
-                                <p><strong>IRR:</strong> 15.2%</p>
-                                <p><strong>ESG Score:</strong> 8.7/10</p>
-                                <p><strong>Risk Level:</strong> Medium</p>
-                                <div class="recommendation" style="color: #28a745;">✓ Recommended</div>
-                            </div>
-                            <div class="project-card-demo">
-                                <h4>Wind Farm Brazil</h4>
-                                <p><strong>IRR:</strong> 12.8%</p>
-                                <p><strong>ESG Score:</strong> 9.1/10</p>
-                                <p><strong>Risk Level:</strong> Low</p>
-                                <div class="recommendation" style="color: #28a745;">✓ Recommended</div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 2rem;">
-                            <h4>Optimal Portfolio Allocation:</h4>
-                            <p>60% Solar Farm Kenya | 40% Wind Farm Brazil</p>
-                            <p><strong>Expected Portfolio IRR:</strong> 14.3%</p>
-                        </div>
-                        <div class="demo-narration">
-                            <p><strong>Voiceover:</strong> "Compare projects side-by-side and get AI-powered portfolio optimization recommendations..."</p>
-                        </div>
-                    </div>
-                `
+        // Audio-enabled demo player
+        class AudioDemoPlayer {
+            constructor() {
+                this.isPlaying = false;
+                this.currentTime = 0;
+                this.totalTime = 300; // 5 minutes in seconds
+                this.scenes = [
+                    {
+                        time: 0,
+                        duration: 60,
+                        title: "Platform Overview",
+                        content: "Welcome to FinergyCloud - AI-driven risk intelligence for renewable energy investors",
+                        voiceover: "Welcome to FinergyCloud, the revolutionary AI-driven risk intelligence platform for renewable energy investors. Let me show you how our platform transforms investment decisions through smart analytics and comprehensive risk profiling."
+                    },
+                    {
+                        time: 60,
+                        duration: 60,
+                        title: "IRR Calculator Demo",
+                        content: "Advanced Monte Carlo simulation with real-time calculations",
+                        voiceover: "Our IRR Calculator uses advanced Monte Carlo simulation with over 10,000 iterations to provide accurate return predictions. Watch as we analyze a solar project in Kenya with dynamic risk scenarios and real-time calculations."
+                    },
+                    {
+                        time: 120,
+                        duration: 60,
+                        title: "ESG Scoring System",
+                        content: "Comprehensive sustainability assessment with AI-powered insights",
+                        voiceover: "The ESG Scoring System evaluates environmental, social, and governance factors using AI-powered analysis. See how we assess carbon reduction, community impact, and regulatory compliance for sustainable investment decisions."
+                    },
+                    {
+                        time: 180,
+                        duration: 60,
+                        title: "Risk Profiling AI",
+                        content: "Machine learning risk assessment for emerging markets",
+                        voiceover: "Our AI Risk Profiling engine combines political, market, technology, and currency risks using machine learning models specifically trained for emerging markets. This provides unprecedented accuracy in risk assessment."
+                    },
+                    {
+                        time: 240,
+                        duration: 60,
+                        title: "Project Comparison",
+                        content: "Side-by-side analysis with portfolio optimization",
+                        voiceover: "Finally, our Project Comparison tool enables side-by-side analysis of multiple renewable energy projects with comprehensive metrics, risk-adjusted returns, and portfolio optimization recommendations for informed decision-making."
+                    }
+                ];
+                this.currentScene = 0;
+                this.speechSynthesis = window.speechSynthesis;
+                this.currentUtterance = null;
+                this.init();
             }
-        };
 
-        function startLiveDemo() {
-            demoModal = new bootstrap.Modal(document.getElementById('liveDemoModal'));
-            demoModal.show();
-            
-            // Initialize demo
-            currentTime = 0;
-            updateDemoContent();
-            updateTimeDisplay();
-            updateProgress();
-        }
+            init() {
+                this.playBtn = document.getElementById('playBtn');
+                this.progressBar = document.getElementById('progressBar');
+                this.progressFill = document.getElementById('progressFill');
+                this.currentTimeEl = document.getElementById('currentTime');
+                this.totalTimeEl = document.getElementById('totalTime');
+                this.videoContent = document.getElementById('videoContent');
+                this.volumeBtn = document.getElementById('volumeBtn');
 
-        function togglePlayPause() {
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            
-            if (isPlaying) {
-                pauseDemo();
-                playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
-            } else {
-                playDemo();
-                playPauseBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+                this.setupEventListeners();
+                this.updateDisplay();
             }
-        }
 
-        function playDemo() {
-            isPlaying = true;
-            demoInterval = setInterval(() => {
-                currentTime++;
-                updateTimeDisplay();
-                updateProgress();
-                updateDemoContent();
-                updateTimeline();
-                
-                if (currentTime >= totalTime) {
-                    pauseDemo();
-                    document.getElementById('playPauseBtn').innerHTML = '<i class="bi bi-play-fill"></i>';
+            setupEventListeners() {
+                this.playBtn.addEventListener('click', () => this.togglePlay());
+                this.progressBar.addEventListener('click', (e) => this.seek(e));
+                this.volumeBtn.addEventListener('click', () => this.toggleMute());
+
+                // Timeline navigation
+                document.querySelectorAll('.timeline-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const time = parseInt(item.getAttribute('data-time'));
+                        this.seekToTime(time);
+                    });
+                });
+            }
+
+            togglePlay() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
                 }
-            }, 100); // Update every 100ms for smooth progress
-        }
-
-        function pauseDemo() {
-            isPlaying = false;
-            if (demoInterval) {
-                clearInterval(demoInterval);
             }
-        }
 
-        function updateDemoContent() {
-            const demoContent = document.getElementById('demo-content');
-            
-            // Find the current scene
-            const sceneTime = Math.max(...Object.keys(demoScenes).filter(time => currentTime >= parseInt(time)));
-            const scene = demoScenes[sceneTime];
-            
-            if (scene && demoContent.innerHTML !== scene.content) {
-                demoContent.innerHTML = scene.content;
-                animateScene();
+            play() {
+                this.isPlaying = true;
+                this.playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
+                this.startDemo();
             }
-        }
 
-        function animateScene() {
-            // Animate metric cards
-            const metricValues = document.querySelectorAll('.metric-value-demo');
-            metricValues.forEach(element => {
-                const target = parseInt(element.dataset.target);
-                animateNumber(element, 0, target, 1000);
-            });
-            
-            // Animate progress bars
-            const progressBars = document.querySelectorAll('.progress-fill-demo');
-            progressBars.forEach(bar => {
-                setTimeout(() => {
-                    bar.style.width = '100%';
-                }, 500);
-            });
-            
-            // Animate IRR values
-            const irrValue = document.querySelector('.irr-value');
-            if (irrValue) {
-                setTimeout(() => {
-                    irrValue.textContent = '14.2%';
+            pause() {
+                this.isPlaying = false;
+                this.playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
+                this.stopVoiceover();
+                if (this.demoInterval) {
+                    clearInterval(this.demoInterval);
+                }
+            }
+
+            startDemo() {
+                this.updateScene();
+                this.demoInterval = setInterval(() => {
+                    if (this.isPlaying) {
+                        this.currentTime += 1;
+                        this.updateDisplay();
+                        this.checkSceneChange();
+                        
+                        if (this.currentTime >= this.totalTime) {
+                            this.pause();
+                            this.currentTime = 0;
+                            this.currentScene = 0;
+                            this.updateDisplay();
+                        }
+                    }
                 }, 1000);
             }
-            
-            const npvValue = document.querySelector('.npv-value');
-            if (npvValue) {
-                setTimeout(() => {
-                    npvValue.textContent = '$2.4M';
-                }, 1200);
-            }
-            
-            const paybackValue = document.querySelector('.payback-value');
-            if (paybackValue) {
-                setTimeout(() => {
-                    paybackValue.textContent = '6.8 years';
-                }, 1400);
-            }
-        }
 
-        function animateNumber(element, start, end, duration) {
-            const startTime = performance.now();
-            
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const current = Math.floor(start + (end - start) * progress);
+            updateScene() {
+                const scene = this.scenes[this.currentScene];
+                if (scene) {
+                    this.videoContent.innerHTML = `
+                        <div class="demo-scene">
+                            <h3>${scene.title}</h3>
+                            <p>${scene.content}</p>
+                            <div class="scene-animation">
+                                ${this.getSceneAnimation(this.currentScene)}
+                            </div>
+                        </div>
+                    `;
+                    
+                    if (this.isPlaying) {
+                        this.playVoiceover(scene.voiceover);
+                    }
+                }
+            }
+
+            getSceneAnimation(sceneIndex) {
+                switch(sceneIndex) {
+                    case 0:
+                        return `
+                            <div class="dashboard-metrics">
+                                <div class="metric"><span class="value" data-target="15.2">0</span><span class="label">IRR %</span></div>
+                                <div class="metric"><span class="value" data-target="8.7">0</span><span class="label">ESG Score</span></div>
+                                <div class="metric"><span class="value" data-target="42">0</span><span class="label">Projects</span></div>
+                            </div>
+                        `;
+                    case 1:
+                        return `
+                            <div class="irr-simulation">
+                                <div class="simulation-progress">
+                                    <div class="progress-bar-demo">
+                                        <div class="progress-fill-demo" style="width: 0%"></div>
+                                    </div>
+                                    <span class="simulation-text">Monte Carlo Simulation: <span class="iteration">0</span>/10,000</span>
+                                </div>
+                            </div>
+                        `;
+                    case 2:
+                        return `
+                            <div class="esg-scores">
+                                <div class="esg-circle" data-score="85">
+                                    <div class="circle-progress" style="--progress: 0%"></div>
+                                    <span class="score-text">E: 0</span>
+                                </div>
+                                <div class="esg-circle" data-score="78">
+                                    <div class="circle-progress" style="--progress: 0%"></div>
+                                    <span class="score-text">S: 0</span>
+                                </div>
+                                <div class="esg-circle" data-score="92">
+                                    <div class="circle-progress" style="--progress: 0%"></div>
+                                    <span class="score-text">G: 0</span>
+                                </div>
+                            </div>
+                        `;
+                    case 3:
+                        return `
+                            <div class="risk-analysis">
+                                <div class="risk-chart">
+                                    <div class="risk-bar low" style="height: 0%"><span>Low: 30%</span></div>
+                                    <div class="risk-bar medium" style="height: 0%"><span>Medium: 50%</span></div>
+                                    <div class="risk-bar high" style="height: 0%"><span>High: 20%</span></div>
+                                </div>
+                            </div>
+                        `;
+                    case 4:
+                        return `
+                            <div class="project-comparison">
+                                <div class="project-card">
+                                    <h4>Solar Kenya</h4>
+                                    <div class="project-metric">IRR: <span class="value">15.2%</span></div>
+                                    <div class="project-metric">Risk: <span class="value">Medium</span></div>
+                                </div>
+                                <div class="project-card">
+                                    <h4>Wind Nigeria</h4>
+                                    <div class="project-metric">IRR: <span class="value">13.8%</span></div>
+                                    <div class="project-metric">Risk: <span class="value">High</span></div>
+                                </div>
+                            </div>
+                        `;
+                    default:
+                        return '<div class="loading">Loading...</div>';
+                }
+            }
+
+            playVoiceover(text) {
+                this.stopVoiceover();
                 
-                if (element.textContent.includes('$')) {
-                    element.textContent = `$${current}M`;
-                } else if (element.textContent.includes('%')) {
-                    element.textContent = `${current}%`;
-                } else {
-                    element.textContent = current;
-                }
-                
-                if (progress < 1) {
-                    requestAnimationFrame(update);
+                if (this.speechSynthesis) {
+                    this.currentUtterance = new SpeechSynthesisUtterance(text);
+                    this.currentUtterance.rate = 0.9;
+                    this.currentUtterance.pitch = 1;
+                    this.currentUtterance.volume = 1;
+                    
+                    // Try to use a professional voice
+                    const voices = this.speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.name.includes('Google') || 
+                        voice.name.includes('Microsoft') ||
+                        voice.lang.includes('en-US')
+                    );
+                    
+                    if (preferredVoice) {
+                        this.currentUtterance.voice = preferredVoice;
+                    }
+                    
+                    this.speechSynthesis.speak(this.currentUtterance);
                 }
             }
-            
-            requestAnimationFrame(update);
-        }
 
-        function updateTimeDisplay() {
-            const timeDisplay = document.getElementById('timeDisplay');
-            const currentMinutes = Math.floor(currentTime / 60);
-            const currentSeconds = currentTime % 60;
-            const totalMinutes = Math.floor(totalTime / 60);
-            const totalSeconds = totalTime % 60;
-            
-            timeDisplay.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
-        }
-
-        function updateProgress() {
-            const progressFill = document.getElementById('progressFill');
-            const progress = (currentTime / totalTime) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-
-        function updateTimeline() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            timelineItems.forEach(item => {
-                const itemTime = parseInt(item.dataset.time);
-                if (currentTime >= itemTime) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
+            stopVoiceover() {
+                if (this.speechSynthesis && this.currentUtterance) {
+                    this.speechSynthesis.cancel();
+                    this.currentUtterance = null;
                 }
-            });
-        }
+            }
 
-        function seekToTime(time) {
-            currentTime = time;
-            updateTimeDisplay();
-            updateProgress();
-            updateDemoContent();
-            updateTimeline();
-        }
+            checkSceneChange() {
+                const newScene = this.scenes.findIndex(scene => 
+                    this.currentTime >= scene.time && this.currentTime < scene.time + scene.duration
+                );
+                
+                if (newScene !== -1 && newScene !== this.currentScene) {
+                    this.currentScene = newScene;
+                    this.updateScene();
+                    this.animateSceneElements();
+                }
+            }
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Play/Pause button
-            document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
-            
-            // Progress bar click
-            document.getElementById('progressBar').addEventListener('click', function(e) {
-                const rect = this.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const progress = clickX / rect.width;
-                seekToTime(Math.floor(progress * totalTime));
-            });
-            
-            // Timeline item clicks
-            document.querySelectorAll('.timeline-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const time = parseInt(this.dataset.time);
-                    seekToTime(time);
+            animateSceneElements() {
+                // Animate counting numbers
+                const values = document.querySelectorAll('.value[data-target]');
+                values.forEach(value => {
+                    const target = parseFloat(value.getAttribute('data-target'));
+                    this.animateValue(value, 0, target, 2000);
                 });
-            });
-            
-            // Modal close event
-            document.getElementById('liveDemoModal').addEventListener('hidden.bs.modal', function() {
-                pauseDemo();
-                currentTime = 0;
-                document.getElementById('playPauseBtn').innerHTML = '<i class="bi bi-play-fill"></i>';
-            });
-        });
 
-        // Global function for the Live Demo button
-        window.startLiveDemo = startLiveDemo;
+                // Animate progress bars
+                const progressBars = document.querySelectorAll('.progress-fill-demo');
+                progressBars.forEach(bar => {
+                    setTimeout(() => {
+                        bar.style.width = '100%';
+                    }, 500);
+                });
+
+                // Animate iteration counter
+                const iteration = document.querySelector('.iteration');
+                if (iteration) {
+                    this.animateValue(iteration, 0, 10000, 3000);
+                }
+
+                // Animate ESG circles
+                const circles = document.querySelectorAll('.esg-circle');
+                circles.forEach((circle, index) => {
+                    const score = parseInt(circle.getAttribute('data-score'));
+                    const progress = circle.querySelector('.circle-progress');
+                    const text = circle.querySelector('.score-text');
+                    
+                    setTimeout(() => {
+                        progress.style.setProperty('--progress', score + '%');
+                        this.animateValue(text, 0, score, 2000, (val) => {
+                            text.textContent = text.textContent.charAt(0) + ': ' + Math.round(val);
+                        });
+                    }, index * 500);
+                });
+
+                // Animate risk bars
+                const riskBars = document.querySelectorAll('.risk-bar');
+                riskBars.forEach((bar, index) => {
+                    setTimeout(() => {
+                        if (bar.classList.contains('low')) bar.style.height = '30%';
+                        if (bar.classList.contains('medium')) bar.style.height = '50%';
+                        if (bar.classList.contains('high')) bar.style.height = '20%';
+                    }, index * 300);
+                });
+            }
+
+            animateValue(element, start, end, duration, callback) {
+                const startTime = performance.now();
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const current = start + (end - start) * progress;
+                    
+                    if (callback) {
+                        callback(current);
+                    } else {
+                        element.textContent = Math.round(current * 10) / 10;
+                    }
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                requestAnimationFrame(animate);
+            }
+
+            seek(e) {
+                const rect = this.progressBar.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percentage = clickX / rect.width;
+                this.seekToTime(Math.floor(percentage * this.totalTime));
+            }
+
+            seekToTime(time) {
+                this.currentTime = Math.max(0, Math.min(time, this.totalTime));
+                this.currentScene = this.scenes.findIndex(scene => 
+                    this.currentTime >= scene.time && this.currentTime < scene.time + scene.duration
+                );
+                if (this.currentScene === -1) this.currentScene = 0;
+                
+                this.updateDisplay();
+                if (this.isPlaying) {
+                    this.updateScene();
+                    this.animateSceneElements();
+                }
+            }
+
+            toggleMute() {
+                if (this.speechSynthesis) {
+                    if (this.speechSynthesis.speaking) {
+                        this.speechSynthesis.pause();
+                        this.volumeBtn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                    } else {
+                        this.speechSynthesis.resume();
+                        this.volumeBtn.innerHTML = '<i class="bi bi-volume-up-fill"></i>';
+                    }
+                }
+            }
+
+            updateDisplay() {
+                const progress = (this.currentTime / this.totalTime) * 100;
+                this.progressFill.style.width = progress + '%';
+                
+                this.currentTimeEl.textContent = this.formatTime(this.currentTime);
+                this.totalTimeEl.textContent = this.formatTime(this.totalTime);
+            }
+
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Initialize the audio demo player
+        document.addEventListener('DOMContentLoaded', () => {
+            window.audioDemoPlayer = new AudioDemoPlayer();
+        });
     </script>
 
     <style>
-        /* Demo Player Additional Styles */
-        .metric-card-demo {
+        /* Demo Scene Styles */
+        .demo-scene {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .demo-scene h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .demo-scene p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .scene-animation {
+            margin-top: 2rem;
+        }
+
+        /* Dashboard Metrics */
+        .dashboard-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .metric {
             background: rgba(255, 255, 255, 0.1);
             padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             text-align: center;
-            backdrop-filter: blur(10px);
+            min-width: 120px;
         }
 
-        .metric-card-demo h3 {
-            color: #fff;
-            margin-bottom: 1rem;
-            font-size: 1rem;
+        .metric .value {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--white);
         }
 
-        .metric-value-demo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #00bfa5;
+        .metric .label {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
         }
 
-        .progress-demo {
-            margin: 1rem 0;
+        /* IRR Simulation */
+        .irr-simulation {
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .progress-bar-demo {
             width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             overflow: hidden;
+            margin-bottom: 1rem;
         }
 
         .progress-fill-demo {
             height: 100%;
-            background: #00bfa5;
-            transition: width 2s ease;
+            background: var(--accent-teal);
+            width: 0%;
+            transition: width 3s ease;
         }
 
-        .progress-text {
-            color: #fff;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: block;
+        .simulation-text {
+            font-size: 1.1rem;
+            color: var(--white);
         }
 
-        .esg-component {
+        /* ESG Scores */
+        .esg-scores {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .esg-circle {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .circle-progress {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-teal) calc(var(--progress) * 3.6deg), rgba(255, 255, 255, 0.2) 0deg);
+            transition: all 2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: var(--font-weight-bold);
+            color: var(--white);
+        }
+
+        /* Risk Analysis */
+        .risk-chart {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1rem;
+            height: 200px;
+        }
+
+        .risk-bar {
+            width: 60px;
+            background: var(--accent-teal);
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .risk-bar.medium {
+            background: #ffc107;
+        }
+
+        .risk-bar.high {
+            background: #dc3545;
+        }
+
+        .risk-bar span {
+            position: absolute;
+            bottom: -30px;
+            font-size: 0.8rem;
+            color: var(--white);
+            white-space: nowrap;
+        }
+
+        /* Project Comparison */
+        .project-comparison {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            min-width: 150px;
             text-align: center;
         }
 
-        .esg-component h4 {
-            color: #fff;
+        .project-card h4 {
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
-        .circular-progress {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: conic-gradient(#00bfa5 0deg, #00bfa5 var(--progress, 0deg), rgba(255,255,255,0.3) var(--progress, 0deg));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .circular-progress::before {
-            content: '';
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #1a1a1a;
-            position: absolute;
-        }
-
-        .score-display {
-            color: #fff;
-            font-weight: bold;
-            font-size: 1.2rem;
-            z-index: 1;
-        }
-
-        .risk-chart {
-            display: flex;
-            width: 100%;
-            height: 40px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .risk-segment {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .project-card-demo {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-        }
-
-        .project-card-demo h4 {
-            color: #00bfa5;
-            margin-bottom: 1rem;
-        }
-
-        .project-card-demo p {
-            color: #fff;
+        .project-metric {
             margin-bottom: 0.5rem;
+            color: var(--white);
         }
 
-        .recommendation {
-            font-weight: bold;
-            margin-top: 1rem;
+        .project-metric .value {
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-teal);
         }
 
-        .demo-narration {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-            border-left: 4px solid #00bfa5;
-        }
+        @media (max-width: 768px) {
+            .dashboard-metrics,
+            .esg-scores,
+            .project-comparison {
+                flex-direction: column;
+                align-items: center;
+            }
 
-        .demo-narration p {
-            color: #fff;
-            margin: 0;
-            font-style: italic;
+            .demo-scene h3 {
+                font-size: 1.5rem;
+            }
+
+            .demo-scene p {
+                font-size: 1rem;
+            }
+
+            .metric {
+                min-width: 100px;
+            }
+
+            .risk-chart {
+                height: 150px;
+            }
         }
     </style>
