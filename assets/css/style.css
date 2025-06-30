@@ -2,15 +2,20 @@
 
 /* CSS Variables */
 :root {
-    /* Colors - Inspired by Finergreen */
+    /* Colors - Improved for better contrast and readability */
     --primary-green: #004d40;
     --accent-teal: #00bfa5;
     --light-green: #e8f5e8;
     --dark-green: #00251a;
     --off-white: #f6f6f6;
-    --text-dark: #333333;
-    --text-light: #666666;
-    --text-muted: #999999;
+    
+    /* Enhanced Text Colors for Better Visibility */
+    --text-dark: #1a1a1a;        /* Darker for better contrast */
+    --text-medium: #333333;      /* Medium contrast */
+    --text-light: #555555;       /* Lighter but still readable */
+    --text-muted: #777777;       /* Muted but visible */
+    --text-white: #ffffff;       /* Pure white for dark backgrounds */
+    
     --white: #ffffff;
     --success: #28a745;
     --warning: #ffc107;
@@ -116,7 +121,7 @@ body {
     }
 }
 
-/* Typography System */
+/* Typography System - Enhanced for Better Readability */
 h1, h2, h3, h4, h5, h6 {
     font-weight: var(--font-weight-bold);
     line-height: 1.2;
@@ -128,31 +133,37 @@ h1, h2, h3, h4, h5, h6 {
 h1 { 
     font-size: 2rem;
     margin-bottom: var(--spacing-lg);
+    color: var(--text-dark);
 }
 
 h2 { 
     font-size: 1.75rem;
     margin-bottom: var(--spacing-md);
+    color: var(--text-dark);
 }
 
 h3 { 
     font-size: 1.5rem;
     margin-bottom: var(--spacing-md);
+    color: var(--text-medium);
 }
 
 h4 { 
     font-size: 1.25rem;
     margin-bottom: var(--spacing-sm);
+    color: var(--text-medium);
 }
 
 h5 { 
     font-size: 1.125rem;
     margin-bottom: var(--spacing-sm);
+    color: var(--text-medium);
 }
 
 h6 { 
     font-size: 1rem;
     margin-bottom: var(--spacing-sm);
+    color: var(--text-medium);
 }
 
 @media (min-width: 768px) {
@@ -201,7 +212,7 @@ p {
     }
 }
 
-/* Navigation */
+/* Navigation - Enhanced Contrast */
 .navbar {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -307,7 +318,7 @@ p {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-medium);
 }
 
 .breadcrumb-item a {
@@ -340,7 +351,7 @@ p {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    color: var(--text-light);
+    color: var(--text-medium);
     font-size: 0.9rem;
     flex-wrap: wrap;
 }
@@ -389,14 +400,14 @@ p {
 
 .btn-primary {
     background: var(--gradient-primary);
-    color: var(--white);
+    color: var(--text-white);
     box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
-    color: var(--white);
+    color: var(--text-white);
 }
 
 .btn-outline-primary {
@@ -407,24 +418,24 @@ p {
 
 .btn-outline-primary:hover {
     background: var(--primary-green);
-    color: var(--white);
+    color: var(--text-white);
 }
 
 .btn-outline-light {
     background: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
+    color: var(--text-white);
+    border: 2px solid var(--text-white);
 }
 
 .btn-outline-light:hover {
-    background: var(--white);
+    background: var(--text-white);
     color: var(--primary-green);
 }
 
-/* Hero Section */
+/* Hero Section - Enhanced Text Contrast */
 .hero-section {
     background: var(--gradient-hero);
-    color: var(--white);
+    color: var(--text-white);
     position: relative;
     overflow: hidden;
     min-height: 100vh;
@@ -452,7 +463,7 @@ p {
 .hero-badge {
     display: inline-block;
     background: rgba(255, 255, 255, 0.2);
-    color: var(--white);
+    color: var(--text-white);
     padding: var(--spacing-xs) var(--spacing-md);
     border-radius: var(--radius-lg);
     font-size: 0.8rem;
@@ -466,11 +477,12 @@ p {
     font-weight: var(--font-weight-extrabold);
     margin-bottom: var(--spacing-lg);
     line-height: 1.1;
+    color: var(--text-white);
 }
 
 .hero-description {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: var(--spacing-xl);
     max-width: 600px;
     line-height: 1.6;
@@ -501,7 +513,7 @@ p {
 
 .stat-label {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     margin-top: var(--spacing-xs);
 }
 
@@ -552,7 +564,7 @@ p {
 
 .metric-label {
     font-size: 0.7rem;
-    color: var(--text-light);
+    color: var(--text-medium);
     margin-bottom: 0.25rem;
 }
 
@@ -562,7 +574,7 @@ p {
     color: var(--primary-green);
 }
 
-/* Section Titles */
+/* Section Titles - Enhanced Contrast */
 .section-title {
     font-size: 2rem;
     font-weight: var(--font-weight-bold);
@@ -573,7 +585,7 @@ p {
 
 .section-subtitle {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text-medium);
     margin-bottom: var(--spacing-xl);
     text-align: center;
     max-width: 600px;
@@ -581,7 +593,7 @@ p {
     margin-right: auto;
 }
 
-/* Feature Cards */
+/* Feature Cards - Enhanced Text Visibility */
 .feature-card {
     background: var(--white);
     padding: var(--spacing-xl);
@@ -613,7 +625,7 @@ p {
 
 .feature-icon i {
     font-size: 2rem;
-    color: var(--white);
+    color: var(--text-white);
 }
 
 .feature-card h4 {
@@ -623,7 +635,7 @@ p {
 }
 
 .feature-card p {
-    color: var(--text-light);
+    color: var(--text-medium);
     margin-bottom: var(--spacing-lg);
     flex: 1;
     line-height: 1.6;
@@ -724,10 +736,12 @@ p {
 
 .problem-before {
     background: rgba(220, 53, 69, 0.1);
+    color: var(--text-dark);
 }
 
 .problem-after {
     background: rgba(40, 167, 69, 0.1);
+    color: var(--text-dark);
 }
 
 .arrow {
@@ -766,11 +780,11 @@ p {
 
 .tech-icon i {
     font-size: 1.5rem;
-    color: var(--white);
+    color: var(--text-white);
 }
 
 .tech-stack-card h5 {
-    color: var(--white);
+    color: var(--text-white);
     margin-bottom: var(--spacing-md);
 }
 
@@ -780,7 +794,7 @@ p {
 }
 
 .tech-list li {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     padding: 0.25rem 0;
     position: relative;
     padding-left: var(--spacing-md);
@@ -819,6 +833,7 @@ p {
     align-items: center;
     margin-bottom: var(--spacing-sm);
     font-weight: var(--font-weight-medium);
+    color: var(--text-dark);
 }
 
 .mvp-actions {
@@ -850,7 +865,7 @@ p {
 
 .github-stat .stat-label {
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-medium);
 }
 
 /* Code Preview */
@@ -937,7 +952,7 @@ p {
 
 .recognition-icon i {
     font-size: 2rem;
-    color: var(--white);
+    color: var(--text-white);
 }
 
 .recognition-card h4 {
@@ -948,6 +963,7 @@ p {
 .recognition-card p {
     flex: 1;
     margin-bottom: var(--spacing-lg);
+    color: var(--text-medium);
 }
 
 .recognition-year {
@@ -955,7 +971,7 @@ p {
     top: var(--spacing-md);
     right: var(--spacing-md);
     background: var(--accent-teal);
-    color: var(--white);
+    color: var(--text-white);
     padding: 0.25rem var(--spacing-sm);
     border-radius: var(--radius-sm);
     font-size: 0.8rem;
@@ -965,7 +981,7 @@ p {
 /* CTA Section */
 .cta-section {
     background: var(--gradient-hero);
-    color: var(--white);
+    color: var(--text-white);
     padding: var(--spacing-xxxl) 0;
     text-align: center;
     position: relative;
@@ -987,11 +1003,12 @@ p {
     font-size: 2rem;
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
 }
 
 .cta-description {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     margin-bottom: var(--spacing-xl);
     max-width: 600px;
     margin-left: auto;
@@ -1007,14 +1024,14 @@ p {
 }
 
 .cta-note {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.9rem;
 }
 
-/* Footer */
+/* Footer - Enhanced Text Contrast */
 .footer {
     background: var(--primary-green);
-    color: var(--white);
+    color: var(--text-white);
     padding: var(--spacing-xxxl) 0 var(--spacing-xl);
 }
 
@@ -1026,12 +1043,12 @@ p {
 }
 
 .footer-brand h5 {
-    color: var(--white);
+    color: var(--text-white);
     margin: 0;
 }
 
 .footer-brand p {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: var(--spacing-lg);
 }
 
@@ -1049,7 +1066,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
+    color: var(--text-white);
     transition: var(--transition-fast);
 }
 
@@ -1059,7 +1076,7 @@ p {
 }
 
 .footer-links h6 {
-    color: var(--white);
+    color: var(--text-white);
     margin-bottom: var(--spacing-md);
     font-weight: var(--font-weight-semibold);
 }
@@ -1074,7 +1091,7 @@ p {
 }
 
 .footer-links ul li a {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: var(--transition-fast);
 }
@@ -1090,7 +1107,7 @@ p {
 
 .footer-copyright,
 .footer-note {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     margin: 0;
     font-size: 0.9rem;
 }
@@ -1389,6 +1406,8 @@ p {
         --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
         --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
         --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+        --text-light: #333333;
+        --text-muted: #555555;
     }
 }
 

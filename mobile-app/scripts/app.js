@@ -1,487 +1,164 @@
-// Enhanced FinergyCloud Mobile App JavaScript
+// FinergyCloud Mobile App - Main Application Script
 
 class FinergyCloudApp {
     constructor() {
         this.currentPage = 'dashboard';
-        this.sideNavOpen = false;
-        this.deferredPrompt = null;
-        this.isOnline = navigator.onLine;
-        this.currentUser = this.getDemoUser();
+        this.isNavOpen = false;
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        this.showLoadingScreen();
-        this.initializeApp();
-        this.setupPWA();
-        this.setupOfflineHandling();
+        this.setupNavigation();
+        this.setupPageSwitching();
+        this.loadUserPreferences();
+        this.initializePages();
+        console.log('FinergyCloud Mobile App initialized');
     }
 
-    // Demo Users System
-    getDemoUser() {
-        const demoUsers = [
-            {
-                id: 1,
-                name: "Sarah Chen",
-                role: "Investment Analyst",
-                company: "GreenCapital Partners",
-                avatar: "SC",
-                experience: "5 years",
-                specialization: "Solar & Wind Projects",
-                portfolioValue: "$125M",
-                activeProjects: 12,
-                avgIRR: 14.2,
-                avgESG: 8.5,
-                riskTolerance: "Medium",
-                preferredRegions: ["Southeast Asia", "East Africa"],
-                recentActivity: "Analyzed 3 solar projects in Kenya this week"
-            },
-            {
-                id: 2,
-                name: "Marcus Rodriguez",
-                role: "Fund Manager",
-                company: "Sustainable Energy Fund",
-                avatar: "MR",
-                experience: "12 years",
-                specialization: "Emerging Markets",
-                portfolioValue: "$450M",
-                activeProjects: 28,
-                avgIRR: 16.8,
-                avgESG: 9.1,
-                riskTolerance: "High",
-                preferredRegions: ["Latin America", "Sub-Saharan Africa"],
-                recentActivity: "Closed $50M wind farm deal in Brazil"
-            },
-            {
-                id: 3,
-                name: "Dr. Amara Okafor",
-                role: "ESG Director",
-                company: "Impact Investment Group",
-                avatar: "AO",
-                experience: "8 years",
-                specialization: "ESG & Impact Assessment",
-                portfolioValue: "$280M",
-                activeProjects: 18,
-                avgIRR: 12.9,
-                avgESG: 9.4,
-                riskTolerance: "Low-Medium",
-                preferredRegions: ["West Africa", "South Asia"],
-                recentActivity: "Published ESG framework for hydro projects"
-            },
-            {
-                id: 4,
-                name: "James Thompson",
-                role: "Risk Analyst",
-                company: "Energy Finance Corp",
-                avatar: "JT",
-                experience: "7 years",
-                specialization: "Risk Modeling & Analytics",
-                portfolioValue: "$190M",
-                activeProjects: 15,
-                avgIRR: 13.5,
-                avgESG: 8.2,
-                riskTolerance: "Medium-High",
-                preferredRegions: ["Middle East", "North Africa"],
-                recentActivity: "Developed new risk model for desert solar"
-            },
-            {
-                id: 5,
-                name: "Lisa Wang",
-                role: "Project Developer",
-                company: "CleanTech Ventures",
-                avatar: "LW",
-                experience: "6 years",
-                specialization: "Project Development",
-                portfolioValue: "$95M",
-                activeProjects: 8,
-                avgIRR: 15.7,
-                avgESG: 8.8,
-                riskTolerance: "High",
-                preferredRegions: ["East Asia", "Pacific Islands"],
-                recentActivity: "Secured permits for 100MW offshore wind"
+    setupEventListeners() {
+        // Menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navOverlay = document.getElementById('nav-overlay');
+        const sideNav = document.getElementById('side-nav');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => this.toggleNavigation());
+        }
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => this.closeNavigation());
+        }
+
+        // Close navigation when clicking outside on desktop
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth >= 1024) return; // Don't close on desktop
+            
+            if (!sideNav.contains(e.target) && !menuToggle.contains(e.target) && this.isNavOpen) {
+                this.closeNavigation();
             }
-        ];
+        });
 
-        // Rotate through demo users or get from localStorage
-        const savedUserId = localStorage.getItem('currentDemoUser');
-        const userId = savedUserId ? parseInt(savedUserId) : 1;
-        return demoUsers.find(user => user.id === userId) || demoUsers[0];
-    }
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                this.closeNavigation();
+            }
+        });
 
-    switchDemoUser() {
-        const userIds = [1, 2, 3, 4, 5];
-        const currentIndex = userIds.indexOf(this.currentUser.id);
-        const nextIndex = (currentIndex + 1) % userIds.length;
-        const nextUserId = userIds[nextIndex];
-        
-        localStorage.setItem('currentDemoUser', nextUserId.toString());
-        this.currentUser = this.getDemoUser();
-        this.updateUserInterface();
-        this.showToast(`Switched to ${this.currentUser.name}`, 'success');
-    }
-
-    updateUserInterface() {
-        // Update user profile in side nav
-        const userInfo = document.querySelector('.user-info');
-        if (userInfo) {
-            userInfo.innerHTML = `
-                <h4>${this.currentUser.name}</h4>
-                <p>${this.currentUser.role}</p>
-            `;
-        }
-
-        // Update user avatar
-        const userAvatar = document.querySelector('.user-avatar');
-        if (userAvatar) {
-            userAvatar.innerHTML = `
-                <div class="avatar-fallback">
-                    ${this.currentUser.avatar}
-                </div>
-            `;
-        }
-
-        // Update dashboard stats based on user
-        this.updateDashboardForUser();
-    }
-
-    updateDashboardForUser() {
-        // Update stats cards with user-specific data
-        const statsData = [
-            { selector: '[data-count="12"]', value: this.currentUser.activeProjects },
-            { selector: '[data-count="14.2"]', value: this.currentUser.avgIRR },
-            { selector: '[data-count="8.5"]', value: this.currentUser.avgESG }
-        ];
-
-        statsData.forEach(stat => {
-            const element = document.querySelector(stat.selector);
-            if (element) {
-                element.textContent = stat.value;
-                element.setAttribute('data-count', stat.value);
+        // Handle escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isNavOpen) {
+                this.closeNavigation();
             }
         });
     }
 
-    setupEventListeners() {
-        // CRITICAL FIX: Enhanced menu toggle with multiple event handling
-        const menuToggle = document.getElementById('menu-toggle');
-        if (menuToggle) {
-            // Remove any existing listeners
-            menuToggle.removeEventListener('click', this.handleMenuToggle);
-            
-            // Add click listener
-            menuToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Menu toggle clicked - event triggered'); // Debug log
-                this.toggleSideNav();
-            });
-
-            // Add touch listener for better mobile support
-            menuToggle.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Menu toggle touched - event triggered'); // Debug log
-                this.toggleSideNav();
-            });
-        }
-
-        // Enhanced overlay click handling
-        const overlay = document.getElementById('overlay');
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Overlay clicked - closing menu'); // Debug log
-                this.closeSideNav();
-            });
-
-            overlay.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('Overlay touched - closing menu'); // Debug log
-                this.closeSideNav();
-            });
-        }
-
-        // Enhanced side nav click handling to prevent closing when clicking inside
-        const sideNav = document.getElementById('side-nav');
-        if (sideNav) {
-            sideNav.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent event bubbling
-            });
-        }
-
-        // Navigation links
-        document.querySelectorAll('.nav-link, .nav-btn, .action-card').forEach(link => {
+    setupNavigation() {
+        // Side navigation links
+        const navLinks = document.querySelectorAll('.nav-link[data-page]');
+        navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const page = link.getAttribute('data-page');
-                if (page) {
-                    this.navigateToPage(page);
-                    this.closeSideNav();
+                this.navigateToPage(page);
+                if (window.innerWidth < 1024) {
+                    this.closeNavigation();
                 }
             });
         });
 
-        // Dark mode toggle
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        if (darkModeToggle) {
-            darkModeToggle.addEventListener('change', (e) => {
-                this.toggleDarkMode(e.target.checked);
-            });
-        }
-
-        // Notification button
-        const notificationBtn = document.getElementById('notification-btn');
-        if (notificationBtn) {
-            notificationBtn.addEventListener('click', () => {
-                this.showNotifications();
-            });
-        }
-
-        // Profile button - now includes user switching
-        const profileBtn = document.getElementById('profile-btn');
-        if (profileBtn) {
-            profileBtn.addEventListener('click', () => {
-                this.showProfile();
-            });
-        }
-
-        // Filter tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                this.switchTab(tab);
-            });
-        });
-
-        // Chart controls
-        document.querySelectorAll('.chart-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.switchChartPeriod(btn);
-            });
-        });
-
-        // Search functionality
-        const searchInput = document.getElementById('project-search');
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                this.searchProjects(e.target.value);
-            });
-        }
-
-        // Swipe gestures for mobile
-        this.setupSwipeGestures();
-
-        // Keyboard shortcuts
-        this.setupKeyboardShortcuts();
-
-        // CRITICAL: Enhanced body scroll prevention
-        document.addEventListener('touchmove', (e) => {
-            if (this.sideNavOpen) {
+        // Bottom navigation buttons
+        const navBtns = document.querySelectorAll('.nav-btn[data-page]');
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
-            }
-        }, { passive: false });
+                const page = btn.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
 
-        // CRITICAL: Escape key to close menu
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.sideNavOpen) {
-                this.closeSideNav();
+        // Quick action cards
+        const actionCards = document.querySelectorAll('.action-card[data-page]');
+        actionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const page = card.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
+
+        // Section actions
+        const sectionActions = document.querySelectorAll('.section-action[data-page]');
+        sectionActions.forEach(action => {
+            action.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = action.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
+    }
+
+    setupPageSwitching() {
+        // Handle hash changes for deep linking
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && this.isValidPage(hash)) {
+                this.navigateToPage(hash);
             }
         });
 
-        // CRITICAL: Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && this.sideNavOpen) {
-                this.closeSideNav();
-            }
-        });
-    }
-
-    showLoadingScreen() {
-        const loadingScreen = document.getElementById('loading-screen');
-        const mainApp = document.getElementById('main-app');
-        
-        // Enhanced loading sequence
-        setTimeout(() => {
-            const progressText = document.querySelector('.progress-text');
-            if (progressText) {
-                progressText.textContent = 'Loading AI Models...';
-            }
-        }, 1000);
-
-        setTimeout(() => {
-            const progressText = document.querySelector('.progress-text');
-            if (progressText) {
-                progressText.textContent = 'Syncing Market Data...';
-            }
-        }, 2000);
-
-        setTimeout(() => {
-            const progressText = document.querySelector('.progress-text');
-            if (progressText) {
-                progressText.textContent = 'Ready!';
-            }
-        }, 2800);
-        
-        // Complete loading
-        setTimeout(() => {
-            if (loadingScreen) {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    if (mainApp) {
-                        mainApp.style.display = 'flex';
-                        mainApp.style.opacity = '0';
-                        setTimeout(() => {
-                            mainApp.style.opacity = '1';
-                            this.animateStatsCards();
-                            this.updateUserInterface();
-                        }, 50);
-                    }
-                }, 500);
-            }
-        }, 3500);
-    }
-
-    initializeApp() {
-        // Initialize default page
-        this.navigateToPage('dashboard');
-        
-        // Load user preferences
-        this.loadUserPreferences();
-        
-        // Setup periodic data refresh
-        this.setupDataRefresh();
-        
-        // Initialize charts
-        this.initializeCharts();
-        
-        // Setup notifications
-        this.setupNotifications();
-    }
-
-    setupPWA() {
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(registration => {
-                    console.log('SW registered:', registration);
-                })
-                .catch(error => {
-                    console.log('SW registration failed:', error);
-                });
+        // Handle initial page load
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash && this.isValidPage(initialHash)) {
+            this.navigateToPage(initialHash);
         }
-        
-        // Handle install prompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            this.deferredPrompt = e;
-            this.showInstallPrompt();
-        });
-
-        // Handle app installed
-        window.addEventListener('appinstalled', () => {
-            this.hideInstallPrompt();
-            this.showToast('App installed successfully!', 'success');
-        });
     }
 
-    setupOfflineHandling() {
-        window.addEventListener('online', () => {
-            this.isOnline = true;
-            this.showToast('Connection restored', 'success');
-            this.refreshData();
-        });
-
-        window.addEventListener('offline', () => {
-            this.isOnline = false;
-            this.showToast('You are offline. Some features may be limited.', 'warning');
-        });
-    }
-
-    // CRITICAL FIX: Enhanced toggle function with better state management
-    toggleSideNav() {
-        const sideNav = document.getElementById('side-nav');
-        const overlay = document.getElementById('overlay');
-        const body = document.body;
-        
-        console.log('Toggle side nav called, current state:', this.sideNavOpen); // Debug log
-        
-        this.sideNavOpen = !this.sideNavOpen;
-        
-        if (this.sideNavOpen) {
-            console.log('Opening side nav'); // Debug log
-            
-            // Add classes
-            if (sideNav) {
-                sideNav.classList.add('open');
-                sideNav.style.transform = 'translateX(0)';
-                sideNav.style.visibility = 'visible';
-            }
-            if (overlay) {
-                overlay.classList.add('active');
-                overlay.style.display = 'block';
-            }
-            
-            // Prevent body scroll
-            body.style.overflow = 'hidden';
-            body.style.position = 'fixed';
-            body.style.width = '100%';
-            body.style.height = '100%';
-            
-            // Add class to main app for additional styling
-            const mainApp = document.getElementById('main-app');
-            if (mainApp) {
-                mainApp.classList.add('menu-open');
-            }
-            
+    toggleNavigation() {
+        if (this.isNavOpen) {
+            this.closeNavigation();
         } else {
-            console.log('Closing side nav'); // Debug log
+            this.openNavigation();
+        }
+    }
+
+    openNavigation() {
+        const sideNav = document.getElementById('side-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        
+        if (sideNav && navOverlay) {
+            sideNav.classList.add('open');
+            navOverlay.classList.add('active');
+            this.isNavOpen = true;
             
-            // Remove classes
-            if (sideNav) {
-                sideNav.classList.remove('open');
-                sideNav.style.transform = 'translateX(-100%)';
-                // Don't hide visibility immediately to allow transition
-                setTimeout(() => {
-                    if (!this.sideNavOpen) {
-                        sideNav.style.visibility = 'hidden';
-                    }
-                }, 300);
-            }
-            if (overlay) {
-                overlay.classList.remove('active');
-                setTimeout(() => {
-                    if (!this.sideNavOpen) {
-                        overlay.style.display = 'none';
-                    }
-                }, 300);
-            }
+            // Prevent body scroll when nav is open
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    closeNavigation() {
+        const sideNav = document.getElementById('side-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        
+        if (sideNav && navOverlay) {
+            sideNav.classList.remove('open');
+            navOverlay.classList.remove('active');
+            this.isNavOpen = false;
             
             // Restore body scroll
-            body.style.overflow = '';
-            body.style.position = '';
-            body.style.width = '';
-            body.style.height = '';
-            
-            // Remove class from main app
-            const mainApp = document.getElementById('main-app');
-            if (mainApp) {
-                mainApp.classList.remove('menu-open');
-            }
-        }
-    }
-
-    closeSideNav() {
-        if (this.sideNavOpen) {
-            this.toggleSideNav();
+            document.body.style.overflow = '';
         }
     }
 
     navigateToPage(pageId) {
+        if (!this.isValidPage(pageId)) {
+            console.warn(`Invalid page: ${pageId}`);
+            return;
+        }
+
         // Hide all pages
-        document.querySelectorAll('.page').forEach(page => {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => {
             page.classList.remove('active');
         });
 
@@ -490,55 +167,57 @@ class FinergyCloudApp {
         if (targetPage) {
             targetPage.classList.add('active');
             this.currentPage = pageId;
+            
+            // Update navigation states
+            this.updateNavigationState(pageId);
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // Initialize page-specific functionality
+            this.initializePage(pageId);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            console.log(`Navigated to page: ${pageId}`);
         }
-
-        // Update navigation states
-        this.updateNavigationState(pageId);
-        
-        // Update page title
-        this.updatePageTitle(pageId);
-        
-        // Trigger page-specific initialization
-        this.initializePage(pageId);
-
-        // Save last page
-        localStorage.setItem('lastPage', pageId);
     }
 
-    updateNavigationState(pageId) {
+    updateNavigationState(activePageId) {
         // Update side navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === activePageId) {
+                link.classList.add('active');
+            }
         });
-        
-        const sideNavLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
-        if (sideNavLink) {
-            sideNavLink.closest('.nav-item').classList.add('active');
-        }
 
         // Update bottom navigation
-        document.querySelectorAll('.nav-btn').forEach(btn => {
+        const navBtns = document.querySelectorAll('.nav-btn');
+        navBtns.forEach(btn => {
             btn.classList.remove('active');
+            if (btn.getAttribute('data-page') === activePageId) {
+                btn.classList.add('active');
+            }
         });
-        
-        const bottomNavBtn = document.querySelector(`.nav-btn[data-page="${pageId}"]`);
-        if (bottomNavBtn) {
-            bottomNavBtn.classList.add('active');
-        }
     }
 
-    updatePageTitle(pageId) {
-        const titles = {
-            dashboard: 'Dashboard',
-            projects: 'Projects',
-            analytics: 'Analytics',
-            calculator: 'IRR Calculator',
-            esg: 'ESG Scoring',
-            market: 'Market Intelligence',
-            settings: 'Settings'
-        };
-        
-        document.title = `${titles[pageId] || 'FinergyCloud'} - FinergyCloud Mobile`;
+    isValidPage(pageId) {
+        const validPages = ['dashboard', 'calculator', 'projects', 'analytics', 'esg', 'settings', 'blog'];
+        return validPages.includes(pageId);
+    }
+
+    initializePages() {
+        // Initialize all pages that need setup
+        this.initializePage('dashboard');
+        this.initializePage('calculator');
+        this.initializePage('projects');
+        this.initializePage('analytics');
+        this.initializePage('esg');
+        this.initializePage('settings');
+        this.initializePage('blog');
     }
 
     initializePage(pageId) {
@@ -546,82 +225,33 @@ class FinergyCloudApp {
             case 'dashboard':
                 this.initializeDashboard();
                 break;
-            case 'projects':
-                this.initializeProjects();
-                break;
             case 'calculator':
                 this.initializeCalculator();
                 break;
-            case 'esg':
-                this.initializeESG();
+            case 'projects':
+                this.initializeProjects();
                 break;
             case 'analytics':
                 this.initializeAnalytics();
                 break;
-            case 'market':
-                this.initializeMarket();
+            case 'esg':
+                this.initializeESG();
                 break;
             case 'settings':
                 this.initializeSettings();
+                break;
+            case 'blog':
+                this.initializeBlog();
                 break;
         }
     }
 
     initializeDashboard() {
-        // Animate stats cards
-        this.animateStatsCards();
+        // Animate dashboard metrics
+        this.animateMetrics();
         
-        // Load recent projects
-        this.loadRecentProjects();
-        
-        // Update dashboard metrics
-        this.updateDashboardMetrics();
-        
-        // Load AI insights
-        this.loadAIInsights();
-    }
-
-    animateStatsCards() {
-        const statCards = document.querySelectorAll('.stat-card');
-        statCards.forEach((card, index) => {
-            setTimeout(() => {
-                card.style.animation = 'slideInUp 0.5s ease forwards';
-                
-                // Animate counter
-                const counter = card.querySelector('[data-count]');
-                if (counter) {
-                    const target = parseFloat(counter.getAttribute('data-count'));
-                    this.animateNumber(counter, 0, target, 1000);
-                }
-            }, index * 100);
-        });
-    }
-
-    animateNumber(element, start, end, duration) {
-        const startTime = performance.now();
-        const isDecimal = end % 1 !== 0;
-        
-        const updateNumber = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            const current = start + (end - start) * progress;
-            element.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
-            
-            if (progress < 1) {
-                requestAnimationFrame(updateNumber);
-            }
-        };
-        
-        requestAnimationFrame(updateNumber);
-    }
-
-    initializeProjects() {
-        // Load projects data
-        this.loadProjectsData();
-        
-        // Setup project filters
-        this.setupProjectFilters();
+        // Update real-time data
+        this.updateDashboardData();
     }
 
     initializeCalculator() {
@@ -632,654 +262,355 @@ class FinergyCloudApp {
         this.loadSavedCalculations();
     }
 
-    initializeESG() {
-        // Animate progress bars
-        this.animateProgressBars();
+    initializeProjects() {
+        // Load project data
+        this.loadProjectData();
         
-        // Load ESG data
-        this.loadESGData();
+        // Setup project filters
+        this.setupProjectFilters();
     }
 
     initializeAnalytics() {
-        // Initialize analytics charts and data
-        this.loadAnalyticsData();
-        this.initializeAnalyticsCharts();
+        // Initialize charts
+        if (window.chartsManager) {
+            window.chartsManager.createChart('portfolio-chart');
+            window.chartsManager.createChart('performance-chart');
+            window.chartsManager.createChart('risk-chart');
+        }
     }
 
-    initializeMarket() {
-        // Load market intelligence data
-        this.loadMarketData();
-        this.setupMarketUpdates();
+    initializeESG() {
+        // Load ESG data
+        this.loadESGData();
+        
+        // Setup ESG scoring
+        this.setupESGScoring();
     }
 
     initializeSettings() {
         // Load user settings
         this.loadUserSettings();
         
-        // Setup settings handlers
+        // Setup settings form handlers
         this.setupSettingsHandlers();
     }
 
-    animateProgressBars() {
-        const progressBars = document.querySelectorAll('.progress');
-        progressBars.forEach((bar, index) => {
-            setTimeout(() => {
-                const width = bar.style.width;
-                bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 100);
-            }, index * 200);
-        });
-    }
-
-    switchTab(activeTab) {
-        // Remove active class from all tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        
-        // Add active class to clicked tab
-        activeTab.classList.add('active');
-        
-        // Filter content based on tab
-        const filter = activeTab.getAttribute('data-filter') || activeTab.textContent.toLowerCase();
-        this.filterProjects(filter);
-    }
-
-    switchChartPeriod(activeBtn) {
-        // Remove active class from all chart buttons
-        document.querySelectorAll('.chart-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Add active class to clicked button
-        activeBtn.classList.add('active');
-        
-        // Update chart data
-        const period = activeBtn.getAttribute('data-period');
-        this.updateChartData(period);
-    }
-
-    filterProjects(filter) {
-        const projects = document.querySelectorAll('.project-card-detailed');
-        
-        projects.forEach(project => {
-            const type = project.getAttribute('data-type');
-            
-            if (filter === 'all' || type === filter) {
-                project.style.display = 'block';
-                project.style.animation = 'fadeIn 0.3s ease';
-            } else {
-                project.style.display = 'none';
-            }
-        });
-    }
-
-    searchProjects(query) {
-        const projects = document.querySelectorAll('.project-card-detailed');
-        
-        projects.forEach(project => {
-            const title = project.querySelector('h3').textContent.toLowerCase();
-            const description = project.querySelector('p').textContent.toLowerCase();
-            
-            if (title.includes(query.toLowerCase()) || description.includes(query.toLowerCase())) {
-                project.style.display = 'block';
-                project.style.animation = 'fadeIn 0.3s ease';
-            } else {
-                project.style.display = 'none';
-            }
-        });
-    }
-
-    setupSwipeGestures() {
-        let startX = 0;
-        let startY = 0;
-        let isSwipeGesture = false;
-        
-        document.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            isSwipeGesture = false;
-        }, { passive: true });
-        
-        document.addEventListener('touchmove', (e) => {
-            if (!startX || !startY) return;
-            
-            const currentX = e.touches[0].clientX;
-            const currentY = e.touches[0].clientY;
-            
-            const diffX = startX - currentX;
-            const diffY = startY - currentY;
-            
-            // Check if this is a horizontal swipe
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 30) {
-                isSwipeGesture = true;
-            }
-        }, { passive: true });
-        
-        document.addEventListener('touchend', (e) => {
-            if (!startX || !startY || !isSwipeGesture) return;
-            
-            const endX = e.changedTouches[0].clientX;
-            const endY = e.changedTouches[0].clientY;
-            
-            const diffX = startX - endX;
-            const diffY = startY - endY;
-            
-            // Horizontal swipe
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                if (diffX < 0) {
-                    // Swipe right - open side nav
-                    if (!this.sideNavOpen) {
-                        console.log('Swipe right detected - opening menu');
-                        this.toggleSideNav();
-                    }
-                } else {
-                    // Swipe left - close side nav
-                    if (this.sideNavOpen) {
-                        console.log('Swipe left detected - closing menu');
-                        this.closeSideNav();
-                    }
-                }
-            }
-            
-            startX = 0;
-            startY = 0;
-            isSwipeGesture = false;
-        }, { passive: true });
-    }
-
-    setupKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-            // Only handle shortcuts when not typing in input fields
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                return;
-            }
-
-            switch (e.key) {
-                case '1':
-                    this.navigateToPage('dashboard');
-                    break;
-                case '2':
-                    this.navigateToPage('projects');
-                    break;
-                case '3':
-                    this.navigateToPage('calculator');
-                    break;
-                case '4':
-                    this.navigateToPage('esg');
-                    break;
-                case '5':
-                    this.navigateToPage('settings');
-                    break;
-                case 'Escape':
-                    this.closeSideNav();
-                    break;
-                case 'm':
-                case 'M':
-                    this.toggleSideNav();
-                    break;
-                case 'u':
-                case 'U':
-                    this.switchDemoUser();
-                    break;
-            }
-        });
-    }
-
-    toggleDarkMode(enabled) {
-        if (enabled) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('darkMode', 'enabled');
+    initializeBlog() {
+        // Initialize blog functionality
+        if (window.mobileBlog) {
+            console.log('Blog functionality already initialized');
         } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('darkMode', 'disabled');
+            // Create blog page if it doesn't exist
+            this.createBlogPage();
         }
+    }
+
+    createBlogPage() {
+        const mainContent = document.getElementById('main-content');
+        if (mainContent && !document.getElementById('blog-page')) {
+            const blogPage = document.createElement('div');
+            blogPage.className = 'page';
+            blogPage.id = 'blog-page';
+            blogPage.innerHTML = `
+                <div class="page-header">
+                    <h1>Blog & Insights</h1>
+                    <p>Expert insights on AI-driven renewable energy investment</p>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Latest Articles</h2>
+                        <a href="https://finergycloud.com/blog.html" target="_blank" class="section-action">
+                            View All on Website
+                        </a>
+                    </div>
+                    
+                    <div class="blog-posts-mobile">
+                        <div class="blog-post-mobile">
+                            <div class="post-image-small">
+                                <img src="../assets/images/wind-turbine.jpg" alt="AI Revolution" class="img-fluid rounded">
+                                <div class="post-category-small">AI & Technology</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 15, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 5 min read</span>
+                                </div>
+                                <h4>The AI Revolution in Renewable Energy Investment</h4>
+                                <p>Discover how AI is transforming renewable energy investment decisions and why traditional models are failing.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="window.open('https://www.linkedin.com/feed/', '_blank')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="blog-post-mobile">
+                            <div class="post-image-small">
+                                <img src="../assets/images/investment.jpg" alt="ESG Scoring" class="img-fluid rounded">
+                                <div class="post-category-small">ESG & Sustainability</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 12, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 4 min read</span>
+                                </div>
+                                <h4>ESG Scoring Revolution: Making Sustainability Measurable</h4>
+                                <p>How AI is revolutionizing ESG scoring and making environmental impact quantifiable.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="window.open('https://www.linkedin.com/feed/', '_blank')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="blog-post-mobile">
+                            <div class="post-image-small">
+                                <img src="../assets/images/digital-banking.jpg" alt="Emerging Markets" class="img-fluid rounded">
+                                <div class="post-category-small">Emerging Markets</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 10, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 6 min read</span>
+                                </div>
+                                <h4>The $2.8 Trillion Opportunity in Emerging Markets</h4>
+                                <p>Why emerging markets represent the future of renewable energy investment.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="window.open('https://www.linkedin.com/feed/', '_blank')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">YouTube Channel</h2>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="youtube-icon mb-3">
+                                <i class="bi bi-youtube" style="font-size: 3rem; color: #ff0000;"></i>
+                            </div>
+                            <h4>FinergyCloud Official</h4>
+                            <p>Watch our latest videos on renewable energy investment and AI technology.</p>
+                            <button class="btn btn-danger btn-block" onclick="window.open('https://www.youtube.com/@FinergyCloud_official', '_blank')">
+                                <i class="bi bi-youtube me-2"></i>Subscribe to Channel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Newsletter</h2>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Stay Updated</h4>
+                            <p>Get weekly insights delivered to your inbox</p>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Enter your email" id="mobile-newsletter-email">
+                            </div>
+                            <button class="btn btn-primary btn-block" onclick="finergyApp.subscribeNewsletter()">
+                                <i class="bi bi-envelope me-2"></i>Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            mainContent.appendChild(blogPage);
+        }
+    }
+
+    animateMetrics() {
+        const metrics = document.querySelectorAll('.metric-value');
+        metrics.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+            }, index * 100);
+        });
+    }
+
+    updateDashboardData() {
+        // Simulate real-time data updates
+        const metrics = [
+            { element: '.metric-value', values: ['15.2%', '$2.4M', '12', '8.7'] }
+        ];
+        
+        // This would typically fetch real data from an API
+        console.log('Dashboard data updated');
+    }
+
+    setupCalculatorValidation() {
+        const inputs = document.querySelectorAll('#calculator-page input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.validateCalculatorInput(input);
+            });
+        });
+    }
+
+    validateCalculatorInput(input) {
+        const value = parseFloat(input.value);
+        const min = parseFloat(input.getAttribute('min')) || 0;
+        const max = parseFloat(input.getAttribute('max')) || Infinity;
+
+        input.classList.remove('valid', 'invalid');
+
+        if (isNaN(value) || value < min || value > max) {
+            input.classList.add('invalid');
+            return false;
+        } else {
+            input.classList.add('valid');
+            return true;
+        }
+    }
+
+    loadSavedCalculations() {
+        const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
+        console.log(`Loaded ${savedCalculations.length} saved calculations`);
+    }
+
+    loadProjectData() {
+        // Load project data from localStorage or API
+        const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+        console.log(`Loaded ${projects.length} projects`);
+    }
+
+    setupProjectFilters() {
+        // Setup project filtering functionality
+        console.log('Project filters initialized');
+    }
+
+    loadESGData() {
+        // Load ESG scoring data
+        console.log('ESG data loaded');
+    }
+
+    setupESGScoring() {
+        // Setup ESG scoring functionality
+        console.log('ESG scoring initialized');
+    }
+
+    loadUserSettings() {
+        // Load user settings from localStorage
+        const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+        
+        // Apply settings to form
+        const displayNameInput = document.querySelector('#settings-page input[type="text"]');
+        const emailInput = document.querySelector('#settings-page input[type="email"]');
+        const roleSelect = document.querySelector('#settings-page select');
+        const currencySelect = document.querySelectorAll('#settings-page select')[1];
+        const notificationsCheckbox = document.querySelector('#settings-page input[type="checkbox"]');
+        
+        if (settings.displayName && displayNameInput) {
+            displayNameInput.value = settings.displayName;
+        }
+        if (settings.email && emailInput) {
+            emailInput.value = settings.email;
+        }
+        if (settings.role && roleSelect) {
+            roleSelect.value = settings.role;
+        }
+        if (settings.currency && currencySelect) {
+            currencySelect.value = settings.currency;
+        }
+        if (settings.notifications !== undefined && notificationsCheckbox) {
+            notificationsCheckbox.checked = settings.notifications;
+        }
+        
+        console.log('User settings loaded');
+    }
+
+    setupSettingsHandlers() {
+        // Setup settings form handlers
+        const settingsInputs = document.querySelectorAll('#settings-page input, #settings-page select');
+        settingsInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                this.saveUserSettings();
+            });
+        });
+    }
+
+    saveUserSettings() {
+        const displayNameInput = document.querySelector('#settings-page input[type="text"]');
+        const emailInput = document.querySelector('#settings-page input[type="email"]');
+        const roleSelect = document.querySelector('#settings-page select');
+        const currencySelect = document.querySelectorAll('#settings-page select')[1];
+        const notificationsCheckbox = document.querySelector('#settings-page input[type="checkbox"]');
+        
+        const settings = {
+            displayName: displayNameInput?.value || 'Demo User',
+            email: emailInput?.value || 'demo@finergycloud.com',
+            role: roleSelect?.value || 'Investment Analyst',
+            currency: currencySelect?.value || 'USD ($)',
+            notifications: notificationsCheckbox?.checked || true,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        localStorage.setItem('userSettings', JSON.stringify(settings));
+        
+        // Show save confirmation
+        this.showToast('Settings saved successfully!', 'success');
+        
+        console.log('User settings saved');
     }
 
     loadUserPreferences() {
-        // Load dark mode preference
-        const darkMode = localStorage.getItem('darkMode');
-        if (darkMode === 'enabled') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            const toggle = document.getElementById('dark-mode-toggle');
-            if (toggle) toggle.checked = true;
+        // Load user preferences from localStorage
+        const preferences = JSON.parse(localStorage.getItem('userPreferences') || '{}');
+        
+        // Apply theme preferences
+        if (preferences.theme) {
+            document.body.setAttribute('data-theme', preferences.theme);
         }
         
-        // Load other preferences
-        const lastPage = localStorage.getItem('lastPage');
-        if (lastPage && lastPage !== 'dashboard') {
-            this.navigateToPage(lastPage);
+        console.log('User preferences loaded');
+    }
+
+    subscribeNewsletter() {
+        const emailInput = document.getElementById('mobile-newsletter-email');
+        if (!emailInput || !emailInput.value) {
+            this.showToast('Please enter your email address', 'warning');
+            return;
         }
-    }
-
-    setupDataRefresh() {
-        // Refresh data every 5 minutes
-        setInterval(() => {
-            if (this.isOnline) {
-                this.refreshData();
-            }
-        }, 5 * 60 * 1000);
-    }
-
-    refreshData() {
-        if (this.currentPage === 'dashboard') {
-            this.updateDashboardMetrics();
-            this.loadRecentProjects();
-            this.loadAIInsights();
-        }
-    }
-
-    initializeCharts() {
-        // Initialize performance chart
-        this.initializePerformanceChart();
-    }
-
-    initializePerformanceChart() {
-        const canvas = document.getElementById('performance-chart');
-        if (!canvas) return;
-
-        // Simple chart implementation
-        const ctx = canvas.getContext('2d');
-        const data = [12.5, 13.2, 14.1, 13.8, 14.5, 15.2, 14.8, 15.1, 14.9, 15.3, 14.7, 15.0];
         
-        this.drawLineChart(ctx, data, canvas.width, canvas.height);
-    }
-
-    drawLineChart(ctx, data, width, height) {
-        const padding = 40;
-        const chartWidth = width - 2 * padding;
-        const chartHeight = height - 2 * padding;
-        
-        const maxValue = Math.max(...data);
-        const minValue = Math.min(...data);
-        const range = maxValue - minValue;
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, width, height);
-        
-        // Draw line
-        ctx.beginPath();
-        ctx.strokeStyle = '#00bfa5';
-        ctx.lineWidth = 3;
-        
-        data.forEach((value, index) => {
-            const x = padding + (index / (data.length - 1)) * chartWidth;
-            const y = padding + (1 - (value - minValue) / range) * chartHeight;
-            
-            if (index === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        });
-        
-        ctx.stroke();
-        
-        // Draw points
-        ctx.fillStyle = '#004d40';
-        data.forEach((value, index) => {
-            const x = padding + (index / (data.length - 1)) * chartWidth;
-            const y = padding + (1 - (value - minValue) / range) * chartHeight;
-            
-            ctx.beginPath();
-            ctx.arc(x, y, 4, 0, 2 * Math.PI);
-            ctx.fill();
-        });
-    }
-
-    updateChartData(period) {
-        // Update chart based on selected period
-        console.log('Updating chart for period:', period);
-        // Implementation would fetch new data and redraw chart
-    }
-
-    setupNotifications() {
-        // Request notification permission
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission();
-        }
-    }
-
-    showNotifications() {
-        const notifications = [
-            {
-                id: 1,
-                title: 'Market Alert',
-                message: 'Solar energy prices dropped 15% in East Africa - new opportunities available',
-                time: '2 hours ago',
-                type: 'info',
-                icon: 'bi-info-circle'
-            },
-            {
-                id: 2,
-                title: 'Project Update',
-                message: `${this.currentUser.name}'s Kenya Solar Farm project IRR updated to 16.2%`,
-                time: '4 hours ago',
-                type: 'success',
-                icon: 'bi-check-circle'
-            },
-            {
-                id: 3,
-                title: 'Risk Alert',
-                message: 'Currency volatility detected in Nigeria - review wind farm exposure',
-                time: '6 hours ago',
-                type: 'warning',
-                icon: 'bi-exclamation-triangle'
-            },
-            {
-                id: 4,
-                title: 'ESG Update',
-                message: 'New ESG regulations published for renewable energy in Brazil',
-                time: '1 day ago',
-                type: 'info',
-                icon: 'bi-leaf'
-            }
-        ];
-        
-        this.showModal('Notifications', this.renderNotifications(notifications));
-    }
-
-    renderNotifications(notifications) {
-        return `
-            <div class="notifications-list">
-                ${notifications.map(notification => `
-                    <div class="notification-item ${notification.type}">
-                        <div class="notification-icon">
-                            <i class="bi ${notification.icon}"></i>
-                        </div>
-                        <div class="notification-content">
-                            <h4>${notification.title}</h4>
-                            <p>${notification.message}</p>
-                            <span class="notification-time">${notification.time}</span>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-            <style>
-                .notifications-list {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1rem;
-                    max-height: 400px;
-                    overflow-y: auto;
-                }
-                .notification-item {
-                    display: flex;
-                    gap: 1rem;
-                    padding: 1rem;
-                    border-radius: 8px;
-                    background: var(--light-gray);
-                }
-                .notification-icon {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-shrink: 0;
-                }
-                .notification-item.info .notification-icon {
-                    background: var(--info);
-                    color: white;
-                }
-                .notification-item.success .notification-icon {
-                    background: var(--success);
-                    color: white;
-                }
-                .notification-item.warning .notification-icon {
-                    background: var(--warning);
-                    color: white;
-                }
-                .notification-content h4 {
-                    margin: 0 0 0.5rem 0;
-                    color: var(--primary-green);
-                }
-                .notification-content p {
-                    margin: 0 0 0.5rem 0;
-                    color: var(--gray);
-                }
-                .notification-time {
-                    font-size: 0.8rem;
-                    color: var(--gray);
-                }
-            </style>
-        `;
-    }
-
-    showProfile() {
-        const user = this.currentUser;
-        const profileContent = `
-            <div class="profile-content">
-                <div class="profile-avatar">
-                    <div class="avatar-fallback">
-                        ${user.avatar}
-                    </div>
-                </div>
-                <h3>${user.name}</h3>
-                <p>${user.role} at ${user.company}</p>
-                <div class="profile-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Experience:</span>
-                        <span class="detail-value">${user.experience}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Specialization:</span>
-                        <span class="detail-value">${user.specialization}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Portfolio Value:</span>
-                        <span class="detail-value">${user.portfolioValue}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Risk Tolerance:</span>
-                        <span class="detail-value">${user.riskTolerance}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Preferred Regions:</span>
-                        <span class="detail-value">${user.preferredRegions.join(', ')}</span>
-                    </div>
-                </div>
-                <div class="profile-stats">
-                    <div class="profile-stat">
-                        <span class="stat-value">${user.activeProjects}</span>
-                        <span class="stat-label">Active Projects</span>
-                    </div>
-                    <div class="profile-stat">
-                        <span class="stat-value">${user.avgIRR}%</span>
-                        <span class="stat-label">Avg IRR</span>
-                    </div>
-                    <div class="profile-stat">
-                        <span class="stat-value">${user.avgESG}</span>
-                        <span class="stat-label">Avg ESG</span>
-                    </div>
-                </div>
-                <div class="profile-activity">
-                    <h4>Recent Activity</h4>
-                    <p>${user.recentActivity}</p>
-                </div>
-                <div class="profile-actions">
-                    <button class="btn-secondary" onclick="window.finergyApp.switchDemoUser()">Switch User</button>
-                    <button class="btn-primary">Edit Profile</button>
-                </div>
-            </div>
-            <style>
-                .profile-content {
-                    text-align: center;
-                    padding: 2rem;
-                }
-                .profile-avatar {
-                    margin: 0 auto 1rem;
-                    width: 80px;
-                    height: 80px;
-                }
-                .profile-avatar .avatar-fallback {
-                    width: 80px;
-                    height: 80px;
-                    font-size: 2rem;
-                }
-                .profile-content h3 {
-                    color: var(--primary-green);
-                    margin-bottom: 0.5rem;
-                }
-                .profile-content p {
-                    color: var(--gray);
-                    margin-bottom: 2rem;
-                }
-                .profile-details {
-                    text-align: left;
-                    margin-bottom: 2rem;
-                }
-                .detail-item {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0.5rem 0;
-                    border-bottom: 1px solid var(--light-gray);
-                }
-                .detail-label {
-                    font-weight: 500;
-                    color: var(--gray);
-                }
-                .detail-value {
-                    color: var(--dark-gray);
-                    font-weight: 600;
-                }
-                .profile-stats {
-                    display: flex;
-                    justify-content: space-around;
-                    margin-bottom: 2rem;
-                    background: var(--light-gray);
-                    padding: 1rem;
-                    border-radius: 8px;
-                }
-                .profile-stat {
-                    text-align: center;
-                }
-                .profile-stat .stat-value {
-                    display: block;
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    color: var(--primary-green);
-                }
-                .profile-stat .stat-label {
-                    font-size: 0.8rem;
-                    color: var(--gray);
-                }
-                .profile-activity {
-                    text-align: left;
-                    margin-bottom: 2rem;
-                    background: var(--light-green);
-                    padding: 1rem;
-                    border-radius: 8px;
-                }
-                .profile-activity h4 {
-                    color: var(--primary-green);
-                    margin-bottom: 0.5rem;
-                }
-                .profile-activity p {
-                    margin: 0;
-                    color: var(--dark-gray);
-                }
-                .profile-actions {
-                    display: flex;
-                    gap: 1rem;
-                    justify-content: center;
-                }
-            </style>
-        `;
-        
-        this.showModal('Profile', profileContent);
-    }
-
-    showModal(title, content) {
-        const modal = document.createElement('div');
-        modal.className = 'modal-overlay';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>${title}</h3>
-                    <button class="modal-close">&times;</button>
-                </div>
-                <div class="modal-body">
-                    ${content}
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        // Handle close button
-        modal.querySelector('.modal-close').addEventListener('click', () => {
-            modal.remove();
-        });
-        
-        // Handle overlay click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.remove();
-            }
-        });
-        
-        // Animate in
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-    }
-
-    showInstallPrompt() {
-        const installPrompt = document.getElementById('install-prompt');
-        if (!installPrompt) return;
-
-        installPrompt.style.display = 'block';
-
-        // Handle install button
-        const installBtn = document.getElementById('install-btn');
-        if (installBtn) {
-            installBtn.addEventListener('click', () => {
-                if (this.deferredPrompt) {
-                    this.deferredPrompt.prompt();
-                    this.deferredPrompt.userChoice.then((choiceResult) => {
-                        this.deferredPrompt = null;
-                        this.hideInstallPrompt();
-                    });
-                }
-            });
-        }
-
-        // Handle dismiss button
-        const dismissBtn = document.getElementById('dismiss-btn');
-        if (dismissBtn) {
-            dismissBtn.addEventListener('click', () => {
-                this.hideInstallPrompt();
-            });
-        }
-    }
-
-    hideInstallPrompt() {
-        const installPrompt = document.getElementById('install-prompt');
-        if (installPrompt) {
-            installPrompt.style.display = 'none';
-        }
+        // Simulate newsletter subscription
+        this.showToast('Thank you for subscribing! You\'ll receive weekly insights.', 'success');
+        emailInput.value = '';
     }
 
     showToast(message, type = 'info') {
         const toast = document.createElement('div');
-        toast.className = `${type}-toast`;
+        toast.className = `mobile-toast ${type}`;
         toast.innerHTML = `
-            <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-            <span>${message}</span>
+            <div class="toast-content">
+                <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
         `;
         
         document.body.appendChild(toast);
         
-        // Animate in
         setTimeout(() => {
             toast.classList.add('show');
         }, 10);
         
-        // Remove after 3 seconds
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
@@ -1288,902 +619,212 @@ class FinergyCloudApp {
         }, 3000);
     }
 
-    // Enhanced data loading methods with real market intelligence and analytics
-
-    loadAnalyticsData() {
-        // Simulate loading comprehensive analytics data
-        console.log('Loading analytics data for', this.currentUser.name);
-        
-        // Update analytics page content
-        this.updateAnalyticsPage();
+    // Public methods for external access
+    getCurrentPage() {
+        return this.currentPage;
     }
 
-    updateAnalyticsPage() {
-        const analyticsPage = document.getElementById('analytics-page');
-        if (!analyticsPage) return;
-
-        const analyticsContent = `
-            <div class="page-header">
-                <h1>Analytics Dashboard</h1>
-                <p>Comprehensive investment performance and market insights</p>
-            </div>
-
-            <!-- Performance Overview -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Performance Overview</h2>
-                    <div class="chart-controls">
-                        <button class="chart-btn active" data-period="1M">1M</button>
-                        <button class="chart-btn" data-period="3M">3M</button>
-                        <button class="chart-btn" data-period="6M">6M</button>
-                        <button class="chart-btn" data-period="1Y">1Y</button>
-                    </div>
-                </div>
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <h4>Portfolio Performance</h4>
-                        <div class="performance-metrics">
-                            <div class="metric">
-                                <span class="metric-label">Total Return</span>
-                                <span class="metric-value positive">+18.5%</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-label">Annualized IRR</span>
-                                <span class="metric-value positive">${this.currentUser.avgIRR}%</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-label">Sharpe Ratio</span>
-                                <span class="metric-value">1.42</span>
-                            </div>
-                            <div class="metric">
-                                <span class="metric-label">Max Drawdown</span>
-                                <span class="metric-value negative">-8.3%</span>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="performance-trend-chart" width="300" height="150"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="analytics-card">
-                        <h4>Risk Analysis</h4>
-                        <div class="risk-breakdown">
-                            <div class="risk-item">
-                                <span class="risk-label">Market Risk</span>
-                                <div class="risk-bar">
-                                    <div class="risk-fill" style="width: 65%"></div>
-                                </div>
-                                <span class="risk-value">65%</span>
-                            </div>
-                            <div class="risk-item">
-                                <span class="risk-label">Currency Risk</span>
-                                <div class="risk-bar">
-                                    <div class="risk-fill" style="width: 45%"></div>
-                                </div>
-                                <span class="risk-value">45%</span>
-                            </div>
-                            <div class="risk-item">
-                                <span class="risk-label">Regulatory Risk</span>
-                                <div class="risk-bar">
-                                    <div class="risk-fill" style="width: 30%"></div>
-                                </div>
-                                <span class="risk-value">30%</span>
-                            </div>
-                            <div class="risk-item">
-                                <span class="risk-label">Technology Risk</span>
-                                <div class="risk-bar">
-                                    <div class="risk-fill" style="width: 25%"></div>
-                                </div>
-                                <span class="risk-value">25%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Regional Analysis -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Regional Performance</h2>
-                </div>
-                <div class="regional-grid">
-                    <div class="region-card">
-                        <div class="region-header">
-                            <h4>East Africa</h4>
-                            <span class="region-allocation">35%</span>
-                        </div>
-                        <div class="region-metrics">
-                            <div class="region-metric">
-                                <span>IRR: 16.8%</span>
-                                <span class="trend positive">+2.1%</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Projects: 8</span>
-                                <span class="trend positive">+2</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Risk Score: Medium</span>
-                                <span class="trend neutral">Stable</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="region-card">
-                        <div class="region-header">
-                            <h4>Southeast Asia</h4>
-                            <span class="region-allocation">28%</span>
-                        </div>
-                        <div class="region-metrics">
-                            <div class="region-metric">
-                                <span>IRR: 14.2%</span>
-                                <span class="trend positive">+1.5%</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Projects: 6</span>
-                                <span class="trend neutral">0</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Risk Score: Low</span>
-                                <span class="trend positive">Improving</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="region-card">
-                        <div class="region-header">
-                            <h4>Latin America</h4>
-                            <span class="region-allocation">22%</span>
-                        </div>
-                        <div class="region-metrics">
-                            <div class="region-metric">
-                                <span>IRR: 13.9%</span>
-                                <span class="trend negative">-0.8%</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Projects: 4</span>
-                                <span class="trend positive">+1</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Risk Score: High</span>
-                                <span class="trend negative">Deteriorating</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="region-card">
-                        <div class="region-header">
-                            <h4>Other Markets</h4>
-                            <span class="region-allocation">15%</span>
-                        </div>
-                        <div class="region-metrics">
-                            <div class="region-metric">
-                                <span>IRR: 12.1%</span>
-                                <span class="trend positive">+0.3%</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Projects: 3</span>
-                                <span class="trend neutral">0</span>
-                            </div>
-                            <div class="region-metric">
-                                <span>Risk Score: Medium</span>
-                                <span class="trend neutral">Stable</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technology Breakdown -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Technology Analysis</h2>
-                </div>
-                <div class="tech-analysis-grid">
-                    <div class="tech-chart-container">
-                        <h4>Portfolio Allocation</h4>
-                        <canvas id="tech-allocation-chart" width="200" height="200"></canvas>
-                    </div>
-                    <div class="tech-performance">
-                        <h4>Technology Performance</h4>
-                        <div class="tech-list">
-                            <div class="tech-item">
-                                <div class="tech-info">
-                                    <span class="tech-name">Solar PV</span>
-                                    <span class="tech-allocation">45%</span>
-                                </div>
-                                <div class="tech-metrics">
-                                    <span class="tech-irr">IRR: 15.8%</span>
-                                    <span class="tech-trend positive">+2.3%</span>
-                                </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-info">
-                                    <span class="tech-name">Wind</span>
-                                    <span class="tech-allocation">35%</span>
-                                </div>
-                                <div class="tech-metrics">
-                                    <span class="tech-irr">IRR: 13.2%</span>
-                                    <span class="tech-trend positive">+1.1%</span>
-                                </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-info">
-                                    <span class="tech-name">Hydro</span>
-                                    <span class="tech-allocation">15%</span>
-                                </div>
-                                <div class="tech-metrics">
-                                    <span class="tech-irr">IRR: 12.9%</span>
-                                    <span class="tech-trend negative">-0.5%</span>
-                                </div>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-info">
-                                    <span class="tech-name">Other</span>
-                                    <span class="tech-allocation">5%</span>
-                                </div>
-                                <div class="tech-metrics">
-                                    <span class="tech-irr">IRR: 11.4%</span>
-                                    <span class="tech-trend neutral">0.0%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Predictive Analytics -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>AI Predictions</h2>
-                    <span class="ai-badge">AI-Powered</span>
-                </div>
-                <div class="predictions-grid">
-                    <div class="prediction-card">
-                        <div class="prediction-header">
-                            <h4>6-Month Outlook</h4>
-                            <span class="confidence-score">Confidence: 87%</span>
-                        </div>
-                        <div class="prediction-content">
-                            <div class="prediction-metric">
-                                <span class="metric-label">Expected IRR</span>
-                                <span class="metric-value positive">15.8% - 17.2%</span>
-                            </div>
-                            <div class="prediction-metric">
-                                <span class="metric-label">Risk Level</span>
-                                <span class="metric-value medium">Medium</span>
-                            </div>
-                            <div class="prediction-insights">
-                                <h5>Key Insights:</h5>
-                                <ul>
-                                    <li>Solar projects in East Africa showing strong momentum</li>
-                                    <li>Currency stabilization expected in Q2</li>
-                                    <li>New regulatory frameworks favoring renewables</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="prediction-card">
-                        <div class="prediction-header">
-                            <h4>Recommended Actions</h4>
-                            <span class="confidence-score">Priority: High</span>
-                        </div>
-                        <div class="prediction-content">
-                            <div class="action-list">
-                                <div class="action-item high">
-                                    <i class="bi bi-arrow-up-circle"></i>
-                                    <span>Increase solar allocation in Kenya by 15%</span>
-                                </div>
-                                <div class="action-item medium">
-                                    <i class="bi bi-exclamation-triangle"></i>
-                                    <span>Monitor currency exposure in Nigeria</span>
-                                </div>
-                                <div class="action-item low">
-                                    <i class="bi bi-info-circle"></i>
-                                    <span>Consider hydro opportunities in Vietnam</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        analyticsPage.innerHTML = analyticsContent;
-        
-        // Initialize analytics charts
-        setTimeout(() => {
-            this.initializeAnalyticsCharts();
-        }, 100);
-    }
-
-    loadMarketData() {
-        // Simulate loading market intelligence data
-        console.log('Loading market intelligence data...');
-        
-        // Update market page content
-        this.updateMarketPage();
-    }
-
-    updateMarketPage() {
-        const marketPage = document.getElementById('market-page');
-        if (!marketPage) return;
-
-        const marketContent = `
-            <div class="page-header">
-                <h1>Market Intelligence</h1>
-                <p>Real-time insights and trends in renewable energy markets</p>
-            </div>
-
-            <!-- Market Overview -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Global Market Overview</h2>
-                    <div class="market-status">
-                        <span class="status-indicator positive"></span>
-                        <span>Markets Open</span>
-                    </div>
-                </div>
-                <div class="market-overview-grid">
-                    <div class="market-metric-card">
-                        <h4>Global Investment</h4>
-                        <div class="metric-value">$1.8T</div>
-                        <div class="metric-change positive">+12.5% YoY</div>
-                        <div class="metric-subtitle">Annual renewable investment</div>
-                    </div>
-                    <div class="market-metric-card">
-                        <h4>Emerging Markets</h4>
-                        <div class="metric-value">$480B</div>
-                        <div class="metric-change positive">+18.3% YoY</div>
-                        <div class="metric-subtitle">Developing economy investment</div>
-                    </div>
-                    <div class="market-metric-card">
-                        <h4>Average IRR</h4>
-                        <div class="metric-value">14.2%</div>
-                        <div class="metric-change positive">+0.8% QoQ</div>
-                        <div class="metric-subtitle">Global renewable projects</div>
-                    </div>
-                    <div class="market-metric-card">
-                        <h4>ESG Score</h4>
-                        <div class="metric-value">8.1/10</div>
-                        <div class="metric-change positive">+0.3 YoY</div>
-                        <div class="metric-subtitle">Average sustainability rating</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Regional Markets -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Regional Market Insights</h2>
-                    <div class="filter-tabs">
-                        <button class="tab active" data-region="all">All Regions</button>
-                        <button class="tab" data-region="africa">Africa</button>
-                        <button class="tab" data-region="asia">Asia</button>
-                        <button class="tab" data-region="latam">Latin America</button>
-                    </div>
-                </div>
-                <div class="regional-markets">
-                    <div class="market-region-card" data-region="africa">
-                        <div class="region-header">
-                            <h4>🌍 East Africa</h4>
-                            <span class="market-status hot">Hot Market</span>
-                        </div>
-                        <div class="region-stats">
-                            <div class="stat-row">
-                                <span>Investment Volume:</span>
-                                <span class="stat-value">$45B</span>
-                                <span class="stat-change positive">+25%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Average IRR:</span>
-                                <span class="stat-value">16.8%</span>
-                                <span class="stat-change positive">+2.1%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Risk Premium:</span>
-                                <span class="stat-value">3.2%</span>
-                                <span class="stat-change negative">-0.5%</span>
-                            </div>
-                        </div>
-                        <div class="region-insights">
-                            <h5>Key Opportunities:</h5>
-                            <ul>
-                                <li>Solar PV costs down 15% in Kenya</li>
-                                <li>New grid connection policies in Tanzania</li>
-                                <li>$2B development bank funding available</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="market-region-card" data-region="asia">
-                        <div class="region-header">
-                            <h4>🌏 Southeast Asia</h4>
-                            <span class="market-status stable">Stable</span>
-                        </div>
-                        <div class="region-stats">
-                            <div class="stat-row">
-                                <span>Investment Volume:</span>
-                                <span class="stat-value">$78B</span>
-                                <span class="stat-change positive">+8%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Average IRR:</span>
-                                <span class="stat-value">14.2%</span>
-                                <span class="stat-change positive">+1.5%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Risk Premium:</span>
-                                <span class="stat-value">2.1%</span>
-                                <span class="stat-change neutral">0.0%</span>
-                            </div>
-                        </div>
-                        <div class="region-insights">
-                            <h5>Key Opportunities:</h5>
-                            <ul>
-                                <li>Offshore wind expansion in Vietnam</li>
-                                <li>Solar floating projects in Thailand</li>
-                                <li>Green bonds market growing rapidly</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="market-region-card" data-region="latam">
-                        <div class="region-header">
-                            <h4>🌎 Latin America</h4>
-                            <span class="market-status volatile">Volatile</span>
-                        </div>
-                        <div class="region-stats">
-                            <div class="stat-row">
-                                <span>Investment Volume:</span>
-                                <span class="stat-value">$32B</span>
-                                <span class="stat-change negative">-5%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Average IRR:</span>
-                                <span class="stat-value">13.9%</span>
-                                <span class="stat-change negative">-0.8%</span>
-                            </div>
-                            <div class="stat-row">
-                                <span>Risk Premium:</span>
-                                <span class="stat-value">4.5%</span>
-                                <span class="stat-change positive">+0.3%</span>
-                            </div>
-                        </div>
-                        <div class="region-insights">
-                            <h5>Key Challenges:</h5>
-                            <ul>
-                                <li>Currency volatility in Argentina</li>
-                                <li>Regulatory uncertainty in Brazil</li>
-                                <li>Grid infrastructure limitations</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technology Trends -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Technology Trends</h2>
-                </div>
-                <div class="tech-trends-grid">
-                    <div class="trend-card">
-                        <div class="trend-header">
-                            <i class="bi bi-sun trend-icon solar"></i>
-                            <h4>Solar PV</h4>
-                            <span class="trend-indicator up">↗ Trending Up</span>
-                        </div>
-                        <div class="trend-metrics">
-                            <div class="trend-metric">
-                                <span>Cost Reduction:</span>
-                                <span class="value positive">-18% YoY</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Efficiency Gains:</span>
-                                <span class="value positive">+12%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Market Share:</span>
-                                <span class="value">48%</span>
-                            </div>
-                        </div>
-                        <div class="trend-forecast">
-                            <h5>2025 Outlook:</h5>
-                            <p>Continued cost reductions expected, particularly in emerging markets. Perovskite tandem cells showing promise.</p>
-                        </div>
-                    </div>
-
-                    <div class="trend-card">
-                        <div class="trend-header">
-                            <i class="bi bi-wind trend-icon wind"></i>
-                            <h4>Wind Power</h4>
-                            <span class="trend-indicator up">↗ Growing</span>
-                        </div>
-                        <div class="trend-metrics">
-                            <div class="trend-metric">
-                                <span>Capacity Factor:</span>
-                                <span class="value positive">+8%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Offshore Growth:</span>
-                                <span class="value positive">+35%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Market Share:</span>
-                                <span class="value">32%</span>
-                            </div>
-                        </div>
-                        <div class="trend-forecast">
-                            <h5>2025 Outlook:</h5>
-                            <p>Offshore wind acceleration in Asia. Larger turbines improving economics in low-wind areas.</p>
-                        </div>
-                    </div>
-
-                    <div class="trend-card">
-                        <div class="trend-header">
-                            <i class="bi bi-droplet trend-icon hydro"></i>
-                            <h4>Hydro Power</h4>
-                            <span class="trend-indicator stable">→ Stable</span>
-                        </div>
-                        <div class="trend-metrics">
-                            <div class="trend-metric">
-                                <span>Small Hydro Growth:</span>
-                                <span class="value positive">+5%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Pumped Storage:</span>
-                                <span class="value positive">+15%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Market Share:</span>
-                                <span class="value">15%</span>
-                            </div>
-                        </div>
-                        <div class="trend-forecast">
-                            <h5>2025 Outlook:</h5>
-                            <p>Focus shifting to pumped storage and small-scale run-of-river projects. Environmental concerns limiting large projects.</p>
-                        </div>
-                    </div>
-
-                    <div class="trend-card">
-                        <div class="trend-header">
-                            <i class="bi bi-battery trend-icon storage"></i>
-                            <h4>Energy Storage</h4>
-                            <span class="trend-indicator up">↗ Explosive</span>
-                        </div>
-                        <div class="trend-metrics">
-                            <div class="trend-metric">
-                                <span>Cost Reduction:</span>
-                                <span class="value positive">-25% YoY</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Deployment:</span>
-                                <span class="value positive">+85%</span>
-                            </div>
-                            <div class="trend-metric">
-                                <span>Market Share:</span>
-                                <span class="value">5%</span>
-                            </div>
-                        </div>
-                        <div class="trend-forecast">
-                            <h5>2025 Outlook:</h5>
-                            <p>Battery costs continuing to fall. Grid-scale storage becoming essential for renewable integration.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Market Alerts -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Market Alerts</h2>
-                    <button class="btn-secondary">Manage Alerts</button>
-                </div>
-                <div class="alerts-container">
-                    <div class="alert-item high">
-                        <div class="alert-icon">
-                            <i class="bi bi-exclamation-triangle"></i>
-                        </div>
-                        <div class="alert-content">
-                            <h4>Currency Risk Alert</h4>
-                            <p>Nigerian Naira volatility increased 15% this week. Review wind farm exposure in Lagos region.</p>
-                            <span class="alert-time">2 hours ago</span>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="btn-primary">Review</button>
-                        </div>
-                    </div>
-
-                    <div class="alert-item medium">
-                        <div class="alert-icon">
-                            <i class="bi bi-info-circle"></i>
-                        </div>
-                        <div class="alert-content">
-                            <h4>Policy Update</h4>
-                            <p>Kenya announces new feed-in tariff rates for solar projects. 12% increase for projects >10MW.</p>
-                            <span class="alert-time">6 hours ago</span>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="btn-secondary">Details</button>
-                        </div>
-                    </div>
-
-                    <div class="alert-item low">
-                        <div class="alert-icon">
-                            <i class="bi bi-graph-up"></i>
-                        </div>
-                        <div class="alert-content">
-                            <h4>Market Opportunity</h4>
-                            <p>Solar panel prices in Southeast Asia dropped 8%. Consider increasing allocation to Vietnam projects.</p>
-                            <span class="alert-time">1 day ago</span>
-                        </div>
-                        <div class="alert-actions">
-                            <button class="btn-secondary">Analyze</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Economic Indicators -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Economic Indicators</h2>
-                </div>
-                <div class="indicators-grid">
-                    <div class="indicator-card">
-                        <h4>Interest Rates</h4>
-                        <div class="indicator-chart">
-                            <canvas id="interest-rates-chart" width="200" height="100"></canvas>
-                        </div>
-                        <div class="indicator-summary">
-                            <span class="current-value">3.25%</span>
-                            <span class="change negative">-0.25%</span>
-                        </div>
-                    </div>
-
-                    <div class="indicator-card">
-                        <h4>Currency Index</h4>
-                        <div class="indicator-chart">
-                            <canvas id="currency-index-chart" width="200" height="100"></canvas>
-                        </div>
-                        <div class="indicator-summary">
-                            <span class="current-value">102.5</span>
-                            <span class="change positive">+1.8%</span>
-                        </div>
-                    </div>
-
-                    <div class="indicator-card">
-                        <h4>Commodity Prices</h4>
-                        <div class="indicator-chart">
-                            <canvas id="commodity-prices-chart" width="200" height="100"></canvas>
-                        </div>
-                        <div class="indicator-summary">
-                            <span class="current-value">$85/MWh</span>
-                            <span class="change positive">+3.2%</span>
-                        </div>
-                    </div>
-
-                    <div class="indicator-card">
-                        <h4>Carbon Credits</h4>
-                        <div class="indicator-chart">
-                            <canvas id="carbon-credits-chart" width="200" height="100"></canvas>
-                        </div>
-                        <div class="indicator-summary">
-                            <span class="current-value">$45/tCO2</span>
-                            <span class="change positive">+12.5%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        marketPage.innerHTML = marketContent;
-        
-        // Initialize market charts
-        setTimeout(() => {
-            this.initializeMarketCharts();
-        }, 100);
-    }
-
-    initializeAnalyticsCharts() {
-        // Initialize performance trend chart
-        const performanceCanvas = document.getElementById('performance-trend-chart');
-        if (performanceCanvas) {
-            const ctx = performanceCanvas.getContext('2d');
-            const data = [12.5, 13.2, 14.1, 13.8, 14.5, 15.2, 14.8, 15.1, 14.9, 15.3, 14.7, 15.0];
-            this.drawLineChart(ctx, data, performanceCanvas.width, performanceCanvas.height);
-        }
-
-        // Initialize technology allocation chart
-        const techCanvas = document.getElementById('tech-allocation-chart');
-        if (techCanvas) {
-            const ctx = techCanvas.getContext('2d');
-            this.drawPieChart(ctx, [
-                { label: 'Solar', value: 45, color: '#ffc107' },
-                { label: 'Wind', value: 35, color: '#00bfa5' },
-                { label: 'Hydro', value: 15, color: '#004d40' },
-                { label: 'Other', value: 5, color: '#6c757d' }
-            ], techCanvas.width, techCanvas.height);
-        }
-    }
-
-    initializeMarketCharts() {
-        // Initialize various market indicator charts
-        const chartIds = ['interest-rates-chart', 'currency-index-chart', 'commodity-prices-chart', 'carbon-credits-chart'];
-        
-        chartIds.forEach(chartId => {
-            const canvas = document.getElementById(chartId);
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                // Generate sample data for each chart
-                const data = Array.from({length: 12}, () => Math.random() * 20 + 80);
-                this.drawMiniLineChart(ctx, data, canvas.width, canvas.height);
-            }
-        });
-    }
-
-    drawPieChart(ctx, data, width, height) {
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = Math.min(width, height) / 2 - 10;
-        
-        let currentAngle = 0;
-        const total = data.reduce((sum, item) => sum + item.value, 0);
-        
-        data.forEach(item => {
-            const sliceAngle = (item.value / total) * 2 * Math.PI;
-            
-            ctx.beginPath();
-            ctx.moveTo(centerX, centerY);
-            ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
-            ctx.closePath();
-            ctx.fillStyle = item.color;
-            ctx.fill();
-            
-            currentAngle += sliceAngle;
-        });
-    }
-
-    drawMiniLineChart(ctx, data, width, height) {
-        const padding = 5;
-        const chartWidth = width - 2 * padding;
-        const chartHeight = height - 2 * padding;
-        
-        const maxValue = Math.max(...data);
-        const minValue = Math.min(...data);
-        const range = maxValue - minValue;
-        
-        ctx.clearRect(0, 0, width, height);
-        
-        ctx.beginPath();
-        ctx.strokeStyle = '#00bfa5';
-        ctx.lineWidth = 2;
-        
-        data.forEach((value, index) => {
-            const x = padding + (index / (data.length - 1)) * chartWidth;
-            const y = padding + (1 - (value - minValue) / range) * chartHeight;
-            
-            if (index === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        });
-        
-        ctx.stroke();
-    }
-
-    setupMarketUpdates() {
-        // Setup real-time market data updates
-        setInterval(() => {
-            if (this.isOnline && this.currentPage === 'market') {
-                this.updateMarketData();
-            }
-        }, 30000); // Update every 30 seconds
-    }
-
-    updateMarketData() {
-        // Simulate real-time market data updates
-        console.log('Updating real-time market data...');
-        
-        // Update market indicators with new values
-        const indicators = document.querySelectorAll('.current-value');
-        indicators.forEach(indicator => {
-            // Add subtle animation to show data refresh
-            indicator.style.animation = 'pulse 0.5s ease';
-        });
-    }
-
-    // Data loading methods
-    loadRecentProjects() {
-        // Simulate API call - in real app, this would fetch from server
-        console.log('Loading recent projects...');
-    }
-
-    updateDashboardMetrics() {
-        // Simulate real-time data updates
-        console.log('Updating dashboard metrics...');
-    }
-
-    loadAIInsights() {
-        // Load AI-generated insights
-        console.log('Loading AI insights...');
-    }
-
-    loadProjectsData() {
-        // Load projects data
-        console.log('Loading projects data...');
-    }
-
-    setupProjectFilters() {
-        // Setup project filtering
-        console.log('Setting up project filters...');
-    }
-
-    setupCalculatorValidation() {
-        // Setup calculator form validation
-        console.log('Setting up calculator validation...');
-    }
-
-    loadSavedCalculations() {
-        // Load saved calculations
-        console.log('Loading saved calculations...');
-    }
-
-    loadESGData() {
-        // Load ESG data
-        console.log('Loading ESG data...');
-    }
-
-    loadUserSettings() {
-        // Load user settings
-        console.log('Loading user settings...');
-    }
-
-    setupSettingsHandlers() {
-        // Setup settings change handlers
-        console.log('Setting up settings handlers...');
+    isNavigationOpen() {
+        return this.isNavOpen;
     }
 }
 
-// Initialize app when DOM is loaded
+// Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing app...');
     window.finergyApp = new FinergyCloudApp();
 });
 
-// Handle page visibility changes
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && window.finergyApp) {
-        window.finergyApp.refreshData();
-    }
-});
-
-// Handle online/offline status
-window.addEventListener('online', () => {
-    console.log('App is online');
-});
-
-window.addEventListener('offline', () => {
-    console.log('App is offline');
-});
-
-// Global functions for calculator
-function calculateIRR() {
-    if (window.irrCalculator) {
-        window.irrCalculator.performCalculation();
-    }
+// Add mobile app specific styles
+const mobileAppStyles = `
+<style>
+/* Mobile App Toast Styles */
+.mobile-toast {
+    position: fixed;
+    top: calc(var(--header-height) + var(--safe-area-top) + var(--spacing-md));
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    z-index: 1002;
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
-function saveCalculation() {
-    if (window.finergyApp) {
-        window.finergyApp.showToast('Calculation saved successfully!', 'success');
-    }
+.mobile-toast.show {
+    transform: translateY(0);
+    opacity: 1;
 }
 
-function exportResults() {
-    if (window.finergyApp) {
-        window.finergyApp.showToast('Results exported to downloads', 'success');
+.mobile-toast.success {
+    border-left: 4px solid var(--success);
+}
+
+.mobile-toast.warning {
+    border-left: 4px solid var(--warning);
+}
+
+.mobile-toast.info {
+    border-left: 4px solid var(--info);
+}
+
+.mobile-toast .toast-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.mobile-toast.success .toast-content i {
+    color: var(--success);
+}
+
+.mobile-toast.warning .toast-content i {
+    color: var(--warning);
+}
+
+.mobile-toast.info .toast-content i {
+    color: var(--info);
+}
+
+/* Blog Post Styles for Mobile */
+.blog-posts-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.blog-post-mobile {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border: 1px solid rgba(0, 77, 64, 0.05);
+    transition: var(--transition-normal);
+}
+
+.blog-post-mobile:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.post-image-small {
+    position: relative;
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+}
+
+.post-image-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.post-category-small {
+    position: absolute;
+    top: var(--spacing-xs);
+    left: var(--spacing-xs);
+    background: var(--gradient-primary);
+    color: var(--white);
+    padding: 0.25rem var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    font-size: 0.6rem;
+    font-weight: var(--font-weight-semibold);
+}
+
+.post-content-small {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-meta-small {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.75rem;
+    color: var(--gray);
+    flex-wrap: wrap;
+}
+
+.post-meta-small span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.post-content-small h4 {
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+}
+
+.post-content-small p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.post-actions-small {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: auto;
+}
+
+/* Calculator Input Validation */
+.form-control.valid {
+    border-color: var(--success);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.form-control.invalid {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Chart Placeholder */
+.chart-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background: var(--light-gray);
+    border-radius: var(--radius-md);
+    color: var(--gray);
+    text-align: center;
+}
+
+.chart-placeholder i {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+@media (max-width: 480px) {
+    .blog-post-mobile {
+        flex-direction: column;
+    }
+    
+    .post-image-small {
+        width: 100%;
+        height: 150px;
+    }
+    
+    .post-actions-small {
+        flex-direction: column;
     }
 }
+</style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', mobileAppStyles);
