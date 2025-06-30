@@ -2,7 +2,10 @@
 
 class FinergyCloudEmailSystem {
     constructor() {
-        this.emailEndpoint = 'https://formspree.io/f/contact@finergycloud.com'; // Replace with actual endpoint
+        this.emailService = 'EmailJS'; // Using EmailJS service
+        this.templateID = 'finergycloud_auto_response';
+        this.serviceID = 'finergycloud_service';
+        this.userID = 'user_finergycloud'; // Replace with actual EmailJS user ID in production
         this.autoResponseEnabled = true;
         this.responseTimeHours = 24;
         this.init();
@@ -11,14 +14,29 @@ class FinergyCloudEmailSystem {
     init() {
         this.setupFormHandlers();
         this.setupEmailTemplates();
+        this.loadEmailJSScript();
+    }
+
+    loadEmailJSScript() {
+        // Load EmailJS SDK if not already loaded
+        if (!window.emailjs) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.emailjs.com/dist/email.min.js';
+            script.async = true;
+            script.onload = () => {
+                // Initialize EmailJS with your user ID
+                emailjs.init(this.userID);
+            };
+            document.head.appendChild(script);
+        }
     }
 
     setupFormHandlers() {
-        // Handle all contact forms on the website
-        const contactForms = document.querySelectorAll('form[method="POST"]');
-        contactForms.forEach(form => {
-            form.addEventListener('submit', (e) => this.handleFormSubmission(e));
-        });
+        // Handle main contact form
+        const mainContactForm = document.getElementById('main-contact-form');
+        if (mainContactForm) {
+            mainContactForm.addEventListener('submit', (e) => this.handleFormSubmission(e));
+        }
     }
 
     async handleFormSubmission(event) {
@@ -30,10 +48,10 @@ class FinergyCloudEmailSystem {
         this.showLoadingState(form);
         
         try {
-            // Send to form processing service
-            await this.submitForm(formData);
+            // Send form data directly to contact@finergycloud.com
+            await this.submitFormToEmail(formData);
             
-            // Send auto-response email
+            // Send auto-response email to user
             if (this.autoResponseEnabled) {
                 await this.sendAutoResponse(formData);
             }
@@ -52,15 +70,58 @@ class FinergyCloudEmailSystem {
         }
     }
 
-    async submitForm(formData) {
-        // In a real implementation, this would send to your backend
-        // For now, we'll simulate the submission
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('Form submitted:', Object.fromEntries(formData));
-                resolve();
-            }, 1000);
+    async submitFormToEmail(formData) {
+        // Convert FormData to object for EmailJS
+        const formObject = {};
+        formData.forEach((value, key) => {
+            formObject[key] = value;
         });
+        
+        // Add timestamp
+        formObject.submission_time = new Date().toISOString();
+        
+        try {
+            // Use EmailJS to send the form data directly to contact@finergycloud.com
+            if (window.emailjs) {
+                await emailjs.send(
+                    this.serviceID,
+                    'finergycloud_contact_form',
+                    formObject
+                );
+                console.log('Form submitted successfully to contact@finergycloud.com');
+                return true;
+            } else {
+                // Fallback if EmailJS is not loaded
+                console.log('EmailJS not loaded, using fallback submission');
+                return this.fallbackFormSubmission(formObject);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            throw error;
+        }
+    }
+
+    async fallbackFormSubmission(formData) {
+        // Fallback method using fetch to a serverless function or email API
+        try {
+            const response = await fetch('https://formspree.io/f/contact@finergycloud.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                console.log('Form submitted successfully via fallback');
+                return true;
+            } else {
+                throw new Error('Fallback form submission failed');
+            }
+        } catch (error) {
+            console.error('Fallback submission error:', error);
+            throw error;
+        }
     }
 
     async sendAutoResponse(formData) {
@@ -71,14 +132,41 @@ class FinergyCloudEmailSystem {
         
         const emailTemplate = this.generateAutoResponseEmail(userName, userInterest, userCompany);
         
-        // In a real implementation, this would trigger an email service
-        console.log('Auto-response email would be sent to:', userEmail);
+        try {
+            // Use EmailJS to send auto-response
+            if (window.emailjs) {
+                await emailjs.send(
+                    this.serviceID,
+                    this.templateID,
+                    {
+                        to_email: userEmail,
+                        to_name: userName,
+                        interest: userInterest,
+                        company: userCompany,
+                        response_time: this.calculateResponseTime(),
+                        response_hours: this.responseTimeHours
+                    }
+                );
+                console.log('Auto-response email sent to:', userEmail);
+                return true;
+            } else {
+                // Fallback if EmailJS is not loaded
+                console.log('EmailJS not loaded, using fallback for auto-response');
+                return this.fallbackAutoResponse(userEmail, emailTemplate);
+            }
+        } catch (error) {
+            console.error('Error sending auto-response:', error);
+            // Don't throw error for auto-response failures to ensure the main form submission still succeeds
+            return false;
+        }
+    }
+
+    async fallbackAutoResponse(userEmail, emailTemplate) {
+        // This would typically use a serverless function or email API
+        // For now, we'll just log it
+        console.log('Would send auto-response to:', userEmail);
         console.log('Email content:', emailTemplate);
-        
-        // Simulate email sending
-        return new Promise((resolve) => {
-            setTimeout(resolve, 500);
-        });
+        return true;
     }
 
     generateAutoResponseEmail(userName, interest, company) {
@@ -395,24 +483,9 @@ https://finergycloud.com
             }
         };
     }
-
-    // Method to manually trigger email for testing
-    testAutoResponse(email, name, interest = 'demo') {
-        const testFormData = new FormData();
-        testFormData.append('email', email);
-        testFormData.append('fullname', name);
-        testFormData.append('interest', interest);
-        
-        return this.sendAutoResponse(testFormData);
-    }
 }
 
 // Initialize email system when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.finergyEmailSystem = new FinergyCloudEmailSystem();
 });
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = FinergyCloudEmailSystem;
-}

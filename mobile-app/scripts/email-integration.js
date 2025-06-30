@@ -2,7 +2,10 @@
 
 class MobileEmailIntegration {
     constructor() {
-        this.emailEndpoint = 'https://formspree.io/f/contact@finergycloud.com';
+        this.emailService = 'EmailJS'; // Using EmailJS service
+        this.templateID = 'finergycloud_mobile_response';
+        this.serviceID = 'finergycloud_service';
+        this.userID = 'user_finergycloud'; // Replace with actual EmailJS user ID in production
         this.autoResponseEnabled = true;
         this.responseTimeHours = 24;
         this.init();
@@ -10,7 +13,21 @@ class MobileEmailIntegration {
 
     init() {
         this.setupMobileFormHandlers();
-        this.addContactFormToMobileApp();
+        this.loadEmailJSScript();
+    }
+
+    loadEmailJSScript() {
+        // Load EmailJS SDK if not already loaded
+        if (!window.emailjs) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.emailjs.com/dist/email.min.js';
+            script.async = true;
+            script.onload = () => {
+                // Initialize EmailJS with your user ID
+                emailjs.init(this.userID);
+            };
+            document.head.appendChild(script);
+        }
     }
 
     setupMobileFormHandlers() {
@@ -22,152 +39,6 @@ class MobileEmailIntegration {
         });
     }
 
-    addContactFormToMobileApp() {
-        // Add contact page to mobile app navigation
-        const mainContent = document.getElementById('main-content');
-        if (mainContent && !document.getElementById('contact-page')) {
-            const contactPage = document.createElement('div');
-            contactPage.className = 'page';
-            contactPage.id = 'contact-page';
-            contactPage.innerHTML = this.generateMobileContactPageHTML();
-            mainContent.appendChild(contactPage);
-        }
-
-        // Add contact navigation
-        this.addContactNavigation();
-    }
-
-    addContactNavigation() {
-        // Add to side navigation
-        const navMenu = document.querySelector('.nav-menu');
-        if (navMenu) {
-            const contactNavItem = document.createElement('li');
-            contactNavItem.className = 'nav-item';
-            contactNavItem.innerHTML = `
-                <a href="#contact" class="nav-link" data-page="contact">
-                    <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            `;
-            navMenu.appendChild(contactNavItem);
-        }
-    }
-
-    generateMobileContactPageHTML() {
-        return `
-            <div class="page-header">
-                <h1>Contact Us</h1>
-                <p>Get in touch with the FinergyCloud team</p>
-            </div>
-
-            <!-- Quick Contact Options -->
-            <div class="quick-contact-options">
-                <div class="quick-contact-item" onclick="window.open('mailto:contact@finergycloud.com')">
-                    <div class="quick-contact-icon">
-                        <i class="bi bi-envelope"></i>
-                    </div>
-                    <div class="quick-contact-content">
-                        <h4>Email</h4>
-                        <p>contact@finergycloud.com</p>
-                        <small>24h response time</small>
-                    </div>
-                </div>
-                
-                <div class="quick-contact-item" onclick="window.open('https://www.linkedin.com/company/finergycloud', '_blank')">
-                    <div class="quick-contact-icon">
-                        <i class="bi bi-linkedin"></i>
-                    </div>
-                    <div class="quick-contact-content">
-                        <h4>LinkedIn</h4>
-                        <p>Professional networking</p>
-                        <small>Same day response</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <div class="mobile-contact-form-container">
-                <h3>Send us a message</h3>
-                <p>We'll respond within 24 hours with a personalized message</p>
-                
-                <form class="mobile-contact-form">
-                    <div class="form-group">
-                        <label for="mobile-fullname">Full Name *</label>
-                        <input type="text" id="mobile-fullname" name="fullname" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="mobile-email">Email Address *</label>
-                        <input type="email" id="mobile-email" name="email" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="mobile-company">Company</label>
-                        <input type="text" id="mobile-company" name="company" class="form-control">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="mobile-interest">Primary Interest *</label>
-                        <select id="mobile-interest" name="interest" class="form-control" required>
-                            <option value="">Select your interest</option>
-                            <option value="demo">Book a Demo</option>
-                            <option value="pitch-deck">Request Pitch Deck</option>
-                            <option value="partnership">Partnership</option>
-                            <option value="investment">Investment</option>
-                            <option value="beta-access">Beta Access</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="mobile-message">Message</label>
-                        <textarea id="mobile-message" name="message" class="form-control" rows="4" 
-                                placeholder="Tell us about your needs..."></textarea>
-                    </div>
-                    
-                    <div class="form-check">
-                        <input type="checkbox" id="mobile-newsletter" name="newsletter" class="form-check-input">
-                        <label for="mobile-newsletter" class="form-check-label">
-                            Receive updates about FinergyCloud
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-block">
-                        <i class="bi bi-send me-2"></i>Send Message
-                    </button>
-                    
-                    <p class="form-note">
-                        <small>
-                            <i class="bi bi-shield-check me-1"></i>
-                            Your information is secure and will never be shared.
-                        </small>
-                    </p>
-                </form>
-            </div>
-
-            <!-- Response Guarantee -->
-            <div class="response-guarantee-mobile">
-                <div class="guarantee-content">
-                    <h4>Our Response Guarantee</h4>
-                    <div class="guarantee-items">
-                        <div class="guarantee-item">
-                            <i class="bi bi-clock text-success"></i>
-                            <span>24-hour response time</span>
-                        </div>
-                        <div class="guarantee-item">
-                            <i class="bi bi-person text-success"></i>
-                            <span>Personalized response</span>
-                        </div>
-                        <div class="guarantee-item">
-                            <i class="bi bi-shield-check text-success"></i>
-                            <span>Privacy protected</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
     async handleMobileFormSubmission(event) {
         event.preventDefault();
         const form = event.target;
@@ -177,10 +48,10 @@ class MobileEmailIntegration {
         this.showMobileLoadingState(form);
         
         try {
-            // Send form data
+            // Send form data directly to contact@finergycloud.com
             await this.submitMobileForm(formData);
             
-            // Send auto-response
+            // Send auto-response email to user
             if (this.autoResponseEnabled) {
                 await this.sendMobileAutoResponse(formData);
             }
@@ -200,13 +71,58 @@ class MobileEmailIntegration {
     }
 
     async submitMobileForm(formData) {
-        // Simulate form submission
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log('Mobile form submitted:', Object.fromEntries(formData));
-                resolve();
-            }, 1000);
+        // Convert FormData to object for EmailJS
+        const formObject = {};
+        formData.forEach((value, key) => {
+            formObject[key] = value;
         });
+        
+        // Add timestamp and source
+        formObject.submission_time = new Date().toISOString();
+        formObject.source = 'Mobile App';
+        
+        try {
+            // Use EmailJS to send the form data directly to contact@finergycloud.com
+            if (window.emailjs) {
+                await emailjs.send(
+                    this.serviceID,
+                    'finergycloud_mobile_form',
+                    formObject
+                );
+                console.log('Mobile form submitted successfully to contact@finergycloud.com');
+                return true;
+            } else {
+                // Fallback if EmailJS is not loaded
+                console.log('EmailJS not loaded, using fallback submission');
+                return this.fallbackFormSubmission(formObject);
+            }
+        } catch (error) {
+            console.error('Error submitting mobile form:', error);
+            throw error;
+        }
+    }
+
+    async fallbackFormSubmission(formData) {
+        // Fallback method using fetch to a serverless function or email API
+        try {
+            const response = await fetch('https://formspree.io/f/contact@finergycloud.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                console.log('Mobile form submitted successfully via fallback');
+                return true;
+            } else {
+                throw new Error('Fallback form submission failed');
+            }
+        } catch (error) {
+            console.error('Fallback submission error:', error);
+            throw error;
+        }
     }
 
     async sendMobileAutoResponse(formData) {
@@ -215,14 +131,41 @@ class MobileEmailIntegration {
         const userInterest = formData.get('interest') || 'general inquiry';
         const userCompany = formData.get('company') || '';
         
-        const emailTemplate = this.generateMobileAutoResponseEmail(userName, userInterest, userCompany);
-        
-        console.log('Mobile auto-response email would be sent to:', userEmail);
-        console.log('Email content:', emailTemplate);
-        
-        return new Promise((resolve) => {
-            setTimeout(resolve, 500);
-        });
+        try {
+            // Use EmailJS to send auto-response
+            if (window.emailjs) {
+                await emailjs.send(
+                    this.serviceID,
+                    this.templateID,
+                    {
+                        to_email: userEmail,
+                        to_name: userName,
+                        interest: userInterest,
+                        company: userCompany,
+                        response_time: this.calculateResponseTime(),
+                        response_hours: this.responseTimeHours
+                    }
+                );
+                console.log('Mobile auto-response email sent to:', userEmail);
+                return true;
+            } else {
+                // Fallback if EmailJS is not loaded
+                console.log('EmailJS not loaded, using fallback for mobile auto-response');
+                return this.fallbackAutoResponse(userEmail, userName, userInterest, userCompany);
+            }
+        } catch (error) {
+            console.error('Error sending mobile auto-response:', error);
+            // Don't throw error for auto-response failures to ensure the main form submission still succeeds
+            return false;
+        }
+    }
+
+    async fallbackAutoResponse(userEmail, userName, userInterest, userCompany) {
+        // This would typically use a serverless function or email API
+        // For now, we'll just log it
+        console.log('Would send mobile auto-response to:', userEmail);
+        console.log('Email content:', this.generateMobileAutoResponseEmail(userName, userInterest, userCompany));
+        return true;
     }
 
     generateMobileAutoResponseEmail(userName, interest, company) {
