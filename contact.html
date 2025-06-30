@@ -67,6 +67,9 @@
                     </li>
                 </ul>
                 <div class="navbar-actions">
+                    <a href="mobile-app/" class="btn btn-outline-primary me-2" id="mobile-app-link">
+                        <i class="bi bi-phone me-2"></i>Mobile App
+                    </a>
                     <a href="#contact-form" class="btn btn-outline-primary me-2">Book Demo</a>
                     <a href="#contact-form" class="btn btn-primary">Get Started</a>
                 </div>
@@ -166,6 +169,9 @@
                             <a href="#contact-form" class="btn btn-primary btn-lg">
                                 <i class="bi bi-arrow-down me-2"></i>Get in Touch
                             </a>
+                            <a href="mobile-app/?page=contact" class="btn btn-outline-light btn-lg" id="contact-mobile-link">
+                                <i class="bi bi-phone me-2"></i>Contact via Mobile
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -205,13 +211,9 @@
                             <p class="section-subtitle">
                                 Fill out the form below and we'll get back to you within 24 hours
                             </p>
-                            <div class="response-guarantee">
-                                <i class="bi bi-shield-check text-success me-2"></i>
-                                <strong>Response Guarantee:</strong> We respond to all inquiries within 24 hours with a personalized message
-                            </div>
                         </div>
                         
-                        <form class="contact-form" id="main-contact-form">
+                        <form id="main-contact-form" class="contact-form">
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -324,6 +326,7 @@
                                                 This is urgent - please prioritize my request
                                             </label>
                                         </div>
+                                    
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
@@ -332,11 +335,7 @@
                                     </button>
                                     <p class="form-note mt-3">
                                         <small class="text-muted">
-                                            <i class="bi bi-shield-check me-1"></i>
                                             We respect your privacy. Your information will never be shared with third parties.
-                                            <br>
-                                            <i class="bi bi-envelope me-1"></i>
-                                            You'll receive an automatic confirmation email with our response timeline.
                                         </small>
                                     </p>
                                 </div>
@@ -348,8 +347,79 @@
         </div>
     </section>
 
-    <!-- Contact Methods Section -->
+    <!-- Mobile App Contact Section -->
     <section class="section-padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="mobile-contact-content">
+                        <div class="mobile-badge">
+                            <i class="bi bi-phone me-2"></i>Mobile Contact
+                        </div>
+                        <h2 class="section-title">Contact Us on Mobile</h2>
+                        <p class="section-subtitle">
+                            Use our mobile app to reach out anytime, anywhere. Get faster responses and track your inquiries on the go.
+                        </p>
+                        <div class="mobile-features">
+                            <div class="mobile-feature">
+                                <i class="bi bi-lightning-charge text-primary"></i>
+                                <span>Faster mobile-optimized responses</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <i class="bi bi-chat-dots text-primary"></i>
+                                <span>Real-time inquiry tracking</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <i class="bi bi-bell text-primary"></i>
+                                <span>Push notification updates</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <i class="bi bi-calendar-check text-primary"></i>
+                                <span>Easy demo scheduling</span>
+                            </div>
+                        </div>
+                        <div class="mobile-actions">
+                            <a href="mobile-app/?page=contact" class="btn btn-primary btn-lg">
+                                <i class="bi bi-phone me-2"></i>Contact via Mobile App
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mobile-preview">
+                        <div class="phone-mockup">
+                            <div class="phone-screen">
+                                <img src="assets/images/finance-analytics.jpg" alt="FinergyCloud Mobile Contact" class="img-fluid">
+                                <div class="mobile-overlay">
+                                    <div class="mobile-header">
+                                        <span class="mobile-logo">FC</span>
+                                        <span class="mobile-title">Contact Us</span>
+                                    </div>
+                                    <div class="mobile-contact-preview">
+                                        <div class="mobile-contact-option">
+                                            <i class="bi bi-envelope"></i>
+                                            <span>Email Us</span>
+                                        </div>
+                                        <div class="mobile-contact-option">
+                                            <i class="bi bi-chat-text"></i>
+                                            <span>Send Message</span>
+                                        </div>
+                                        <div class="mobile-contact-option">
+                                            <i class="bi bi-calendar-check"></i>
+                                            <span>Book Demo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Methods Section -->
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
@@ -393,15 +463,15 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="contact-method-card">
                         <div class="contact-method-icon">
-                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-phone"></i>
                         </div>
-                        <h4>Facebook</h4>
-                        <p>Social updates and community engagement</p>
-                        <a href="https://www.facebook.com/onuorah.joshua.nwani" target="_blank" class="contact-link">
-                            Follow on Facebook
+                        <h4>Mobile App</h4>
+                        <p>Contact us on the go with our mobile app</p>
+                        <a href="mobile-app/?page=contact" class="contact-link">
+                            Open Mobile App
                         </a>
                         <div class="response-time">
-                            <small>Regular updates and insights</small>
+                            <small>Push notification updates</small>
                         </div>
                     </div>
                 </div>
@@ -425,7 +495,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="section-padding bg-light">
+    <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -532,6 +602,22 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq7">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7">
+                                    Is there a mobile app available?
+                                </button>
+                            </h2>
+                            <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! We have a fully-featured mobile app that allows you to access FinergyCloud's core features on the go. 
+                                    The mobile app includes IRR calculation, ESG scoring, project management, and even works offline. 
+                                    You can <a href="mobile-app/">try our mobile app</a> directly in your browser or install it as a 
+                                    Progressive Web App on your device for a native-like experience.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -539,7 +625,7 @@
     </section>
 
     <!-- Response Commitment Section -->
-    <section class="section-padding">
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
@@ -611,6 +697,7 @@
                             <li><a href="services.html">Solution</a></li>
                             <li><a href="index.html#mvp">MVP</a></li>
                             <li><a href="about.html">Technology</a></li>
+                            <li><a href="mobile-app/">Mobile App</a></li>
                         </ul>
                     </div>
                 </div>
@@ -663,137 +750,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/enhanced-interactions.js"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS
-        (function(){
-            emailjs.init("user_finergycloud"); // Replace with your actual EmailJS user ID
-        })();
-
-        // Handle form submission
-        document.getElementById('main-contact-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const submitBtn = form.querySelector('button[type="submit"]');
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
-            
-            // Prepare form data for EmailJS
-            const templateParams = {
-                from_name: formData.get('fullname'),
-                from_email: formData.get('email'),
-                company: formData.get('company') || 'Not specified',
-                role: formData.get('role') || 'Not specified',
-                phone: formData.get('phone') || 'Not provided',
-                investment_size: formData.get('investment-size') || 'Not specified',
-                interest: formData.get('interest'),
-                message: formData.get('message') || 'No additional message',
-                newsletter: formData.get('newsletter') ? 'Yes' : 'No',
-                urgent: formData.get('urgent') ? 'Yes' : 'No',
-                submission_time: new Date().toISOString(),
-                to_email: 'contact@finergycloud.com'
-            };
-            
-            // Send email using EmailJS
-            emailjs.send('service_finergycloud', 'template_contact', templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    showSuccessMessage(form, formData.get('fullname') || 'there');
-                    form.reset();
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    // Fallback to Formspree
-                    submitToFormspree(templateParams, form, formData.get('fullname') || 'there');
-                })
-                .finally(function() {
-                    // Reset button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Send Message';
-                });
-        });
-
-        // Fallback submission to Formspree
-        function submitToFormspree(data, form, userName) {
-            fetch('https://formspree.io/f/xpwzgqpb', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.ok) {
-                    showSuccessMessage(form, userName);
-                } else {
-                    showErrorMessage(form);
-                }
-            })
-            .catch(error => {
-                console.error('Formspree error:', error);
-                showErrorMessage(form);
-            });
-        }
-
-        function showSuccessMessage(form, userName) {
-            const successMessage = document.createElement('div');
-            successMessage.className = 'alert alert-success alert-dismissible fade show';
-            successMessage.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-check-circle-fill me-3" style="font-size: 1.5rem;"></i>
-                    <div>
-                        <h5 class="alert-heading mb-1">Message Sent Successfully!</h5>
-                        <p class="mb-2">Thank you ${userName}! We've received your inquiry and will respond within 24 hours.</p>
-                        <small class="text-muted">
-                            <i class="bi bi-envelope me-1"></i>
-                            You should receive a confirmation email shortly at the address you provided.
-                        </small>
-                    </div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            
-            form.parentNode.insertBefore(successMessage, form);
-            
-            // Auto-dismiss after 10 seconds
-            setTimeout(() => {
-                if (successMessage.parentNode) {
-                    successMessage.remove();
-                }
-            }, 10000);
-        }
-
-        function showErrorMessage(form) {
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'alert alert-danger alert-dismissible fade show';
-            errorMessage.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
-                    <div>
-                        <h5 class="alert-heading mb-1">Message Failed to Send</h5>
-                        <p class="mb-2">We're sorry, but there was an issue sending your message. Please try again or contact us directly.</p>
-                        <small class="text-muted">
-                            <i class="bi bi-envelope me-1"></i>
-                            Direct email: <a href="mailto:contact@finergycloud.com">contact@finergycloud.com</a>
-                        </small>
-                    </div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            
-            form.parentNode.insertBefore(errorMessage, form);
-            
-            // Auto-dismiss after 8 seconds
-            setTimeout(() => {
-                if (errorMessage.parentNode) {
-                    errorMessage.remove();
-                }
-            }, 8000);
-        }
-    </script>
+    <script src="assets/js/email-automation.js"></script>
+    <script src="assets/js/cross-platform-navigation.js"></script>
 
     <style>
         /* Contact page specific styles */
@@ -904,14 +862,6 @@
         .contact-form .form-select:focus {
             border-color: var(--accent-teal);
             box-shadow: 0 0 0 0.25rem rgba(0, 191, 165, 0.15);
-        }
-
-        .response-guarantee {
-            background: var(--light-green);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 2rem;
-            border: 1px solid var(--accent-teal);
         }
 
         .form-check-group {
@@ -1061,6 +1011,134 @@
             margin-bottom: 1rem;
         }
 
+        /* Mobile App Promo Styles */
+        .mobile-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-lg);
+            font-size: 0.9rem;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .mobile-feature i {
+            font-size: 1.25rem;
+        }
+
+        .mobile-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .mobile-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(145deg, #2c3e50, #34495e);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mobile-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 77, 64, 0.9) 0%, rgba(0, 191, 165, 0.8) 100%);
+            color: var(--white);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mobile-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            color: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .mobile-title {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .mobile-contact-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-contact-option {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .mobile-contact-option i {
+            font-size: 1.5rem;
+        }
+
+        .mobile-contact-option span {
+            font-weight: var(--font-weight-medium);
+        }
+
         @media (max-width: 768px) {
             .contact-form-container {
                 padding: 2rem;
@@ -1086,8 +1164,31 @@
                 min-width: 80px;
                 padding: 0.75rem;
             }
+
+            .mobile-actions {
+                flex-direction: column;
+            }
+
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+                padding: 15px;
+            }
+
+            .mobile-contact-option {
+                padding: 0.75rem;
+            }
         }
     </style>
+
+    <!-- EmailJS Integration -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function() {
+            // Initialize EmailJS with your user ID
+            emailjs.init("user_finergycloud");
+        })();
+    </script>
 </body>
 
 </html>

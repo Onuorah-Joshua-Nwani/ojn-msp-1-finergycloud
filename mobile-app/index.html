@@ -71,6 +71,9 @@
                         </div>
                     </div>
                     <div class="nav-right">
+                        <button class="website-btn" id="website-btn" aria-label="Visit Website" onclick="window.open('https://finergycloud.com', '_blank')">
+                            <i class="bi bi-globe"></i>
+                        </button>
                         <button class="notification-btn" id="notification-btn" aria-label="Notifications">
                             <i class="bi bi-bell"></i>
                             <span class="notification-badge">4</span>
@@ -155,6 +158,10 @@
                     </li>
                 </ul>
                 <div class="nav-footer">
+                    <button class="website-link-btn" onclick="window.open('https://finergycloud.com', '_blank')">
+                        <i class="bi bi-globe"></i>
+                        <span>Visit Website</span>
+                    </button>
                     <button class="upgrade-btn">
                         <i class="bi bi-star"></i>
                         <span>Upgrade to Pro</span>
@@ -169,6 +176,11 @@
                     <div class="page-header">
                         <h1>Dashboard</h1>
                         <p>Welcome back! Here's your investment overview.</p>
+                        <div class="page-actions">
+                            <button class="btn btn-outline-primary" onclick="window.open('https://finergycloud.com', '_blank')">
+                                <i class="bi bi-globe me-2"></i>Full Website
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Quick Stats -->
@@ -222,6 +234,35 @@
                                 <div class="stat-trend neutral">
                                     <i class="bi bi-dash"></i>
                                     <span>Stable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cross-Platform Navigation -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Platform Access</h2>
+                        </div>
+                        <div class="platform-links">
+                            <div class="platform-card" onclick="window.open('https://finergycloud.com', '_blank')">
+                                <div class="platform-icon">
+                                    <i class="bi bi-globe"></i>
+                                </div>
+                                <div class="platform-content">
+                                    <h4>Full Website</h4>
+                                    <p>Access complete features, detailed analytics, and comprehensive documentation</p>
+                                    <span class="platform-link">Visit finergycloud.com <i class="bi bi-arrow-right"></i></span>
+                                </div>
+                            </div>
+                            <div class="platform-card" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                <div class="platform-icon">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <div class="platform-content">
+                                    <h4>Industry Blog</h4>
+                                    <p>Read expert insights and LinkedIn-ready articles on renewable energy investment</p>
+                                    <span class="platform-link">Read Blog <i class="bi bi-arrow-right"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -652,11 +693,104 @@
                     </div>
                 </div>
 
+                <!-- Blog Page -->
+                <div class="page" id="blog-page">
+                    <div class="page-header">
+                        <h1>Blog & Insights</h1>
+                        <p>Expert insights on AI-driven renewable energy investment</p>
+                        <div class="page-actions">
+                            <button class="btn btn-outline-primary" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                <i class="bi bi-globe me-2"></i>Full Blog
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Featured Post -->
+                    <div class="featured-post-mobile">
+                        <div class="post-image">
+                            <img src="../assets/images/wind-turbine.jpg" alt="AI Revolution in Renewable Energy" class="img-fluid rounded-3">
+                            <div class="post-category">AI & Technology</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span><i class="bi bi-calendar"></i> Dec 15, 2024</span>
+                                <span><i class="bi bi-clock"></i> 5 min read</span>
+                            </div>
+                            <h3>The AI Revolution in Renewable Energy Investment</h3>
+                            <p>Discover how AI is transforming renewable energy investment decisions and why traditional models are failing.</p>
+                            <div class="post-actions">
+                                <button class="btn btn-primary" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                    <i class="bi bi-book-open me-2"></i>Read on Website
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="mobileBlog.shareOnLinkedIn('post-1')">
+                                    <i class="bi bi-linkedin me-2"></i>Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Posts -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Recent Posts</h2>
+                            <button class="btn-secondary" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                View All
+                            </button>
+                        </div>
+                        <div class="blog-posts-mobile">
+                            <div class="blog-post-mobile">
+                                <div class="post-image-small">
+                                    <img src="../assets/images/investment.jpg" alt="ESG Scoring Revolution" class="img-fluid rounded">
+                                    <div class="post-category-small">ESG</div>
+                                </div>
+                                <div class="post-content-small">
+                                    <div class="post-meta-small">
+                                        <span><i class="bi bi-calendar"></i> Dec 12</span>
+                                        <span><i class="bi bi-clock"></i> 4 min</span>
+                                    </div>
+                                    <h4>ESG Scoring Revolution</h4>
+                                    <p>How AI is making sustainability measurable...</p>
+                                    <div class="post-actions-small">
+                                        <button class="btn btn-primary btn-sm" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                            Read More
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="blog-post-mobile">
+                                <div class="post-image-small">
+                                    <img src="../assets/images/digital-banking.jpg" alt="Emerging Markets" class="img-fluid rounded">
+                                    <div class="post-category-small">Markets</div>
+                                </div>
+                                <div class="post-content-small">
+                                    <div class="post-meta-small">
+                                        <span><i class="bi bi-calendar"></i> Dec 10</span>
+                                        <span><i class="bi bi-clock"></i> 6 min</span>
+                                    </div>
+                                    <h4>$2.8T Emerging Market Opportunity</h4>
+                                    <p>Why emerging markets are the future...</p>
+                                    <div class="post-actions-small">
+                                        <button class="btn btn-primary btn-sm" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                            Read More
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Contact Page -->
                 <div class="page" id="contact-page">
                     <div class="page-header">
                         <h1>Contact Us</h1>
                         <p>Get in touch with the FinergyCloud team</p>
+                        <div class="page-actions">
+                            <button class="btn btn-outline-primary" onclick="window.open('https://finergycloud.com/contact.html', '_blank')">
+                                <i class="bi bi-globe me-2"></i>Full Contact Page
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Quick Contact Options -->
@@ -774,6 +908,24 @@
                     </div>
 
                     <div class="settings-container">
+                        <div class="settings-section">
+                            <h3>Platform Access</h3>
+                            <div class="setting-item" onclick="window.open('https://finergycloud.com', '_blank')">
+                                <div class="setting-info">
+                                    <span class="setting-title">Visit Full Website</span>
+                                    <span class="setting-desc">Access complete features and documentation</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                            <div class="setting-item" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
+                                <div class="setting-info">
+                                    <span class="setting-title">Read Full Blog</span>
+                                    <span class="setting-desc">Expert insights and industry analysis</span>
+                                </div>
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+
                         <div class="settings-section">
                             <h3>Account</h3>
                             <div class="setting-item">
@@ -910,5 +1062,6 @@
     <script src="scripts/charts.js"></script>
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/email-integration.js"></script>
+    <script src="scripts/cross-platform-navigation.js"></script>
 </body>
 </html>
