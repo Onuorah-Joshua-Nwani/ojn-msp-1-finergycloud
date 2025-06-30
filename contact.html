@@ -663,7 +663,137 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/enhanced-interactions.js"></script>
-    <script src="assets/js/email-automation.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init("user_finergycloud"); // Replace with your actual EmailJS user ID
+        })();
+
+        // Handle form submission
+        document.getElementById('main-contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+            
+            // Prepare form data for EmailJS
+            const templateParams = {
+                from_name: formData.get('fullname'),
+                from_email: formData.get('email'),
+                company: formData.get('company') || 'Not specified',
+                role: formData.get('role') || 'Not specified',
+                phone: formData.get('phone') || 'Not provided',
+                investment_size: formData.get('investment-size') || 'Not specified',
+                interest: formData.get('interest'),
+                message: formData.get('message') || 'No additional message',
+                newsletter: formData.get('newsletter') ? 'Yes' : 'No',
+                urgent: formData.get('urgent') ? 'Yes' : 'No',
+                submission_time: new Date().toISOString(),
+                to_email: 'contact@finergycloud.com'
+            };
+            
+            // Send email using EmailJS
+            emailjs.send('service_finergycloud', 'template_contact', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showSuccessMessage(form, formData.get('fullname') || 'there');
+                    form.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    // Fallback to Formspree
+                    submitToFormspree(templateParams, form, formData.get('fullname') || 'there');
+                })
+                .finally(function() {
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="bi bi-send me-2"></i>Send Message';
+                });
+        });
+
+        // Fallback submission to Formspree
+        function submitToFormspree(data, form, userName) {
+            fetch('https://formspree.io/f/xpwzgqpb', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    showSuccessMessage(form, userName);
+                } else {
+                    showErrorMessage(form);
+                }
+            })
+            .catch(error => {
+                console.error('Formspree error:', error);
+                showErrorMessage(form);
+            });
+        }
+
+        function showSuccessMessage(form, userName) {
+            const successMessage = document.createElement('div');
+            successMessage.className = 'alert alert-success alert-dismissible fade show';
+            successMessage.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1">Message Sent Successfully!</h5>
+                        <p class="mb-2">Thank you ${userName}! We've received your inquiry and will respond within 24 hours.</p>
+                        <small class="text-muted">
+                            <i class="bi bi-envelope me-1"></i>
+                            You should receive a confirmation email shortly at the address you provided.
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            form.parentNode.insertBefore(successMessage, form);
+            
+            // Auto-dismiss after 10 seconds
+            setTimeout(() => {
+                if (successMessage.parentNode) {
+                    successMessage.remove();
+                }
+            }, 10000);
+        }
+
+        function showErrorMessage(form) {
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger alert-dismissible fade show';
+            errorMessage.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1">Message Failed to Send</h5>
+                        <p class="mb-2">We're sorry, but there was an issue sending your message. Please try again or contact us directly.</p>
+                        <small class="text-muted">
+                            <i class="bi bi-envelope me-1"></i>
+                            Direct email: <a href="mailto:contact@finergycloud.com">contact@finergycloud.com</a>
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            form.parentNode.insertBefore(errorMessage, form);
+            
+            // Auto-dismiss after 8 seconds
+            setTimeout(() => {
+                if (errorMessage.parentNode) {
+                    errorMessage.remove();
+                }
+            }, 8000);
+        }
+    </script>
 
     <style>
         /* Contact page specific styles */
