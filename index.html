@@ -412,54 +412,80 @@
     <!-- MVP Showcase Section -->
     <section id="mvp" class="section-padding bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center mb-5">
-                    <h2 class="section-title">MVP Snapshot</h2>
-                    <p class="section-subtitle">
-                        Experience our working prototype with real IRR calculations, 
-                        risk profiling, and ESG scoring for renewable energy projects.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Feature Tabs -->
-            <div class="row mb-5">
-                <div class="col-12">
-                    <div class="feature-tabs">
-                        <div class="tab-nav">
-                            <button class="tab-btn active" data-tab="irr">IRR Calculator</button>
-                            <button class="tab-btn" data-tab="esg">ESG Scoring</button>
-                            <button class="tab-btn" data-tab="risk">Risk Profiling</button>
-                            <button class="tab-btn" data-tab="comparison">Project Comparison</button>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="mvp-content">
+                        <div class="mvp-badge">
+                            <i class="bi bi-github me-2"></i>Live on GitHub
                         </div>
-                        
-                        <!-- IRR Calculator Tab -->
-                        <div class="tab-content active" id="irr-tab">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="feature-description">
-                                        <h3>IRR Simulation Engine</h3>
-                                        <p>Advanced Monte Carlo simulation with 10,000+ iterations for accurate return predictions across different market scenarios.</p>
-                                        <ul class="feature-list">
-                                            <li>Newton-Raphson IRR calculation</li>
-                                            <li>NPV analysis with multiple discount rates</li>
-                                            <li>Payback period calculation</li>
-                                            <li>Sensitivity analysis and stress testing</li>
-                                        </ul>
-                                    </div>
+                        <h2 class="section-title">MVP Snapshot</h2>
+                        <p class="section-subtitle">
+                            Experience our working prototype with real IRR calculations, 
+                            risk profiling, and ESG scoring for renewable energy projects.
+                        </p>
+                        <div class="mvp-features">
+                            <div class="mvp-feature">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                Interactive IRR Calculator
+                            </div>
+                            <div class="mvp-feature">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                Risk Assessment Dashboard
+                            </div>
+                            <div class="mvp-feature">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                ESG Scoring Framework
+                            </div>
+                            <div class="mvp-feature">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                Project Comparison Tools
+                            </div>
+                        </div>
+                        <div class="mvp-actions">
+                            <a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" class="btn btn-primary" target="_blank">
+                                <i class="bi bi-github me-2"></i>View GitHub Repo
+                            </a>
+                            <button class="btn btn-outline-primary" onclick="startLiveDemo()">
+                                <i class="bi bi-play-circle me-2"></i>Live Demo
+                            </button>
+                        </div>
+                        <div class="github-stats">
+                            <div class="github-stat">
+                                <span class="stat-number">150+</span>
+                                <span class="stat-label">Commits</span>
+                            </div>
+                            <div class="github-stat">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Releases</span>
+                            </div>
+                            <div class="github-stat">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Contributors</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mvp-visual">
+                        <div class="code-preview">
+                            <div class="code-header">
+                                <div class="code-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="code-preview">
-                                        <div class="code-header">
-                                            <div class="code-dots">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <span class="code-title">irr-calculator.js</span>
-                                        </div>
-                                        <div class="code-content">
-                                            <pre><code>// IRR Calculation Engine
+                                <span class="code-title">Platform Features</span>
+                            </div>
+                            <div class="code-content">
+                                <div class="feature-tabs">
+                                    <button class="feature-tab active" data-feature="irr">IRR Calculator</button>
+                                    <button class="feature-tab" data-feature="esg">ESG Scoring</button>
+                                    <button class="feature-tab" data-feature="risk">Risk Profiling</button>
+                                    <button class="feature-tab" data-feature="comparison">Project Comparison</button>
+                                </div>
+                                <div class="feature-content">
+                                    <div class="feature-panel active" id="irr-panel">
+                                        <pre><code>// IRR Calculation Engine
 function calculateIRR(cashFlows) {
   const irr = newton(
     rate => npv(rate, cashFlows),
@@ -470,47 +496,17 @@ function calculateIRR(cashFlows) {
 }
 
 // Monte Carlo Simulation
-function runMonteCarloSimulation(params, iterations = 10000) {
+function runMonteCarlo(iterations = 10000) {
   const results = [];
   for (let i = 0; i < iterations; i++) {
-    const scenario = generateScenario(params);
-    results.push(calculateIRR(scenario.cashFlows));
+    const scenario = generateScenario();
+    results.push(calculateIRR(scenario));
   }
   return analyzeResults(results);
 }</code></pre>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- ESG Scoring Tab -->
-                        <div class="tab-content" id="esg-tab">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="feature-description">
-                                        <h3>ESG Scoring Framework</h3>
-                                        <p>Comprehensive environmental, social, and governance scoring tailored for renewable energy projects with real-time updates.</p>
-                                        <ul class="feature-list">
-                                            <li>Environmental impact assessment</li>
-                                            <li>Social community benefit analysis</li>
-                                            <li>Governance structure evaluation</li>
-                                            <li>Regulatory compliance scoring</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="code-preview">
-                                        <div class="code-header">
-                                            <div class="code-dots">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <span class="code-title">esg-scoring.js</span>
-                                        </div>
-                                        <div class="code-content">
-                                            <pre><code>// ESG Scoring Algorithm
+                                    <div class="feature-panel" id="esg-panel">
+                                        <pre><code>// ESG Scoring Algorithm
 function calculateESGScore(project) {
   const environmental = assessEnvironmental(project);
   const social = assessSocial(project);
@@ -521,215 +517,115 @@ function calculateESGScore(project) {
   ], [0.4, 0.3, 0.3]);
 }
 
-// Environmental Assessment
+// Environmental Impact Assessment
 function assessEnvironmental(project) {
-  const carbonReduction = project.co2Savings * 0.3;
-  const biodiversityImpact = project.biodiversity * 0.2;
-  const resourceEfficiency = project.efficiency * 0.5;
+  const carbonReduction = project.carbonOffset;
+  const biodiversityImpact = project.biodiversity;
+  const waterUsage = project.waterConsumption;
   
-  return normalize(carbonReduction + biodiversityImpact + resourceEfficiency);
+  return calculateEnvironmentalScore({
+    carbonReduction, biodiversityImpact, waterUsage
+  });
 }</code></pre>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Risk Profiling Tab -->
-                        <div class="tab-content" id="risk-tab">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="feature-description">
-                                        <h3>AI Risk Profiling</h3>
-                                        <p>Machine learning-powered risk assessment combining market data, regulatory factors, and project-specific variables for emerging markets.</p>
-                                        <ul class="feature-list">
-                                            <li>Political and regulatory risk analysis</li>
-                                            <li>Market volatility assessment</li>
-                                            <li>Technology risk evaluation</li>
-                                            <li>Currency and economic risk modeling</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="code-preview">
-                                        <div class="code-header">
-                                            <div class="code-dots">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <span class="code-title">risk-profiling.js</span>
-                                        </div>
-                                        <div class="code-content">
-                                            <pre><code>// Risk Profiling Engine
-function calculateRiskProfile(project, market) {
-  const politicalRisk = assessPoliticalRisk(market);
-  const marketRisk = assessMarketVolatility(market);
-  const techRisk = assessTechnologyRisk(project);
-  const currencyRisk = assessCurrencyRisk(market);
-  
-  const riskScore = weightedRiskScore([
-    politicalRisk, marketRisk, techRisk, currencyRisk
-  ], [0.3, 0.25, 0.25, 0.2]);
+                                    <div class="feature-panel" id="risk-panel">
+                                        <pre><code>// AI Risk Profiling Engine
+function assessProjectRisk(project) {
+  const politicalRisk = analyzePoliticalStability(project.country);
+  const marketRisk = assessMarketConditions(project.sector);
+  const technologyRisk = evaluateTechMaturity(project.technology);
+  const currencyRisk = analyzeCurrencyVolatility(project.currency);
   
   return {
-    overall: riskScore,
-    category: categorizeRisk(riskScore),
-    recommendations: generateRecommendations(riskScore)
+    overall: calculateOverallRisk([
+      politicalRisk, marketRisk, technologyRisk, currencyRisk
+    ]),
+    breakdown: { politicalRisk, marketRisk, technologyRisk, currencyRisk }
   };
 }</code></pre>
-                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Project Comparison Tab -->
-                        <div class="tab-content" id="comparison-tab">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="feature-description">
-                                        <h3>Project Comparison</h3>
-                                        <p>Side-by-side analysis of multiple renewable energy projects with comprehensive metrics and visual comparisons for informed decision-making.</p>
-                                        <ul class="feature-list">
-                                            <li>Multi-project IRR comparison</li>
-                                            <li>Risk-adjusted return analysis</li>
-                                            <li>ESG score benchmarking</li>
-                                            <li>Portfolio optimization recommendations</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="code-preview">
-                                        <div class="code-header">
-                                            <div class="code-dots">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </div>
-                                            <span class="code-title">project-comparison.js</span>
-                                        </div>
-                                        <div class="code-content">
-                                            <pre><code>// Project Comparison Engine
+                                    <div class="feature-panel" id="comparison-panel">
+                                        <pre><code>// Project Comparison Engine
 function compareProjects(projects) {
   return projects.map(project => ({
     id: project.id,
     name: project.name,
     irr: calculateIRR(project.cashFlows),
-    esg: calculateESGScore(project),
-    risk: calculateRiskProfile(project, project.market),
-    sharpeRatio: calculateSharpeRatio(project),
-    recommendation: generateRecommendation(project)
-  })).sort((a, b) => b.sharpeRatio - a.sharpeRatio);
-}
-
-// Portfolio Optimization
-function optimizePortfolio(projects, constraints) {
-  const efficientFrontier = calculateEfficientFrontier(projects);
-  return findOptimalAllocation(efficientFrontier, constraints);
+    esgScore: calculateESGScore(project),
+    riskLevel: assessProjectRisk(project).overall,
+    npv: calculateNPV(project.cashFlows, 0.1),
+    paybackPeriod: calculatePaybackPeriod(project.cashFlows),
+    ranking: calculateOverallRanking(project)
+  })).sort((a, b) => b.ranking - a.ranking);
 }</code></pre>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Live Demo Section -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="live-demo-section">
-                        <div class="demo-header">
-                            <h3>🎬 Live Platform Demo</h3>
-                            <p>Watch our comprehensive 5-minute demo with professional voiceover showcasing all four platform features</p>
-                        </div>
-                        
-                        <div class="demo-player">
-                            <div class="video-container">
-                                <div class="video-player" id="demoPlayer">
-                                    <div class="video-content" id="videoContent">
-                                        <!-- Dynamic content will be inserted here -->
-                                    </div>
-                                    
-                                    <div class="video-controls">
-                                        <button class="play-btn" id="playBtn">
-                                            <i class="bi bi-play-fill"></i>
-                                        </button>
-                                        <div class="progress-container">
-                                            <div class="progress-bar" id="progressBar">
-                                                <div class="progress-fill" id="progressFill"></div>
-                                            </div>
-                                        </div>
-                                        <div class="time-display">
-                                            <span id="currentTime">0:00</span> / <span id="totalTime">5:00</span>
-                                        </div>
-                                        <button class="volume-btn" id="volumeBtn">
-                                            <i class="bi bi-volume-up-fill"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="demo-timeline">
-                                <div class="timeline-item" data-time="0">
-                                    <span class="time">0:00</span>
-                                    <span class="title">Platform Overview</span>
-                                </div>
-                                <div class="timeline-item" data-time="60">
-                                    <span class="time">1:00</span>
-                                    <span class="title">IRR Calculator Demo</span>
-                                </div>
-                                <div class="timeline-item" data-time="120">
-                                    <span class="time">2:00</span>
-                                    <span class="title">ESG Scoring System</span>
-                                </div>
-                                <div class="timeline-item" data-time="180">
-                                    <span class="time">3:00</span>
-                                    <span class="title">Risk Profiling AI</span>
-                                </div>
-                                <div class="timeline-item" data-time="240">
-                                    <span class="time">4:00</span>
-                                    <span class="title">Project Comparison</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- GitHub Stats and Actions -->
-            <div class="row mt-5">
-                <div class="col-lg-6">
-                    <div class="mvp-actions">
-                        <a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" class="btn btn-primary" target="_blank">
-                            <i class="bi bi-github me-2"></i>View GitHub Repo
-                        </a>
-                        <a href="https://onuorah-joshua-nwani.github.io/ojn-msp-1-finergycloud/" class="btn btn-outline-primary" target="_blank">
-                            <i class="bi bi-play-circle me-2"></i>Live Demo
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="github-stats">
-                        <div class="github-stat">
-                            <span class="stat-number">150+</span>
-                            <span class="stat-label">Commits</span>
-                        </div>
-                        <div class="github-stat">
-                            <span class="stat-number">12</span>
-                            <span class="stat-label">Releases</span>
-                        </div>
-                        <div class="github-stat">
-                            <span class="stat-number">5</span>
-                            <span class="stat-label">Contributors</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Live Demo Modal -->
+    <div class="modal fade" id="liveDemoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">FinergyCloud Live Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="demo-container">
+                        <div class="demo-controls">
+                            <button id="playPauseBtn" class="btn btn-primary">
+                                <i class="bi bi-play-fill"></i> Play Demo
+                            </button>
+                            <button id="muteBtn" class="btn btn-outline-secondary">
+                                <i class="bi bi-volume-up-fill"></i>
+                            </button>
+                            <div class="demo-progress">
+                                <div class="progress">
+                                    <div class="progress-bar" id="demoProgressBar" style="width: 0%"></div>
+                                </div>
+                                <div class="demo-time">
+                                    <span id="currentTime">0:00</span> / <span id="totalTime">5:00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="demo-timeline">
+                            <div class="timeline-item" data-time="0">
+                                <span class="timeline-time">0:00</span>
+                                <span class="timeline-label">Platform Overview</span>
+                            </div>
+                            <div class="timeline-item" data-time="60">
+                                <span class="timeline-time">1:00</span>
+                                <span class="timeline-label">IRR Calculator</span>
+                            </div>
+                            <div class="timeline-item" data-time="120">
+                                <span class="timeline-time">2:00</span>
+                                <span class="timeline-label">ESG Scoring</span>
+                            </div>
+                            <div class="timeline-item" data-time="180">
+                                <span class="timeline-time">3:00</span>
+                                <span class="timeline-label">Risk Profiling</span>
+                            </div>
+                            <div class="timeline-item" data-time="240">
+                                <span class="timeline-time">4:00</span>
+                                <span class="timeline-label">Project Comparison</span>
+                            </div>
+                        </div>
+                        
+                        <div class="demo-content" id="demoContent">
+                            <!-- Demo content will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Blog Preview Section -->
     <section class="section-padding">
@@ -909,9 +805,9 @@ function optimizePortfolio(projects, constraints) {
                     <div class="footer-links">
                         <h6>Resources</h6>
                         <ul>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">API</a></li>
-                            <li><a href="#">Support</a></li>
+                            <li><a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" target="_blank">Documentation</a></li>
+                            <li><a href="https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud" target="_blank">API</a></li>
+                            <li><a href="contact.html">Support</a></li>
                         </ul>
                     </div>
                 </div>
@@ -919,9 +815,9 @@ function optimizePortfolio(projects, constraints) {
                     <div class="footer-links">
                         <h6>Legal</h6>
                         <ul>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Security</a></li>
+                            <li><a href="contact.html">Privacy</a></li>
+                            <li><a href="contact.html">Terms</a></li>
+                            <li><a href="contact.html">Security</a></li>
                         </ul>
                     </div>
                 </div>
@@ -945,201 +841,685 @@ function optimizePortfolio(projects, constraints) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/enhanced-interactions.js"></script>
     <script src="assets/js/cross-platform-navigation.js"></script>
+    <script src="assets/js/email-automation.js"></script>
+
+    <script>
+        // Feature tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.feature-tab');
+            const panels = document.querySelectorAll('.feature-panel');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const feature = this.dataset.feature;
+                    
+                    // Remove active class from all tabs and panels
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding panel
+                    this.classList.add('active');
+                    document.getElementById(feature + '-panel').classList.add('active');
+                });
+            });
+        });
+
+        // Live Demo functionality
+        let demoInterval;
+        let currentTime = 0;
+        let isPlaying = false;
+        let isMuted = false;
+        const totalDuration = 300; // 5 minutes in seconds
+
+        function startLiveDemo() {
+            const modal = new bootstrap.Modal(document.getElementById('liveDemoModal'));
+            modal.show();
+            
+            // Reset demo state
+            currentTime = 0;
+            isPlaying = false;
+            updateDemoDisplay();
+        }
+
+        function togglePlayPause() {
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            
+            if (isPlaying) {
+                pauseDemo();
+                playPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i> Play Demo';
+            } else {
+                playDemo();
+                playPauseBtn.innerHTML = '<i class="bi bi-pause-fill"></i> Pause Demo';
+            }
+            
+            isPlaying = !isPlaying;
+        }
+
+        function playDemo() {
+            demoInterval = setInterval(() => {
+                currentTime += 1;
+                updateDemoDisplay();
+                
+                if (currentTime >= totalDuration) {
+                    pauseDemo();
+                    document.getElementById('playPauseBtn').innerHTML = '<i class="bi bi-play-fill"></i> Play Demo';
+                    isPlaying = false;
+                }
+            }, 1000);
+            
+            // Start narration
+            if (!isMuted) {
+                startNarration();
+            }
+        }
+
+        function pauseDemo() {
+            clearInterval(demoInterval);
+            stopNarration();
+        }
+
+        function toggleMute() {
+            const muteBtn = document.getElementById('muteBtn');
+            isMuted = !isMuted;
+            
+            if (isMuted) {
+                muteBtn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                stopNarration();
+            } else {
+                muteBtn.innerHTML = '<i class="bi bi-volume-up-fill"></i>';
+                if (isPlaying) {
+                    startNarration();
+                }
+            }
+        }
+
+        function updateDemoDisplay() {
+            // Update progress bar
+            const progressBar = document.getElementById('demoProgressBar');
+            const progress = (currentTime / totalDuration) * 100;
+            progressBar.style.width = progress + '%';
+            
+            // Update time display
+            const currentTimeEl = document.getElementById('currentTime');
+            currentTimeEl.textContent = formatTime(currentTime);
+            
+            // Update demo content based on current time
+            updateDemoContent();
+        }
+
+        function updateDemoContent() {
+            const demoContent = document.getElementById('demoContent');
+            
+            if (currentTime < 60) {
+                // Scene 1: Platform Overview
+                demoContent.innerHTML = `
+                    <div class="demo-scene">
+                        <h3>Platform Overview</h3>
+                        <div class="demo-dashboard">
+                            <div class="demo-metric">
+                                <span class="metric-label">Active Projects</span>
+                                <span class="metric-value" data-target="24">${Math.min(24, Math.floor(currentTime * 0.4))}</span>
+                            </div>
+                            <div class="demo-metric">
+                                <span class="metric-label">Total Investment</span>
+                                <span class="metric-value">$${Math.min(450, Math.floor(currentTime * 7.5))}M</span>
+                            </div>
+                            <div class="demo-metric">
+                                <span class="metric-label">Average IRR</span>
+                                <span class="metric-value">${Math.min(14.2, (currentTime * 0.24)).toFixed(1)}%</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentTime < 120) {
+                // Scene 2: IRR Calculator
+                const progress = Math.min(100, (currentTime - 60) * 1.67);
+                demoContent.innerHTML = `
+                    <div class="demo-scene">
+                        <h3>IRR Calculator - Monte Carlo Simulation</h3>
+                        <div class="demo-calculator">
+                            <div class="simulation-progress">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: ${progress}%"></div>
+                                </div>
+                                <p>Running ${Math.floor(progress * 100)} / 10,000 iterations</p>
+                            </div>
+                            <div class="calculation-results">
+                                <div class="result-item">
+                                    <span>Expected IRR:</span>
+                                    <span class="text-success">${(12.5 + progress * 0.02).toFixed(2)}%</span>
+                                </div>
+                                <div class="result-item">
+                                    <span>Confidence Interval:</span>
+                                    <span>±${(2.1 - progress * 0.01).toFixed(1)}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentTime < 180) {
+                // Scene 3: ESG Scoring
+                const envScore = Math.min(85, (currentTime - 120) * 1.42);
+                const socScore = Math.min(78, (currentTime - 120) * 1.3);
+                const govScore = Math.min(92, (currentTime - 120) * 1.53);
+                
+                demoContent.innerHTML = `
+                    <div class="demo-scene">
+                        <h3>ESG Scoring System</h3>
+                        <div class="demo-esg">
+                            <div class="esg-score">
+                                <div class="score-circle">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45" fill="none" stroke="#e0e0e0" stroke-width="8"/>
+                                        <circle cx="50" cy="50" r="45" fill="none" stroke="#28a745" stroke-width="8" 
+                                                stroke-dasharray="${envScore * 2.83} 283" transform="rotate(-90 50 50)"/>
+                                    </svg>
+                                    <div class="score-text">
+                                        <span class="score-value">${Math.floor(envScore)}</span>
+                                        <span class="score-label">Environmental</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="esg-breakdown">
+                                <div class="esg-item">
+                                    <span>Social Impact:</span>
+                                    <span>${Math.floor(socScore)}/100</span>
+                                </div>
+                                <div class="esg-item">
+                                    <span>Governance:</span>
+                                    <span>${Math.floor(govScore)}/100</span>
+                                </div>
+                                <div class="esg-item">
+                                    <span>Overall Score:</span>
+                                    <span class="text-success">${Math.floor((envScore + socScore + govScore) / 3)}/100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentTime < 240) {
+                // Scene 4: Risk Profiling
+                demoContent.innerHTML = `
+                    <div class="demo-scene">
+                        <h3>AI Risk Profiling</h3>
+                        <div class="demo-risk">
+                            <div class="risk-chart">
+                                <div class="risk-bar">
+                                    <span class="risk-label">Political Risk</span>
+                                    <div class="risk-progress">
+                                        <div class="progress-bar bg-warning" style="width: 35%"></div>
+                                    </div>
+                                    <span class="risk-value">Medium</span>
+                                </div>
+                                <div class="risk-bar">
+                                    <span class="risk-label">Market Risk</span>
+                                    <div class="risk-progress">
+                                        <div class="progress-bar bg-success" style="width: 20%"></div>
+                                    </div>
+                                    <span class="risk-value">Low</span>
+                                </div>
+                                <div class="risk-bar">
+                                    <span class="risk-label">Technology Risk</span>
+                                    <div class="risk-progress">
+                                        <div class="progress-bar bg-info" style="width: 25%"></div>
+                                    </div>
+                                    <span class="risk-value">Low</span>
+                                </div>
+                                <div class="risk-bar">
+                                    <span class="risk-label">Currency Risk</span>
+                                    <div class="risk-progress">
+                                        <div class="progress-bar bg-danger" style="width: 60%"></div>
+                                    </div>
+                                    <span class="risk-value">High</span>
+                                </div>
+                            </div>
+                            <div class="overall-risk">
+                                <h4>Overall Risk Level: <span class="text-warning">Medium</span></h4>
+                                <p>Recommendation: Proceed with enhanced monitoring</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Scene 5: Project Comparison
+                demoContent.innerHTML = `
+                    <div class="demo-scene">
+                        <h3>Project Comparison</h3>
+                        <div class="demo-comparison">
+                            <div class="comparison-table">
+                                <div class="comparison-header">
+                                    <div class="project-col">Project</div>
+                                    <div class="metric-col">IRR</div>
+                                    <div class="metric-col">ESG</div>
+                                    <div class="metric-col">Risk</div>
+                                    <div class="metric-col">NPV</div>
+                                </div>
+                                <div class="comparison-row highlight">
+                                    <div class="project-col">Solar Farm Kenya</div>
+                                    <div class="metric-col text-success">14.2%</div>
+                                    <div class="metric-col text-success">85/100</div>
+                                    <div class="metric-col text-warning">Medium</div>
+                                    <div class="metric-col text-success">$12.5M</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="project-col">Wind Farm Brazil</div>
+                                    <div class="metric-col">12.8%</div>
+                                    <div class="metric-col">78/100</div>
+                                    <div class="metric-col text-success">Low</div>
+                                    <div class="metric-col">$8.3M</div>
+                                </div>
+                                <div class="comparison-row">
+                                    <div class="project-col">Hydro Plant Vietnam</div>
+                                    <div class="metric-col">11.5%</div>
+                                    <div class="metric-col">92/100</div>
+                                    <div class="metric-col text-danger">High</div>
+                                    <div class="metric-col">$6.7M</div>
+                                </div>
+                            </div>
+                            <div class="recommendation">
+                                <h4>AI Recommendation: Solar Farm Kenya</h4>
+                                <p>Best risk-adjusted returns with strong ESG profile</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function startNarration() {
+            if ('speechSynthesis' in window && !isMuted) {
+                const narrationTexts = {
+                    0: "Welcome to FinergyCloud, the revolutionary AI-driven risk intelligence platform for renewable energy investors. Our comprehensive dashboard provides real-time insights into your investment portfolio.",
+                    60: "Our advanced IRR Calculator uses Monte Carlo simulation with over 10,000 iterations to provide accurate return predictions. Watch as we analyze multiple scenarios to give you confidence intervals for your investment decisions.",
+                    120: "The ESG Scoring System evaluates environmental, social, and governance factors using AI algorithms. Our system provides detailed breakdowns across all three pillars of sustainability.",
+                    180: "Our AI Risk Profiling engine combines political, market, technology, and currency risks to provide comprehensive risk assessment. Machine learning models analyze thousands of data points to give you actionable insights.",
+                    240: "Finally, our Project Comparison tool enables side-by-side analysis of multiple renewable energy investments. Our AI recommendation engine considers all factors to suggest the optimal investment choice."
+                };
+                
+                const currentScene = Math.floor(currentTime / 60) * 60;
+                const text = narrationTexts[currentScene];
+                
+                if (text) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1;
+                    utterance.volume = 0.8;
+                    
+                    // Try to use a professional voice
+                    const voices = speechSynthesis.getVoices();
+                    const preferredVoice = voices.find(voice => 
+                        voice.name.includes('Google') || 
+                        voice.name.includes('Microsoft') || 
+                        voice.lang.includes('en-US')
+                    );
+                    if (preferredVoice) {
+                        utterance.voice = preferredVoice;
+                    }
+                    
+                    speechSynthesis.speak(utterance);
+                }
+            }
+        }
+
+        function stopNarration() {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // Event listeners for demo controls
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+            document.getElementById('muteBtn').addEventListener('click', toggleMute);
+            
+            // Timeline navigation
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    currentTime = parseInt(this.dataset.time);
+                    updateDemoDisplay();
+                });
+            });
+            
+            // Progress bar click navigation
+            document.querySelector('.progress').addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const clickPosition = (e.clientX - rect.left) / rect.width;
+                currentTime = Math.floor(clickPosition * totalDuration);
+                updateDemoDisplay();
+            });
+        });
+    </script>
 
     <style>
-        /* Feature Tabs Styles */
+        /* Feature tabs styles */
         .feature-tabs {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .tab-nav {
             display: flex;
-            background: var(--light-green);
-            border-bottom: 1px solid rgba(0, 77, 64, 0.1);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            color: var(--primary-green);
-            font-weight: var(--font-weight-medium);
+        .feature-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             transition: var(--transition-fast);
-            border-bottom: 3px solid transparent;
+            font-size: 0.8rem;
         }
 
-        .tab-btn:hover,
-        .tab-btn.active {
-            background: var(--white);
-            border-bottom-color: var(--accent-teal);
+        .feature-tab:hover,
+        .feature-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
-        .tab-content {
+        .feature-panel {
             display: none;
-            padding: 2rem;
         }
 
-        .tab-content.active {
+        .feature-panel.active {
             display: block;
         }
 
-        .feature-description h3 {
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 0.5rem 0;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            color: var(--accent-teal);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        /* Live Demo Styles */
-        .live-demo-section {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .demo-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .demo-header h3 {
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .video-container {
-            background: #000;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 16/9;
-            margin-bottom: 1rem;
-        }
-
-        .video-player {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
-            color: var(--white);
-            font-size: 1.5rem;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .video-controls {
-            background: rgba(0, 0, 0, 0.8);
+        /* Demo modal styles */
+        .demo-container {
             padding: 1rem;
+        }
+
+        .demo-controls {
             display: flex;
             align-items: center;
             gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
-        .play-btn,
-        .volume-btn {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
+        .demo-progress {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .demo-progress .progress {
+            height: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .demo-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .demo-timeline {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             cursor: pointer;
             padding: 0.5rem;
             border-radius: var(--radius-sm);
             transition: var(--transition-fast);
         }
 
-        .play-btn:hover,
-        .volume-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .progress-container {
-            flex: 1;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--accent-teal);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        .time-display {
-            color: var(--white);
-            font-size: 0.9rem;
-            font-weight: var(--font-weight-medium);
-        }
-
-        .demo-timeline {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .timeline-item {
-            background: var(--light-green);
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: var(--transition-fast);
-            text-align: center;
-            min-width: 120px;
-        }
-
         .timeline-item:hover {
-            background: var(--accent-teal);
-            color: var(--white);
+            background: var(--light-green);
         }
 
-        .timeline-item .time {
-            display: block;
-            font-weight: var(--font-weight-bold);
+        .timeline-time {
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
             font-size: 0.9rem;
         }
 
-        .timeline-item .title {
+        .timeline-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .demo-content {
+            min-height: 400px;
+            background: var(--light-green);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+
+        .demo-scene h3 {
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Demo scene specific styles */
+        .demo-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .demo-metric {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-label {
             display: block;
             font-size: 0.8rem;
-            opacity: 0.8;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+        }
+
+        .simulation-progress {
+            margin-bottom: 2rem;
+        }
+
+        .calculation-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .demo-esg {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .score-circle {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .score-circle svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .esg-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .esg-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .demo-risk {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .risk-bar {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .risk-progress {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .risk-progress .progress-bar {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .overall-risk {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comparison-table {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-header,
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .comparison-header {
+            background: var(--primary-green);
+            color: var(--white);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .comparison-row {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-row.highlight {
+            background: var(--light-green);
+        }
+
+        .recommendation {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 768px) {
+            .demo-esg {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .risk-bar {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .demo-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .demo-timeline {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .timeline-item {
+                flex-direction: row;
+                justify-content: space-between;
+            }
         }
 
         /* Mobile App Showcase Styles */
@@ -1343,10 +1723,6 @@ function optimizePortfolio(projects, constraints) {
         }
 
         @media (max-width: 768px) {
-            .tab-nav {
-                flex-direction: column;
-            }
-
             .mobile-actions {
                 flex-direction: column;
             }
@@ -1365,611 +1741,8 @@ function optimizePortfolio(projects, constraints) {
                 font-size: 1.5rem;
             }
 
-            .demo-timeline {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .timeline-item {
-                min-width: 200px;
-            }
-        }
-    </style>
-
-    <script>
-        // Tab functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const targetTab = btn.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs and contents
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    btn.classList.add('active');
-                    document.getElementById(targetTab + '-tab').classList.add('active');
-                });
-            });
-        });
-
-        // Audio-enabled demo player
-        class AudioDemoPlayer {
-            constructor() {
-                this.isPlaying = false;
-                this.currentTime = 0;
-                this.totalTime = 300; // 5 minutes in seconds
-                this.scenes = [
-                    {
-                        time: 0,
-                        duration: 60,
-                        title: "Platform Overview",
-                        content: "Welcome to FinergyCloud - AI-driven risk intelligence for renewable energy investors",
-                        voiceover: "Welcome to FinergyCloud, the revolutionary AI-driven risk intelligence platform for renewable energy investors. Let me show you how our platform transforms investment decisions through smart analytics and comprehensive risk profiling."
-                    },
-                    {
-                        time: 60,
-                        duration: 60,
-                        title: "IRR Calculator Demo",
-                        content: "Advanced Monte Carlo simulation with real-time calculations",
-                        voiceover: "Our IRR Calculator uses advanced Monte Carlo simulation with over 10,000 iterations to provide accurate return predictions. Watch as we analyze a solar project in Kenya with dynamic risk scenarios and real-time calculations."
-                    },
-                    {
-                        time: 120,
-                        duration: 60,
-                        title: "ESG Scoring System",
-                        content: "Comprehensive sustainability assessment with AI-powered insights",
-                        voiceover: "The ESG Scoring System evaluates environmental, social, and governance factors using AI-powered analysis. See how we assess carbon reduction, community impact, and regulatory compliance for sustainable investment decisions."
-                    },
-                    {
-                        time: 180,
-                        duration: 60,
-                        title: "Risk Profiling AI",
-                        content: "Machine learning risk assessment for emerging markets",
-                        voiceover: "Our AI Risk Profiling engine combines political, market, technology, and currency risks using machine learning models specifically trained for emerging markets. This provides unprecedented accuracy in risk assessment."
-                    },
-                    {
-                        time: 240,
-                        duration: 60,
-                        title: "Project Comparison",
-                        content: "Side-by-side analysis with portfolio optimization",
-                        voiceover: "Finally, our Project Comparison tool enables side-by-side analysis of multiple renewable energy projects with comprehensive metrics, risk-adjusted returns, and portfolio optimization recommendations for informed decision-making."
-                    }
-                ];
-                this.currentScene = 0;
-                this.speechSynthesis = window.speechSynthesis;
-                this.currentUtterance = null;
-                this.init();
-            }
-
-            init() {
-                this.playBtn = document.getElementById('playBtn');
-                this.progressBar = document.getElementById('progressBar');
-                this.progressFill = document.getElementById('progressFill');
-                this.currentTimeEl = document.getElementById('currentTime');
-                this.totalTimeEl = document.getElementById('totalTime');
-                this.videoContent = document.getElementById('videoContent');
-                this.volumeBtn = document.getElementById('volumeBtn');
-
-                this.setupEventListeners();
-                this.updateDisplay();
-            }
-
-            setupEventListeners() {
-                this.playBtn.addEventListener('click', () => this.togglePlay());
-                this.progressBar.addEventListener('click', (e) => this.seek(e));
-                this.volumeBtn.addEventListener('click', () => this.toggleMute());
-
-                // Timeline navigation
-                document.querySelectorAll('.timeline-item').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const time = parseInt(item.getAttribute('data-time'));
-                        this.seekToTime(time);
-                    });
-                });
-            }
-
-            togglePlay() {
-                if (this.isPlaying) {
-                    this.pause();
-                } else {
-                    this.play();
-                }
-            }
-
-            play() {
-                this.isPlaying = true;
-                this.playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>';
-                this.startDemo();
-            }
-
-            pause() {
-                this.isPlaying = false;
-                this.playBtn.innerHTML = '<i class="bi bi-play-fill"></i>';
-                this.stopVoiceover();
-                if (this.demoInterval) {
-                    clearInterval(this.demoInterval);
-                }
-            }
-
-            startDemo() {
-                this.updateScene();
-                this.demoInterval = setInterval(() => {
-                    if (this.isPlaying) {
-                        this.currentTime += 1;
-                        this.updateDisplay();
-                        this.checkSceneChange();
-                        
-                        if (this.currentTime >= this.totalTime) {
-                            this.pause();
-                            this.currentTime = 0;
-                            this.currentScene = 0;
-                            this.updateDisplay();
-                        }
-                    }
-                }, 1000);
-            }
-
-            updateScene() {
-                const scene = this.scenes[this.currentScene];
-                if (scene) {
-                    this.videoContent.innerHTML = `
-                        <div class="demo-scene">
-                            <h3>${scene.title}</h3>
-                            <p>${scene.content}</p>
-                            <div class="scene-animation">
-                                ${this.getSceneAnimation(this.currentScene)}
-                            </div>
-                        </div>
-                    `;
-                    
-                    if (this.isPlaying) {
-                        this.playVoiceover(scene.voiceover);
-                    }
-                }
-            }
-
-            getSceneAnimation(sceneIndex) {
-                switch(sceneIndex) {
-                    case 0:
-                        return `
-                            <div class="dashboard-metrics">
-                                <div class="metric"><span class="value" data-target="15.2">0</span><span class="label">IRR %</span></div>
-                                <div class="metric"><span class="value" data-target="8.7">0</span><span class="label">ESG Score</span></div>
-                                <div class="metric"><span class="value" data-target="42">0</span><span class="label">Projects</span></div>
-                            </div>
-                        `;
-                    case 1:
-                        return `
-                            <div class="irr-simulation">
-                                <div class="simulation-progress">
-                                    <div class="progress-bar-demo">
-                                        <div class="progress-fill-demo" style="width: 0%"></div>
-                                    </div>
-                                    <span class="simulation-text">Monte Carlo Simulation: <span class="iteration">0</span>/10,000</span>
-                                </div>
-                            </div>
-                        `;
-                    case 2:
-                        return `
-                            <div class="esg-scores">
-                                <div class="esg-circle" data-score="85">
-                                    <div class="circle-progress" style="--progress: 0%"></div>
-                                    <span class="score-text">E: 0</span>
-                                </div>
-                                <div class="esg-circle" data-score="78">
-                                    <div class="circle-progress" style="--progress: 0%"></div>
-                                    <span class="score-text">S: 0</span>
-                                </div>
-                                <div class="esg-circle" data-score="92">
-                                    <div class="circle-progress" style="--progress: 0%"></div>
-                                    <span class="score-text">G: 0</span>
-                                </div>
-                            </div>
-                        `;
-                    case 3:
-                        return `
-                            <div class="risk-analysis">
-                                <div class="risk-chart">
-                                    <div class="risk-bar low" style="height: 0%"><span>Low: 30%</span></div>
-                                    <div class="risk-bar medium" style="height: 0%"><span>Medium: 50%</span></div>
-                                    <div class="risk-bar high" style="height: 0%"><span>High: 20%</span></div>
-                                </div>
-                            </div>
-                        `;
-                    case 4:
-                        return `
-                            <div class="project-comparison">
-                                <div class="project-card">
-                                    <h4>Solar Kenya</h4>
-                                    <div class="project-metric">IRR: <span class="value">15.2%</span></div>
-                                    <div class="project-metric">Risk: <span class="value">Medium</span></div>
-                                </div>
-                                <div class="project-card">
-                                    <h4>Wind Nigeria</h4>
-                                    <div class="project-metric">IRR: <span class="value">13.8%</span></div>
-                                    <div class="project-metric">Risk: <span class="value">High</span></div>
-                                </div>
-                            </div>
-                        `;
-                    default:
-                        return '<div class="loading">Loading...</div>';
-                }
-            }
-
-            playVoiceover(text) {
-                this.stopVoiceover();
-                
-                if (this.speechSynthesis) {
-                    this.currentUtterance = new SpeechSynthesisUtterance(text);
-                    this.currentUtterance.rate = 0.9;
-                    this.currentUtterance.pitch = 1;
-                    this.currentUtterance.volume = 1;
-                    
-                    // Try to use a professional voice
-                    const voices = this.speechSynthesis.getVoices();
-                    const preferredVoice = voices.find(voice => 
-                        voice.name.includes('Google') || 
-                        voice.name.includes('Microsoft') ||
-                        voice.lang.includes('en-US')
-                    );
-                    
-                    if (preferredVoice) {
-                        this.currentUtterance.voice = preferredVoice;
-                    }
-                    
-                    this.speechSynthesis.speak(this.currentUtterance);
-                }
-            }
-
-            stopVoiceover() {
-                if (this.speechSynthesis && this.currentUtterance) {
-                    this.speechSynthesis.cancel();
-                    this.currentUtterance = null;
-                }
-            }
-
-            checkSceneChange() {
-                const newScene = this.scenes.findIndex(scene => 
-                    this.currentTime >= scene.time && this.currentTime < scene.time + scene.duration
-                );
-                
-                if (newScene !== -1 && newScene !== this.currentScene) {
-                    this.currentScene = newScene;
-                    this.updateScene();
-                    this.animateSceneElements();
-                }
-            }
-
-            animateSceneElements() {
-                // Animate counting numbers
-                const values = document.querySelectorAll('.value[data-target]');
-                values.forEach(value => {
-                    const target = parseFloat(value.getAttribute('data-target'));
-                    this.animateValue(value, 0, target, 2000);
-                });
-
-                // Animate progress bars
-                const progressBars = document.querySelectorAll('.progress-fill-demo');
-                progressBars.forEach(bar => {
-                    setTimeout(() => {
-                        bar.style.width = '100%';
-                    }, 500);
-                });
-
-                // Animate iteration counter
-                const iteration = document.querySelector('.iteration');
-                if (iteration) {
-                    this.animateValue(iteration, 0, 10000, 3000);
-                }
-
-                // Animate ESG circles
-                const circles = document.querySelectorAll('.esg-circle');
-                circles.forEach((circle, index) => {
-                    const score = parseInt(circle.getAttribute('data-score'));
-                    const progress = circle.querySelector('.circle-progress');
-                    const text = circle.querySelector('.score-text');
-                    
-                    setTimeout(() => {
-                        progress.style.setProperty('--progress', score + '%');
-                        this.animateValue(text, 0, score, 2000, (val) => {
-                            text.textContent = text.textContent.charAt(0) + ': ' + Math.round(val);
-                        });
-                    }, index * 500);
-                });
-
-                // Animate risk bars
-                const riskBars = document.querySelectorAll('.risk-bar');
-                riskBars.forEach((bar, index) => {
-                    setTimeout(() => {
-                        if (bar.classList.contains('low')) bar.style.height = '30%';
-                        if (bar.classList.contains('medium')) bar.style.height = '50%';
-                        if (bar.classList.contains('high')) bar.style.height = '20%';
-                    }, index * 300);
-                });
-            }
-
-            animateValue(element, start, end, duration, callback) {
-                const startTime = performance.now();
-                const animate = (currentTime) => {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const current = start + (end - start) * progress;
-                    
-                    if (callback) {
-                        callback(current);
-                    } else {
-                        element.textContent = Math.round(current * 10) / 10;
-                    }
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    }
-                };
-                requestAnimationFrame(animate);
-            }
-
-            seek(e) {
-                const rect = this.progressBar.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const percentage = clickX / rect.width;
-                this.seekToTime(Math.floor(percentage * this.totalTime));
-            }
-
-            seekToTime(time) {
-                this.currentTime = Math.max(0, Math.min(time, this.totalTime));
-                this.currentScene = this.scenes.findIndex(scene => 
-                    this.currentTime >= scene.time && this.currentTime < scene.time + scene.duration
-                );
-                if (this.currentScene === -1) this.currentScene = 0;
-                
-                this.updateDisplay();
-                if (this.isPlaying) {
-                    this.updateScene();
-                    this.animateSceneElements();
-                }
-            }
-
-            toggleMute() {
-                if (this.speechSynthesis) {
-                    if (this.speechSynthesis.speaking) {
-                        this.speechSynthesis.pause();
-                        this.volumeBtn.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
-                    } else {
-                        this.speechSynthesis.resume();
-                        this.volumeBtn.innerHTML = '<i class="bi bi-volume-up-fill"></i>';
-                    }
-                }
-            }
-
-            updateDisplay() {
-                const progress = (this.currentTime / this.totalTime) * 100;
-                this.progressFill.style.width = progress + '%';
-                
-                this.currentTimeEl.textContent = this.formatTime(this.currentTime);
-                this.totalTimeEl.textContent = this.formatTime(this.totalTime);
-            }
-
-            formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                return `${mins}:${secs.toString().padStart(2, '0')}`;
-            }
-        }
-
-        // Initialize the audio demo player
-        document.addEventListener('DOMContentLoaded', () => {
-            window.audioDemoPlayer = new AudioDemoPlayer();
-        });
-    </script>
-
-    <style>
-        /* Demo Scene Styles */
-        .demo-scene {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .demo-scene h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--white);
-        }
-
-        .demo-scene p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .scene-animation {
-            margin-top: 2rem;
-        }
-
-        /* Dashboard Metrics */
-        .dashboard-metrics {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .metric {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            min-width: 120px;
-        }
-
-        .metric .value {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--white);
-        }
-
-        .metric .label {
-            display: block;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
-        /* IRR Simulation */
-        .irr-simulation {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .progress-bar-demo {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill-demo {
-            height: 100%;
-            background: var(--accent-teal);
-            width: 0%;
-            transition: width 3s ease;
-        }
-
-        .simulation-text {
-            font-size: 1.1rem;
-            color: var(--white);
-        }
-
-        /* ESG Scores */
-        .esg-scores {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .esg-circle {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-
-        .circle-progress {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(var(--accent-teal) calc(var(--progress) * 3.6deg), rgba(255, 255, 255, 0.2) 0deg);
-            transition: all 2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .score-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: var(--font-weight-bold);
-            color: var(--white);
-        }
-
-        /* Risk Analysis */
-        .risk-chart {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 1rem;
-            height: 200px;
-        }
-
-        .risk-bar {
-            width: 60px;
-            background: var(--accent-teal);
-            border-radius: 4px 4px 0 0;
-            transition: height 1s ease;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        .risk-bar.medium {
-            background: #ffc107;
-        }
-
-        .risk-bar.high {
-            background: #dc3545;
-        }
-
-        .risk-bar span {
-            position: absolute;
-            bottom: -30px;
-            font-size: 0.8rem;
-            color: var(--white);
-            white-space: nowrap;
-        }
-
-        /* Project Comparison */
-        .project-comparison {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
-            min-width: 150px;
-            text-align: center;
-        }
-
-        .project-card h4 {
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        .project-metric {
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
-
-        .project-metric .value {
-            font-weight: var(--font-weight-bold);
-            color: var(--accent-teal);
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-metrics,
-            .esg-scores,
-            .project-comparison {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .demo-scene h3 {
-                font-size: 1.5rem;
-            }
-
-            .demo-scene p {
-                font-size: 1rem;
-            }
-
-            .metric {
-                min-width: 100px;
-            }
-
-            .risk-chart {
-                height: 150px;
+            .mobile-features {
+                gap: 0.75rem;
             }
         }
     </style>
