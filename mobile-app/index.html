@@ -136,6 +136,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#blog" class="nav-link" data-page="blog">
+                            <i class="bi bi-journal-text"></i>
+                            <span>Blog</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link" data-page="contact">
+                            <i class="bi bi-envelope"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#settings" class="nav-link" data-page="settings">
                             <i class="bi bi-gear"></i>
                             <span>Settings</span>
@@ -326,9 +338,9 @@
                                 <i class="bi bi-plus-circle"></i>
                                 <span>New Project</span>
                             </button>
-                            <button class="action-card" data-page="market">
-                                <i class="bi bi-globe"></i>
-                                <span>Market Data</span>
+                            <button class="action-card" data-page="contact">
+                                <i class="bi bi-envelope"></i>
+                                <span>Contact Us</span>
                             </button>
                         </div>
                     </div>
@@ -640,6 +652,120 @@
                     </div>
                 </div>
 
+                <!-- Contact Page -->
+                <div class="page" id="contact-page">
+                    <div class="page-header">
+                        <h1>Contact Us</h1>
+                        <p>Get in touch with the FinergyCloud team</p>
+                    </div>
+
+                    <!-- Quick Contact Options -->
+                    <div class="quick-contact-options">
+                        <div class="quick-contact-item" onclick="window.open('mailto:contact@finergycloud.com')">
+                            <div class="quick-contact-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="quick-contact-content">
+                                <h4>Email</h4>
+                                <p>contact@finergycloud.com</p>
+                                <small>24h response time</small>
+                            </div>
+                        </div>
+                        
+                        <div class="quick-contact-item" onclick="window.open('https://www.linkedin.com/company/finergycloud', '_blank')">
+                            <div class="quick-contact-icon">
+                                <i class="bi bi-linkedin"></i>
+                            </div>
+                            <div class="quick-contact-content">
+                                <h4>LinkedIn</h4>
+                                <p>Professional networking</p>
+                                <small>Same day response</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="mobile-contact-form-container">
+                        <h3>Send us a message</h3>
+                        <p>We'll respond within 24 hours with a personalized message</p>
+                        
+                        <form class="mobile-contact-form">
+                            <div class="form-group">
+                                <label for="mobile-fullname">Full Name *</label>
+                                <input type="text" id="mobile-fullname" name="fullname" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobile-email">Email Address *</label>
+                                <input type="email" id="mobile-email" name="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobile-company">Company</label>
+                                <input type="text" id="mobile-company" name="company" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobile-interest">Primary Interest *</label>
+                                <select id="mobile-interest" name="interest" class="form-control" required>
+                                    <option value="">Select your interest</option>
+                                    <option value="demo">Book a Demo</option>
+                                    <option value="pitch-deck">Request Pitch Deck</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="investment">Investment</option>
+                                    <option value="beta-access">Beta Access</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobile-message">Message</label>
+                                <textarea id="mobile-message" name="message" class="form-control" rows="4" 
+                                        placeholder="Tell us about your needs..."></textarea>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="mobile-newsletter" name="newsletter" class="form-check-input">
+                                <label for="mobile-newsletter" class="form-check-label">
+                                    Receive updates about FinergyCloud
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary btn-block">
+                                <i class="bi bi-send me-2"></i>Send Message
+                            </button>
+                            
+                            <p class="form-note">
+                                <small>
+                                    <i class="bi bi-shield-check me-1"></i>
+                                    Your information is secure and will never be shared.
+                                </small>
+                            </p>
+                        </form>
+                    </div>
+
+                    <!-- Response Guarantee -->
+                    <div class="response-guarantee-mobile">
+                        <div class="guarantee-content">
+                            <h4>Our Response Guarantee</h4>
+                            <div class="guarantee-items">
+                                <div class="guarantee-item">
+                                    <i class="bi bi-clock text-success"></i>
+                                    <span>24-hour response time</span>
+                                </div>
+                                <div class="guarantee-item">
+                                    <i class="bi bi-person text-success"></i>
+                                    <span>Personalized response</span>
+                                </div>
+                                <div class="guarantee-item">
+                                    <i class="bi bi-shield-check text-success"></i>
+                                    <span>Privacy protected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Settings Page -->
                 <div class="page" id="settings-page">
                     <div class="page-header">
@@ -782,5 +908,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/calculator.js"></script>
     <script src="scripts/charts.js"></script>
+    <script src="scripts/blog-integration.js"></script>
+    <script src="scripts/email-integration.js"></script>
 </body>
 </html>

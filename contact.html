@@ -60,6 +60,9 @@
                         <a class="nav-link" href="services.html">Solution</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="contact.html">Contact</a>
                     </li>
                 </ul>
@@ -202,9 +205,13 @@
                             <p class="section-subtitle">
                                 Fill out the form below and we'll get back to you within 24 hours
                             </p>
+                            <div class="response-guarantee">
+                                <i class="bi bi-shield-check text-success me-2"></i>
+                                <strong>Response Guarantee:</strong> We respond to all inquiries within 24 hours with a personalized message
+                            </div>
                         </div>
                         
-                        <form method="POST" action="https://formdump.codeinstitute.net" target="_blank" class="contact-form">
+                        <form method="POST" class="contact-form" id="main-contact-form">
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -317,7 +324,6 @@
                                                 This is urgent - please prioritize my request
                                             </label>
                                         </div>
-                                    
                                     </div>
                                 </div>
                                 <div class="col-12 text-center">
@@ -326,7 +332,11 @@
                                     </button>
                                     <p class="form-note mt-3">
                                         <small class="text-muted">
+                                            <i class="bi bi-shield-check me-1"></i>
                                             We respect your privacy. Your information will never be shared with third parties.
+                                            <br>
+                                            <i class="bi bi-envelope me-1"></i>
+                                            You'll receive an automatic confirmation email with our response timeline.
                                         </small>
                                     </p>
                                 </div>
@@ -610,7 +620,7 @@
                         <ul>
                             <li><a href="about.html">About</a></li>
                             <li><a href="contact.html">Contact</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="blog.html">Blog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -653,6 +663,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/enhanced-interactions.js"></script>
+    <script src="assets/js/email-automation.js"></script>
 
     <style>
         /* Contact page specific styles */
@@ -736,6 +747,14 @@
             border-radius: var(--radius-xl);
             box-shadow: var(--shadow-xl);
             border: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .response-guarantee {
+            background: var(--light-green);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            border: 1px solid var(--accent-teal);
         }
 
         .contact-form .form-group {
