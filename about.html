@@ -168,18 +168,32 @@
                         <p>
                             FinergyCloud was founded by O.J. Nwani, a UK-based SAP & AI consultant and clean energy innovator. The company was officially registered in the UK in June 2025 to scale its mission of unlocking sustainable energy financing in Africa using artificial intelligence.
                         </p>
-                        <div class="uk-market-stats">
-                            <div class="stat-item">
-                                <div class="stat-number">2025</div>
-                                <div class="stat-label">UK Registration</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">3+</div>
-                                <div class="stat-label">African Markets</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">₦120M+</div>
-                                <div class="stat-label">Pilot Funding</div>
+                        
+                        <!-- Enhanced Key Metrics Section -->
+                        <div class="key-metrics-container">
+                            <h3 class="metrics-title">Key Metrics</h3>
+                            <div class="uk-market-stats">
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                    <div class="stat-number">2025</div>
+                                    <div class="stat-label">UK Registration</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-globe"></i>
+                                    </div>
+                                    <div class="stat-number">3+</div>
+                                    <div class="stat-label">African Markets</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-currency-exchange"></i>
+                                    </div>
+                                    <div class="stat-number">₦120M+</div>
+                                    <div class="stat-label">Pilot Funding</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -850,11 +864,85 @@
             border-left: 4px solid var(--accent-teal);
         }
 
+        /* Enhanced Key Metrics Section */
+        .key-metrics-container {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .metrics-title {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .metrics-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-teal);
+            border-radius: 3px;
+        }
+
         .uk-market-stats {
             display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
+            justify-content: space-around;
+            gap: 1rem;
             flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            min-width: 140px;
+            flex: 1;
+            background: var(--light-green);
+            border-radius: var(--radius-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .stat-icon i {
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: var(--font-weight-medium);
         }
 
         @media (max-width: 768px) {
@@ -884,6 +972,11 @@
             
             .uk-market-stats {
                 justify-content: center;
+            }
+            
+            .stat-item {
+                min-width: 120px;
+                padding: 1rem;
             }
         }
     </style>
