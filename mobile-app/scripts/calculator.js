@@ -2,7 +2,9 @@
 
 class IRRCalculator {
     constructor() {
+        this.savedCalculations = [];
         this.setupCalculator();
+        this.loadSavedCalculations();
     }
 
     setupCalculator() {
@@ -16,6 +18,9 @@ class IRRCalculator {
 
         // Setup real-time input validation
         this.setupInputValidation();
+        
+        // Setup chart interactions
+        this.setupChartInteractions();
     }
 
     setupInputValidation() {
@@ -24,6 +29,15 @@ class IRRCalculator {
             input.addEventListener('input', () => {
                 this.validateInput(input);
                 this.updatePreview();
+            });
+            
+            // Add focus/blur effects for better UX
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('focused');
             });
         });
     }
@@ -64,7 +78,9 @@ class IRRCalculator {
     }
 
     validateAllInputs(inputs) {
-        return Object.values(inputs).every(value => !isNaN(value) && value > 0);
+        return inputs.initialInvestment > 0 && 
+               inputs.projectDuration > 0 && 
+               inputs.annualCashflow > 0;
     }
 
     performCalculation() {
@@ -83,6 +99,11 @@ class IRRCalculator {
             const results = this.calculateIRR(inputs);
             this.displayResults(results);
             this.saveCalculation(inputs, results);
+            
+            // Haptic feedback on success (if available)
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
         }, 1000);
     }
 
@@ -188,7 +209,11 @@ class IRRCalculator {
             previewElement.innerHTML = `
                 <div class="preview-metric">
                     <span>Simple ROI</span>
-                    <span>${preview.simpleROI.toFixed(1)}%</span>
+                    <span class="text-primary">${preview.simpleROI.toFixed(1)}%</span>
+                </div>
+                <div class="preview-metric">
+                    <span>Total Returns</span>
+                    <span class="text-primary">₦${this.formatNumber(preview.totalReturns)}</span>
                 </div>
             `;
         }
@@ -218,7 +243,7 @@ class IRRCalculator {
 
         // Update result displays
         this.updateResultElement('irr-result', `${(results.irr * 100).toFixed(2)}%`);
-        this.updateResultElement('npv-result', `$${this.formatNumber(results.npv)}`);
+        this.updateResultElement('npv-result', `₦${this.formatNumber(results.npv)}`);
         this.updateResultElement('payback-result', `${results.paybackPeriod.toFixed(1)} years`);
 
         // Create cash flow chart
@@ -247,28 +272,100 @@ class IRRCalculator {
         const chartContainer = document.getElementById('cashflow-chart');
         if (!chartContainer) return;
 
+        // Clear placeholder
+        chartContainer.classList.remove('chart-placeholder');
+        chartContainer.innerHTML = '';
+
         // Simple bar chart implementation
         const maxValue = Math.max(...cashFlows.map(Math.abs));
-        const chartHTML = cashFlows.map((value, index) => {
-            const height = Math.abs(value) / maxValue * 100;
-            const isNegative = value < 0;
-            
-            return `
-                <div class="chart-bar ${isNegative ? 'negative' : 'positive'}" 
-                     style="height: ${height}%; bottom: ${isNegative ? height : 0}%"
-                     title="Year ${index}: $${this.formatNumber(value)}">
-                </div>
-            `;
-        }).join('');
-
-        chartContainer.innerHTML = `
-            <div class="chart-container-inner">
-                <div class="chart-bars">${chartHTML}</div>
-                <div class="chart-axis">
-                    ${cashFlows.map((_, index) => `<span>Y${index}</span>`).join('')}
+        const chartHTML = `
+            <div class="chart-wrapper">
+                <div class="chart-title">Cash Flow Projection</div>
+                <div class="chart-content">
+                    <div class="chart-container-inner">
+                        <div class="chart-bars">
+                            ${cashFlows.map((value, index) => {
+                                const height = Math.abs(value) / maxValue * 100;
+                                const isNegative = value < 0;
+                                
+                                return `
+                                    <div class="chart-bar-wrapper">
+                                        <div class="chart-bar ${isNegative ? 'negative' : 'positive'}" 
+                                            style="height: ${height}%; bottom: ${isNegative ? height : 0}%"
+                                            data-value="₦${this.formatNumber(value)}"
+                                            data-label="Year ${index}">
+                                        </div>
+                                        <div class="chart-label">Y${index}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
+
+        chartContainer.innerHTML = chartHTML;
+        
+        // Add tooltip interactions
+        this.setupChartInteractions();
+    }
+
+    setupChartInteractions() {
+        // Add hover/touch tooltips to chart bars
+        document.querySelectorAll('.chart-bar').forEach(bar => {
+            // For mouse devices
+            bar.addEventListener('mouseenter', (e) => {
+                this.showChartTooltip(e.target);
+            });
+            
+            bar.addEventListener('mouseleave', () => {
+                this.hideChartTooltip();
+            });
+            
+            // For touch devices
+            bar.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.showChartTooltip(e.target);
+            }, { passive: false });
+            
+            bar.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    this.hideChartTooltip();
+                }, 2000);
+            });
+        });
+    }
+
+    showChartTooltip(element) {
+        // Remove any existing tooltips
+        this.hideChartTooltip();
+        
+        // Create tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'chart-tooltip';
+        tooltip.textContent = `${element.dataset.label}: ${element.dataset.value}`;
+        document.body.appendChild(tooltip);
+        
+        // Position tooltip
+        const rect = element.getBoundingClientRect();
+        tooltip.style.left = `${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px`;
+        tooltip.style.top = `${rect.top - tooltip.offsetHeight - 10}px`;
+        
+        // Show tooltip
+        setTimeout(() => {
+            tooltip.classList.add('show');
+        }, 10);
+    }
+
+    hideChartTooltip() {
+        const tooltip = document.querySelector('.chart-tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('show');
+            setTimeout(() => {
+                tooltip.remove();
+            }, 300);
+        }
     }
 
     animateResults() {
@@ -276,12 +373,19 @@ class IRRCalculator {
         resultCards.forEach((card, index) => {
             setTimeout(() => {
                 card.style.animation = 'pulse 0.5s ease';
+                
+                // Remove animation after it completes
+                setTimeout(() => {
+                    card.style.animation = '';
+                }, 500);
             }, index * 100);
         });
     }
 
     formatNumber(number) {
-        if (Math.abs(number) >= 1e6) {
+        if (Math.abs(number) >= 1e9) {
+            return (number / 1e9).toFixed(1) + 'B';
+        } else if (Math.abs(number) >= 1e6) {
             return (number / 1e6).toFixed(1) + 'M';
         } else if (Math.abs(number) >= 1e3) {
             return (number / 1e3).toFixed(1) + 'K';
@@ -295,33 +399,75 @@ class IRRCalculator {
             id: Date.now(),
             timestamp: new Date().toISOString(),
             inputs: inputs,
-            results: results
+            results: {
+                irr: results.irr,
+                npv: results.npv,
+                paybackPeriod: results.paybackPeriod,
+                totalReturns: results.totalReturns
+            },
+            projectName: `Calculation ${this.savedCalculations.length + 1}`
         };
 
-        // Save to localStorage
-        const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
-        savedCalculations.unshift(calculation);
+        // Add to saved calculations
+        this.savedCalculations.unshift(calculation);
         
         // Keep only last 10 calculations
-        if (savedCalculations.length > 10) {
-            savedCalculations.splice(10);
+        if (this.savedCalculations.length > 10) {
+            this.savedCalculations.splice(10);
         }
         
-        localStorage.setItem('savedCalculations', JSON.stringify(savedCalculations));
+        // Save to localStorage
+        localStorage.setItem('savedCalculations', JSON.stringify(this.savedCalculations));
+        
+        // Show success message
+        this.showSaveSuccess();
     }
 
     loadSavedCalculations() {
-        const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
-        return savedCalculations;
+        try {
+            const saved = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
+            this.savedCalculations = saved;
+            console.log(`Loaded ${this.savedCalculations.length} saved calculations`);
+        } catch (error) {
+            console.error('Error loading saved calculations:', error);
+            this.savedCalculations = [];
+        }
+    }
+
+    showSaveSuccess() {
+        // Show a success message that calculation was saved
+        const toast = document.createElement('div');
+        toast.className = 'mobile-toast success';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="bi bi-check-circle"></i>
+                <span>Calculation saved successfully</span>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
     }
 
     showError(message) {
         // Create error toast
         const toast = document.createElement('div');
-        toast.className = 'error-toast';
+        toast.className = 'mobile-toast warning';
         toast.innerHTML = `
-            <i class="bi bi-exclamation-triangle"></i>
-            <span>${message}</span>
+            <div class="toast-content">
+                <i class="bi bi-exclamation-triangle"></i>
+                <span>${message}</span>
+            </div>
         `;
         
         document.body.appendChild(toast);
@@ -338,6 +484,11 @@ class IRRCalculator {
                 toast.remove();
             }, 300);
         }, 3000);
+        
+        // Vibrate for error (if available)
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
     }
 }
 
@@ -352,3 +503,167 @@ function calculateIRR() {
         window.irrCalculator.performCalculation();
     }
 }
+
+// Add calculator styles
+const calculatorStyles = `
+<style>
+/* Calculator Specific Styles */
+.calculator-form {
+    position: relative;
+}
+
+.form-group.focused label {
+    color: var(--accent-teal);
+}
+
+.calculation-preview {
+    background: var(--light-green);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--accent-teal);
+}
+
+.preview-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.preview-metric:last-child {
+    margin-bottom: 0;
+}
+
+.calculate-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.calculate-btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+}
+
+.calculate-btn:hover:after {
+    animation: button-shine 1.5s infinite;
+}
+
+@keyframes button-shine {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.result-metric {
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Chart Styles */
+.chart-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    font-size: 1rem;
+}
+
+.chart-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container-inner {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 0 var(--spacing-sm);
+}
+
+.chart-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.chart-bar {
+    width: 100%;
+    max-width: 20px;
+    border-radius: 2px 2px 0 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.chart-bar.positive {
+    background: var(--success);
+}
+
+.chart-bar.negative {
+    background: var(--danger);
+}
+
+.chart-bar:hover {
+    opacity: 0.8;
+}
+
+.chart-label {
+    font-size: 0.7rem;
+    color: var(--gray);
+    margin-top: var(--spacing-xs);
+    text-align: center;
+}
+
+.chart-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.chart-tooltip.show {
+    opacity: 1;
+}
+</style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', calculatorStyles);

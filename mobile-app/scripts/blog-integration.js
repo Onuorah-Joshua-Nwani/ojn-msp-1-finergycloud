@@ -16,14 +16,25 @@ class MobileBlogManager {
         // In a real app, this would fetch from an API
         this.posts = [
             {
+                id: 'post-xgboost',
+                title: 'Building Our XGBoost Model: How We\'re Predicting Solar Project Success in Nigeria',
+                category: 'AI & Technology',
+                date: '2024-12-18',
+                readTime: '8 min',
+                excerpt: 'Our XGBoost model achieves 87% accuracy in predicting solar project success in Nigeria\'s complex market. Learn how we built it and the surprising insights we discovered.',
+                image: 'https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg',
+                featured: true,
+                linkedInReady: true
+            },
+            {
                 id: 'post-1',
                 title: 'The AI Revolution in Renewable Energy Investment',
                 category: 'AI & Technology',
                 date: '2024-12-15',
                 readTime: '5 min',
                 excerpt: 'Discover how AI is transforming renewable energy investment decisions and why traditional models are failing.',
-                image: '../assets/images/wind-turbine.jpg',
-                featured: true,
+                image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg',
+                featured: false,
                 linkedInReady: true
             },
             {
@@ -33,7 +44,7 @@ class MobileBlogManager {
                 date: '2024-12-12',
                 readTime: '4 min',
                 excerpt: 'How AI is revolutionizing ESG scoring and making environmental impact quantifiable.',
-                image: '../assets/images/investment.jpg',
+                image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg',
                 featured: false,
                 linkedInReady: true
             },
@@ -44,7 +55,7 @@ class MobileBlogManager {
                 date: '2024-12-10',
                 readTime: '6 min',
                 excerpt: 'Why emerging markets represent the future of renewable energy investment.',
-                image: '../assets/images/digital-banking.jpg',
+                image: 'https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg',
                 featured: false,
                 linkedInReady: true
             },
@@ -55,7 +66,7 @@ class MobileBlogManager {
                 date: '2024-12-08',
                 readTime: '5 min',
                 excerpt: 'How advanced simulation is replacing spreadsheets for renewable energy analysis.',
-                image: '../assets/images/finance-analytics.jpg',
+                image: 'https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg',
                 featured: false,
                 linkedInReady: true
             },
@@ -66,7 +77,7 @@ class MobileBlogManager {
                 date: '2024-12-05',
                 readTime: '7 min',
                 excerpt: 'The journey from academic research to building the future of sustainable finance.',
-                image: '../assets/images/businessperson.jpg',
+                image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg',
                 featured: false,
                 linkedInReady: true
             }
@@ -76,13 +87,22 @@ class MobileBlogManager {
     setupEventListeners() {
         // Add blog navigation to mobile app
         this.addBlogNavigation();
-        this.setupBlogPage();
+        
+        // Listen for blog page activation
+        document.addEventListener('pageActivated', (e) => {
+            if (e.detail.pageId === 'blog') {
+                this.refreshBlogContent();
+            }
+        });
+        
+        // Setup swipe gestures for blog posts
+        this.setupSwipeGestures();
     }
 
     addBlogNavigation() {
-        // Add blog link to side navigation
+        // Add blog link to side navigation if not already present
         const navMenu = document.querySelector('.nav-menu');
-        if (navMenu) {
+        if (navMenu && !document.querySelector('.nav-link[data-page="blog"]')) {
             const blogNavItem = document.createElement('li');
             blogNavItem.className = 'nav-item';
             blogNavItem.innerHTML = `
@@ -94,9 +114,9 @@ class MobileBlogManager {
             navMenu.appendChild(blogNavItem);
         }
 
-        // Add blog to bottom navigation
+        // Add blog to bottom navigation if not already present
         const bottomNav = document.querySelector('.bottom-nav');
-        if (bottomNav && bottomNav.children.length < 5) {
+        if (bottomNav && !document.querySelector('.nav-btn[data-page="blog"]') && bottomNav.children.length < 5) {
             const blogNavBtn = document.createElement('button');
             blogNavBtn.className = 'nav-btn';
             blogNavBtn.setAttribute('data-page', 'blog');
@@ -105,34 +125,32 @@ class MobileBlogManager {
                 <span>Blog</span>
             `;
             bottomNav.appendChild(blogNavBtn);
+            
+            // Re-attach event listeners
+            blogNavBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (window.finergyApp) {
+                    window.finergyApp.navigateToPage('blog');
+                }
+            });
         }
     }
 
-    setupBlogPage() {
-        // Create blog page if it doesn't exist
-        const mainContent = document.getElementById('main-content');
-        if (mainContent && !document.getElementById('blog-page')) {
-            const blogPage = document.createElement('div');
-            blogPage.className = 'page';
-            blogPage.id = 'blog-page';
-            blogPage.innerHTML = this.generateBlogPageHTML();
-            mainContent.appendChild(blogPage);
-        }
+    refreshBlogContent() {
+        // Update featured post
+        this.updateFeaturedPost();
+        
+        // Update recent posts
+        this.updateRecentPosts();
     }
 
-    generateBlogPageHTML() {
+    updateFeaturedPost() {
         const featuredPost = this.posts.find(post => post.featured);
-        const regularPosts = this.posts.filter(post => !post.featured);
-
-        return `
-            <div class="page-header">
-                <h1>Blog & Insights</h1>
-                <p>Expert insights on AI-driven renewable energy investment</p>
-            </div>
-
-            <!-- Featured Post -->
-            ${featuredPost ? `
-            <div class="featured-post-mobile">
+        if (!featuredPost) return;
+        
+        const featuredPostContainer = document.querySelector('.featured-post-mobile');
+        if (featuredPostContainer) {
+            featuredPostContainer.innerHTML = `
                 <div class="post-image">
                     <img src="${featuredPost.image}" alt="${featuredPost.title}" class="img-fluid rounded-3">
                     <div class="post-category">${featuredPost.category}</div>
@@ -153,56 +171,58 @@ class MobileBlogManager {
                         </button>
                     </div>
                 </div>
-            </div>
-            ` : ''}
+            `;
+            
+            // Add ripple effect
+            this.addRippleEffect(featuredPostContainer);
+        }
+    }
 
-            <!-- Recent Posts -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>Recent Posts</h2>
-                </div>
-                <div class="blog-posts-mobile">
-                    ${regularPosts.map(post => `
-                        <div class="blog-post-mobile">
-                            <div class="post-image-small">
-                                <img src="${post.image}" alt="${post.title}" class="img-fluid rounded">
-                                <div class="post-category-small">${post.category}</div>
-                            </div>
-                            <div class="post-content-small">
-                                <div class="post-meta-small">
-                                    <span><i class="bi bi-calendar"></i> ${this.formatDate(post.date)}</span>
-                                    <span><i class="bi bi-clock"></i> ${post.readTime}</span>
-                                </div>
-                                <h4>${post.title}</h4>
-                                <p>${post.excerpt}</p>
-                                <div class="post-actions-small">
-                                    <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('${post.id}')">
-                                        Read More
-                                    </button>
-                                    <button class="btn btn-outline-primary btn-sm" onclick="mobileBlog.shareOnLinkedIn('${post.id}')">
-                                        <i class="bi bi-linkedin"></i>
-                                    </button>
-                                </div>
-                            </div>
+    updateRecentPosts() {
+        const regularPosts = this.posts.filter(post => !post.featured).slice(0, 3);
+        const blogPostsContainer = document.querySelector('.blog-posts-mobile');
+        
+        if (blogPostsContainer) {
+            blogPostsContainer.innerHTML = regularPosts.map(post => `
+                <div class="blog-post-mobile" data-post-id="${post.id}">
+                    <div class="post-image-small">
+                        <img src="${post.image}" alt="${post.title}" class="img-fluid rounded">
+                        <div class="post-category-small">${post.category}</div>
+                    </div>
+                    <div class="post-content-small">
+                        <div class="post-meta-small">
+                            <span><i class="bi bi-calendar"></i> ${this.formatDate(post.date)}</span>
+                            <span><i class="bi bi-clock"></i> ${post.readTime}</span>
                         </div>
-                    `).join('')}
-                </div>
-            </div>
-
-            <!-- Newsletter Signup -->
-            <div class="newsletter-mobile">
-                <div class="newsletter-content">
-                    <h3>Stay Updated</h3>
-                    <p>Get weekly insights delivered to your inbox</p>
-                    <div class="newsletter-form">
-                        <input type="email" class="form-control" placeholder="Enter your email" id="newsletter-email">
-                        <button class="btn btn-primary" onclick="mobileBlog.subscribeNewsletter()">
-                            <i class="bi bi-envelope"></i>
-                        </button>
+                        <h4>${post.title}</h4>
+                        <p>${post.excerpt}</p>
+                        <div class="post-actions-small">
+                            <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('${post.id}')">
+                                Read More
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="mobileBlog.shareOnLinkedIn('${post.id}')">
+                                <i class="bi bi-linkedin"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `).join('');
+            
+            // Add ripple effect to all blog posts
+            const blogPosts = document.querySelectorAll('.blog-post-mobile');
+            blogPosts.forEach(post => {
+                this.addRippleEffect(post);
+                
+                // Add click handler for the whole card
+                post.addEventListener('click', (e) => {
+                    // Don't trigger if clicking on a button
+                    if (!e.target.closest('button')) {
+                        const postId = post.getAttribute('data-post-id');
+                        this.readPost(postId);
+                    }
+                });
+            });
+        }
     }
 
     formatDate(dateString) {
@@ -218,31 +238,100 @@ class MobileBlogManager {
         const post = this.posts.find(p => p.id === postId);
         if (!post) return;
 
-        // In a real app, this would navigate to a full post view
-        // For now, we'll show a modal with post content
+        // Track post view
+        this.trackPostView(post);
+        
+        // Show post modal
         this.showPostModal(post);
     }
 
+    trackPostView(post) {
+        // In a real app, this would send analytics data
+        console.log(`Post viewed: ${post.title}`);
+        
+        // Save to recently viewed
+        const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewedPosts') || '[]');
+        
+        // Add to front if not already in list
+        if (!recentlyViewed.some(p => p.id === post.id)) {
+            recentlyViewed.unshift({
+                id: post.id,
+                title: post.title,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 10
+            if (recentlyViewed.length > 10) {
+                recentlyViewed.pop();
+            }
+            
+            localStorage.setItem('recentlyViewedPosts', JSON.stringify(recentlyViewed));
+        }
+    }
+
     showPostModal(post) {
+        // Remove any existing modals
+        const existingModal = document.querySelector('.blog-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
         const modal = document.createElement('div');
         modal.className = 'blog-modal';
+        
+        // Create post content based on post ID
+        let postContent = '';
+        
+        if (post.id === 'post-xgboost') {
+            postContent = `
+                <img src="${post.image}" alt="${post.title}" class="img-fluid rounded mb-3">
+                <div class="post-meta mb-3">
+                    <span><i class="bi bi-calendar"></i> ${this.formatDate(post.date)}</span>
+                    <span><i class="bi bi-clock"></i> ${post.readTime}</span>
+                    <span><i class="bi bi-tag"></i> ${post.category}</span>
+                </div>
+                
+                <div class="post-summary bg-light p-4 rounded mb-4">
+                    <h5>Key Takeaways:</h5>
+                    <ul>
+                        <li>Our XGBoost model achieves 87% accuracy in predicting solar project success in Nigeria</li>
+                        <li>We identified 14 critical features that determine project viability</li>
+                        <li>Local weather patterns and grid stability emerged as the most influential factors</li>
+                        <li>The model reduced due diligence time from weeks to minutes</li>
+                        <li>Real-world validation with ₦50M in solar projects confirmed model reliability</li>
+                    </ul>
+                </div>
+                
+                <h3>The Challenge: Predicting Success in a Complex Market</h3>
+                <p>When we began developing FinergyCloud's AI engine, we faced a significant challenge: how to accurately predict the success of solar energy projects in Nigeria's complex and often unpredictable market. Traditional financial models failed to capture the nuanced interplay of factors unique to emerging markets.</p>
+                
+                <p>Our goal was ambitious but clear: build a machine learning model that could analyze multiple variables simultaneously and predict project IRR with greater accuracy than conventional methods. After evaluating several algorithms, we selected XGBoost (eXtreme Gradient Boosting) for its exceptional performance with tabular data and ability to handle complex feature interactions.</p>
+                
+                <p>This is a preview of the full article. The complete post with detailed analysis, insights, and actionable recommendations is available on our website.</p>
+            `;
+        } else {
+            postContent = `
+                <img src="${post.image}" alt="${post.title}" class="img-fluid rounded mb-3">
+                <div class="post-meta mb-3">
+                    <span><i class="bi bi-calendar"></i> ${this.formatDate(post.date)}</span>
+                    <span><i class="bi bi-clock"></i> ${post.readTime}</span>
+                    <span><i class="bi bi-tag"></i> ${post.category}</span>
+                </div>
+                <p class="lead">${post.excerpt}</p>
+                <p>This is a preview of the full article. The complete post with detailed analysis, insights, and actionable recommendations is available on our website.</p>
+            `;
+        }
+        
         modal.innerHTML = `
             <div class="blog-modal-content">
                 <div class="blog-modal-header">
                     <h3>${post.title}</h3>
-                    <button class="blog-modal-close" onclick="this.closest('.blog-modal').remove()">
+                    <button class="blog-modal-close" aria-label="Close">
                         <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <div class="blog-modal-body">
-                    <img src="${post.image}" alt="${post.title}" class="img-fluid rounded mb-3">
-                    <div class="post-meta mb-3">
-                        <span><i class="bi bi-calendar"></i> ${this.formatDate(post.date)}</span>
-                        <span><i class="bi bi-clock"></i> ${post.readTime}</span>
-                        <span><i class="bi bi-tag"></i> ${post.category}</span>
-                    </div>
-                    <p class="lead">${post.excerpt}</p>
-                    <p>This is a preview of the full article. The complete post with detailed analysis, insights, and actionable recommendations is available on our website.</p>
+                    ${postContent}
                     <div class="modal-actions">
                         <button class="btn btn-primary" onclick="window.open('https://finergycloud.com/blog.html', '_blank')">
                             <i class="bi bi-globe me-2"></i>Read Full Article
@@ -257,6 +346,27 @@ class MobileBlogManager {
 
         document.body.appendChild(modal);
         
+        // Add close button handler
+        const closeBtn = modal.querySelector('.blog-modal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            });
+        }
+        
+        // Close on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        });
+        
         // Animate in
         setTimeout(() => {
             modal.classList.add('show');
@@ -265,6 +375,32 @@ class MobileBlogManager {
 
     shareOnLinkedIn(postId) {
         const linkedInTemplates = {
+            'post-xgboost': `🔬 Building Our XGBoost Model: How We're Predicting Solar Project Success in Nigeria
+
+At FinergyCloud, we've developed an XGBoost machine learning model that achieves 87% accuracy in predicting solar project success in Nigeria's complex market. Here's how we did it:
+
+🔑 Key Achievements:
+• 87% accuracy in predicting project IRR within ±1.5%
+• 92% success rate in identifying high-risk projects
+• Reduced due diligence time from weeks to minutes
+• Validated with ₦50M in real solar projects
+
+📊 The Technical Journey:
+1. Data Collection: Gathered 120+ historical projects, 10 years of weather data, grid stability metrics, economic indicators, and local factors
+2. Feature Engineering: Created composite metrics like Grid Stability Index and Regulatory Risk Score
+3. Model Development: Optimized XGBoost with Bayesian hyperparameter tuning
+4. Validation: Rigorous testing through cross-validation and real-world deployment
+
+💡 Surprising Insights:
+• Grid stability is more critical than solar irradiation
+• Community engagement directly correlates with +2.3% IRR
+• Regulatory navigation expertise reduces delays by 35%
+• Specific equipment quality thresholds yield optimal returns
+
+This model represents a significant advancement in renewable energy investment analysis for emerging markets, bridging the information gap that has historically limited clean energy deployment in Africa.
+
+#MachineLearning #XGBoost #RenewableEnergy #SolarEnergy #Nigeria #EmergingMarkets #DataScience #CleanTech #AI #Investment`,
+
             'post-1': `🚀 The AI Revolution in Renewable Energy Investment: Why Traditional Models Are Failing
 
 The renewable energy sector is experiencing unprecedented growth, but traditional investment models are struggling to keep pace. Here's why AI is becoming essential:
@@ -287,125 +423,162 @@ The renewable energy sector is experiencing unprecedented growth, but traditiona
 • 25% better portfolio performance
 • Enhanced ESG compliance and reporting
 
-At FinergyCloud, we're pioneering AI-driven risk intelligence specifically for renewable energy investments.
+At FinergyCloud, we're pioneering AI-driven risk intelligence specifically for renewable energy investments. Our platform combines advanced machine learning with deep industry expertise to help investors make smarter, faster decisions.
 
 The future of renewable energy investment is intelligent. Are you ready?
 
 #RenewableEnergy #AI #Investment #ESG #Fintech #SustainableFinance #CleanTech #Innovation
 
-Read the full article: https://finergycloud.com/blog.html`,
+What's your experience with AI in investment analysis? Share your thoughts below! 👇`,
 
             'post-2': `🌱 ESG Scoring Revolution: How AI is Making Sustainability Measurable
 
-ESG factors are no longer nice-to-have metrics—they're essential for investment decisions. But traditional ESG scoring has been subjective and inconsistent. AI is changing that.
+ESG (Environmental, Social, Governance) factors are no longer nice-to-have metrics—they're essential for investment decisions. But traditional ESG scoring has been subjective and inconsistent. AI is changing that.
 
 🔍 Traditional ESG Challenges:
 • Subjective scoring methodologies
 • Inconsistent data sources
 • Manual analysis prone to bias
 • Delayed reporting and updates
+• Limited emerging market coverage
 
 🤖 How AI is Revolutionizing ESG:
 • Automated data collection from multiple sources
-• Real-time sentiment analysis
+• Real-time sentiment analysis of news and reports
 • Objective, quantifiable scoring algorithms
 • Continuous monitoring and updates
+• Enhanced emerging market analysis
 
 📊 The Impact:
 • 70% more consistent scoring across projects
 • Real-time ESG risk alerts
 • Improved regulatory compliance
+• Better stakeholder reporting
 • Enhanced investment decision-making
 
-At FinergyCloud, our AI-powered ESG scoring framework specifically addresses renewable energy projects in emerging markets.
+At FinergyCloud, our AI-powered ESG scoring framework specifically addresses renewable energy projects in emerging markets, where traditional ESG data is often limited or unreliable.
+
+The future of sustainable investing is data-driven and AI-powered. 
 
 #ESG #SustainableInvesting #AI #RenewableEnergy #CleanTech #Impact #Sustainability #Fintech
 
-Read more: https://finergycloud.com/blog.html`,
+How is your organization approaching ESG measurement? Let's discuss! 💬`,
 
             'post-3': `🌍 The $2.8 Trillion Opportunity: Why Emerging Markets Are the Future of Renewable Energy
 
-While developed markets dominate headlines, the real opportunity lies in emerging markets.
+While developed markets dominate renewable energy headlines, the real opportunity lies in emerging markets. Here's why smart investors are looking beyond traditional markets:
 
-📊 The Numbers:
-• $2.8T investment gap by 2030
-• 65% of global renewable growth from developing economies
-• 3x higher IRR potential vs developed markets
-• 2.6 billion people lack clean energy access
+📊 The Numbers Don't Lie:
+• $2.8T investment gap in emerging market renewables by 2030
+• 65% of global renewable energy growth will come from developing economies
+• 3x higher IRR potential compared to developed markets
+• 2.6 billion people still lack access to clean energy
 
-🚀 Why Emerging Markets Win:
-• Abundant natural resources
-• Lower development costs
-• Supportive government policies
-• Growing energy demand
+🚀 Why Emerging Markets Are Winning:
+• Abundant natural resources (solar, wind, hydro)
+• Lower development costs and faster deployment
+• Supportive government policies and incentives
+• Growing energy demand and economic development
+• Less market saturation and competition
 
 ⚠️ The Challenge: Risk Assessment
-Traditional models fail due to limited data and political uncertainty.
+Traditional risk models fail in emerging markets due to:
+• Limited historical data
+• Political and regulatory uncertainty
+• Currency volatility
+• Infrastructure challenges
 
 💡 The Solution: AI-Driven Risk Intelligence
-FinergyCloud provides local market intelligence and real-time monitoring.
+At FinergyCloud, we're solving this with:
+• Local market intelligence and data
+• Real-time political and economic monitoring
+• Currency risk modeling
+• Cultural and regulatory context analysis
 
-#EmergingMarkets #RenewableEnergy #Investment #AI #CleanTech #SustainableFinance
+The future of renewable energy is in emerging markets. The question is: are you equipped to capitalize on this opportunity?
 
-Learn more: https://finergycloud.com/blog.html`,
+#EmergingMarkets #RenewableEnergy #Investment #AI #CleanTech #SustainableFinance #Africa #Asia #LatinAmerica
+
+What's your experience investing in emerging market renewables? Share your insights! 🗣️`,
 
             'post-4': `📊 Beyond Excel: The Future of IRR Simulation in Renewable Energy Projects
 
-Excel has been the backbone of financial modeling, but it's no longer adequate for complex renewable energy analysis.
+Excel spreadsheets have been the backbone of financial modeling for decades, but they're no longer adequate for complex renewable energy project analysis. Here's why advanced IRR simulation is essential:
 
 ❌ Excel Limitations:
-• Static models
-• Limited scenario analysis
-• Human error prone
+• Static models that don't adapt to changing conditions
+• Limited scenario analysis capabilities
+• Prone to human error and version control issues
+• Can't handle complex risk interactions
 • No real-time data integration
 
-✅ Advanced IRR Simulation:
+✅ Advanced IRR Simulation Benefits:
 • Monte Carlo analysis with 10,000+ iterations
-• Dynamic risk modeling
-• Real-time data integration
+• Dynamic risk modeling and sensitivity analysis
+• Real-time data integration and updates
 • Automated scenario generation
+• Probabilistic outcome distributions
 
-🎯 Results:
+🎯 Key Advantages:
 • 85% more accurate risk assessment
-• 60% faster analysis
-• Better stakeholder communication
-• Enhanced compliance
+• 60% faster analysis and decision-making
+• Better stakeholder communication with visual outputs
+• Enhanced regulatory compliance and reporting
+• Improved portfolio optimization
 
-FinergyCloud's IRR engine incorporates ML, real-time data, and emerging market factors.
+At FinergyCloud, our IRR simulation engine goes beyond traditional models by incorporating:
+• Machine learning for predictive analytics
+• Real-time market data integration
+• Emerging market risk factors
+• ESG impact modeling
+• Regulatory change scenarios
 
-#FinancialModeling #IRR #RenewableEnergy #Investment #AI #Fintech
+The future of financial modeling is intelligent, dynamic, and data-driven. Are your models keeping up?
 
-Discover more: https://finergycloud.com/blog.html`,
+#FinancialModeling #IRR #RenewableEnergy #Investment #AI #Fintech #ProjectFinance #Analytics
+
+What tools are you using for renewable energy project analysis? Let's discuss! 💭`,
 
             'post-5': `🎓 From MBA Distinction to Startup: Building the Future of Sustainable Finance
 
-The journey from academic research to fintech startup has been incredible.
+The journey from academic research to building a fintech startup has been incredible. Here's what I've learned about transforming ideas into impact:
 
-📚 Academic Foundation:
+📚 The Academic Foundation:
 • MBA with Distinction in Renewable Energy Finance
 • Research focus: AI-driven investment analysis
-• Supervisor recognition for exceptional work
+• Supervisor recognition: "Exceptional work combining financial modeling with sustainable investment principles"
+• Academic rigor meets real-world application
 
 💡 The Eureka Moment:
-Discovered critical gap in renewable energy investment tools, especially for emerging markets.
+During my MBA research, I discovered a critical gap: sophisticated investment analysis tools for renewable energy projects, especially in emerging markets. Traditional models were failing investors, and AI could solve this.
 
 🚀 From Idea to MVP:
 • 2022: MBA project genesis
 • 2023: MVP development and GitHub launch
-• 2024: Company registration
+• 2024: Company registration and beta testing
 • 2025: AI engine integration planned
 
-🔑 Key Lessons:
+🔑 Key Lessons Learned:
 • Academic excellence provides credibility
 • Real-world validation is essential
 • Technology must solve genuine problems
 • Emerging markets offer massive opportunities
+• AI can democratize sophisticated analysis
 
-The future of sustainable finance is intelligent.
+💪 The Challenges:
+• Bridging academic theory with market needs
+• Building technical capabilities
+• Securing early customers and feedback
+• Balancing innovation with practicality
 
-#Entrepreneurship #MBA #Startup #SustainableFinance #AI #RenewableEnergy #Fintech
+🎯 The Vision:
+To democratize access to sophisticated renewable energy investment analysis, making sustainable investing more transparent, data-driven, and accessible globally.
 
-Read the full story: https://finergycloud.com/blog.html`
+The future of sustainable finance is intelligent, and we're building it one algorithm at a time.
+
+#Entrepreneurship #MBA #Startup #SustainableFinance #AI #RenewableEnergy #Fintech #Innovation #AcademicEntrepreneurship
+
+What's your experience transitioning from academia to entrepreneurship? Share your story! 🗣️`
         };
 
         const template = linkedInTemplates[postId];
@@ -415,16 +588,82 @@ Read the full story: https://finergycloud.com/blog.html`
         if (navigator.clipboard) {
             navigator.clipboard.writeText(template).then(() => {
                 this.showToast('LinkedIn post copied! Opening LinkedIn...', 'success');
-                window.open('https://www.linkedin.com/feed/', '_blank');
+                setTimeout(() => {
+                    window.open('https://www.linkedin.com/feed/', '_blank');
+                }, 1000);
             }).catch(() => {
                 this.showToast('Please copy the text manually', 'warning');
-                window.open('https://www.linkedin.com/feed/', '_blank');
+                this.showShareModal(template);
             });
         } else {
             // Fallback for older browsers
-            this.showToast('Opening LinkedIn...', 'info');
-            window.open('https://www.linkedin.com/feed/', '_blank');
+            this.showShareModal(template);
         }
+    }
+
+    showShareModal(content) {
+        const modal = document.createElement('div');
+        modal.className = 'blog-modal';
+        modal.innerHTML = `
+            <div class="blog-modal-content">
+                <div class="blog-modal-header">
+                    <h3>Share on LinkedIn</h3>
+                    <button class="blog-modal-close" aria-label="Close">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+                <div class="blog-modal-body">
+                    <p>Copy this text and paste it into your LinkedIn post:</p>
+                    <div class="share-content p-3 bg-light rounded mb-3" style="max-height: 300px; overflow-y: auto;">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary copy-btn">
+                            <i class="bi bi-clipboard me-2"></i>Copy Text
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="window.open('https://www.linkedin.com/feed/', '_blank')">
+                            <i class="bi bi-linkedin me-2"></i>Open LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        
+        // Add close button handler
+        const closeBtn = modal.querySelector('.blog-modal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            });
+        }
+        
+        // Add copy button handler
+        const copyBtn = modal.querySelector('.copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(content).then(() => {
+                    this.showToast('Copied to clipboard!', 'success');
+                    copyBtn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Copied!';
+                    copyBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        window.open('https://www.linkedin.com/feed/', '_blank');
+                    }, 1000);
+                }).catch(() => {
+                    this.showToast('Failed to copy. Please select and copy manually.', 'warning');
+                });
+            });
+        }
+        
+        // Animate in
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
     }
 
     subscribeNewsletter() {
@@ -433,9 +672,26 @@ Read the full story: https://finergycloud.com/blog.html`
             this.showToast('Please enter your email address', 'warning');
             return;
         }
+        
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value)) {
+            this.showToast('Please enter a valid email address', 'warning');
+            return;
+        }
 
         // Simulate newsletter subscription
         this.showToast('Thank you for subscribing! You\'ll receive weekly insights.', 'success');
+        
+        // Save to localStorage for persistence
+        const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+        subscribers.push({
+            email: email.value,
+            timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+        
+        // Clear input
         email.value = '';
     }
 
@@ -462,6 +718,88 @@ Read the full story: https://finergycloud.com/blog.html`
             }, 300);
         }, 3000);
     }
+
+    setupSwipeGestures() {
+        // Add swipe gestures for blog posts
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 100;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            this.handleSwipe();
+        }, { passive: true });
+        
+        this.handleSwipe = () => {
+            const swipeDistance = touchEndX - touchStartX;
+            
+            // Only process significant swipes
+            if (Math.abs(swipeDistance) < minSwipeDistance) return;
+            
+            // Only process swipes on the blog page
+            if (window.finergyApp && window.finergyApp.currentPage !== 'blog') return;
+            
+            if (swipeDistance > 0) {
+                // Swipe right - previous post
+                this.navigatePosts('prev');
+            } else {
+                // Swipe left - next post
+                this.navigatePosts('next');
+            }
+        };
+    }
+
+    navigatePosts(direction) {
+        // If a modal is open, navigate between posts
+        const modal = document.querySelector('.blog-modal');
+        if (modal) {
+            // Find current post
+            const currentPostId = this.currentPost || '';
+            const currentIndex = this.posts.findIndex(p => p.id === currentPostId);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                
+                if (direction === 'next') {
+                    newIndex = (currentIndex + 1) % this.posts.length;
+                } else {
+                    newIndex = (currentIndex - 1 + this.posts.length) % this.posts.length;
+                }
+                
+                // Close current modal
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                    
+                    // Open new post
+                    this.readPost(this.posts[newIndex].id);
+                }, 300);
+            }
+        }
+    }
+
+    addRippleEffect(element) {
+        element.addEventListener('click', function(e) {
+            const rect = element.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            element.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    }
 }
 
 // Initialize mobile blog manager
@@ -479,6 +817,7 @@ const mobileBlogStyles = `
     box-shadow: var(--shadow-md);
     overflow: hidden;
     margin-bottom: var(--spacing-xl);
+    position: relative;
 }
 
 .featured-post-mobile .post-image {
@@ -494,19 +833,22 @@ const mobileBlogStyles = `
 .post-category,
 .post-category-small {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
     background: var(--gradient-primary);
     color: var(--white);
-    padding: 0.5rem 1rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     font-size: 0.8rem;
     font-weight: var(--font-weight-semibold);
+    z-index: 1;
 }
 
 .post-category-small {
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem var(--spacing-xs);
     font-size: 0.7rem;
+    top: var(--spacing-xs);
+    left: var(--spacing-xs);
 }
 
 .featured-post-mobile .post-content {
@@ -516,8 +858,8 @@ const mobileBlogStyles = `
 .post-meta,
 .post-meta-small {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     font-size: 0.9rem;
     color: var(--gray);
     flex-wrap: wrap;
@@ -525,7 +867,8 @@ const mobileBlogStyles = `
 
 .post-meta-small {
     font-size: 0.8rem;
-    gap: 0.75rem;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .post-meta span,
@@ -537,15 +880,24 @@ const mobileBlogStyles = `
 
 .featured-post-mobile h3 {
     color: var(--primary-green);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
     font-weight: var(--font-weight-semibold);
+    font-size: 1.25rem;
+    line-height: 1.3;
+}
+
+.featured-post-mobile p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .post-actions,
 .post-actions-small {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
 }
 
 .blog-posts-mobile {
@@ -562,6 +914,18 @@ const mobileBlogStyles = `
     display: flex;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
+    border: 1px solid rgba(0, 77, 64, 0.05);
+    transition: var(--transition-normal);
+    position: relative;
+}
+
+.blog-post-mobile:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.blog-post-mobile:active {
+    transform: scale(0.98);
 }
 
 .post-image-small {
@@ -586,18 +950,24 @@ const mobileBlogStyles = `
 
 .post-content-small h4 {
     color: var(--primary-green);
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
     font-weight: var(--font-weight-semibold);
     line-height: 1.3;
 }
 
 .post-content-small p {
     color: var(--text-light);
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.8rem;
     line-height: 1.4;
     flex: 1;
+}
+
+.post-actions-small {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: auto;
 }
 
 .newsletter-mobile {
@@ -611,17 +981,19 @@ const mobileBlogStyles = `
 
 .newsletter-mobile h3 {
     color: var(--white);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.25rem;
 }
 
 .newsletter-mobile p {
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.95rem;
 }
 
 .newsletter-form {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
     max-width: 300px;
     margin: 0 auto;
 }
@@ -630,12 +1002,14 @@ const mobileBlogStyles = `
     flex: 1;
     border: none;
     border-radius: var(--radius-md);
-    padding: 0.75rem;
+    padding: var(--spacing-sm);
 }
 
 .newsletter-form .btn {
     border-radius: var(--radius-md);
-    padding: 0.75rem 1rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--white);
+    color: var(--primary-green);
 }
 
 /* Blog Modal */
@@ -646,7 +1020,7 @@ const mobileBlogStyles = `
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: var(--z-modal);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -654,6 +1028,7 @@ const mobileBlogStyles = `
     visibility: hidden;
     transition: all 0.3s ease;
     padding: var(--spacing-md);
+    backdrop-filter: blur(3px);
 }
 
 .blog-modal.show {
@@ -682,6 +1057,10 @@ const mobileBlogStyles = `
     justify-content: space-between;
     padding: var(--spacing-lg);
     border-bottom: 1px solid rgba(0, 77, 64, 0.1);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 1;
 }
 
 .blog-modal-header h3 {
@@ -696,9 +1075,14 @@ const mobileBlogStyles = `
     font-size: 1.5rem;
     color: var(--gray);
     cursor: pointer;
-    padding: 0.5rem;
+    padding: var(--spacing-xs);
     border-radius: var(--radius-sm);
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .blog-modal-close:hover {
@@ -712,22 +1096,72 @@ const mobileBlogStyles = `
 
 .modal-actions {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
     flex-wrap: wrap;
+}
+
+/* Post Summary Box */
+.post-summary {
+    background: var(--light-green);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.post-summary h5 {
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1rem;
+}
+
+.post-summary ul {
+    padding-left: var(--spacing-lg);
+    margin-bottom: 0;
+}
+
+.post-summary li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-dark);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Share Content */
+.share-content {
+    white-space: pre-line;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-dark);
 }
 
 /* Mobile Toast */
 .mobile-toast {
     position: fixed;
-    top: calc(var(--header-height) + var(--spacing-md));
+    top: calc(var(--header-height) + var(--safe-area-top) + var(--spacing-md));
     left: var(--spacing-md);
     right: var(--spacing-md);
     background: var(--white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
     padding: var(--spacing-md);
-    z-index: 1001;
+    z-index: var(--z-toast);
     transform: translateY(-100px);
     opacity: 0;
     transition: all 0.3s ease;
@@ -753,7 +1187,7 @@ const mobileBlogStyles = `
 .mobile-toast .toast-content {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
 }
 
 .mobile-toast.success .toast-content i {
