@@ -230,8 +230,78 @@
         </div>
     </section>
 
-    <!-- Detailed Features Section -->
+    <!-- System Architecture Diagram Section -->
     <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="section-title">How It Works: System Architecture</h2>
+                    <p class="section-subtitle">
+                        Our AI-powered pipeline transforms raw data into actionable investment intelligence
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="architecture-diagram-container">
+                        <div class="architecture-diagram">
+                            <div class="diagram-node start-node">
+                                <div class="node-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+                                <div class="node-text">User uploads solar project data</div>
+                            </div>
+                            <div class="diagram-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                            <div class="diagram-node">
+                                <div class="node-icon">
+                                    <i class="bi bi-cpu"></i>
+                                </div>
+                                <div class="node-text">XGBoost ML Model</div>
+                            </div>
+                            <div class="diagram-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                            <div class="diagram-node">
+                                <div class="node-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div class="node-text">ESG Risk Score Generator</div>
+                            </div>
+                            <div class="diagram-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                            <div class="diagram-node">
+                                <div class="node-icon">
+                                    <i class="bi bi-calculator"></i>
+                                </div>
+                                <div class="node-text">IRR Simulation Engine (10,000 Monte Carlo Runs)</div>
+                            </div>
+                            <div class="diagram-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                            <div class="diagram-node end-node">
+                                <div class="node-icon">
+                                    <i class="bi bi-graph-up"></i>
+                                </div>
+                                <div class="node-text">Power BI / Dashboard Visualisation</div>
+                            </div>
+                        </div>
+                        <div class="architecture-insight">
+                            <div class="insight-icon">
+                                <i class="bi bi-lightbulb"></i>
+                            </div>
+                            <p>This AI-powered pipeline processes solar energy project inputs to generate risk scores and simulate financial return probabilities — in real-time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Features Section -->
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
@@ -1077,6 +1147,114 @@
             text-decoration: underline;
         }
 
+        /* Architecture Diagram Styles */
+        .architecture-diagram-container {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .diagram-node {
+            background: var(--light-green);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .diagram-node:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .diagram-node.start-node {
+            border-left: 4px solid var(--success);
+        }
+
+        .diagram-node.end-node {
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .node-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .node-icon i {
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .node-text {
+            font-weight: var(--font-weight-medium);
+            color: var(--primary-green);
+            font-size: 1.1rem;
+        }
+
+        .diagram-arrow {
+            color: var(--accent-teal);
+            font-size: 1.5rem;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .architecture-insight {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .insight-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .insight-icon i {
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .architecture-insight p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--white);
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
             .feature-detail {
                 padding: 2rem 0;
@@ -1118,6 +1296,25 @@
                 flex-direction: column;
                 text-align: center;
                 gap: 0.5rem;
+            }
+
+            .architecture-insight {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .insight-icon {
+                margin: 0 auto 1rem;
+            }
+
+            .diagram-node {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .node-icon {
+                margin-bottom: 0.5rem;
             }
         }
     </style>
