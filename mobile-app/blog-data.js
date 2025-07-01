@@ -60,6 +60,32 @@ const mobileBlogPosts = [
 
 // LinkedIn sharing templates
 const linkedInTemplates = {
+    'post-xgboost': `🔬 Building Our XGBoost Model: How We're Predicting Solar Project Success in Nigeria
+
+At FinergyCloud, we've developed an XGBoost machine learning model that achieves 87% accuracy in predicting solar project success in Nigeria's complex market. Here's how we did it:
+
+🔑 Key Achievements:
+• 87% accuracy in predicting project IRR within ±1.5%
+• 92% success rate in identifying high-risk projects
+• Reduced due diligence time from weeks to minutes
+• Validated with ₦50M in real solar projects
+
+📊 The Technical Journey:
+1. Data Collection: Gathered 120+ historical projects, 10 years of weather data, grid stability metrics, economic indicators, and local factors
+2. Feature Engineering: Created composite metrics like Grid Stability Index and Regulatory Risk Score
+3. Model Development: Optimized XGBoost with Bayesian hyperparameter tuning
+4. Validation: Rigorous testing through cross-validation and real-world deployment
+
+💡 Surprising Insights:
+• Grid stability is more critical than solar irradiation
+• Community engagement directly correlates with +2.3% IRR
+• Regulatory navigation expertise reduces delays by 35%
+• Specific equipment quality thresholds yield optimal returns
+
+This model represents a significant advancement in renewable energy investment analysis for emerging markets, bridging the information gap that has historically limited clean energy deployment in Africa.
+
+#MachineLearning #XGBoost #RenewableEnergy #SolarEnergy #Nigeria #EmergingMarkets #DataScience #CleanTech #AI #Investment`,
+
     'post-1': `🚀 The AI Revolution in Renewable Energy Investment: Why Traditional Models Are Failing
 
 The renewable energy sector is experiencing unprecedented growth, but traditional investment models are struggling to keep pace. Here's why AI is becoming essential:

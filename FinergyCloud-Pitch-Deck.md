@@ -10,7 +10,7 @@
 
 **Transforming Investment Decisions Through Smart Analytics**
 
-*Onuorah Nwani, Founder & CEO*
+*O.J. Nwani, Founder & CEO*
 *MBA with Distinction | Renewable Energy Finance*
 
 *contact@finergycloud.com | www.finergycloud.com*
@@ -340,7 +340,7 @@
 
 ### **Experienced Leadership**
 
-**👨‍💼 Onuorah Nwani - Founder & CEO**
+**👨‍💼 O.J. Nwani - Founder & CEO**
 - MBA with Distinction (Renewable Energy Finance)
 - ICAS trainee with accounting expertise
 - SAP consultant with enterprise software experience

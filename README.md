@@ -297,7 +297,7 @@ npm run dev
 
 ### Project Leadership
 
-**Onuorah Nwani** - Founder & CEO
+**O.J. Nwani** - Founder & CEO
 - MBA with Distinction in Renewable Energy Finance
 - Professional background: ICAS trainee, SAP consultant, NatWest banking
 - Academic recognition for innovative fintech research
