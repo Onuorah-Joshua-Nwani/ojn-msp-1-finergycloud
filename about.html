@@ -152,8 +152,44 @@
         </div>
     </section>
 
-    <!-- Mission & Vision Section -->
+    <!-- UK Market Statement Section -->
     <section class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <img src="assets/images/businessperson.jpg" alt="UK Headquarters" class="img-fluid rounded-3 shadow-lg">
+                </div>
+                <div class="col-lg-6">
+                    <div class="uk-market-content">
+                        <h2 class="section-title">UK Headquarters</h2>
+                        <p class="uk-market-text">
+                            Now headquartered in the UK, FinergyCloud plans to collaborate with UK-based clean energy investors and climate tech researchers to expand the platform's reach and impact.
+                        </p>
+                        <p>
+                            FinergyCloud was founded by Joshua Nwani, a UK-based SAP & AI consultant and clean energy innovator. The company was officially registered in the UK in June 2025 to scale its mission of unlocking sustainable energy financing in Africa using artificial intelligence.
+                        </p>
+                        <div class="uk-market-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">2025</div>
+                                <div class="stat-label">UK Registration</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">3+</div>
+                                <div class="stat-label">African Markets</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₦120M+</div>
+                                <div class="stat-label">Pilot Funding</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
@@ -205,7 +241,7 @@
     </section>
 
     <!-- The Problem We Solve -->
-    <section class="section-padding">
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -259,7 +295,7 @@
     </section>
 
     <!-- Timeline Section -->
-    <section id="timeline" class="section-padding bg-light">
+    <section id="timeline" class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
@@ -308,9 +344,10 @@
                     <div class="timeline-year">2025</div>
                     <div class="timeline-content">
                         <h4>AI Engine Roadmap</h4>
-                        <p>Planned integration of advanced AI/ML capabilities including XGBoost models for risk prediction and NLP for document analysis.</p>
+                        <p>Planned integration of advanced AI/ML capabilities including XGBoost models for risk prediction and NLP for document analysis. UK headquarters established to expand global reach.</p>
                         <div class="timeline-achievements">
                             <span class="achievement-badge">AI Integration</span>
+                            <span class="achievement-badge">UK Expansion</span>
                             <span class="achievement-badge">Scale Preparation</span>
                         </div>
                     </div>
@@ -320,7 +357,7 @@
     </section>
 
     <!-- Founder Story Section -->
-    <section id="founder-story" class="section-padding">
+    <section id="founder-story" class="section-padding bg-light">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -331,7 +368,7 @@
                 <div class="col-lg-6">
                     <div class="founder-content">
                         <h2 class="section-title">Founder Story</h2>
-                        <h3>Onuorah Nwani</h3>
+                        <h3>Joshua Nwani</h3>
                         <p class="founder-title">Founder & CEO</p>
                         
                         <div class="founder-bio">
@@ -380,7 +417,7 @@
     </section>
 
     <!-- Recognition Section -->
-    <section class="section-padding bg-light">
+    <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
@@ -410,7 +447,7 @@
                             <i class="bi bi-people"></i>
                         </div>
                         <h4>Industry Feedback</h4>
-                        <p>"FinergyCloud addresses a real gap in the market. The ESG integration and emerging market focus are particularly valuable for our investment decisions."</p>
+                        <p>"We used FinergyCloud to score ₦50M in solar projects – it simplified our risk decisions."</p>
                         <div class="recognition-source">
                             <strong>Beta User</strong><br>
                             <small>Renewable Energy Investment Firm</small>
@@ -435,7 +472,7 @@
     </section>
 
     <!-- Technology Philosophy -->
-    <section class="section-padding">
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -796,6 +833,30 @@
             align-items: center;
         }
 
+        /* UK Market Statement Styles */
+        .uk-market-content {
+            padding: 2rem 0;
+        }
+
+        .uk-market-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--primary-green);
+            font-weight: var(--font-weight-medium);
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--light-green);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-teal);
+        }
+
+        .uk-market-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
         @media (max-width: 768px) {
             .timeline::before {
                 left: 30px;
@@ -819,6 +880,10 @@
 
             .founder-actions {
                 flex-direction: column;
+            }
+            
+            .uk-market-stats {
+                justify-content: center;
             }
         }
     </style>
