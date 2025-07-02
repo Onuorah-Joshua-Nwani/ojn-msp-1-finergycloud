@@ -3,6 +3,13 @@
 class IRRCalculator {
     constructor() {
         this.savedCalculations = [];
+        this.currencySymbols = {
+            'NGN': '₦',
+            'USD': '$',
+            'EUR': '€',
+            'GBP': '£'
+        };
+        this.currentCurrency = 'NGN';
         this.setupCalculator();
         this.loadSavedCalculations();
     }
@@ -24,6 +31,9 @@ class IRRCalculator {
         
         // Setup project type change handler
         this.setupProjectTypeHandler();
+        
+        // Setup currency change handler
+        this.setupCurrencyHandler();
     }
 
     setupInputValidation() {
@@ -53,6 +63,59 @@ class IRRCalculator {
                 this.updatePreview();
             });
         }
+    }
+    
+    setupCurrencyHandler() {
+        const currencySelect = document.getElementById('currency');
+        if (currencySelect) {
+            currencySelect.addEventListener('change', () => {
+                this.currentCurrency = currencySelect.value;
+                this.updatePreview();
+                
+                // Update any existing results with new currency
+                const irrResult = document.getElementById('irr-result');
+                const npvResult = document.getElementById('npv-result');
+                const paybackResult = document.getElementById('payback-result');
+                
+                if (irrResult && irrResult.textContent !== '--') {
+                    // IRR is a percentage, so no need to update
+                }
+                
+                if (npvResult && npvResult.textContent !== '--') {
+                    // Extract the numeric value and update with new currency
+                    const value = npvResult.textContent.replace(/[^0-9.]/g, '');
+                    if (value) {
+                        npvResult.textContent = `${this.currencySymbols[this.currentCurrency]}${value}`;
+                    }
+                }
+                
+                // Payback period is in years, so no need to update
+                
+                // Update chart if it exists
+                this.updateCashFlowChartCurrency();
+            });
+        }
+    }
+    
+    updateCashFlowChartCurrency() {
+        const chartContainer = document.getElementById('cashflow-chart');
+        if (!chartContainer || chartContainer.classList.contains('chart-placeholder')) {
+            return;
+        }
+        
+        // Update currency in chart tooltips
+        const chartBars = chartContainer.querySelectorAll('.chart-bar');
+        chartBars.forEach(bar => {
+            const value = bar.getAttribute('data-value');
+            if (value) {
+                // Extract numeric value
+                const numericValue = value.replace(/[^0-9.]/g, '');
+                if (numericValue) {
+                    // Update with new currency symbol
+                    bar.setAttribute('data-value', `${this.currencySymbols[this.currentCurrency]}${numericValue}`);
+                }
+            }
+        });
     }
     
     adjustDefaultsForProjectType(projectType) {
@@ -115,6 +178,7 @@ class IRRCalculator {
     getInputValues() {
         return {
             projectType: document.getElementById('project-type')?.value || 'solar',
+            currency: document.getElementById('currency')?.value || 'NGN',
             initialInvestment: parseFloat(document.getElementById('initial-investment')?.value) || 0,
             projectDuration: parseFloat(document.getElementById('project-duration')?.value) || 0,
             annualCashflow: parseFloat(document.getElementById('annual-cashflow')?.value) || 0,
@@ -154,7 +218,7 @@ class IRRCalculator {
     }
 
     calculateIRR(inputs) {
-        const { initialInvestment, projectDuration, annualCashflow, terminalValue, discountRate } = inputs;
+        const { initialInvestment, projectDuration, annualCashflow, terminalValue, discountRate, currency } = inputs;
         
         // Create cash flow array
         const cashFlows = [-initialInvestment]; // Initial investment as negative
@@ -183,7 +247,8 @@ class IRRCalculator {
             cashFlows: cashFlows,
             totalInvestment: initialInvestment,
             totalReturns: (annualCashflow * projectDuration) + terminalValue,
-            projectType: inputs.projectType
+            projectType: inputs.projectType,
+            currency: currency
         };
     }
 
@@ -239,7 +304,7 @@ class IRRCalculator {
 
     calculatePreview(inputs) {
         // Quick preview calculation
-        const { initialInvestment, annualCashflow, projectDuration, projectType, discountRate } = inputs;
+        const { initialInvestment, annualCashflow, projectDuration, projectType, discountRate, currency } = inputs;
         const totalReturns = annualCashflow * projectDuration;
         const simpleROI = ((totalReturns - initialInvestment) / initialInvestment) * 100;
         
@@ -270,7 +335,8 @@ class IRRCalculator {
             simpleROI: adjustedROI,
             totalReturns: totalReturns,
             estimatedNPV: npv,
-            projectType: projectType
+            projectType: projectType,
+            currency: currency
         };
     }
 
@@ -278,6 +344,8 @@ class IRRCalculator {
         // Update preview in UI (if preview element exists)
         const previewElement = document.querySelector('.calculation-preview');
         if (previewElement) {
+            const currencySymbol = this.currencySymbols[preview.currency] || '₦';
+            
             previewElement.innerHTML = `
                 <div class="preview-metric">
                     <span>Simple ROI</span>
@@ -285,11 +353,11 @@ class IRRCalculator {
                 </div>
                 <div class="preview-metric">
                     <span>Total Returns</span>
-                    <span class="text-primary">₦${this.formatNumber(preview.totalReturns)}</span>
+                    <span class="text-primary">${currencySymbol}${this.formatNumber(preview.totalReturns)}</span>
                 </div>
                 <div class="preview-metric">
                     <span>Estimated NPV</span>
-                    <span class="text-primary">₦${this.formatNumber(preview.estimatedNPV)}</span>
+                    <span class="text-primary">${currencySymbol}${this.formatNumber(preview.estimatedNPV)}</span>
                 </div>
                 <div class="preview-metric">
                     <span>Project Type</span>
@@ -325,13 +393,16 @@ class IRRCalculator {
             calculateBtn.disabled = false;
         }
 
+        // Get currency symbol
+        const currencySymbol = this.currencySymbols[results.currency] || '₦';
+
         // Update result displays
         this.updateResultElement('irr-result', `${(results.irr * 100).toFixed(2)}%`);
-        this.updateResultElement('npv-result', `₦${this.formatNumber(results.npv)}`);
+        this.updateResultElement('npv-result', `${currencySymbol}${this.formatNumber(results.npv)}`);
         this.updateResultElement('payback-result', `${results.paybackPeriod.toFixed(1)} years`);
 
         // Create cash flow chart
-        this.createCashFlowChart(results.cashFlows, results.projectType);
+        this.createCashFlowChart(results.cashFlows, results.projectType, results.currency);
 
         // Show success animation
         this.animateResults();
@@ -352,7 +423,7 @@ class IRRCalculator {
         }
     }
 
-    createCashFlowChart(cashFlows, projectType) {
+    createCashFlowChart(cashFlows, projectType, currency) {
         const chartContainer = document.getElementById('cashflow-chart');
         if (!chartContainer) return;
 
@@ -362,6 +433,9 @@ class IRRCalculator {
 
         // Get color based on project type
         const barColor = this.getProjectTypeColor(projectType);
+        
+        // Get currency symbol
+        const currencySymbol = this.currencySymbols[currency] || '₦';
 
         // Simple bar chart implementation
         const maxValue = Math.max(...cashFlows.map(Math.abs));
@@ -379,7 +453,7 @@ class IRRCalculator {
                                     <div class="chart-bar-wrapper">
                                         <div class="chart-bar ${isNegative ? 'negative' : 'positive'}" 
                                             style="height: ${height}%; bottom: ${isNegative ? height : 0}%; ${!isNegative ? `background: ${barColor};` : ''}"
-                                            data-value="₦${this.formatNumber(value)}"
+                                            data-value="${currencySymbol}${this.formatNumber(value)}"
                                             data-label="Year ${index}">
                                         </div>
                                         <div class="chart-label">Y${index}</div>
@@ -508,7 +582,8 @@ class IRRCalculator {
                 npv: results.npv,
                 paybackPeriod: results.paybackPeriod,
                 totalReturns: results.totalReturns,
-                projectType: inputs.projectType
+                projectType: inputs.projectType,
+                currency: inputs.currency
             },
             projectName: `${this.capitalizeFirstLetter(inputs.projectType)} Project ${this.savedCalculations.length + 1}`
         };
@@ -706,6 +781,8 @@ const calculatorStyles = `
     height: 200px;
     width: 100%;
     padding-bottom: 30px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .chart-bars {
@@ -715,6 +792,7 @@ const calculatorStyles = `
     height: 100%;
     width: 100%;
     padding: 0 var(--spacing-sm);
+    min-width: 300px;
 }
 
 .chart-bar-wrapper {
@@ -723,6 +801,8 @@ const calculatorStyles = `
     align-items: center;
     flex: 1;
     height: 100%;
+    min-width: 30px;
+    position: relative;
 }
 
 .chart-bar {
@@ -731,6 +811,8 @@ const calculatorStyles = `
     border-radius: 2px 2px 0 0;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    position: absolute;
+    bottom: 0;
 }
 
 .chart-bar.positive {
@@ -750,6 +832,9 @@ const calculatorStyles = `
     color: var(--gray);
     margin-top: var(--spacing-xs);
     text-align: center;
+    position: absolute;
+    bottom: -25px;
+    width: 100%;
 }
 
 .chart-tooltip {
