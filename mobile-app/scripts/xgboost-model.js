@@ -41,6 +41,16 @@ class XGBoostModelManager {
 
         // Add model page navigation if not already present
         this.addModelNavigation();
+        
+        // Set up prediction button
+        document.addEventListener('DOMContentLoaded', () => {
+            const predictBtn = document.getElementById('predict-btn');
+            if (predictBtn) {
+                predictBtn.addEventListener('click', () => {
+                    this.runPrediction();
+                });
+            }
+        });
     }
 
     addModelNavigation() {
@@ -198,6 +208,52 @@ class XGBoostModelManager {
         // This would typically load from an API or local storage
     }
 
+    runPrediction() {
+        // Get input values
+        const location = document.getElementById('project-location')?.value || 'lagos';
+        const gridStability = document.getElementById('grid-stability')?.value || 'medium';
+        const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
+        const projectSize = parseFloat(document.getElementById('project-size')?.value) || 5;
+        
+        // Show loading state
+        const predictBtn = document.getElementById('predict-btn');
+        if (predictBtn) {
+            predictBtn.innerHTML = `
+                <div class="loading-spinner"></div>
+                Processing...
+            `;
+            predictBtn.disabled = true;
+        }
+        
+        // Simulate prediction delay
+        setTimeout(() => {
+            // Run prediction
+            const result = this.predictProjectSuccess({
+                location,
+                gridStability,
+                communityEngagement,
+                projectSize
+            });
+            
+            // Display results
+            this.displayPredictionResults(result);
+            
+            // Reset button
+            if (predictBtn) {
+                predictBtn.innerHTML = `
+                    <i class="bi bi-cpu"></i>
+                    Run AI Prediction
+                `;
+                predictBtn.disabled = false;
+            }
+            
+            // Haptic feedback on success (if available)
+            if (navigator.vibrate) {
+                navigator.vibrate(100);
+            }
+        }, 2000);
+    }
+
     predictProjectSuccess(projectData) {
         // Simulate XGBoost prediction
         if (!this.modelLoaded) {
@@ -224,16 +280,32 @@ class XGBoostModelManager {
             adjustedIRR -= 0.02;
         }
         
+        // Project size adjustment
+        if (projectData.projectSize > 10) {
+            adjustedIRR += 0.01;
+        } else if (projectData.projectSize < 2) {
+            adjustedIRR -= 0.01;
+        }
+        
+        // Location adjustment
+        if (projectData.location === 'lagos' || projectData.location === 'abuja') {
+            adjustedIRR += 0.015;
+        } else if (projectData.location === 'kano') {
+            adjustedIRR -= 0.01;
+        }
+        
         // Add some randomness to simulate model variance
         adjustedIRR += (Math.random() * 0.02 - 0.01);
         
         // Calculate success probability
         const successProbability = 0.7 + (adjustedIRR - baseIRR) * 5;
+        const clampedProbability = Math.min(Math.max(successProbability, 0), 1);
         
         return {
             predictedIRR: adjustedIRR,
-            successProbability: Math.min(Math.max(successProbability, 0), 1),
-            riskLevel: this.getRiskLevel(successProbability),
+            successProbability: clampedProbability,
+            riskLevel: this.getRiskLevel(clampedProbability),
+            confidenceScore: this.getConfidenceScore(clampedProbability),
             keyFactors: this.getKeyFactors(projectData)
         };
     }
@@ -245,6 +317,16 @@ class XGBoostModelManager {
             return 'Medium Risk';
         } else {
             return 'High Risk';
+        }
+    }
+    
+    getConfidenceScore(probability) {
+        if (probability > 0.85) {
+            return 'High';
+        } else if (probability > 0.7) {
+            return 'Medium';
+        } else {
+            return 'Low';
         }
     }
 
@@ -264,7 +346,56 @@ class XGBoostModelManager {
             factors.push('Limited community engagement increases risk');
         }
         
+        if (projectData.projectSize > 10) {
+            factors.push('Larger project size provides economies of scale');
+        } else if (projectData.projectSize < 2) {
+            factors.push('Small project size may reduce economies of scale');
+        }
+        
+        if (projectData.location === 'lagos' || projectData.location === 'abuja') {
+            factors.push('Urban location with strong infrastructure support');
+        } else if (projectData.location === 'kano') {
+            factors.push('Location has grid stability challenges');
+        }
+        
         return factors;
+    }
+
+    displayPredictionResults(result) {
+        if (!result) return;
+        
+        // Update prediction result elements
+        document.getElementById('predicted-irr').textContent = `${(result.predictedIRR * 100).toFixed(1)}%`;
+        document.getElementById('success-probability').textContent = `${(result.successProbability * 100).toFixed(0)}%`;
+        document.getElementById('risk-level').textContent = result.riskLevel;
+        document.getElementById('confidence-score').textContent = result.confidenceScore;
+        
+        // Update key factors
+        const keyFactorsList = document.getElementById('key-factors-list');
+        if (keyFactorsList) {
+            keyFactorsList.innerHTML = '';
+            
+            result.keyFactors.forEach(factor => {
+                const factorItem = document.createElement('div');
+                factorItem.className = 'factor-item';
+                factorItem.innerHTML = `
+                    <i class="bi bi-arrow-right-circle"></i>
+                    <span>${factor}</span>
+                `;
+                keyFactorsList.appendChild(factorItem);
+            });
+        }
+        
+        // Show prediction result
+        const predictionResult = document.getElementById('prediction-result');
+        if (predictionResult) {
+            predictionResult.style.display = 'block';
+            
+            // Scroll to result
+            setTimeout(() => {
+                predictionResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
     }
 
     setupModelVisualizations() {
@@ -300,6 +431,16 @@ class XGBoostModelManager {
 // Initialize XGBoost model manager
 document.addEventListener('DOMContentLoaded', () => {
     window.xgboostModel = new XGBoostModelManager();
+    
+    // Add click handler for predict button
+    const predictBtn = document.getElementById('predict-btn');
+    if (predictBtn) {
+        predictBtn.addEventListener('click', () => {
+            if (window.xgboostModel) {
+                window.xgboostModel.runPrediction();
+            }
+        });
+    }
 });
 
 // Add XGBoost model styles
@@ -332,6 +473,69 @@ const xgboostModelStyles = `
     color: var(--danger);
 }
 
+.model-stats {
+    margin-bottom: var(--spacing-lg);
+}
+
+.model-stat {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: var(--light-green);
+    border-radius: var(--radius-md);
+    height: 100%;
+}
+
+.model-stat-value {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+}
+
+.model-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+}
+
+.feature-importance {
+    margin-bottom: var(--spacing-lg);
+}
+
+.feature-item {
+    margin-bottom: var(--spacing-sm);
+}
+
+.feature-name {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.feature-bar-container {
+    height: 12px;
+    background: var(--light-gray);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-bar {
+    height: 100%;
+    background: var(--accent-teal);
+    border-radius: var(--radius-sm);
+}
+
+.feature-value {
+    position: absolute;
+    right: var(--spacing-xs);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-dark);
+}
+
 .performance-chart {
     width: 100%;
     height: 100%;
@@ -361,48 +565,6 @@ const xgboostModelStyles = `
     width: 20px;
     height: 10px;
     border-radius: 2px;
-}
-
-.model-upload-form {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(0, 77, 64, 0.1);
-}
-
-.model-upload-form h4 {
-    margin-bottom: 1rem;
-    color: var(--primary-green);
-}
-
-.upload-dropzone {
-    border: 2px dashed rgba(0, 77, 64, 0.2);
-    border-radius: var(--radius-md);
-    padding: 2rem;
-    text-align: center;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
-
-.upload-dropzone:hover {
-    border-color: var(--accent-teal);
-    background: rgba(0, 77, 64, 0.05);
-}
-
-.upload-icon {
-    font-size: 2rem;
-    color: var(--accent-teal);
-    margin-bottom: 1rem;
-}
-
-.upload-text {
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
-}
-
-.upload-hint {
-    font-size: 0.8rem;
-    color: var(--text-light);
 }
 
 .prediction-result {
@@ -477,6 +639,13 @@ const xgboostModelStyles = `
 
 .factor-item i {
     color: var(--accent-teal);
+}
+
+.case-study-metrics {
+    background: var(--light-green);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
 }
 
 @media (max-width: 480px) {

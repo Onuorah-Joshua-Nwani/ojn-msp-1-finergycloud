@@ -203,6 +203,12 @@ class FinergyCloudApp {
             this.saveUserPreference('lastPage', pageId);
             
             console.log(`Navigated to page: ${pageId}`);
+            
+            // Dispatch page activated event
+            const event = new CustomEvent('pageActivated', {
+                detail: { pageId: pageId }
+            });
+            document.dispatchEvent(event);
         }
     }
 
@@ -227,7 +233,7 @@ class FinergyCloudApp {
     }
 
     isValidPage(pageId) {
-        const validPages = ['dashboard', 'calculator', 'projects', 'esg', 'blog'];
+        const validPages = ['dashboard', 'calculator', 'projects', 'esg', 'blog', 'xgboost'];
         return validPages.includes(pageId);
     }
 
@@ -238,6 +244,7 @@ class FinergyCloudApp {
         this.initializePage('projects');
         this.initializePage('esg');
         this.initializePage('blog');
+        this.initializePage('xgboost');
         
         // Restore last visited page if available
         const lastPage = this.userPreferences.lastPage;
@@ -262,6 +269,9 @@ class FinergyCloudApp {
                 break;
             case 'blog':
                 this.initializeBlog();
+                break;
+            case 'xgboost':
+                this.initializeXGBoost();
                 break;
         }
     }
@@ -290,6 +300,13 @@ class FinergyCloudApp {
     initializeBlog() {
         // Blog initialization is handled by blog-integration.js
     }
+    
+    initializeXGBoost() {
+        // XGBoost initialization is handled by xgboost-model.js
+        if (window.xgboostModel) {
+            window.xgboostModel.refreshModelContent();
+        }
+    }
 
     animateMetrics() {
         const metrics = document.querySelectorAll('.metric-value');
@@ -303,6 +320,22 @@ class FinergyCloudApp {
     setupCalculatorValidation() {
         const inputs = document.querySelectorAll('#calculator-page input[type="number"]');
         inputs.forEach(input => {
+            // Add floating label effect
+            const label = input.previousElementSibling;
+            if (label && label.classList.contains('form-label')) {
+                input.addEventListener('focus', function() {
+                    label.style.transform = 'translateY(-25px) scale(0.8)';
+                    label.style.color = '#007bff';
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!input.value) {
+                        label.style.transform = 'translateY(0) scale(1)';
+                        label.style.color = '#343a40';
+                    }
+                });
+            }
+            
             input.addEventListener('input', () => {
                 this.validateCalculatorInput(input);
                 this.updateCalculatorPreview();
