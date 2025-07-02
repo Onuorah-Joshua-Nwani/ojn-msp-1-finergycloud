@@ -18,6 +18,10 @@ WORKDIR /home/$USERNAME
 ENV PYENV_ROOT /home/$USERNAME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
+# Set environment variables for proper Python compilation
+ENV LDFLAGS="-L/usr/lib -L/usr/local/lib"
+ENV CPPFLAGS="-I/usr/include -I/usr/local/include"
+
 # Install pyenv
 RUN set -ex \
     && curl https://pyenv.run | bash \
