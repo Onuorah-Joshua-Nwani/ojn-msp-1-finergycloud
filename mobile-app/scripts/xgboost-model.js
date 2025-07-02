@@ -22,6 +22,13 @@ class XGBoostModelManager {
             'Financing Structure': 0.37,
             'Technology Type': 0.35
         };
+        this.projectTypeFeatures = {
+            'solar': ['Solar Irradiation', 'Grid Stability', 'Land Rights', 'Equipment Quality'],
+            'wind': ['Wind Speed Consistency', 'Grid Connection', 'Land Rights', 'Turbine Quality'],
+            'hydro': ['Water Flow Stability', 'Environmental Impact', 'Regulatory Navigation', 'Dam Construction'],
+            'biomass': ['Feedstock Supply', 'Processing Efficiency', 'Waste Management', 'Emissions Control'],
+            'geothermal': ['Resource Temperature', 'Drilling Success', 'Reservoir Management', 'Plant Efficiency']
+        };
         this.init();
     }
 
@@ -48,6 +55,14 @@ class XGBoostModelManager {
             if (predictBtn) {
                 predictBtn.addEventListener('click', () => {
                     this.runPrediction();
+                });
+            }
+            
+            // Set up project type change handler
+            const projectTypeSelect = document.getElementById('project-type-xgboost');
+            if (projectTypeSelect) {
+                projectTypeSelect.addEventListener('change', () => {
+                    this.updateFeatureImportanceForProjectType(projectTypeSelect.value);
                 });
             }
         });
@@ -130,29 +145,54 @@ class XGBoostModelManager {
     }
 
     updateFeatureImportance() {
-        // Update feature importance bars
+        // Get current project type
+        const projectTypeSelect = document.getElementById('project-type-xgboost');
+        const projectType = projectTypeSelect ? projectTypeSelect.value : 'solar';
+        
+        this.updateFeatureImportanceForProjectType(projectType);
+    }
+    
+    updateFeatureImportanceForProjectType(projectType) {
+        // Update feature importance bars based on project type
         const featureImportanceContainer = document.querySelector('.feature-importance');
-        if (featureImportanceContainer) {
-            featureImportanceContainer.innerHTML = '';
-            
-            // Get top features
-            const topFeatures = Object.entries(this.featureImportance)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 4);
-            
-            topFeatures.forEach(([feature, importance]) => {
-                const featureItem = document.createElement('div');
-                featureItem.className = 'feature-item';
-                featureItem.innerHTML = `
-                    <div class="feature-name">${feature}</div>
-                    <div class="feature-bar-container">
-                        <div class="feature-bar" style="width: ${importance * 100}%"></div>
-                        <span class="feature-value">${Math.round(importance * 100)}%</span>
-                    </div>
-                `;
-                featureImportanceContainer.appendChild(featureItem);
-            });
-        }
+        if (!featureImportanceContainer) return;
+        
+        featureImportanceContainer.innerHTML = '';
+        
+        // Get features for this project type
+        const relevantFeatures = this.projectTypeFeatures[projectType] || this.projectTypeFeatures['solar'];
+        
+        // Create a combined feature importance object with project-specific features
+        const combinedFeatures = {};
+        
+        // Add project-specific features with high importance
+        relevantFeatures.forEach((feature, index) => {
+            combinedFeatures[feature] = 0.9 - (index * 0.05); // Decreasing importance
+        });
+        
+        // Add some general features
+        combinedFeatures['Community Engagement'] = 0.85;
+        combinedFeatures['Regulatory Navigation'] = 0.78;
+        combinedFeatures['Political Stability'] = 0.52;
+        combinedFeatures['Currency Risk'] = 0.49;
+        
+        // Get top features
+        const topFeatures = Object.entries(combinedFeatures)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 6);
+        
+        topFeatures.forEach(([feature, importance]) => {
+            const featureItem = document.createElement('div');
+            featureItem.className = 'feature-item';
+            featureItem.innerHTML = `
+                <div class="feature-name">${feature}</div>
+                <div class="feature-bar-container">
+                    <div class="feature-bar" style="width: ${importance * 100}%"></div>
+                    <span class="feature-value">${Math.round(importance * 100)}%</span>
+                </div>
+            `;
+            featureImportanceContainer.appendChild(featureItem);
+        });
     }
 
     updateModelPerformance() {
@@ -210,6 +250,7 @@ class XGBoostModelManager {
 
     runPrediction() {
         // Get input values
+        const projectType = document.getElementById('project-type-xgboost')?.value || 'solar';
         const location = document.getElementById('project-location')?.value || 'lagos';
         const gridStability = document.getElementById('grid-stability')?.value || 'medium';
         const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
@@ -229,6 +270,7 @@ class XGBoostModelManager {
         setTimeout(() => {
             // Run prediction
             const result = this.predictProjectSuccess({
+                projectType,
                 location,
                 gridStability,
                 communityEngagement,
@@ -263,17 +305,19 @@ class XGBoostModelManager {
         
         // In a real app, this would call an API or use a local model
         // For demo purposes, we'll simulate a prediction
-        const baseIRR = 0.15; // 15% base IRR
+        let baseIRR = this.getBaseIRRForProjectType(projectData.projectType);
         
         // Apply feature adjustments
         let adjustedIRR = baseIRR;
         
+        // Grid stability adjustment
         if (projectData.gridStability === 'high') {
             adjustedIRR += 0.03;
         } else if (projectData.gridStability === 'low') {
             adjustedIRR -= 0.04;
         }
         
+        // Community engagement adjustment
         if (projectData.communityEngagement === 'extensive') {
             adjustedIRR += 0.023;
         } else if (projectData.communityEngagement === 'minimal') {
@@ -302,12 +346,31 @@ class XGBoostModelManager {
         const clampedProbability = Math.min(Math.max(successProbability, 0), 1);
         
         return {
+            projectType: projectData.projectType,
             predictedIRR: adjustedIRR,
             successProbability: clampedProbability,
             riskLevel: this.getRiskLevel(clampedProbability),
             confidenceScore: this.getConfidenceScore(clampedProbability),
             keyFactors: this.getKeyFactors(projectData)
         };
+    }
+    
+    getBaseIRRForProjectType(projectType) {
+        // Different project types have different base IRRs
+        switch(projectType) {
+            case 'solar':
+                return 0.15; // 15% base IRR for solar
+            case 'wind':
+                return 0.16; // 16% base IRR for wind
+            case 'hydro':
+                return 0.14; // 14% base IRR for hydro
+            case 'biomass':
+                return 0.13; // 13% base IRR for biomass
+            case 'geothermal':
+                return 0.17; // 17% base IRR for geothermal
+            default:
+                return 0.15; // Default to solar
+        }
     }
 
     getRiskLevel(successProbability) {
@@ -331,9 +394,10 @@ class XGBoostModelManager {
     }
 
     getKeyFactors(projectData) {
-        // Return key factors affecting the prediction
+        // Return key factors affecting the prediction based on project type
         const factors = [];
         
+        // Common factors
         if (projectData.gridStability === 'high') {
             factors.push('Strong grid stability is a positive factor');
         } else if (projectData.gridStability === 'low') {
@@ -356,6 +420,25 @@ class XGBoostModelManager {
             factors.push('Urban location with strong infrastructure support');
         } else if (projectData.location === 'kano') {
             factors.push('Location has grid stability challenges');
+        }
+        
+        // Project-specific factors
+        switch(projectData.projectType) {
+            case 'solar':
+                factors.push('Solar irradiation levels are favorable in this region');
+                break;
+            case 'wind':
+                factors.push('Wind speed consistency is critical for project success');
+                break;
+            case 'hydro':
+                factors.push('Water flow stability is a key success factor');
+                break;
+            case 'biomass':
+                factors.push('Reliable feedstock supply chain is essential');
+                break;
+            case 'geothermal':
+                factors.push('Resource temperature and drilling success are critical');
+                break;
         }
         
         return factors;
@@ -565,6 +648,48 @@ const xgboostModelStyles = `
     width: 20px;
     height: 10px;
     border-radius: 2px;
+}
+
+.model-upload-form {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 77, 64, 0.1);
+}
+
+.model-upload-form h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-green);
+}
+
+.upload-dropzone {
+    border: 2px dashed rgba(0, 77, 64, 0.2);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.upload-dropzone:hover {
+    border-color: var(--accent-teal);
+    background: rgba(0, 77, 64, 0.05);
+}
+
+.upload-icon {
+    font-size: 2rem;
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
+.upload-text {
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.upload-hint {
+    font-size: 0.8rem;
+    color: var(--text-light);
 }
 
 .prediction-result {

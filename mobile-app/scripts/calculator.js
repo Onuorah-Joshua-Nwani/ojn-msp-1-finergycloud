@@ -21,6 +21,9 @@ class IRRCalculator {
         
         // Setup chart interactions
         this.setupChartInteractions();
+        
+        // Setup project type change handler
+        this.setupProjectTypeHandler();
     }
 
     setupInputValidation() {
@@ -40,6 +43,47 @@ class IRRCalculator {
                 input.parentElement.classList.remove('focused');
             });
         });
+    }
+    
+    setupProjectTypeHandler() {
+        const projectTypeSelect = document.getElementById('project-type');
+        if (projectTypeSelect) {
+            projectTypeSelect.addEventListener('change', () => {
+                this.adjustDefaultsForProjectType(projectTypeSelect.value);
+                this.updatePreview();
+            });
+        }
+    }
+    
+    adjustDefaultsForProjectType(projectType) {
+        // Adjust default values based on project type
+        const durationInput = document.getElementById('project-duration');
+        const discountRateInput = document.getElementById('discount-rate');
+        
+        if (!durationInput || !discountRateInput) return;
+        
+        switch(projectType) {
+            case 'solar':
+                durationInput.placeholder = 'e.g., 25';
+                discountRateInput.value = '10';
+                break;
+            case 'wind':
+                durationInput.placeholder = 'e.g., 20';
+                discountRateInput.value = '9.5';
+                break;
+            case 'hydro':
+                durationInput.placeholder = 'e.g., 30';
+                discountRateInput.value = '8.5';
+                break;
+            case 'biomass':
+                durationInput.placeholder = 'e.g., 15';
+                discountRateInput.value = '11';
+                break;
+            case 'geothermal':
+                durationInput.placeholder = 'e.g., 35';
+                discountRateInput.value = '8';
+                break;
+        }
     }
 
     validateInput(input) {
@@ -70,10 +114,12 @@ class IRRCalculator {
 
     getInputValues() {
         return {
+            projectType: document.getElementById('project-type')?.value || 'solar',
             initialInvestment: parseFloat(document.getElementById('initial-investment')?.value) || 0,
             projectDuration: parseFloat(document.getElementById('project-duration')?.value) || 0,
             annualCashflow: parseFloat(document.getElementById('annual-cashflow')?.value) || 0,
-            terminalValue: parseFloat(document.getElementById('terminal-value')?.value) || 0
+            terminalValue: parseFloat(document.getElementById('terminal-value')?.value) || 0,
+            discountRate: parseFloat(document.getElementById('discount-rate')?.value) || 10
         };
     }
 
@@ -108,7 +154,7 @@ class IRRCalculator {
     }
 
     calculateIRR(inputs) {
-        const { initialInvestment, projectDuration, annualCashflow, terminalValue } = inputs;
+        const { initialInvestment, projectDuration, annualCashflow, terminalValue, discountRate } = inputs;
         
         // Create cash flow array
         const cashFlows = [-initialInvestment]; // Initial investment as negative
@@ -124,8 +170,8 @@ class IRRCalculator {
         // Calculate IRR using Newton-Raphson method
         const irr = this.newtonRaphsonIRR(cashFlows);
         
-        // Calculate NPV at 10% discount rate
-        const npv = this.calculateNPV(cashFlows, 0.10);
+        // Calculate NPV at specified discount rate
+        const npv = this.calculateNPV(cashFlows, discountRate / 100);
         
         // Calculate payback period
         const paybackPeriod = this.calculatePaybackPeriod(cashFlows);
@@ -136,7 +182,8 @@ class IRRCalculator {
             paybackPeriod: paybackPeriod,
             cashFlows: cashFlows,
             totalInvestment: initialInvestment,
-            totalReturns: (annualCashflow * projectDuration) + terminalValue
+            totalReturns: (annualCashflow * projectDuration) + terminalValue,
+            projectType: inputs.projectType
         };
     }
 
@@ -192,13 +239,38 @@ class IRRCalculator {
 
     calculatePreview(inputs) {
         // Quick preview calculation
-        const { initialInvestment, annualCashflow, projectDuration } = inputs;
+        const { initialInvestment, annualCashflow, projectDuration, projectType, discountRate } = inputs;
         const totalReturns = annualCashflow * projectDuration;
         const simpleROI = ((totalReturns - initialInvestment) / initialInvestment) * 100;
         
+        // Adjust ROI based on project type for more realistic preview
+        let adjustedROI = simpleROI;
+        switch(projectType) {
+            case 'solar':
+                // Solar is baseline
+                break;
+            case 'wind':
+                adjustedROI *= 1.05; // Wind typically has higher ROI
+                break;
+            case 'hydro':
+                adjustedROI *= 0.95; // Hydro has lower ROI but longer lifespan
+                break;
+            case 'biomass':
+                adjustedROI *= 0.9; // Biomass has lower ROI due to fuel costs
+                break;
+            case 'geothermal':
+                adjustedROI *= 1.1; // Geothermal has higher ROI but higher upfront costs
+                break;
+        }
+        
+        // Simple NPV calculation for preview
+        const npv = -initialInvestment + (annualCashflow * (1 - Math.pow(1 + (discountRate/100), -projectDuration)) / (discountRate/100));
+        
         return {
-            simpleROI: simpleROI,
-            totalReturns: totalReturns
+            simpleROI: adjustedROI,
+            totalReturns: totalReturns,
+            estimatedNPV: npv,
+            projectType: projectType
         };
     }
 
@@ -215,8 +287,20 @@ class IRRCalculator {
                     <span>Total Returns</span>
                     <span class="text-primary">₦${this.formatNumber(preview.totalReturns)}</span>
                 </div>
+                <div class="preview-metric">
+                    <span>Estimated NPV</span>
+                    <span class="text-primary">₦${this.formatNumber(preview.estimatedNPV)}</span>
+                </div>
+                <div class="preview-metric">
+                    <span>Project Type</span>
+                    <span class="text-primary">${this.capitalizeFirstLetter(preview.projectType)}</span>
+                </div>
             `;
         }
+    }
+    
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     showCalculating() {
@@ -247,7 +331,7 @@ class IRRCalculator {
         this.updateResultElement('payback-result', `${results.paybackPeriod.toFixed(1)} years`);
 
         // Create cash flow chart
-        this.createCashFlowChart(results.cashFlows);
+        this.createCashFlowChart(results.cashFlows, results.projectType);
 
         // Show success animation
         this.animateResults();
@@ -268,7 +352,7 @@ class IRRCalculator {
         }
     }
 
-    createCashFlowChart(cashFlows) {
+    createCashFlowChart(cashFlows, projectType) {
         const chartContainer = document.getElementById('cashflow-chart');
         if (!chartContainer) return;
 
@@ -276,11 +360,14 @@ class IRRCalculator {
         chartContainer.classList.remove('chart-placeholder');
         chartContainer.innerHTML = '';
 
+        // Get color based on project type
+        const barColor = this.getProjectTypeColor(projectType);
+
         // Simple bar chart implementation
         const maxValue = Math.max(...cashFlows.map(Math.abs));
         const chartHTML = `
             <div class="chart-wrapper">
-                <div class="chart-title">Cash Flow Projection</div>
+                <div class="chart-title">Cash Flow Projection (${this.capitalizeFirstLetter(projectType)})</div>
                 <div class="chart-content">
                     <div class="chart-container-inner">
                         <div class="chart-bars">
@@ -291,7 +378,7 @@ class IRRCalculator {
                                 return `
                                     <div class="chart-bar-wrapper">
                                         <div class="chart-bar ${isNegative ? 'negative' : 'positive'}" 
-                                            style="height: ${height}%; bottom: ${isNegative ? height : 0}%"
+                                            style="height: ${height}%; bottom: ${isNegative ? height : 0}%; ${!isNegative ? `background: ${barColor};` : ''}"
                                             data-value="₦${this.formatNumber(value)}"
                                             data-label="Year ${index}">
                                         </div>
@@ -309,6 +396,23 @@ class IRRCalculator {
         
         // Add tooltip interactions
         this.setupChartInteractions();
+    }
+    
+    getProjectTypeColor(projectType) {
+        switch(projectType) {
+            case 'solar':
+                return '#FFC107'; // Yellow/gold for solar
+            case 'wind':
+                return '#00BFA5'; // Teal for wind
+            case 'hydro':
+                return '#2196F3'; // Blue for hydro
+            case 'biomass':
+                return '#8BC34A'; // Green for biomass
+            case 'geothermal':
+                return '#FF5722'; // Orange/red for geothermal
+            default:
+                return '#28a745'; // Default green
+        }
     }
 
     setupChartInteractions() {
@@ -403,9 +507,10 @@ class IRRCalculator {
                 irr: results.irr,
                 npv: results.npv,
                 paybackPeriod: results.paybackPeriod,
-                totalReturns: results.totalReturns
+                totalReturns: results.totalReturns,
+                projectType: inputs.projectType
             },
-            projectName: `Calculation ${this.savedCalculations.length + 1}`
+            projectName: `${this.capitalizeFirstLetter(inputs.projectType)} Project ${this.savedCalculations.length + 1}`
         };
 
         // Add to saved calculations

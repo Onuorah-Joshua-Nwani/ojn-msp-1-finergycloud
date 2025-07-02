@@ -163,17 +163,17 @@
                             </div>
                             <p class="action-label">Calculate IRR</p>
                         </div>
-                        <div class="action-card" data-page="projects">
-                            <div class="action-icon">
-                                <i class="bi bi-folder-plus"></i>
-                            </div>
-                            <p class="action-label">New Project</p>
-                        </div>
                         <div class="action-card" data-page="xgboost">
                             <div class="action-icon">
                                 <i class="bi bi-cpu"></i>
                             </div>
-                            <p class="action-label">AI Model</p>
+                            <p class="action-label">AI Prediction</p>
+                        </div>
+                        <div class="action-card" data-page="esg">
+                            <div class="action-icon">
+                                <i class="bi bi-leaf"></i>
+                            </div>
+                            <p class="action-label">ESG Score</p>
                         </div>
                     </div>
                 </div>
@@ -288,6 +288,17 @@
                 
                 <div class="calculator-form">
                     <div class="form-group">
+                        <label for="project-type" class="form-label">Project Type</label>
+                        <select id="project-type" class="form-control">
+                            <option value="solar">Solar PV</option>
+                            <option value="wind">Wind Farm</option>
+                            <option value="hydro">Small Hydro</option>
+                            <option value="biomass">Biomass</option>
+                            <option value="geothermal">Geothermal</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="initial-investment" class="form-label">Initial Investment (₦)</label>
                         <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 10000000" min="1000" max="1000000000">
                     </div>
@@ -305,6 +316,11 @@
                     <div class="form-group">
                         <label for="terminal-value" class="form-label">Terminal Value (₦)</label>
                         <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 5000000" min="0" max="1000000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="discount-rate" class="form-label">Discount Rate (%)</label>
+                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="100" step="0.1" value="10">
                     </div>
                     
                     <div class="calculation-preview mb-3">
@@ -327,7 +343,7 @@
                         </div>
                         <div class="result-metric">
                             <div class="result-value" id="npv-result">₦--</div>
-                            <div class="result-label">NPV (10%)</div>
+                            <div class="result-label">NPV</div>
                         </div>
                         <div class="result-metric">
                             <div class="result-value" id="payback-result">-.- years</div>
@@ -343,11 +359,11 @@
                     <div class="text-center mt-4">
                         <button class="btn btn-outline-primary">
                             <i class="bi bi-share"></i>
-                            Share Results
+                            <span>Share Results</span>
                         </button>
                         <button class="btn btn-secondary">
                             <i class="bi bi-save"></i>
-                            Save Calculation
+                            <span>Save Calculation</span>
                         </button>
                     </div>
                 </div>
@@ -518,6 +534,7 @@
                                 <option value="wind">Wind Farm</option>
                                 <option value="hydro">Small Hydro</option>
                                 <option value="biomass">Biomass</option>
+                                <option value="geothermal">Geothermal</option>
                             </select>
                         </div>
                         
@@ -619,194 +636,6 @@
                                 <span class="text-primary">7.5/10</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- XGBoost Model Page -->
-            <div id="xgboost-page" class="page">
-                <div class="page-header">
-                    <h1>XGBoost Model</h1>
-                    <p>AI-powered solar project success prediction</p>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Model Status</h2>
-                    </div>
-                    <div class="card">
-                        <div id="model-status">
-                            <div class="model-status-badge warning">
-                                <i class="bi bi-hourglass-split"></i>
-                                <span>Loading Model...</span>
-                            </div>
-                        </div>
-                        
-                        <div class="row g-4">
-                            <div class="col-4">
-                                <div class="model-stat">
-                                    <div class="model-stat-value">92%</div>
-                                    <div class="model-stat-label">AUC Score</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="model-stat">
-                                    <div class="model-stat-value">87%</div>
-                                    <div class="model-stat-label">Accuracy</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="model-stat">
-                                    <div class="model-stat-value">14</div>
-                                    <div class="model-stat-label">Key Features</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Feature Importance</h2>
-                    </div>
-                    <div class="card">
-                        <p>The most influential factors in predicting solar project success:</p>
-                        <div class="feature-importance">
-                            <!-- Feature importance bars will be populated by JavaScript -->
-                        </div>
-                        
-                        <div class="text-center mt-4">
-                            <button class="btn btn-outline-primary" onclick="window.open('https://www.youtube.com/@FinergyCloud_official', '_blank')">
-                                <i class="bi bi-youtube me-2"></i>Watch Model Explanation
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Model Performance</h2>
-                    </div>
-                    <div class="card">
-                        <div id="model-performance-chart" class="chart-placeholder">
-                            <i class="bi bi-graph-up"></i>
-                            <p>Model performance metrics</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Project Prediction</h2>
-                    </div>
-                    <div class="card">
-                        <h4>Predict Solar Project Success</h4>
-                        <p>Enter project details to get AI-powered predictions</p>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Project Location</label>
-                            <select class="form-control" id="project-location">
-                                <option value="lagos">Lagos, Nigeria</option>
-                                <option value="abuja">Abuja, Nigeria</option>
-                                <option value="kano">Kano, Nigeria</option>
-                                <option value="nairobi">Nairobi, Kenya</option>
-                                <option value="accra">Accra, Ghana</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Grid Stability</label>
-                            <select class="form-control" id="grid-stability">
-                                <option value="high">High Stability</option>
-                                <option value="medium" selected>Medium Stability</option>
-                                <option value="low">Low Stability</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Community Engagement</label>
-                            <select class="form-control" id="community-engagement">
-                                <option value="extensive">Extensive</option>
-                                <option value="moderate" selected>Moderate</option>
-                                <option value="minimal">Minimal</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Project Size (MW)</label>
-                            <input type="number" class="form-control" id="project-size" placeholder="e.g., 5" min="0.1" max="100" value="5">
-                        </div>
-                        
-                        <button class="btn btn-primary btn-block mt-4" id="predict-btn">
-                            <i class="bi bi-cpu"></i>
-                            Run AI Prediction
-                        </button>
-                        
-                        <div id="prediction-result" style="display: none;" class="prediction-result">
-                            <div class="prediction-header">
-                                <h5 class="prediction-title">Prediction Results</h5>
-                                <span class="prediction-timestamp">Just now</span>
-                            </div>
-                            
-                            <div class="prediction-metrics">
-                                <div class="prediction-metric">
-                                    <div class="prediction-metric-value" id="predicted-irr">18.5%</div>
-                                    <div class="prediction-metric-label">Predicted IRR</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-metric-value" id="success-probability">87%</div>
-                                    <div class="prediction-metric-label">Success Probability</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-metric-value" id="risk-level">Medium</div>
-                                    <div class="prediction-metric-label">Risk Level</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-metric-value" id="confidence-score">High</div>
-                                    <div class="prediction-metric-label">Confidence</div>
-                                </div>
-                            </div>
-                            
-                            <div class="key-factors">
-                                <h5>Key Factors</h5>
-                                <div id="key-factors-list">
-                                    <!-- Will be populated by JavaScript -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Case Studies</h2>
-                    </div>
-                    <div class="card">
-                        <h4>Lagos 5MW Solar Farm</h4>
-                        <p>Our XGBoost model correctly predicted the success of this project with 92% confidence.</p>
-                        
-                        <div class="case-study-metrics">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Predicted IRR</span>
-                                <span class="text-primary">19.2%</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Actual IRR</span>
-                                <span class="text-success">19.5%</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Prediction Error</span>
-                                <span class="text-success">±0.3%</span>
-                            </div>
-                        </div>
-                        
-                        <h4 class="mt-4">Key Success Factors Identified</h4>
-                        <ul>
-                            <li>Strong grid stability in Lagos business district</li>
-                            <li>Extensive community engagement program</li>
-                            <li>High-quality equipment sourcing</li>
-                            <li>Experienced local workforce</li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -933,6 +762,227 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- XGBoost Model Page -->
+            <div id="xgboost-page" class="page">
+                <div class="page-header">
+                    <h1>XGBoost AI Model</h1>
+                    <p>Renewable energy project success prediction</p>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Model Overview</h2>
+                        <div id="model-status">
+                            <div class="model-status-badge warning">
+                                <i class="bi bi-hourglass-split"></i>
+                                <span>Loading Model...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-4">
+                            <div class="model-stat">
+                                <div class="model-stat-value">92%</div>
+                                <div class="model-stat-label">AUC Score</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="model-stat">
+                                <div class="model-stat-value">87%</div>
+                                <div class="model-stat-label">Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="model-stat">
+                                <div class="model-stat-value">14</div>
+                                <div class="model-stat-label">Key Features</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Top Predictive Features</h2>
+                    </div>
+                    <div class="card">
+                        <div class="feature-importance">
+                            <!-- Feature importance bars will be added dynamically -->
+                        </div>
+                        
+                        <div id="model-performance-chart" class="chart-placeholder">
+                            <i class="bi bi-graph-up"></i>
+                            <p>Model performance chart</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Project Success Prediction</h2>
+                    </div>
+                    <div class="card">
+                        <h4>Enter Project Details</h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Project Type</label>
+                            <select id="project-type-xgboost" class="form-control">
+                                <option value="solar">Solar PV</option>
+                                <option value="wind">Wind Farm</option>
+                                <option value="hydro">Small Hydro</option>
+                                <option value="biomass">Biomass</option>
+                                <option value="geothermal">Geothermal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Project Location</label>
+                            <select id="project-location" class="form-control">
+                                <option value="lagos">Lagos, Nigeria</option>
+                                <option value="abuja">Abuja, Nigeria</option>
+                                <option value="kano">Kano, Nigeria</option>
+                                <option value="nairobi">Nairobi, Kenya</option>
+                                <option value="accra">Accra, Ghana</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Project Size (MW)</label>
+                            <input type="number" id="project-size" class="form-control" placeholder="e.g., 5" min="0.1" max="100" step="0.1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Grid Stability</label>
+                            <select id="grid-stability" class="form-control">
+                                <option value="high">High</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Community Engagement</label>
+                            <select id="community-engagement" class="form-control">
+                                <option value="extensive">Extensive</option>
+                                <option value="moderate" selected>Moderate</option>
+                                <option value="minimal">Minimal</option>
+                            </select>
+                        </div>
+                        
+                        <button id="predict-btn" class="btn btn-primary btn-block mt-4">
+                            <i class="bi bi-cpu"></i>
+                            Run AI Prediction
+                        </button>
+                        
+                        <div id="prediction-result" class="prediction-result" style="display: none;">
+                            <div class="prediction-header">
+                                <h4 class="prediction-title">Prediction Results</h4>
+                                <div class="prediction-timestamp">
+                                    <i class="bi bi-clock"></i>
+                                    <span>Just now</span>
+                                </div>
+                            </div>
+                            
+                            <div class="prediction-metrics">
+                                <div class="prediction-metric">
+                                    <div class="prediction-metric-value" id="predicted-irr">--.--%</div>
+                                    <div class="prediction-metric-label">Predicted IRR</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-metric-value" id="success-probability">--%</div>
+                                    <div class="prediction-metric-label">Success Probability</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-metric-value" id="risk-level">--</div>
+                                    <div class="prediction-metric-label">Risk Level</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-metric-value" id="confidence-score">--</div>
+                                    <div class="prediction-metric-label">Confidence Score</div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-factors">
+                                <h5>Key Factors Affecting Prediction</h5>
+                                <div id="key-factors-list">
+                                    <!-- Key factors will be added dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Case Studies</h2>
+                    </div>
+                    <div class="card">
+                        <h4>Renewable Energy Project Success Stories</h4>
+                        
+                        <div class="case-study-item mb-4">
+                            <h5>Wind Farm in Nairobi, Kenya</h5>
+                            <p>10MW wind farm with 92% success probability predicted by our model. The project achieved 17.8% IRR, validating our prediction.</p>
+                            
+                            <div class="case-study-metrics">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Predicted IRR</span>
+                                    <span class="text-primary">16.5%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Actual IRR</span>
+                                    <span class="text-success">17.8%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Key Success Factor</span>
+                                    <span>Strong Grid Connection</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="case-study-item mb-4">
+                            <h5>Small Hydro in Ghana</h5>
+                            <p>2MW hydro project with 85% success probability. The project achieved 15.3% IRR despite regulatory challenges.</p>
+                            
+                            <div class="case-study-metrics">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Predicted IRR</span>
+                                    <span class="text-primary">14.8%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Actual IRR</span>
+                                    <span class="text-success">15.3%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Key Success Factor</span>
+                                    <span>Community Engagement</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="case-study-item">
+                            <h5>Biomass Plant in Tanzania</h5>
+                            <p>5MW biomass plant with 78% success probability. The project achieved 14.2% IRR, slightly below prediction due to supply chain issues.</p>
+                            
+                            <div class="case-study-metrics">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Predicted IRR</span>
+                                    <span class="text-primary">15.0%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Actual IRR</span>
+                                    <span class="text-primary">14.2%</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Key Challenge</span>
+                                    <span>Feedstock Supply</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         
         <!-- Bottom Navigation -->
@@ -948,6 +998,10 @@
             <button class="nav-btn" data-page="projects">
                 <i class="bi bi-folder"></i>
                 <span>Projects</span>
+            </button>
+            <button class="nav-btn" data-page="esg">
+                <i class="bi bi-leaf"></i>
+                <span>ESG</span>
             </button>
             <button class="nav-btn" data-page="xgboost">
                 <i class="bi bi-cpu"></i>
