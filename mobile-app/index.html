@@ -88,6 +88,18 @@
                         <span>ESG Scoring</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="#blog" class="nav-link" data-page="blog">
+                        <i class="bi bi-journal-text"></i>
+                        <span>Blog</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#xgboost" class="nav-link" data-page="xgboost">
+                        <i class="bi bi-cpu"></i>
+                        <span>XGBoost Model</span>
+                    </a>
+                </li>
             </ul>
             
             <div class="nav-footer">
@@ -168,6 +180,12 @@
                                 <i class="bi bi-leaf"></i>
                             </div>
                             <p class="action-label">ESG Score</p>
+                        </div>
+                        <div class="action-card" data-page="xgboost">
+                            <div class="action-icon">
+                                <i class="bi bi-cpu"></i>
+                            </div>
+                            <p class="action-label">AI Analysis</p>
                         </div>
                     </div>
                 </div>
@@ -739,6 +757,151 @@
                     </div>
                 </div>
             </div>
+
+            <!-- XGBoost Model Page -->
+            <div id="xgboost-page" class="page">
+                <div class="page-header">
+                    <h1>XGBoost Model</h1>
+                    <p>AI-powered risk prediction with 92% AUC score</p>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Model Overview</h2>
+                    </div>
+                    <div class="card">
+                        <div class="model-stats">
+                            <div class="model-stat-item">
+                                <div class="model-stat-icon">
+                                    <i class="bi bi-graph-up"></i>
+                                </div>
+                                <div class="model-stat-value">92%</div>
+                                <div class="model-stat-label">AUC Score</div>
+                            </div>
+                            <div class="model-stat-item">
+                                <div class="model-stat-icon">
+                                    <i class="bi bi-bullseye"></i>
+                                </div>
+                                <div class="model-stat-value">87%</div>
+                                <div class="model-stat-label">Accuracy</div>
+                            </div>
+                            <div class="model-stat-item">
+                                <div class="model-stat-icon">
+                                    <i class="bi bi-lightning"></i>
+                                </div>
+                                <div class="model-stat-value">14</div>
+                                <div class="model-stat-label">Key Features</div>
+                            </div>
+                        </div>
+                        
+                        <div class="model-description mt-4">
+                            <h4>About Our XGBoost Model</h4>
+                            <p>Our advanced machine learning model uses XGBoost to predict solar project success in Nigeria with 87% accuracy. The model analyzes multiple variables simultaneously to provide comprehensive risk assessment.</p>
+                            
+                            <h4 class="mt-4">Key Features</h4>
+                            <div class="feature-importance">
+                                <div class="feature-item">
+                                    <div class="feature-name">Grid Stability</div>
+                                    <div class="feature-bar-container">
+                                        <div class="feature-bar" style="width: 92%"></div>
+                                        <span class="feature-value">92%</span>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-name">Community Engagement</div>
+                                    <div class="feature-bar-container">
+                                        <div class="feature-bar" style="width: 85%"></div>
+                                        <span class="feature-value">85%</span>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-name">Regulatory Navigation</div>
+                                    <div class="feature-bar-container">
+                                        <div class="feature-bar" style="width: 78%"></div>
+                                        <span class="feature-value">78%</span>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-name">Solar Irradiation</div>
+                                    <div class="feature-bar-container">
+                                        <div class="feature-bar" style="width: 65%"></div>
+                                        <span class="feature-value">65%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="model-actions mt-4">
+                            <button class="btn btn-primary">
+                                <i class="bi bi-upload"></i>
+                                Upload Project Data
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="bi bi-info-circle"></i>
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Model Performance</h2>
+                    </div>
+                    <div class="card">
+                        <div id="model-performance-chart" class="chart-placeholder">
+                            <i class="bi bi-graph-up"></i>
+                            <p>Model performance metrics</p>
+                        </div>
+                        
+                        <div class="model-metrics mt-4">
+                            <h4>Performance Metrics</h4>
+                            <div class="metrics-grid">
+                                <div class="metric-item">
+                                    <div class="metric-label">Precision</div>
+                                    <div class="metric-value">89%</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Recall</div>
+                                    <div class="metric-value">85%</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">F1 Score</div>
+                                    <div class="metric-value">87%</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Training Time</div>
+                                    <div class="metric-value">3.2s</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Case Studies</h2>
+                    </div>
+                    <div class="card">
+                        <h4>Lagos Solar Project</h4>
+                        <p>Our XGBoost model predicted an IRR of 18.7% for this 5MW solar project, which was within 1.2% of the actual performance after 12 months of operation.</p>
+                        <div class="case-study-metrics">
+                            <div class="case-metric">
+                                <div class="case-metric-label">Predicted IRR</div>
+                                <div class="case-metric-value">18.7%</div>
+                            </div>
+                            <div class="case-metric">
+                                <div class="case-metric-label">Actual IRR</div>
+                                <div class="case-metric-value">19.9%</div>
+                            </div>
+                            <div class="case-metric">
+                                <div class="case-metric-label">Accuracy</div>
+                                <div class="case-metric-value">94%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         
         <!-- Bottom Navigation -->
@@ -758,6 +921,10 @@
             <button class="nav-btn" data-page="esg">
                 <i class="bi bi-leaf"></i>
                 <span>ESG</span>
+            </button>
+            <button class="nav-btn" data-page="xgboost">
+                <i class="bi bi-cpu"></i>
+                <span>AI</span>
             </button>
         </nav>
     </div>
@@ -784,5 +951,160 @@
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/cross-platform-navigation.js"></script>
     <script src="scripts/email-integration.js"></script>
+
+    <style>
+        /* XGBoost Model Page Styles */
+        .model-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .model-stat-item {
+            flex: 1;
+            min-width: 100px;
+            background: var(--light-green);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        
+        .model-stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+        
+        .model-stat-value {
+            font-size: 1.75rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .model-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        
+        .feature-importance {
+            margin-top: 1rem;
+        }
+        
+        .feature-item {
+            margin-bottom: 1rem;
+        }
+        
+        .feature-name {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .feature-bar-container {
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+        }
+        
+        .feature-value {
+            position: absolute;
+            right: 0;
+            top: -18px;
+            font-size: 0.8rem;
+            color: var(--primary-green);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .model-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .metric-item {
+            background: var(--light-green);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+        }
+        
+        .case-study-metrics {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .case-metric {
+            flex: 1;
+            min-width: 100px;
+            background: var(--light-green);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+        
+        .case-metric-label {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .case-metric-value {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+        }
+        
+        @media (max-width: 480px) {
+            .model-stats {
+                flex-direction: column;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-study-metrics {
+                flex-direction: column;
+            }
+        }
+    </style>
 </body>
 </html>

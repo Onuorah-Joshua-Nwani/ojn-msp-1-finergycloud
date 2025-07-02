@@ -230,83 +230,77 @@
         </div>
     </section>
 
-    <!-- System Architecture Section -->
+    <!-- Interactive IRR Calculator Section -->
     <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center mb-5">
-                    <h2 class="section-title">🔧 How It Works: System Architecture</h2>
+                    <h2 class="section-title">Interactive IRR Calculator</h2>
                     <p class="section-subtitle">
-                        Our AI-powered pipeline transforms raw data into actionable investment intelligence
+                        Try our IRR calculator to see how different parameters affect your renewable energy investment returns
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <div class="architecture-diagram">
-                        <div class="architecture-node start-node">
-                            <div class="node-icon">
-                                <i class="bi bi-upload"></i>
+                    <div class="calculator-container">
+                        <div class="calculator-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="initial-investment" class="form-label">Initial Investment (₦)</label>
+                                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 10000000" min="1000" max="1000000000" value="10000000">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="project-duration" class="form-label">Project Duration (Years)</label>
+                                        <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="50" value="25">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="annual-cashflow" class="form-label">Annual Cash Flow (₦)</label>
+                                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 1500000" min="0" max="100000000" value="1500000">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="terminal-value" class="form-label">Terminal Value (₦)</label>
+                                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 5000000" min="0" max="1000000000" value="5000000">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="node-content">
-                                <h4>User uploads solar project data</h4>
-                                <p>Project specifications, market data, and regulatory information</p>
+                            <button class="btn btn-primary btn-block calculate-btn" onclick="calculateIRR()">
+                                <i class="bi bi-calculator me-2"></i>Calculate IRR
+                            </button>
+                        </div>
+                        <div class="calculator-results">
+                            <h3 class="text-center mb-3">Results</h3>
+                            <div class="result-grid">
+                                <div class="result-metric">
+                                    <div class="result-value" id="irr-result">--.--%</div>
+                                    <div class="result-label">IRR</div>
+                                </div>
+                                <div class="result-metric">
+                                    <div class="result-value" id="npv-result">₦--</div>
+                                    <div class="result-label">NPV (10%)</div>
+                                </div>
+                                <div class="result-metric">
+                                    <div class="result-value" id="payback-result">-.- years</div>
+                                    <div class="result-label">Payback Period</div>
+                                </div>
+                            </div>
+                            <div id="cashflow-chart" class="chart-placeholder">
+                                <i class="bi bi-bar-chart"></i>
+                                <p>Cash flow chart will appear here</p>
+                            </div>
+                            <div class="text-center mt-4">
+                                <a href="contact.html" class="btn btn-primary">
+                                    <i class="bi bi-calendar-check me-2"></i>Book Demo for Full Features
+                                </a>
                             </div>
                         </div>
-                        <div class="architecture-arrow">
-                            <i class="bi bi-arrow-down"></i>
-                        </div>
-                        <div class="architecture-node">
-                            <div class="node-icon">
-                                <i class="bi bi-cpu"></i>
-                            </div>
-                            <div class="node-content">
-                                <h4>XGBoost ML Model</h4>
-                                <p>Advanced machine learning model processes and analyzes data</p>
-                            </div>
-                        </div>
-                        <div class="architecture-arrow">
-                            <i class="bi bi-arrow-down"></i>
-                        </div>
-                        <div class="architecture-node">
-                            <div class="node-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="node-content">
-                                <h4>ESG Risk Score Generator</h4>
-                                <p>Comprehensive sustainability and governance assessment</p>
-                            </div>
-                        </div>
-                        <div class="architecture-arrow">
-                            <i class="bi bi-arrow-down"></i>
-                        </div>
-                        <div class="architecture-node">
-                            <div class="node-icon">
-                                <i class="bi bi-calculator"></i>
-                            </div>
-                            <div class="node-content">
-                                <h4>IRR Simulation Engine</h4>
-                                <p>10,000+ Monte Carlo simulation runs</p>
-                            </div>
-                        </div>
-                        <div class="architecture-arrow">
-                            <i class="bi bi-arrow-down"></i>
-                        </div>
-                        <div class="architecture-node end-node">
-                            <div class="node-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="node-content">
-                                <h4>Power BI / Dashboard Visualization</h4>
-                                <p>Actionable insights and investment intelligence</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="architecture-insight">
-                        <div class="insight-icon">
-                            <i class="bi bi-lightbulb"></i>
-                        </div>
-                        <p>This AI-powered pipeline processes solar energy project inputs to generate risk scores and simulate financial return probabilities — in real-time.</p>
                     </div>
                 </div>
             </div>
@@ -520,6 +514,88 @@
                     <div class="col-lg-6 order-lg-1">
                         <div class="feature-visual">
                             <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="Project Comparison" class="img-fluid rounded-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Architecture Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="section-title">How It Works: System Architecture</h2>
+                    <p class="section-subtitle">
+                        Our AI-powered pipeline processes solar energy project inputs to generate risk scores and simulate financial return probabilities — in real-time
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="architecture-diagram">
+                        <div class="architecture-step">
+                            <div class="step-icon">
+                                <i class="bi bi-upload"></i>
+                                <div class="step-number">1</div>
+                            </div>
+                            <div class="step-content">
+                                <h4>User uploads solar project data</h4>
+                                <p>Project specifications, market data, and regulatory information</p>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="architecture-step">
+                            <div class="step-icon">
+                                <i class="bi bi-cpu"></i>
+                                <div class="step-number">2</div>
+                            </div>
+                            <div class="step-content">
+                                <h4>XGBoost ML Model</h4>
+                                <p>Advanced machine learning model with 92% AUC score processes and analyzes data</p>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="architecture-step">
+                            <div class="step-icon">
+                                <i class="bi bi-shield-check"></i>
+                                <div class="step-number">3</div>
+                            </div>
+                            <div class="step-content">
+                                <h4>ESG Risk Score Generator</h4>
+                                <p>Comprehensive sustainability and governance assessment</p>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="architecture-step">
+                            <div class="step-icon">
+                                <i class="bi bi-calculator"></i>
+                                <div class="step-number">4</div>
+                            </div>
+                            <div class="step-content">
+                                <h4>IRR Simulation Engine</h4>
+                                <p>Monte Carlo analysis with 10,000+ iterations</p>
+                            </div>
+                            <div class="step-arrow">
+                                <i class="bi bi-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="architecture-step">
+                            <div class="step-icon">
+                                <i class="bi bi-graph-up"></i>
+                                <div class="step-number">5</div>
+                            </div>
+                            <div class="step-content">
+                                <h4>Power BI / Dashboard Visualization</h4>
+                                <p>Actionable insights and investment intelligence</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -819,6 +895,166 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/enhanced-interactions.js"></script>
     <script src="assets/js/carousel-script.js"></script>
+
+    <!-- IRR Calculator Script -->
+    <script>
+        function calculateIRR() {
+            // Get input values
+            const initialInvestment = parseFloat(document.getElementById('initial-investment').value) || 0;
+            const projectDuration = parseFloat(document.getElementById('project-duration').value) || 0;
+            const annualCashflow = parseFloat(document.getElementById('annual-cashflow').value) || 0;
+            const terminalValue = parseFloat(document.getElementById('terminal-value').value) || 0;
+            
+            // Validate inputs
+            if (initialInvestment <= 0 || projectDuration <= 0 || annualCashflow <= 0) {
+                alert('Please enter valid values for all fields');
+                return;
+            }
+            
+            // Show loading state
+            const calculateBtn = document.querySelector('.calculate-btn');
+            calculateBtn.innerHTML = '<div class="spinner-border spinner-border-sm me-2" role="status"></div> Calculating...';
+            calculateBtn.disabled = true;
+            
+            // Simulate calculation delay for better UX
+            setTimeout(() => {
+                // Create cash flow array
+                const cashFlows = [-initialInvestment]; // Initial investment as negative
+                
+                // Add annual cash flows
+                for (let i = 1; i < projectDuration; i++) {
+                    cashFlows.push(annualCashflow);
+                }
+                
+                // Add final year with terminal value
+                cashFlows.push(annualCashflow + terminalValue);
+                
+                // Calculate IRR using Newton-Raphson method
+                const irr = newtonRaphsonIRR(cashFlows);
+                
+                // Calculate NPV at 10% discount rate
+                const npv = calculateNPV(cashFlows, 0.10);
+                
+                // Calculate payback period
+                const paybackPeriod = calculatePaybackPeriod(cashFlows);
+                
+                // Display results
+                document.getElementById('irr-result').textContent = `${(irr * 100).toFixed(2)}%`;
+                document.getElementById('npv-result').textContent = `₦${formatNumber(npv)}`;
+                document.getElementById('payback-result').textContent = `${paybackPeriod.toFixed(1)} years`;
+                
+                // Create cash flow chart
+                createCashFlowChart(cashFlows);
+                
+                // Reset button
+                calculateBtn.innerHTML = '<i class="bi bi-calculator me-2"></i>Calculate IRR';
+                calculateBtn.disabled = false;
+                
+            }, 1500);
+        }
+        
+        function newtonRaphsonIRR(cashFlows, guess = 0.1, maxIterations = 100, tolerance = 1e-6) {
+            let rate = guess;
+            
+            for (let i = 0; i < maxIterations; i++) {
+                const npv = calculateNPV(cashFlows, rate);
+                const npvDerivative = calculateNPVDerivative(cashFlows, rate);
+                
+                if (Math.abs(npv) < tolerance) {
+                    return rate;
+                }
+                
+                if (Math.abs(npvDerivative) < tolerance) {
+                    break; // Avoid division by zero
+                }
+                
+                rate = rate - (npv / npvDerivative);
+            }
+            
+            return rate;
+        }
+        
+        function calculateNPV(cashFlows, rate) {
+            return cashFlows.reduce((npv, cashFlow, period) => {
+                return npv + (cashFlow / Math.pow(1 + rate, period));
+            }, 0);
+        }
+        
+        function calculateNPVDerivative(cashFlows, rate) {
+            return cashFlows.reduce((derivative, cashFlow, period) => {
+                if (period === 0) return derivative;
+                return derivative - (period * cashFlow / Math.pow(1 + rate, period + 1));
+            }, 0);
+        }
+        
+        function calculatePaybackPeriod(cashFlows) {
+            let cumulativeCashFlow = 0;
+            
+            for (let i = 0; i < cashFlows.length; i++) {
+                cumulativeCashFlow += cashFlows[i];
+                if (cumulativeCashFlow >= 0) {
+                    // Interpolate for more accurate payback period
+                    const previousCumulative = cumulativeCashFlow - cashFlows[i];
+                    const fraction = -previousCumulative / cashFlows[i];
+                    return i - 1 + fraction;
+                }
+            }
+            
+            return cashFlows.length; // Payback period exceeds project duration
+        }
+        
+        function formatNumber(number) {
+            if (Math.abs(number) >= 1e9) {
+                return (number / 1e9).toFixed(1) + 'B';
+            } else if (Math.abs(number) >= 1e6) {
+                return (number / 1e6).toFixed(1) + 'M';
+            } else if (Math.abs(number) >= 1e3) {
+                return (number / 1e3).toFixed(1) + 'K';
+            } else {
+                return number.toFixed(0);
+            }
+        }
+        
+        function createCashFlowChart(cashFlows) {
+            const chartContainer = document.getElementById('cashflow-chart');
+            if (!chartContainer) return;
+            
+            // Clear placeholder
+            chartContainer.classList.remove('chart-placeholder');
+            chartContainer.innerHTML = '';
+            
+            // Simple bar chart implementation
+            const maxValue = Math.max(...cashFlows.map(Math.abs));
+            const chartHTML = `
+                <div class="chart-wrapper">
+                    <div class="chart-title">Cash Flow Projection</div>
+                    <div class="chart-content">
+                        <div class="chart-container-inner">
+                            <div class="chart-bars">
+                                ${cashFlows.map((value, index) => {
+                                    const height = Math.abs(value) / maxValue * 100;
+                                    const isNegative = value < 0;
+                                    
+                                    return `
+                                        <div class="chart-bar-wrapper">
+                                            <div class="chart-bar ${isNegative ? 'negative' : 'positive'}" 
+                                                style="height: ${height}%; bottom: ${isNegative ? height : 0}%"
+                                                data-value="₦${formatNumber(value)}"
+                                                data-label="Year ${index}">
+                                            </div>
+                                            <div class="chart-label">Y${index}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chartContainer.innerHTML = chartHTML;
+        }
+    </script>
 
     <style>
         /* Services page specific styles */
@@ -1160,121 +1396,193 @@
             text-decoration: underline;
         }
 
+        /* Interactive IRR Calculator Styles */
+        .calculator-container {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .calculator-form {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(0, 77, 64, 0.1);
+        }
+
+        .calculator-results {
+            padding: 2rem;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-metric {
+            background: var(--light-green);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: var(--light-gray);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .chart-placeholder i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-wrapper {
+            height: 250px;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .chart-container-inner {
+            height: 200px;
+            position: relative;
+        }
+
+        .chart-bars {
+            display: flex;
+            height: 100%;
+            align-items: flex-end;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .chart-bar {
+            width: 80%;
+            max-width: 30px;
+            position: absolute;
+            bottom: 0;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .chart-bar.positive {
+            background: var(--success);
+        }
+
+        .chart-bar.negative {
+            background: var(--danger);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
         /* Architecture Diagram Styles */
         .architecture-diagram {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 1rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .architecture-node {
             background: var(--white);
             border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow-md);
-            border: 1px solid rgba(0, 77, 64, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            z-index: 2;
         }
 
-        .architecture-node:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .node-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-md);
+        .architecture-step {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .node-icon i {
-            font-size: 1.5rem;
-            color: var(--white);
-        }
-
-        .node-content {
-            flex: 1;
-        }
-
-        .node-content h4 {
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .node-content p {
-            color: var(--text-light);
-            margin-bottom: 0;
-            font-size: 0.9rem;
-        }
-
-        .architecture-arrow {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-teal);
-            font-size: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .start-node {
-            border-left: 4px solid var(--success);
-        }
-
-        .end-node {
-            border-left: 4px solid var(--primary-green);
-        }
-
-        .architecture-insight {
-            background: var(--light-green);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1.5rem;
-            margin-top: 2rem;
-            border-left: 4px solid var(--accent-teal);
+            position: relative;
         }
 
-        .insight-icon {
-            width: 50px;
-            height: 50px;
+        .step-icon {
+            width: 70px;
+            height: 70px;
             background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .insight-icon i {
-            font-size: 1.25rem;
             color: var(--white);
+            font-size: 1.75rem;
+            flex-shrink: 0;
+            position: relative;
         }
 
-        .architecture-insight p {
+        .step-number {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 25px;
+            height: 25px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--primary-green);
+            font-weight: var(--font-weight-bold);
+            font-size: 0.9rem;
+            border: 2px solid var(--accent-teal);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step-content p {
             margin-bottom: 0;
-            font-weight: var(--font-weight-medium);
-            font-size: 1.1rem;
-            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .step-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-teal);
+            font-size: 1.5rem;
+            height: 70px;
+            margin-left: 2rem;
         }
 
         @media (max-width: 768px) {
@@ -1320,24 +1628,24 @@
                 gap: 0.5rem;
             }
 
-            .architecture-node {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .architecture-step {
                 flex-direction: column;
+                align-items: center;
                 text-align: center;
-                padding: 1rem;
             }
 
-            .node-icon {
-                margin-bottom: 1rem;
-            }
-
-            .architecture-insight {
-                flex-direction: column;
+            .step-content {
                 text-align: center;
-                padding: 1rem;
             }
 
-            .insight-icon {
-                margin-bottom: 1rem;
+            .step-arrow {
+                transform: rotate(90deg);
+                height: 40px;
+                margin: 0;
             }
         }
     </style>
