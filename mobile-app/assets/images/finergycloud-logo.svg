@@ -1,20 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#004d40" />
       <stop offset="100%" stop-color="#00bfa5" />
     </linearGradient>
   </defs>
-  <g>
-    <!-- Cloud shape -->
-    <path d="M256,100C216,100 176.5,125 166.5,160C156.5,155 146.5,150 136,150C96,150 66,180 66,220C66,260 96,290 136,290L376,290C406,290 436,260 436,230C436,200 406,170 376,170C371,170 366,172 361,172C346,140 306,100 256,100Z" fill="url(#gradient)"/>
-    
-    <!-- Wind turbine -->
-    <path d="M256,200L256,350M231,225L281,225M241,240L271,240" stroke="#ffffff" stroke-width="15" fill="none"/>
-    
-    <!-- Data visualization bars -->
-    <rect x="156" y="250" width="20" height="50" fill="#ffffff"/>
-    <rect x="186" y="230" width="20" height="70" fill="#ffffff"/>
-    <rect x="216" y="240" width="20" height="60" fill="#ffffff"/>
-  </g>
+  <circle cx="256" cy="256" r="256" fill="url(#gradient)" />
+  <path d="M256 100C215 100 180 125 170 160C160 158 150 156 140 156C105 156 75 186 75 220C75 255 105 285 140 285L370 285C395 285 415 265 415 240C415 215 395 195 370 195C367 195 365 196 362 196C355 170 330 150 300 150C290 150 280 152 270 156C265 125 240 100 210 100L256 100Z" fill="white" />
+  <path d="M256 225L256 325M240 240L270 240M245 250L265 250" stroke="#00bfa5" stroke-width="10" stroke-linecap="round" />
+  <path d="M175 275L175 305L185 305L185 275ZM195 260L195 305L205 305L205 260ZM215 270L215 305L225 305L225 270Z" fill="#00bfa5" />
 </svg>

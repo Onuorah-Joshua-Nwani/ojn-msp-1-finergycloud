@@ -1,14 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <g fill="#000000">
-    <!-- Cloud shape -->
-    <path d="M24,10C20,10 16.5,12.5 15.5,16C14.5,15.5 13.5,15 12,15C8,15 5,18 5,22C5,26 8,29 12,29L36,29C39,29 42,26 42,23C42,20 39,17 36,17C35.5,17 35,17.2 34.5,17.2C33,14 29,10 24,10Z" fill="#000000"/>
-    
-    <!-- Wind turbine -->
-    <path d="M24,20L24,35M21.5,22.5L26.5,22.5M22.5,24L25.5,24" stroke="#000000" stroke-width="1.5" fill="none"/>
-    
-    <!-- Data visualization bars -->
-    <rect x="15" y="25" width="2" height="5" fill="#000000"/>
-    <rect x="18" y="23" width="2" height="7" fill="#000000"/>
-    <rect x="21" y="24" width="2" height="6" fill="#000000"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <path d="M24 6C20 6 16 8 15 12C14 12 13 12 12 12C9 12 6 15 6 18C6 21 9 24 12 24L36 24C39 24 41 22 41 19C41 16 39 14 36 14C36 14 36 14 35 14C34 10 31 8 28 8C27 8 26 8 25 9C24 7 22 6 20 6L24 6Z" fill="currentColor" />
+  <path d="M24 19L24 29M22 21L26 21M23 22L25 22" stroke="currentColor" stroke-width="1" stroke-linecap="round" />
+  <path d="M15 23L15 26L16 26L16 23ZM17 22L17 26L18 26L18 22ZM19 23L19 26L20 26L20 23Z" fill="currentColor" />
 </svg>
