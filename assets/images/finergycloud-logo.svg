@@ -1,33 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <!-- Background gradient -->
   <defs>
     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#004d40" />
       <stop offset="100%" stop-color="#00bfa5" />
     </linearGradient>
   </defs>
-  
-  <!-- Background circle -->
-  <circle cx="256" cy="256" r="256" fill="url(#gradient)" />
-  
-  <!-- Cloud shape -->
-  <path d="M256 120C230 120 207.5 135.5 197.5 158C190.5 156.5 183.5 155 175 155C142 155 115 177 115 205C115 233 142 255 175 255L337 255C364 255 385 234 385 207C385 180 364 159 337 159C334 159 331 159.5 328 160C321 136 291 120 256 120Z" fill="white" opacity="0.9" />
-  
-  <!-- Wind turbine -->
-  <g transform="translate(256, 256)">
-    <rect x="-5" y="-80" width="10" height="160" fill="#00bfa5" />
-    <polygon points="0,-120 -40,-80 40,-80" fill="#00bfa5" />
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 0 0" to="360 0 0" dur="10s" repeatCount="indefinite" />
+  <g>
+    <!-- Cloud shape -->
+    <path d="M256,100C216,100 176.5,125 166.5,160C156.5,155 146.5,150 136,150C96,150 66,180 66,220C66,260 96,290 136,290L376,290C406,290 436,260 436,230C436,200 406,170 376,170C371,170 366,172 361,172C346,140 306,100 256,100Z" fill="url(#gradient)"/>
+    
+    <!-- Wind turbine -->
+    <path d="M256,200L256,350M231,225L281,225M241,240L271,240" stroke="#ffffff" stroke-width="15" fill="none"/>
+    
+    <!-- Data visualization bars -->
+    <rect x="156" y="250" width="20" height="50" fill="#ffffff"/>
+    <rect x="186" y="230" width="20" height="70" fill="#ffffff"/>
+    <rect x="216" y="240" width="20" height="60" fill="#ffffff"/>
   </g>
-  
-  <!-- Data visualization bars -->
-  <g transform="translate(175, 255)">
-    <rect x="0" y="-30" width="10" height="30" fill="#00bfa5" />
-    <rect x="15" y="-50" width="10" height="50" fill="#00bfa5" />
-    <rect x="30" y="-40" width="10" height="40" fill="#00bfa5" />
-    <rect x="45" y="-60" width="10" height="60" fill="#00bfa5" />
-  </g>
-  
-  <!-- Text "FC" for FinergyCloud -->
-  <text x="256" y="340" font-family="Arial, sans-serif" font-size="60" font-weight="bold" text-anchor="middle" fill="white">FC</text>
 </svg>
