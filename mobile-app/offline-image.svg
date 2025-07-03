@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <path d="M200 100c-30 0-55 20-65 50c-10-2-20-3-30-3c-50 0-90 40-90 90h360c0-40-30-70-70-70c-5 0-10 2-15 3c-10-40-45-70-90-70z" 
+        fill="#e8f5e8" stroke="#004d40" stroke-width="2"/>
+  <path d="M180 200l40-40M180 160l40 40" stroke="#dc3545" stroke-width="4" stroke-linecap="round"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Arial" font-size="16" fill="#333">Image Unavailable Offline</text>
+</svg>
