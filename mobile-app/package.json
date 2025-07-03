@@ -7,6 +7,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "dev": "npx http-server . -p 8000 -o",
     "test": "jest",
     "lint": "eslint .",
     "build:android": "cd android && ./gradlew assembleRelease",
