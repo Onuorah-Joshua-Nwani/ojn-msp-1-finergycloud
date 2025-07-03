@@ -25,6 +25,7 @@
     "react-native-vector-icons": "^10.0.0"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",

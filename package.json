@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx http-server . -p 8000 -o",
     "build": "echo 'Static site - no build required'",
-    "start": "echo 'Static site - serve index.html'"
+    "start": "npx http-server . -p 8000 -o"
   },
   "keywords": [
     "fintech",
@@ -16,6 +16,8 @@
   ],
   "author": "Onuorah Nwani",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
   "dependencies": {}
 }
