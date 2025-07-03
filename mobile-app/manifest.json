@@ -58,6 +58,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "../assets/images/finergycloud-logo-mono.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
     }
   ],
   "screenshots": [
