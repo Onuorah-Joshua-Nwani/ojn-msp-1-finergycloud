@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="FinergyCloud Mobile App Security Policy - Learn about our security measures to protect your data when using our mobile application.">
+    <meta name="theme-color" content="#004d40">
+    
+    <title>Security Policy - FinergyCloud Mobile</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinergyCloud">
+    <meta name="application-name" content="FinergyCloud">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/finergycloud-logo.png">
+    <link rel="apple-touch-icon" href="assets/images/finergycloud-logo.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/app.css">
+    
+    <style>
+        /* Legal Document Styles for Mobile */
+        .legal-document {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .legal-header {
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .legal-header h1 {
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.75rem;
+        }
+
+        .legal-effective {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .legal-summary {
+            background: var(--light-green);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .legal-summary p {
+            color: var(--primary-green);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .legal-toc {
+            background: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .legal-toc h2 {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .legal-toc ol {
+            padding-left: var(--spacing-lg);
+            margin-bottom: 0;
+        }
+
+        .legal-toc li {
+            margin-bottom: var(--spacing-xs);
+            font-size: 0.9rem;
+        }
+
+        .legal-toc a {
+            color: var(--accent-teal);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .legal-toc a:hover {
+            color: var(--primary-green);
+            text-decoration: underline;
+        }
+
+        .legal-section {
+            margin-bottom: var(--spacing-xl);
+            padding-top: var(--spacing-sm);
+        }
+
+        .legal-section h2 {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .legal-section h3 {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            margin: var(--spacing-md) 0 var(--spacing-sm);
+        }
+
+        .legal-section p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .legal-section ul, 
+        .legal-section ol {
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-lg);
+        }
+
+        .legal-section li {
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .contact-details {
+            background: var(--light-green);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .contact-details p {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .contact-details a {
+            color: var(--accent-teal);
+            text-decoration: none;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        .legal-footer {
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--light-green);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .back-to-app {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        /* Security-specific styles */
+        .security-feature {
+            background: var(--light-green);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+        
+        .security-feature-icon {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .security-feature-content {
+            flex: 1;
+        }
+        
+        .security-feature-content h4 {
+            color: var(--primary-green);
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .security-feature-content p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button id="back-btn" class="menu-btn" aria-label="Back" onclick="window.history.back()">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <div class="header-brand">
+                    <h1 class="header-title">Security Policy</h1>
+                    <p class="header-subtitle">FinergyCloud Mobile</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="website-btn" aria-label="Visit Website" onclick="window.open('https://finergycloud.com/security.html', '_blank')">
+                    <i class="bi bi-globe"></i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main id="main-content" class="main-content">
+            <div class="legal-document">
+                <div class="legal-header">
+                    <p class="legal-effective">Effective Date: June 1, 2025</p>
+                    <div class="legal-summary">
+                        <p>This Security Policy outlines the measures we take to protect your data when using the FinergyCloud mobile application. Your security is our priority, and we implement industry-standard practices to safeguard your information.</p>
+                    </div>
+                </div>
+
+                <div class="legal-toc">
+                    <h2>Table of Contents</h2>
+                    <ol>
+                        <li><a href="#mobile-security">Mobile App Security</a></li>
+                        <li><a href="#data-protection">Data Protection</a></li>
+                        <li><a href="#authentication">Authentication & Access</a></li>
+                        <li><a href="#device-security">Device Security</a></li>
+                        <li><a href="#offline-security">Offline Security</a></li>
+                        <li><a href="#security-updates">Security Updates</a></li>
+                        <li><a href="#best-practices">Security Best Practices</a></li>
+                        <li><a href="#contact-us">Contact Security Team</a></li>
+                    </ol>
+                </div>
+
+                <div id="mobile-security" class="legal-section">
+                    <h2>1. Mobile App Security</h2>
+                    
+                    <p>The FinergyCloud mobile app is designed with security as a core principle. We implement multiple layers of protection to safeguard your data and ensure a secure user experience.</p>
+                    
+                    <div class="security-feature">
+                        <div class="security-feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="security-feature-content">
+                            <h4>Secure Development</h4>
+                            <p>Our app is developed following secure coding practices and undergoes regular security testing before each release.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-feature">
+                        <div class="security-feature-icon">
+                            <i class="bi bi-lock"></i>
+                        </div>
+                        <div class="security-feature-content">
+                            <h4>Secure Communications</h4>
+                            <p>All communication between the app and our servers is encrypted using TLS 1.2 or higher to protect data in transit.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-feature">
+                        <div class="security-feature-icon">
+                            <i class="bi bi-shield"></i>
+                        </div>
+                        <div class="security-feature-content">
+                            <h4>Certificate Pinning</h4>
+                            <p>We implement certificate pinning to prevent man-in-the-middle attacks and ensure secure connections.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-feature">
+                        <div class="security-feature-icon">
+                            <i class="bi bi-bug"></i>
+                        </div>
+                        <div class="security-feature-content">
+                            <h4>Vulnerability Management</h4>
+                            <p>We regularly scan for vulnerabilities and promptly address security issues through app updates.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="data-protection" class="legal-section">
+                    <h2>2. Data Protection</h2>
+                    
+                    <h3>2.1 Data Encryption</h3>
+                    <p>We protect your data using industry-standard encryption:</p>
+                    <ul>
+                        <li>All sensitive data stored on your device is encrypted</li>
+                        <li>We use AES-256 encryption for local data storage</li>
+                        <li>Encryption keys are securely stored in your device's secure storage when available</li>
+                    </ul>
+                    
+                    <h3>2.2 Local Storage</h3>
+                    <p>Data stored locally on your device is protected:</p>
+                    <ul>
+                        <li>Sensitive data is never stored in plain text</li>
+                        <li>We minimize the amount of sensitive data stored locally</li>
+                        <li>Temporary files are securely deleted when no longer needed</li>
+                        <li>App data is isolated from other apps on your device</li>
+                    </ul>
+                    
+                    <h3>2.3 Data Synchronization</h3>
+                    <p>When synchronizing data with our servers:</p>
+                    <ul>
+                        <li>All data is encrypted during transmission</li>
+                        <li>We use secure API endpoints with proper authentication</li>
+                        <li>Synchronization occurs only when necessary to minimize data exposure</li>
+                    </ul>
+                </div>
+
+                <div id="authentication" class="legal-section">
+                    <h2>3. Authentication & Access</h2>
+                    
+                    <h3>3.1 User Authentication</h3>
+                    <p>We implement secure authentication methods:</p>
+                    <ul>
+                        <li>Strong password requirements</li>
+                        <li>Support for biometric authentication (fingerprint, face recognition) when available</li>
+                        <li>Multi-factor authentication options</li>
+                        <li>Secure token-based authentication</li>
+                        <li>Automatic session timeout for inactivity</li>
+                    </ul>
+                    
+                    <h3>3.2 Authorization</h3>
+                    <p>We ensure proper authorization for all actions:</p>
+                    <ul>
+                        <li>Role-based access controls</li>
+                        <li>Principle of least privilege</li>
+                        <li>Server-side validation of all requests</li>
+                    </ul>
+                </div>
+
+                <div id="device-security" class="legal-section">
+                    <h2>4. Device Security</h2>
+                    
+                    <h3>4.1 Device Compatibility</h3>
+                    <p>Our app is designed to work securely on supported devices:</p>
+                    <ul>
+                        <li>Compatible with modern Android and iOS versions</li>
+                        <li>Optimized for devices with security features</li>
+                        <li>Leverages platform security capabilities when available</li>
+                    </ul>
+                    
+                    <h3>4.2 App Permissions</h3>
+                    <p>We request only the permissions necessary for app functionality:</p>
+                    <ul>
+                        <li>Internet access: To connect to our services</li>
+                        <li>Storage: To save calculations and reports</li>
+                        <li>Camera (optional): For document scanning</li>
+                        <li>Notifications: For alerts and updates</li>
+                    </ul>
+                    <p>You can manage these permissions through your device settings.</p>
+                    
+                    <h3>4.3 Screen Security</h3>
+                    <p>We implement measures to protect sensitive information on screen:</p>
+                    <ul>
+                        <li>Option to hide sensitive data when app is in background</li>
+                        <li>Prevention of screenshots for sensitive screens (where supported by the platform)</li>
+                        <li>Automatic locking after inactivity</li>
+                    </ul>
+                </div>
+
+                <div id="offline-security" class="legal-section">
+                    <h2>5. Offline Security</h2>
+                    
+                    <h3>5.1 Offline Data Protection</h3>
+                    <p>When using the app offline, your data remains protected:</p>
+                    <ul>
+                        <li>Encrypted local storage for offline data</li>
+                        <li>Secure caching mechanisms</li>
+                        <li>Authentication state maintained securely</li>
+                    </ul>
+                    
+                    <h3>5.2 Synchronization Security</h3>
+                    <p>When your device reconnects to the internet:</p>
+                    <ul>
+                        <li>Secure synchronization of offline changes</li>
+                        <li>Conflict resolution with data integrity checks</li>
+                        <li>Verification of authentication before sync</li>
+                    </ul>
+                </div>
+
+                <div id="security-updates" class="legal-section">
+                    <h2>6. Security Updates</h2>
+                    
+                    <h3>6.1 App Updates</h3>
+                    <p>We regularly update the app to address security issues:</p>
+                    <ul>
+                        <li>Security patches are released promptly</li>
+                        <li>Critical security updates are prioritized</li>
+                        <li>Automatic update notifications</li>
+                    </ul>
+                    
+                    <h3>6.2 Vulnerability Management</h3>
+                    <p>Our approach to managing vulnerabilities includes:</p>
+                    <ul>
+                        <li>Regular security assessments</li>
+                        <li>Third-party penetration testing</li>
+                        <li>Monitoring of security advisories</li>
+                        <li>Prompt remediation of identified issues</li>
+                    </ul>
+                    
+                    <p>We encourage users to keep their app updated to the latest version to benefit from security improvements.</p>
+                </div>
+
+                <div id="best-practices" class="legal-section">
+                    <h2>7. Security Best Practices</h2>
+                    
+                    <p>To enhance the security of your data when using our mobile app, we recommend the following practices:</p>
+                    
+                    <h3>7.1 Device Security</h3>
+                    <ul>
+                        <li>Keep your device's operating system and apps updated</li>
+                        <li>Use a strong device passcode or biometric authentication</li>
+                        <li>Enable remote wipe capabilities for your device</li>
+                        <li>Install a reputable mobile security app</li>
+                        <li>Avoid using the app on jailbroken or rooted devices</li>
+                    </ul>
+                    
+                    <h3>7.2 Account Security</h3>
+                    <ul>
+                        <li>Use a strong, unique password for your FinergyCloud account</li>
+                        <li>Enable multi-factor authentication when available</li>
+                        <li>Sign out when using shared devices</li>
+                        <li>Regularly review your account activity</li>
+                    </ul>
+                    
+                    <h3>7.3 Network Security</h3>
+                    <ul>
+                        <li>Avoid using public Wi-Fi for sensitive transactions</li>
+                        <li>Use a VPN when connecting to public networks</li>
+                        <li>Verify you're connected to legitimate networks</li>
+                    </ul>
+                    
+                    <h3>7.4 Data Management</h3>
+                    <ul>
+                        <li>Regularly export and backup important data</li>
+                        <li>Delete data you no longer need from the app</li>
+                        <li>Be mindful of what information you share through the app</li>
+                    </ul>
+                </div>
+
+                <div id="contact-us" class="legal-section">
+                    <h2>8. Contact Security Team</h2>
+                    
+                    <p>If you discover a security vulnerability or have security concerns about our mobile app, please contact our security team immediately:</p>
+                    
+                    <div class="contact-details">
+                        <p><strong>Email:</strong> <a href="mailto:security@finergycloud.com">security@finergycloud.com</a></p>
+                        <p><strong>For urgent security issues:</strong> <a href="mailto:security-urgent@finergycloud.com">security-urgent@finergycloud.com</a></p>
+                    </div>
+                    
+                    <p>We appreciate responsible disclosure of security vulnerabilities and will work with you to address any legitimate concerns.</p>
+                </div>
+
+                <div class="legal-footer">
+                    <p>© 2025 FinergyCloud Ltd. All rights reserved.</p>
+                </div>
+            </div>
+            
+            <div class="back-to-app">
+                <button class="btn btn-primary" onclick="window.history.back()">
+                    <i class="bi bi-arrow-left me-2"></i>Back to App
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Simple script to handle back navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    window.history.back();
+                });
+            }
+            
+            // Scroll to section if hash is present
+            if (window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
