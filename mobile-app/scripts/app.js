@@ -16,6 +16,7 @@ class FinergyCloudApp {
         this.checkForUpdates();
         this.setupOfflineSupport();
         this.setupTheme();
+       this.setupLegalNavigation();
         console.log('FinergyCloud Mobile App initialized');
     }
 
@@ -233,7 +234,7 @@ class FinergyCloudApp {
     }
 
     isValidPage(pageId) {
-        const validPages = ['dashboard', 'calculator', 'projects', 'esg', 'blog', 'xgboost'];
+       const validPages = ['dashboard', 'calculator', 'projects', 'esg', 'blog', 'xgboost', 'legal'];
         return validPages.includes(pageId);
     }
 
@@ -245,6 +246,7 @@ class FinergyCloudApp {
         this.initializePage('esg');
         this.initializePage('blog');
         this.initializePage('xgboost');
+       this.initializePage('legal');
         
         // Restore last visited page if available
         const lastPage = this.userPreferences.lastPage;
@@ -273,6 +275,9 @@ class FinergyCloudApp {
             case 'xgboost':
                 this.initializeXGBoost();
                 break;
+           case 'legal':
+               this.initializeLegal();
+               break;
         }
     }
 
@@ -431,6 +436,48 @@ class FinergyCloudApp {
         console.log('Loading market insights...');
     }
 
+   initializeLegal() {
+       // Initialize legal page
+       console.log('Initializing legal page...');
+       this.setupLegalLinks();
+   }
+
+   setupLegalLinks() {
+       // Set up legal page links
+       const legalLinks = document.querySelectorAll('.legal-link-card');
+       legalLinks.forEach(link => {
+           link.addEventListener('click', (e) => {
+               // Allow normal navigation for these links
+               // They will open the respective HTML pages
+           });
+       });
+   }
+
+   setupLegalNavigation() {
+       // Add legal page to side navigation if not already present
+       const navMenu = document.querySelector('.nav-menu');
+       if (navMenu && !document.querySelector('.nav-link[data-page="legal"]')) {
+           const legalNavItem = document.createElement('li');
+           legalNavItem.className = 'nav-item';
+           legalNavItem.innerHTML = `
+               <a href="#legal" class="nav-link" data-page="legal">
+                   <i class="bi bi-shield-lock"></i>
+                   <span>Legal</span>
+               </a>
+           `;
+           navMenu.appendChild(legalNavItem);
+           
+           // Add event listener
+           const legalLink = legalNavItem.querySelector('.nav-link');
+           legalLink.addEventListener('click', (e) => {
+               e.preventDefault();
+               this.navigateToPage('legal');
+               if (window.innerWidth < 1024) {
+                   this.closeNavigation();
+               }
+           });
+       }
+   }
     setupPullToRefresh() {
         let touchStartY = 0;
         let touchEndY = 0;
