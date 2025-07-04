@@ -1466,8 +1466,118 @@ body {
     color: var(--success);
 }
 
+.text-warning {
+    color: var(--warning);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
 .mt-4 {
     margin-top: 1rem;
+}
+
+/* Legal Page Styles */
+.legal-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.legal-link-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    gap: var(--spacing-md);
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: var(--transition-normal);
+    border: 1px solid rgba(0, 77, 64, 0.1);
+}
+
+.legal-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.legal-card-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.legal-card-content {
+    flex: 1;
+}
+
+.legal-card-content h3 {
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.1rem;
+}
+
+.legal-card-content p {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.9rem;
+}
+
+.legal-card-action {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--accent-teal);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.contact-info-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+}
+
+.contact-info-item i {
+    font-size: 1.5rem;
+    color: var(--primary-green);
+    flex-shrink: 0;
+}
+
+.contact-info-item h4 {
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1rem;
+}
+
+.contact-info-item p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.contact-info-item a {
+    color: var(--accent-teal);
+    text-decoration: none;
+}
+
+.contact-info-item a:hover {
+    text-decoration: underline;
 }
 
 /* Responsive Design Breakpoints */
