@@ -125,6 +125,98 @@
             </div>
         </nav>
         
+        <!-- Analytics Dashboard Page -->
+        <div id="analytics-page" class="page">
+            <div class="page-header">
+                <h1>Analytics Dashboard</h1>
+                <p>Comprehensive investment intelligence</p>
+            </div>
+            
+            <div class="dashboard-carousel">
+                <div class="dashboard-slide active">
+                    <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
+                    <div class="slide-caption">Executive Summary</div>
+                </div>
+                <div class="dashboard-slide">
+                    <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
+                    <div class="slide-caption">Financial Analysis</div>
+                </div>
+                <div class="dashboard-slide">
+                    <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
+                    <div class="slide-caption">ESG Scoring</div>
+                </div>
+                <div class="dashboard-slide">
+                    <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
+                    <div class="slide-caption">Risk Assessment</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-controls">
+                <button class="dashboard-control prev">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <div class="dashboard-indicators">
+                    <span class="indicator active"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                    <span class="indicator"></span>
+                </div>
+                <button class="dashboard-control next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="dashboard-metrics">
+                <div class="section-header">
+                    <h2 class="section-title">Key Metrics</h2>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="metric-card">
+                        <div class="metric-value">15.2%</div>
+                        <div class="metric-label">Average IRR</div>
+                        <div class="metric-change positive">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>2.3%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">8.7</div>
+                        <div class="metric-label">ESG Score</div>
+                        <div class="metric-change positive">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>0.5</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">₦120M+</div>
+                        <div class="metric-label">Analyzed Value</div>
+                        <div class="metric-change positive">
+                            <i class="bi bi-arrow-up"></i>
+                            <span>₦20M</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Low</div>
+                        <div class="metric-label">Risk Level</div>
+                        <div class="metric-change positive">
+                            <i class="bi bi-arrow-down"></i>
+                            <span>Improved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-actions">
+                <button class="btn btn-primary btn-block">
+                    <i class="bi bi-download me-2"></i>Export as PDF
+                </button>
+                <button class="btn btn-outline-primary btn-block">
+                    <i class="bi bi-share me-2"></i>Share Dashboard
+                </button>
+            </div>
+        </div>
+        
         <!-- Main Content -->
         <main id="main-content" class="main-content">
             <!-- Dashboard Page -->
@@ -925,6 +1017,10 @@
                 <i class="bi bi-leaf"></i>
                 <span>ESG</span>
             </button>
+            <button class="nav-btn" data-page="analytics">
+                <i class="bi bi-graph-up"></i>
+                <span>Analytics</span>
+            </button>
         </nav>
     </div>
     
@@ -935,6 +1031,7 @@
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/xgboost-model.js"></script>
     <script src="scripts/cross-platform-navigation.js"></script>
+    <script src="scripts/dashboard.js"></script>
     <script src="scripts/email-integration.js"></script>
     
     <!-- Service Worker Registration -->
