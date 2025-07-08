@@ -717,25 +717,25 @@
             <!-- Analytics Dashboard Page -->
             <div id="analytics-page" class="page">
                 <div class="page-header">
-                    <h1>Analytics Dashboard</h1>
+                    <h1>Power BI Dashboard</h1>
                     <p>Comprehensive investment intelligence</p>
                 </div>
                 
                 <div class="dashboard-carousel">
                     <div class="dashboard-slide active">
-                        <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
+                        <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg" id="executive-dashboard">
                         <div class="slide-caption">Executive Summary</div>
                     </div>
                     <div class="dashboard-slide">
-                        <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
+                        <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg" id="financial-dashboard">
                         <div class="slide-caption">Financial Analysis</div>
                     </div>
                     <div class="dashboard-slide">
-                        <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
+                        <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg" id="esg-dashboard">
                         <div class="slide-caption">ESG Scoring</div>
                     </div>
                     <div class="dashboard-slide">
-                        <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
+                        <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg" id="risk-dashboard">
                         <div class="slide-caption">Risk Assessment</div>
                     </div>
                 </div>
@@ -759,7 +759,7 @@
                     <div class="section-header">
                         <h2 class="section-title">Key Metrics</h2>
                     </div>
-                    
+                    <p class="text-center mb-4">Real-time metrics from Power BI analytics</p>
                     <div class="grid-2">
                         <div class="metric-card">
                             <div class="metric-value">15.2%</div>
@@ -798,7 +798,7 @@
                 
                 <div class="dashboard-actions">
                     <button class="btn btn-primary btn-block">
-                        <i class="bi bi-download me-2"></i>Export as PDF
+                        <i class="bi bi-download me-2"></i>Download Dashboard
                     </button>
                     <button class="btn btn-outline-primary btn-block">
                         <i class="bi bi-share me-2"></i>Share Dashboard
@@ -977,11 +977,34 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/calculator.js"></script>
     <script src="scripts/charts.js"></script>
+    <script src="scripts/dashboard.js"></script>
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/xgboost-model.js"></script>
-   <script src="scripts/dashboard.js"></script>
-    <script src="scripts/dashboard.js"></script>
     <script src="scripts/cross-platform-navigation.js"></script>
     <script src="scripts/email-integration.js"></script>
+    
+    <script>
+        // Power BI Dashboard Integration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Replace placeholder images with actual Power BI dashboard images
+            // In a real implementation, these would be actual Power BI embedded dashboards
+            
+            // Dashboard preview on home page
+            const dashboardPreview = document.getElementById('dashboard-preview');
+            if (dashboardPreview) {
+                // Keep using the placeholder image for now
+                // In a real implementation, this would be a Power BI embedded dashboard
+            }
+            
+            // Dashboard slides
+            const executiveDashboard = document.getElementById('executive-dashboard');
+            const financialDashboard = document.getElementById('financial-dashboard');
+            const esgDashboard = document.getElementById('esg-dashboard');
+            const riskDashboard = document.getElementById('risk-dashboard');
+            
+            // In a real implementation, these would be actual Power BI embedded dashboards
+            // For now, we're using placeholder images
+        });
+    </script>
 </body>
 </html>
