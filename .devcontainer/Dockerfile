@@ -19,7 +19,8 @@ ENV PYENV_ROOT /home/$USERNAME/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # Set environment variables for proper Python compilation
-ENV LDFLAGS="-L/usr/lib -L/usr/local/lib"
+ENV CFLAGS="-I/usr/include/openssl -I/usr/include/zlib"
+ENV LDFLAGS="-L/usr/lib -L/usr/local/lib -L/usr/lib/x86_64-linux-gnu"
 ENV CPPFLAGS="-I/usr/include -I/usr/local/include"
 ENV PYTHON_CONFIGURE_OPTS="--with-openssl=/usr --with-zlib=/usr"
 
