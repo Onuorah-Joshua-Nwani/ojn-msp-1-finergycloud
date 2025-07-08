@@ -21,6 +21,7 @@ ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # Set environment variables for proper Python compilation
 ENV LDFLAGS="-L/usr/lib -L/usr/local/lib"
 ENV CPPFLAGS="-I/usr/include -I/usr/local/include"
+ENV PYTHON_CONFIGURE_OPTS="--with-openssl=/usr --with-zlib=/usr"
 
 # Install pyenv
 RUN set -ex \
