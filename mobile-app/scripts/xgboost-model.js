@@ -1052,6 +1052,9 @@
                         <i class="bi bi-graph-up"></i>
                         <p>Performance chart will load here</p>
                     </div>
+                    <div id="roc-curve-chart" style="display: none;">
+                        <canvas></canvas>
+                    </div>
                 </div>
                 
                 <div class="card">
