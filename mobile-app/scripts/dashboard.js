@@ -9,7 +9,7 @@ class MobileDashboardManager {
 
     init() {
         this.setupEventListeners();
-        this.addDashboardNavigation();
+        this.setupDashboardNavigation();
     }
 
     setupEventListeners() {
@@ -18,6 +18,7 @@ class MobileDashboardManager {
             if (e.detail.pageId === 'analytics') {
                 this.initializeDashboardCarousel();
                 this.startAutoplay();
+                this.loadDashboardMetrics();
             } else {
                 this.stopAutoplay();
             }
@@ -38,55 +39,15 @@ class MobileDashboardManager {
         });
     }
 
-    addDashboardNavigation() {
-        // Add analytics dashboard to side navigation if not already present
-        const navMenu = document.querySelector('.nav-menu');
-        if (navMenu && !document.querySelector('.nav-link[data-page="analytics"]')) {
-            const analyticsNavItem = document.createElement('li');
-            analyticsNavItem.className = 'nav-item';
-            analyticsNavItem.innerHTML = `
-                <a href="#analytics" class="nav-link" data-page="analytics">
-                    <i class="bi bi-graph-up"></i>
-                    <span>Analytics</span>
-                </a>
-            `;
-            navMenu.appendChild(analyticsNavItem);
-            
-            // Add event listener
-            const analyticsLink = analyticsNavItem.querySelector('.nav-link');
-            analyticsLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (window.finergyApp) {
-                    window.finergyApp.navigateToPage('analytics');
-                }
-                if (window.innerWidth < 1024) {
-                    if (window.finergyApp) {
-                        window.finergyApp.closeNavigation();
-                    }
-                }
-            });
-        }
-
-        // Add analytics to bottom navigation if not already present
-        const bottomNav = document.querySelector('.bottom-nav');
-        if (bottomNav && !document.querySelector('.nav-btn[data-page="analytics"]') && bottomNav.children.length < 5) {
-            const analyticsNavBtn = document.createElement('button');
-            analyticsNavBtn.className = 'nav-btn';
-            analyticsNavBtn.setAttribute('data-page', 'analytics');
-            analyticsNavBtn.innerHTML = `
-                <i class="bi bi-graph-up"></i>
-                <span>Analytics</span>
-            `;
-            bottomNav.appendChild(analyticsNavBtn);
-            
-            // Re-attach event listeners
-            analyticsNavBtn.addEventListener('click', (e) => {
-                e.preventDefault();
+    setupDashboardNavigation() {
+        // Make sure analytics is properly linked in navigation
+        document.querySelectorAll('.nav-btn[data-page="analytics"]').forEach(btn => {
+            btn.addEventListener('click', () => {
                 if (window.finergyApp) {
                     window.finergyApp.navigateToPage('analytics');
                 }
             });
-        }
+        });
     }
 
     initializeDashboardCarousel() {
@@ -200,6 +161,23 @@ class MobileDashboardManager {
         this.startAutoplay();
     }
 
+    loadDashboardMetrics() {
+        // In a real app, this would fetch data from an API
+        // For now, we'll just animate the metrics that are already in the HTML
+        
+        const metricValues = document.querySelectorAll('.dashboard-metrics .metric-value');
+        metricValues.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+                
+                // Remove animation after it completes
+                setTimeout(() => {
+                    metric.style.animation = '';
+                }, 500);
+            }, index * 100);
+        });
+    }
+
     downloadDashboard() {
         // In a real implementation, this would generate a PDF
         this.showToast('Dashboard PDF download started', 'success');
@@ -277,3 +255,115 @@ class MobileDashboardManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.mobileDashboard = new MobileDashboardManager();
 });
+
+// Add dashboard styles
+const dashboardStyles = `
+<style>
+/* Dashboard Carousel Styles */
+.dashboard-carousel {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-slide {
+    display: none;
+    width: 100%;
+}
+
+.dashboard-slide.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.dashboard-slide img {
+    width: 100%;
+    display: block;
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 77, 64, 0.8);
+    color: var(--white);
+    padding: var(--spacing-sm);
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+}
+
+.dashboard-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.dashboard-control {
+    background: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.dashboard-control:hover {
+    background: var(--light-green);
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-indicators {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: 0 var(--spacing-md);
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.indicator.active {
+    background: var(--accent-teal);
+    transform: scale(1.2);
+}
+
+.dashboard-metrics {
+    margin-bottom: var(--spacing-lg);
+}
+
+.dashboard-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.dashboard-actions .btn {
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', dashboardStyles);
