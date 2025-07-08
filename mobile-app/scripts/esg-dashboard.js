@@ -50,6 +50,11 @@ class ESGDashboard {
     }
 
     initializeCharts() {
+        if (!window.Chart) {
+            console.log('Chart.js not loaded yet');
+            return;
+        }
+        
         this.initializeESGTrendChart();
         this.initializeESGRadarChart();
         this.initializePeerComparisonChart();
@@ -135,7 +140,7 @@ class ESGDashboard {
             labels: ['Environmental', 'Social', 'Governance', 'Community', 'Innovation', 'Ethics'],
             datasets: [{
                 label: 'Current Project',
-                data: [8.5, 8.9, 8.6, 7.5, 8.0, 9.2],
+                data: [9.2, 8.5, 8.4, 7.5, 8.0, 9.2],
                 backgroundColor: 'rgba(0, 191, 165, 0.2)',
                 borderColor: '#00bfa5',
                 pointBackgroundColor: '#00bfa5',

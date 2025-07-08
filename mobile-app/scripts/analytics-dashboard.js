@@ -30,6 +30,11 @@ class AnalyticsDashboard {
     }
 
     initializeCharts() {
+        if (!window.Chart) {
+            console.log('Chart.js not loaded yet');
+            return;
+        }
+        
         this.initializePortfolioChart();
         this.initializePerformanceChart();
         this.initializeRiskChart();
