@@ -1509,6 +1509,104 @@ body {
     width: 100%;
 }
 
+/* Analytics Page Styles */
+.analytics-container {
+    padding-bottom: var(--spacing-xl);
+}
+
+.analytics-container.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.analytics-charts {
+    margin-bottom: var(--spacing-lg);
+}
+
+.chart-container {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.chart-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--gray);
+    text-align: center;
+}
+
+.chart-placeholder i {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent-teal);
+}
+
+.chart-placeholder p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.metric-card {
+    background: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.metric-change {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.metric-change.positive {
+    color: var(--success);
+}
+
+.metric-change.negative {
+    color: var(--danger);
+}
+
+@media (max-width: 480px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes scaleIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 /* XGBoost Model Page Styles */
 .model-status-badge {
     display: inline-flex;
