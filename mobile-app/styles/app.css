@@ -2104,6 +2104,106 @@ body {
     width: 100%;
 }
 
+/* Dashboard Carousel Styles */
+.dashboard-carousel {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-slide {
+    display: none;
+    width: 100%;
+}
+
+.dashboard-slide.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.dashboard-slide img {
+    width: 100%;
+    display: block;
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 77, 64, 0.8);
+    color: var(--white);
+    padding: var(--spacing-sm);
+    text-align: center;
+    font-weight: var(--font-weight-medium);
+}
+
+.dashboard-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.dashboard-control {
+    background: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--primary-green);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.dashboard-control:hover {
+    background: var(--light-green);
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-indicators {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: 0 var(--spacing-md);
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.indicator.active {
+    background: var(--accent-teal);
+    transform: scale(1.2);
+}
+
+.dashboard-metrics {
+    margin-bottom: var(--spacing-lg);
+}
+
+.dashboard-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.dashboard-actions .btn {
+    width: 100%;
+}
+
 /* Improved Form Styles */
 .form-control:focus + .form-label {
     color: var(--accent-teal);
