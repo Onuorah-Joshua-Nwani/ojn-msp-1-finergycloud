@@ -864,101 +864,233 @@
                 </div>
                 
                 <div class="analytics-container">
-                    <div class="dashboard-carousel">
-                        <div class="dashboard-slide active">
-                            <img src="../assets/images/dashboards/executive-summary-mobile.png" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Executive Summary</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/financial-analysis-mobile.png" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Financial Analysis</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/esg-scoring-mobile.png" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">ESG Scoring</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/risk-assessment-mobile.png" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Risk Assessment</div>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-controls">
-                        <button class="dashboard-control prev">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        <div class="dashboard-indicators">
-                            <span class="indicator active"></span>
-                            <span class="indicator"></span>
-                            <span class="indicator"></span>
-                            <span class="indicator"></span>
-                        </div>
-                        <button class="dashboard-control next">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="dashboard-metrics">
+                    <!-- Dashboard Overview Section -->
+                    <div class="section">
                         <div class="section-header">
-                            <h2 class="section-title">Key Metrics</h2>
+                            <h2>Portfolio Overview</h2>
+                            <span class="section-badge">Live Data</span>
                         </div>
                         
-                        <div class="grid-2">
+                        <!-- Dashboard Carousel -->
+                        <div class="dashboard-carousel">
+                            <div class="dashboard-slide active">
+                                <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
+                                <div class="slide-caption">Executive Summary</div>
+                            </div>
+                            <div class="dashboard-slide">
+                                <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
+                                <div class="slide-caption">Financial Analysis</div>
+                            </div>
+                            <div class="dashboard-slide">
+                                <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
+                                <div class="slide-caption">ESG Scoring</div>
+                            </div>
+                            <div class="dashboard-slide">
+                                <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
+                                <div class="slide-caption">Risk Assessment</div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-controls">
+                            <button class="dashboard-control prev">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <div class="dashboard-indicators">
+                                <span class="indicator active"></span>
+                                <span class="indicator"></span>
+                                <span class="indicator"></span>
+                                <span class="indicator"></span>
+                            </div>
+                            <button class="dashboard-control next">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Metrics Section -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Key Performance Indicators</h2>
+                            <span class="last-updated">Updated 2h ago</span>
+                        </div>
+                        
+                        <div class="metrics-grid">
                             <div class="metric-card">
+                                <div class="metric-icon">
+                                    <i class="bi bi-graph-up-arrow"></i>
+                                </div>
                                 <div class="metric-value">15.2%</div>
                                 <div class="metric-label">Average IRR</div>
                                 <div class="metric-change positive">
-                                    <i class="bi bi-arrow-up"></i>
+                                    <i class="bi bi-arrow-up-short"></i>
                                     <span>2.3%</span>
                                 </div>
                             </div>
                             <div class="metric-card">
+                                <div class="metric-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
                                 <div class="metric-value">8.7</div>
                                 <div class="metric-label">ESG Score</div>
                                 <div class="metric-change positive">
-                                    <i class="bi bi-arrow-up"></i>
+                                    <i class="bi bi-arrow-up-short"></i>
                                     <span>0.5</span>
                                 </div>
                             </div>
                             <div class="metric-card">
+                                <div class="metric-icon">
+                                    <i class="bi bi-currency-exchange"></i>
+                                </div>
                                 <div class="metric-value">₦120M+</div>
-                                <div class="metric-label">Analyzed Value</div>
+                                <div class="metric-label">Portfolio Value</div>
                                 <div class="metric-change positive">
-                                    <i class="bi bi-arrow-up"></i>
+                                    <i class="bi bi-arrow-up-short"></i>
                                     <span>₦20M</span>
                                 </div>
                             </div>
                             <div class="metric-card">
+                                <div class="metric-icon">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                </div>
                                 <div class="metric-value">Low</div>
                                 <div class="metric-label">Risk Level</div>
                                 <div class="metric-change positive">
-                                    <i class="bi bi-arrow-down"></i>
+                                    <i class="bi bi-arrow-down-short"></i>
                                     <span>Improved</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="analytics-charts">
+                    <!-- Charts Section -->
+                    <div class="section">
                         <div class="section-header">
-                            <h2 class="section-title">Performance Analysis</h2>
-                        </div>
-                        
-                        <div class="chart-container">
-                            <div id="performance-chart" class="chart-placeholder">
-                                <i class="bi bi-graph-up"></i>
-                                <p>Performance chart will be displayed here</p>
+                            <h2>Performance Analytics</h2>
+                            <div class="section-actions">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-calendar3"></i>
+                                    <span>This Month</span>
+                                </button>
                             </div>
                         </div>
                         
-                        <div class="chart-container">
-                            <div id="portfolio-chart" class="chart-placeholder">
-                                <i class="bi bi-pie-chart"></i>
-                                <p>Portfolio distribution will be displayed here</p>
+                        <div class="charts-grid">
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>Portfolio Distribution</h3>
+                                    <div class="chart-legend">
+                                        <span class="legend-item">
+                                            <span class="legend-color" style="background-color: #ffc107;"></span>
+                                            <span>Solar</span>
+                                        </span>
+                                        <span class="legend-item">
+                                            <span class="legend-color" style="background-color: #00bfa5;"></span>
+                                            <span>Wind</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="portfolio-chart" class="chart-container">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>IRR Performance</h3>
+                                    <div class="chart-actions">
+                                        <button class="btn btn-sm btn-icon">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="performance-chart" class="chart-container">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>Risk Assessment</h3>
+                                    <div class="chart-actions">
+                                        <button class="btn btn-sm btn-icon">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="risk-chart" class="chart-container">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <h3>Cash Flow Projection</h3>
+                                    <div class="chart-actions">
+                                        <button class="btn btn-sm btn-icon">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="cashflow-chart" class="chart-container">
+                                    <!-- Chart will be rendered here -->
+                                </div>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- Recent Projects Section -->
+                    <div class="section">
+                        <div class="section-header">
+                            <h2>Recent Projects</h2>
+                            <a href="#projects" class="section-link" data-page="projects">View All</a>
+                        </div>
+                        
+                        <div class="recent-projects">
+                            <div class="project-card">
+                                <div class="project-type solar">
+                                    <i class="bi bi-sun"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Lagos Solar Farm</h3>
+                                    <div class="project-meta">
+                                        <span><i class="bi bi-geo-alt"></i> Lagos</span>
+                                        <span><i class="bi bi-lightning"></i> 5.0 MW</span>
+                                    </div>
+                                </div>
+                                <div class="project-metrics">
+                                    <div class="project-metric">
+                                        <span class="metric-label">IRR</span>
+                                        <span class="metric-value">16.8%</span>
+                                    </div>
+                                    <div class="project-metric">
+                                        <span class="metric-label">Risk</span>
+                                        <span class="metric-value low">Low</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <div class="project-type wind">
+                                    <i class="bi bi-wind"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Abuja Wind Farm</h3>
+                                    <div class="project-meta">
+                                        <span><i class="bi bi-geo-alt"></i> Abuja</span>
+                                        <span><i class="bi bi-lightning"></i> 2.5 MW</span>
+                                    </div>
+                                </div>
+                                <div class="project-metrics">
+                                    <div class="project-metric">
+                                        <span class="metric-label">IRR</span>
+                                        <span class="metric-value">14.5%</span>
+                                    </div>
+                                    <div class="project-metric">
+                                        <span class="metric-label">Risk</span>
+                                        <span class="metric-value medium">Medium</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Actions -->
                     <div class="dashboard-actions">
                         <button class="btn btn-primary btn-block" onclick="window.mobileDashboard.downloadDashboard()">
                             <i class="bi bi-download me-2"></i>Export as PDF

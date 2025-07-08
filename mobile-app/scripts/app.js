@@ -282,6 +282,9 @@ class FinergyCloudApp {
           case 'analytics':
               this.initializeAnalytics();
               break;
+          case 'analytics':
+              this.initializeAnalytics();
+              break;
         }
     }
 
@@ -430,6 +433,49 @@ class FinergyCloudApp {
         console.log('Loading ESG benchmarks...');
     }
     
+    initializeAnalytics() {
+        console.log('Initializing analytics page...');
+        this.loadAnalyticsData();
+        this.setupAnalyticsCharts();
+    }
+    
+    loadAnalyticsData() {
+        console.log('Loading analytics data...');
+        // In a real app, this would fetch data from an API
+        
+        // Simulate loading state
+        const analyticsContainer = document.querySelector('.analytics-container');
+        if (analyticsContainer) {
+            analyticsContainer.classList.add('loading');
+            
+            setTimeout(() => {
+                analyticsContainer.classList.remove('loading');
+                this.animateAnalyticsMetrics();
+            }, 1000);
+        }
+    }
+    
+    setupAnalyticsCharts() {
+        // Setup analytics charts
+        console.log('Setting up analytics charts...');
+        
+        // Initialize charts if they exist
+        if (window.chartsManager) {
+            const chartContainers = document.querySelectorAll('#analytics-page [id$="-chart"]');
+            chartContainers.forEach(container => {
+                window.chartsManager.createChart(container.id);
+            });
+        }
+    }
+    
+    animateAnalyticsMetrics() {
+        const metrics = document.querySelectorAll('#analytics-page .metric-value');
+        metrics.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+            }, index * 100);
+        });
+    }
     initializeAnalytics() {
         console.log('Initializing analytics page...');
         this.loadAnalyticsData();

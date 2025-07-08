@@ -15,7 +15,7 @@ class MobileDashboardManager {
     setupEventListeners() {
         // Listen for page activation
         document.addEventListener('pageActivated', (e) => {
-            if (e.detail.pageId === 'analytics') {
+            if (e.detail.pageId === 'analytics' || e.detail.pageId === 'dashboard') {
                 this.initializeDashboardCarousel();
                 this.startAutoplay();
                 this.loadDashboardMetrics();
