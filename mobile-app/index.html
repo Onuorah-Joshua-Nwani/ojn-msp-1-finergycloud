@@ -1139,9 +1139,96 @@
                 <div class="model-section">
                     <h3>Model Performance</h3>
                     <p>Evaluation metrics from 120+ projects</p>
-                    
-                    <div id="model-performance-chart" class="chart-container">
-                        <div class="performance-chart">
+                    <div id="model-performance-chart" class="performance-dashboard">
+                        <div class="performance-header">
+                            <h4>Model Accuracy Metrics</h4>
+                            <div class="performance-badge">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Production Ready</span>
+                            </div>
+                        </div>
+                        <div class="performance-metrics">
+                            <div class="performance-metric">
+                                <div class="metric-circle">
+                                    <svg viewBox="0 0 36 36">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle-fill"
+                                            stroke-dasharray="92, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" class="metric-percentage">92%</text>
+                                    </svg>
+                                </div>
+                                <div class="metric-name">AUC Score</div>
+                                <div class="metric-description">Area Under ROC Curve</div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="metric-circle">
+                                    <svg viewBox="0 0 36 36">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle-fill"
+                                            stroke-dasharray="87, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" class="metric-percentage">87%</text>
+                                    </svg>
+                                </div>
+                                <div class="metric-name">Accuracy</div>
+                                <div class="metric-description">Prediction Precision</div>
+                            </div>
+                            <div class="performance-metric">
+                                <div class="metric-circle">
+                                    <svg viewBox="0 0 36 36">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle-fill"
+                                            stroke-dasharray="83, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" class="metric-percentage">83%</text>
+                                    </svg>
+                                </div>
+                                <div class="metric-name">R² Score</div>
+                                <div class="metric-description">Variance Explained</div>
+                            </div>
+                        </div>
+                        <div class="performance-details">
+                            <div class="performance-detail">
+                                <div class="detail-label">
+                                    <i class="bi bi-bullseye"></i>
+                                    <span>RMSE</span>
+                                </div>
+                                <div class="detail-value">1.5%</div>
+                                <div class="detail-description">Root Mean Squared Error</div>
+                            </div>
+                            <div class="performance-detail">
+                                <div class="detail-label">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                    <span>MAE</span>
+                                </div>
+                                <div class="detail-value">1.2%</div>
+                                <div class="detail-description">Mean Absolute Error</div>
+                            </div>
+                        </div>
+                        <div class="confusion-matrix">
+                            <h5>Confusion Matrix</h5>
+                            <div class="matrix-container">
+                                <div class="matrix-row">
+                                    <div class="matrix-header"></div>
+                                    <div class="matrix-header">Predicted Failure</div>
+                                    <div class="matrix-header">Predicted Success</div>
+                                </div>
+                                <div class="matrix-row">
+                                    <div class="matrix-header">Actual Failure</div>
+                                    <div class="matrix-cell true-negative">45</div>
+                                    <div class="matrix-cell false-positive">5</div>
+                                </div>
+                                <div class="matrix-row">
+                                    <div class="matrix-header">Actual Success</div>
+                                    <div class="matrix-cell false-negative">8</div>
+                                    <div class="matrix-cell true-positive">42</div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="chart-title">ROC Curve (AUC = 0.92)</div>
                             <div class="roc-curve">
                                 <svg viewBox="0 0 100 100" width="100%" height="250">
