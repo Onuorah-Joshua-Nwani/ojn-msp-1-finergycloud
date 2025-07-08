@@ -638,220 +638,192 @@
             <!-- ESG Scoring Page -->
             <div id="esg-page" class="page">
                 <div class="page-header">
-                    <h2>ESG Scoring</h2>
-                    <p>Comprehensive sustainability assessment for renewable energy projects</p>
+                    <h1>ESG Scoring</h1>
+                    <p>Environmental, Social & Governance Assessment</p>
                 </div>
                 
-                <div class="esg-calculator">
-                    <div class="form-section">
-                        <h3><i class="bi bi-info-circle me-2"></i>Project Information</h3>
-                        <div class="form-row">
+                <div class="esg-dashboard-container">
+                    <!-- Key Metrics & Summaries -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="bi bi-award"></i>
+                            </div>
+                            <div class="metric-value">8.7</div>
+                            <div class="metric-label">Overall ESG Score</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>0.3</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon environmental">
+                                <i class="bi bi-tree"></i>
+                            </div>
+                            <div class="metric-value">8.5</div>
+                            <div class="metric-label">Environmental</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>0.2</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon social">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="metric-value">8.9</div>
+                            <div class="metric-label">Social</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>0.5</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon governance">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div class="metric-value">8.6</div>
+                            <div class="metric-label">Governance</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>0.1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Visualizations -->
+                    <div class="chart-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>ESG Score Trend</h3>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container" id="esg-trend-chart"></div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>ESG Score Breakdown</h3>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container" id="esg-radar-chart"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Peer Comparison</h3>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container" id="peer-comparison-chart"></div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>ESG Factor Impact</h3>
+                                <div class="chart-actions">
+                                    <button class="chart-action-btn">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container" id="factor-impact-chart"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Interactive Tools -->
+                    <div class="interactive-tools-card">
+                        <div class="chart-header">
+                            <h3>Interactive Tools</h3>
+                        </div>
+                        <div class="interactive-tools-content">
                             <div class="form-group">
-                                <label for="esg-project-type">Project Type</label>
-                                <select id="esg-project-type" class="form-control">
-                                    <option value="solar">Solar</option>
-                                    <option value="wind">Wind</option>
-                                    <option value="hydro">Hydro</option>
-                                    <option value="biomass">Biomass</option>
-                                    <option value="geothermal">Geothermal</option>
+                                <label for="esg-project-selector">Project Selector</label>
+                                <select id="esg-project-selector" class="form-control">
+                                    <option>Project A - Solar Farm</option>
+                                    <option>Project B - Wind Park</option>
+                                    <option>Project C - Hydro Plant</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="esg-project-location">Location</label>
-                                <select id="esg-project-location" class="form-control">
-                                    <option value="lagos">Lagos, Nigeria</option>
-                                    <option value="abuja">Abuja, Nigeria</option>
-                                    <option value="kano">Kano, Nigeria</option>
-                                    <option value="port-harcourt">Port Harcourt, Nigeria</option>
-                                    <option value="ibadan">Ibadan, Nigeria</option>
+                                <label for="esg-time-period">Time Period</label>
+                                <select id="esg-time-period" class="form-control">
+                                    <option>Last 3 Months</option>
+                                    <option>Last 6 Months</option>
+                                    <option>Last 12 Months</option>
+                                    <option>All Time</option>
                                 </select>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Environmental Factors</h3>
-                        <div class="form-group">
-                            <label for="carbon-reduction">Carbon Reduction (tons CO2/year)</label>
-                            <input type="number" id="carbon-reduction" class="form-control" placeholder="e.g., 5000" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="land-use">Land Use Efficiency (MW/hectare)</label>
-                            <input type="number" id="land-use" class="form-control" placeholder="e.g., 2.5" min="0" step="0.1">
-                        </div>
-                        <div class="form-group">
-                            <label for="water-usage">Water Usage (liters/MWh)</label>
-                            <input type="number" id="water-usage" class="form-control" placeholder="e.g., 100" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="biodiversity-impact">Biodiversity Impact</label>
-                            <select id="biodiversity-impact" class="form-control">
-                                <option value="minimal">Minimal Impact</option>
-                                <option value="low">Low Impact</option>
-                                <option value="moderate">Moderate Impact</option>
-                                <option value="significant">Significant Impact</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Social Factors</h3>
-                        <div class="form-group">
-                            <label for="local-employment">Local Employment (%)</label>
-                            <input type="number" id="local-employment" class="form-control" placeholder="e.g., 75" min="0" max="100">
-                        </div>
-                        <div class="form-group">
-                            <label for="community-programs">Community Programs</label>
-                            <select id="community-programs" class="form-control">
-                                <option value="extensive">Extensive Programs</option>
-                                <option value="moderate">Moderate Programs</option>
-                                <option value="minimal">Minimal Programs</option>
-                                <option value="none">No Programs</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="health-safety">Health & Safety Standards</label>
-                            <select id="health-safety" class="form-control">
-                                <option value="excellent">Excellent</option>
-                                <option value="good">Good</option>
-                                <option value="adequate">Adequate</option>
-                                <option value="poor">Poor</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Governance Factors</h3>
-                        <div class="form-group">
-                            <label for="transparency">Transparency & Reporting</label>
-                            <select id="transparency" class="form-control">
-                                <option value="excellent">Excellent</option>
-                                <option value="good">Good</option>
-                                <option value="adequate">Adequate</option>
-                                <option value="poor">Poor</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="anti-corruption">Anti-Corruption Measures</label>
-                            <select id="anti-corruption" class="form-control">
-                                <option value="extensive">Extensive Measures</option>
-                                <option value="moderate">Moderate Measures</option>
-                                <option value="minimal">Minimal Measures</option>
-                                <option value="none">No Measures</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="board-diversity">Board Diversity</label>
-                            <select id="board-diversity" class="form-control">
-                                <option value="excellent">Excellent</option>
-                                <option value="good">Good</option>
-                                <option value="adequate">Adequate</option>
-                                <option value="poor">Poor</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary calculate-btn">
-                        <i class="bi bi-calculator"></i>
-                        Calculate ESG Score
-                    </button>
-                </div>
-                
-                <div class="esg-results">
-                    <div class="esg-score-container">
-                        <div class="esg-score-card">
-                            <div class="esg-score-content">
-                                <div class="esg-score-label">Overall ESG Score</div>
-                                <div class="esg-score-value">8.7</div>
-                                <div class="esg-score-rating">Excellent</div>
-                                <div class="esg-score-description">This project demonstrates strong sustainability performance across environmental, social, and governance factors.</div>
-                            </div>
-                        </div>
-                        
-                        <div class="esg-breakdown">
-                            <div class="esg-component environmental">
-                                <div class="component-label">
-                                    <i class="bi bi-tree-fill environmental"></i>
-                                    Environmental
-                                </div>
-                                <div class="component-bar-container">
-                                    <div class="component-bar environmental" style="width: 92%"></div>
-                                </div>
-                                <div class="component-value environmental">9.2</div>
-                            </div>
-                            
-                            <div class="esg-component social">
-                                <div class="component-label">
-                                    <i class="bi bi-people-fill social"></i>
-                                    Social
-                                </div>
-                                <div class="component-bar-container">
-                                    <div class="component-bar social" style="width: 85%"></div>
-                                </div>
-                                <div class="component-value social">8.5</div>
-                            </div>
-                            
-                            <div class="esg-component governance">
-                                <div class="component-label">
-                                    <i class="bi bi-building-fill governance"></i>
-                                    Governance
-                                </div>
-                                <div class="component-bar-container">
-                                    <div class="component-bar governance" style="width: 83%"></div>
-                                </div>
-                                <div class="component-value governance">8.3</div>
+                            <div class="esg-action-buttons">
+                                <button class="btn btn-primary">
+                                    <i class="bi bi-file-earmark-text me-2"></i>Generate ESG Report
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="bi bi-lightbulb me-2"></i>View Insights
+                                </button>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="esg-details">
-                        <div class="esg-detail-section">
-                            <h4><i class="bi bi-tree"></i>Environmental Highlights</h4>
-                            <ul class="esg-detail-list">
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Low carbon footprint with 85% emissions reduction</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Efficient resource utilization with 92% materials optimization</li>
-                                <li class="neutral"><i class="bi bi-dash-circle-fill"></i>Moderate land use impact requiring mitigation</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Strong biodiversity protection measures implemented</li>
-                            </ul>
+                    <!-- ESG Improvement Recommendations -->
+                    <div class="recommendations-card">
+                        <div class="chart-header">
+                            <h3>ESG Improvement Recommendations</h3>
                         </div>
-                        
-                        <div class="esg-detail-section">
-                            <h4><i class="bi bi-people"></i>Social Highlights</h4>
-                            <ul class="esg-detail-list">
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Strong community engagement with regular stakeholder meetings</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>75% local employment rate with skills development</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Excellent health and safety record with zero incidents</li>
-                                <li class="negative"><i class="bi bi-x-circle-fill"></i>Limited diversity initiatives requiring improvement</li>
-                            </ul>
+                        <div class="recommendations-list">
+                            <div class="recommendation-item">
+                                <div class="recommendation-icon environmental">
+                                    <i class="bi bi-droplet"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Reduce Water Usage</h4>
+                                    <p>Implement water recycling systems to reduce consumption by 15%</p>
+                                    <div class="recommendation-impact">
+                                        <span class="impact-label">Potential Impact:</span>
+                                        <span class="impact-value">+0.3 Environmental Score</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="recommendation-icon social">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Enhance Community Engagement</h4>
+                                    <p>Develop structured community feedback program for project areas</p>
+                                    <div class="recommendation-impact">
+                                        <span class="impact-label">Potential Impact:</span>
+                                        <span class="impact-value">+0.4 Social Score</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <div class="recommendation-icon governance">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Improve Board Diversity</h4>
+                                    <p>Increase board diversity with focus on gender and expertise balance</p>
+                                    <div class="recommendation-impact">
+                                        <span class="impact-label">Potential Impact:</span>
+                                        <span class="impact-value">+0.5 Governance Score</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="esg-detail-section">
-                            <h4><i class="bi bi-building"></i>Governance Highlights</h4>
-                            <ul class="esg-detail-list">
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Transparent reporting with quarterly sustainability updates</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Comprehensive anti-corruption policies and training</li>
-                                <li class="neutral"><i class="bi bi-dash-circle-fill"></i>Moderate board independence with 60% independent directors</li>
-                                <li class="positive"><i class="bi bi-check-circle-fill"></i>Full regulatory compliance across all jurisdictions</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="esg-recommendations">
-                        <h4><i class="bi bi-lightbulb"></i>Recommendations for Improvement</h4>
-                        <ul class="recommendation-list">
-                            <li><i class="bi bi-arrow-right-circle"></i>Develop and implement a comprehensive diversity and inclusion program with measurable targets and regular reporting</li>
-                            <li><i class="bi bi-arrow-right-circle"></i>Enhance land use mitigation strategies through advanced site planning and restoration initiatives</li>
-                            <li><i class="bi bi-arrow-right-circle"></i>Increase board independence to at least 75% with diverse representation</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="esg-actions">
-                        <button class="btn btn-primary">
-                            <i class="bi bi-download me-2"></i>Export Report
-                        </button>
-                        <button class="btn btn-outline-primary">
-                            <i class="bi bi-share me-2"></i>Share Results
-                        </button>
                     </div>
                 </div>
             </div>
