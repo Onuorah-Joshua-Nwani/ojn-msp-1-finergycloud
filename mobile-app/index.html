@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors. Advanced IRR simulation, ESG scoring, and risk profiling on your mobile device.">
+    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors on your mobile device.">
     <meta name="theme-color" content="#004d40">
     
-    <title>FinergyCloud Mobile - AI Risk Intelligence</title>
+    <title>FinergyCloud Mobile</title>
     
     <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -53,7 +53,6 @@
         </header>
         
         <!-- Side Navigation -->
-        <div id="nav-overlay" class="nav-overlay"></div>
         <nav id="side-nav" class="side-nav">
             <div class="nav-header">
                 <div class="nav-user">
@@ -66,10 +65,11 @@
                     </div>
                 </div>
             </div>
+            
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a href="#dashboard" class="nav-link active" data-page="dashboard">
-                        <i class="bi bi-grid"></i>
+                        <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -81,7 +81,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#projects" class="nav-link" data-page="projects">
-                        <i class="bi bi-kanban"></i>
+                        <i class="bi bi-folder2"></i>
                         <span>Projects</span>
                     </a>
                 </li>
@@ -89,6 +89,12 @@
                     <a href="#esg" class="nav-link" data-page="esg">
                         <i class="bi bi-leaf"></i>
                         <span>ESG Scoring</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analytics" class="nav-link" data-page="analytics">
+                        <i class="bi bi-graph-up"></i>
+                        <span>Analytics</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -110,68 +116,34 @@
                     </a>
                 </li>
             </ul>
+            
             <div class="nav-footer">
                 <button class="website-link-btn" onclick="window.open('https://finergycloud.com', '_blank')">
                     <i class="bi bi-globe"></i>
                     <span>Visit Website</span>
                 </button>
-                <button class="btn btn-primary upgrade-btn">
-                    <i class="bi bi-star"></i>
-                    <span>Upgrade to Pro</span>
+                <button class="btn btn-outline-primary upgrade-btn">
+                    <i class="bi bi-star me-2"></i>Upgrade to Pro
                 </button>
                 <div class="nav-version">
-                    <small>Version 1.0.0</small>
+                    Version 1.0.0
                 </div>
             </div>
         </nav>
         
-        <!-- Analytics Dashboard Page -->
-        <div id="analytics-page" class="page">
-            <div class="page-header">
-                <h1>Analytics Dashboard</h1>
-                <p>Comprehensive investment intelligence</p>
-            </div>
-            
-            <div class="dashboard-carousel">
-                <div class="dashboard-slide active">
-                    <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
-                    <div class="slide-caption">Executive Summary</div>
-                </div>
-                <div class="dashboard-slide">
-                    <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
-                    <div class="slide-caption">Financial Analysis</div>
-                </div>
-                <div class="dashboard-slide">
-                    <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
-                    <div class="slide-caption">ESG Scoring</div>
-                </div>
-                <div class="dashboard-slide">
-                    <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
-                    <div class="slide-caption">Risk Assessment</div>
-                </div>
-            </div>
-            
-            <div class="dashboard-controls">
-                <button class="dashboard-control prev">
-                    <i class="bi bi-chevron-left"></i>
-                </button>
-                <div class="dashboard-indicators">
-                    <span class="indicator active"></span>
-                    <span class="indicator"></span>
-                    <span class="indicator"></span>
-                    <span class="indicator"></span>
-                </div>
-                <button class="dashboard-control next">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
-            </div>
-            
-            <div class="dashboard-metrics">
-                <div class="section-header">
-                    <h2 class="section-title">Key Metrics</h2>
+        <!-- Navigation Overlay -->
+        <div id="nav-overlay" class="nav-overlay"></div>
+        
+        <!-- Main Content -->
+        <main id="main-content" class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page active">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome to FinergyCloud Mobile</p>
                 </div>
                 
-                <div class="grid-2">
+                <div class="dashboard-stats">
                     <div class="metric-card">
                         <div class="metric-value">15.2%</div>
                         <div class="metric-label">Average IRR</div>
@@ -190,48 +162,450 @@
                     </div>
                     <div class="metric-card">
                         <div class="metric-value">₦120M+</div>
-                        <div class="metric-label">Analyzed Value</div>
+                        <div class="metric-label">Investments</div>
                         <div class="metric-change positive">
                             <i class="bi bi-arrow-up"></i>
                             <span>₦20M</span>
                         </div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-value">Low</div>
-                        <div class="metric-label">Risk Level</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-down"></i>
-                            <span>Improved</span>
+                </div>
+                
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Quick Actions</h2>
+                        <a href="#" class="section-action">View All</a>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <div class="action-card" data-page="calculator">
+                            <div class="action-icon">
+                                <i class="bi bi-calculator"></i>
+                            </div>
+                            <div class="action-label">Calculate IRR</div>
+                        </div>
+                        <div class="action-card" data-page="projects">
+                            <div class="action-icon">
+                                <i class="bi bi-plus-lg"></i>
+                            </div>
+                            <div class="action-label">New Project</div>
+                        </div>
+                        <div class="action-card" data-page="esg">
+                            <div class="action-icon">
+                                <i class="bi bi-leaf"></i>
+                            </div>
+                            <div class="action-label">ESG Score</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Projects</h2>
+                        <a href="#projects" class="section-action" data-page="projects">View All</a>
+                    </div>
+                    
+                    <div class="project-list">
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-info">
+                                    <h3>Lagos Solar Farm</h3>
+                                    <p>5MW Solar PV • Lagos, Nigeria</p>
+                                </div>
+                                <div class="project-status active">Active</div>
+                            </div>
+                            <div class="project-metrics">
+                                <div class="project-metric">
+                                    <div class="project-metric-value">16.8%</div>
+                                    <div class="project-metric-label">IRR</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">9.2</div>
+                                    <div class="project-metric-label">ESG</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">Low</div>
+                                    <div class="project-metric-label">Risk</div>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-info">
+                                    <h3>Abuja Wind Project</h3>
+                                    <p>2.5MW Wind • Abuja, Nigeria</p>
+                                </div>
+                                <div class="project-status pending">Pending</div>
+                            </div>
+                            <div class="project-metrics">
+                                <div class="project-metric">
+                                    <div class="project-metric-value">14.5%</div>
+                                    <div class="project-metric-label">IRR</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">8.5</div>
+                                    <div class="project-metric-label">ESG</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">Medium</div>
+                                    <div class="project-metric-label">Risk</div>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Market Insights</h2>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Renewable Energy Trends</h3>
+                            <p class="card-subtitle">Updated today</p>
+                        </div>
+                        <div class="card-body">
+                            <p>Solar energy projects in Nigeria are showing strong performance with average IRR of 15.2%, outperforming other renewable energy types in the region.</p>
+                            <p>Key success factors include grid stability, community engagement, and equipment quality selection optimized for local conditions.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Calculator Page -->
+            <div id="calculator-page" class="page">
+                <div class="page-header">
+                    <h1>IRR Calculator</h1>
+                    <p>Simulate project returns with Monte Carlo analysis</p>
+                </div>
+                
+                <div class="calculator-form">
+                    <div class="calculation-preview">
+                        <div class="preview-metric">
+                            <span>Simple ROI</span>
+                            <span class="text-primary">0.0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project-type" class="form-label">Project Type</label>
+                        <select id="project-type" class="form-control">
+                            <option value="solar">Solar PV</option>
+                            <option value="wind">Wind</option>
+                            <option value="hydro">Hydro</option>
+                            <option value="biomass">Biomass</option>
+                            <option value="geothermal">Geothermal</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="currency" class="form-label">Currency</label>
+                        <select id="currency" class="form-control">
+                            <option value="NGN">Nigerian Naira (₦)</option>
+                            <option value="USD">US Dollar ($)</option>
+                            <option value="EUR">Euro (€)</option>
+                            <option value="GBP">British Pound (£)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="initial-investment" class="form-label">Initial Investment</label>
+                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 50000000" min="1000000" max="1000000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project-duration" class="form-label">Project Duration (Years)</label>
+                        <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="40">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
+                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 8000000" min="100000" max="100000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="terminal-value" class="form-label">Terminal Value</label>
+                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 10000000" min="0" max="500000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="discount-rate" class="form-label">Discount Rate (%)</label>
+                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="1" max="30" value="10">
+                    </div>
+                    
+                    <button class="btn btn-primary calculate-btn" onclick="calculateIRR()">
+                        <i class="bi bi-calculator"></i>
+                        Calculate IRR
+                    </button>
+                </div>
+                
+                <div class="calculator-results">
+                    <h3 class="text-center mb-4">Results</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-metric">
+                            <div class="result-value" id="irr-result">--</div>
+                            <div class="result-label">IRR</div>
+                        </div>
+                        <div class="result-metric">
+                            <div class="result-value" id="npv-result">--</div>
+                            <div class="result-label">NPV</div>
+                        </div>
+                        <div class="result-metric">
+                            <div class="result-value" id="payback-result">--</div>
+                            <div class="result-label">Payback Period</div>
+                        </div>
+                    </div>
+                    
+                    <div id="cashflow-chart" class="chart-placeholder">
+                        <i class="bi bi-graph-up"></i>
+                        <p>Cash flow chart will appear here after calculation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Page -->
+            <div id="projects-page" class="page">
+                <div class="page-header">
+                    <h1>Projects</h1>
+                    <p>Manage your renewable energy investments</p>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Your Projects</h2>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg me-2"></i>Add Project
+                        </button>
+                    </div>
+                    
+                    <div class="project-list">
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-info">
+                                    <h3>Lagos Solar Farm</h3>
+                                    <p>5MW Solar PV • Lagos, Nigeria</p>
+                                </div>
+                                <div class="project-status active">Active</div>
+                            </div>
+                            <div class="project-metrics">
+                                <div class="project-metric">
+                                    <div class="project-metric-value">16.8%</div>
+                                    <div class="project-metric-label">IRR</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">9.2</div>
+                                    <div class="project-metric-label">ESG</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">Low</div>
+                                    <div class="project-metric-label">Risk</div>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-info">
+                                    <h3>Abuja Wind Project</h3>
+                                    <p>2.5MW Wind • Abuja, Nigeria</p>
+                                </div>
+                                <div class="project-status pending">Pending</div>
+                            </div>
+                            <div class="project-metrics">
+                                <div class="project-metric">
+                                    <div class="project-metric-value">14.5%</div>
+                                    <div class="project-metric-label">IRR</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">8.5</div>
+                                    <div class="project-metric-label">ESG</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">Medium</div>
+                                    <div class="project-metric-label">Risk</div>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <div class="project-header">
+                                <div class="project-info">
+                                    <h3>Kano Solar Array</h3>
+                                    <p>3.2MW Solar PV • Kano, Nigeria</p>
+                                </div>
+                                <div class="project-status completed">Completed</div>
+                            </div>
+                            <div class="project-metrics">
+                                <div class="project-metric">
+                                    <div class="project-metric-value">15.2%</div>
+                                    <div class="project-metric-label">IRR</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">8.8</div>
+                                    <div class="project-metric-label">ESG</div>
+                                </div>
+                                <div class="project-metric">
+                                    <div class="project-metric-value">Medium</div>
+                                    <div class="project-metric-label">Risk</div>
+                                </div>
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="dashboard-actions">
-                <button class="btn btn-primary btn-block">
-                    <i class="bi bi-download me-2"></i>Export as PDF
-                </button>
-                <button class="btn btn-outline-primary btn-block">
-                    <i class="bi bi-share me-2"></i>Share Dashboard
-                </button>
-            </div>
-        </div>
-        
-        <!-- Main Content -->
-        <main id="main-content" class="main-content">
-            <!-- Dashboard Page -->
-            <div id="dashboard-page" class="page active">
+            <!-- ESG Scoring Page -->
+            <div id="esg-page" class="page">
                 <div class="page-header">
-                    <h1>Dashboard</h1>
-                    <p>Welcome to FinergyCloud Mobile</p>
+                    <h1>ESG Scoring</h1>
+                    <p>Environmental, Social & Governance assessment</p>
                 </div>
                 
-                <section class="section">
+                <div class="section">
                     <div class="section-header">
-                        <h2 class="section-title">Investment Overview</h2>
-                        <a href="#" class="section-action" data-page="projects">View All</a>
+                        <h2 class="section-title">ESG Calculator</h2>
                     </div>
-                    <div class="dashboard-stats">
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Assess the ESG performance of your renewable energy projects with our comprehensive scoring system.</p>
+                            
+                            <div class="form-group">
+                                <label for="esg-project" class="form-label">Select Project</label>
+                                <select id="esg-project" class="form-control">
+                                    <option value="">New Assessment</option>
+                                    <option value="lagos-solar">Lagos Solar Farm</option>
+                                    <option value="abuja-wind">Abuja Wind Project</option>
+                                    <option value="kano-solar">Kano Solar Array</option>
+                                </select>
+                            </div>
+                            
+                            <h4 class="mt-4 mb-3">Environmental Factors</h4>
+                            
+                            <div class="form-group">
+                                <label for="carbon-reduction" class="form-label">Carbon Reduction (tCO2e/year)</label>
+                                <input type="number" id="carbon-reduction" class="form-control" placeholder="e.g., 5000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="land-use" class="form-label">Land Use Efficiency (MW/hectare)</label>
+                                <input type="number" id="land-use" class="form-control" placeholder="e.g., 2.5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="water-usage" class="form-label">Water Usage (liters/MWh)</label>
+                                <input type="number" id="water-usage" class="form-control" placeholder="e.g., 100">
+                            </div>
+                            
+                            <h4 class="mt-4 mb-3">Social Factors</h4>
+                            
+                            <div class="form-group">
+                                <label for="local-employment" class="form-label">Local Employment (%)</label>
+                                <input type="number" id="local-employment" class="form-control" placeholder="e.g., 75">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="community-programs" class="form-label">Community Programs (#)</label>
+                                <input type="number" id="community-programs" class="form-control" placeholder="e.g., 4">
+                            </div>
+                            
+                            <h4 class="mt-4 mb-3">Governance Factors</h4>
+                            
+                            <div class="form-group">
+                                <label for="transparency" class="form-label">Transparency Level</label>
+                                <select id="transparency" class="form-control">
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="compliance" class="form-label">Regulatory Compliance</label>
+                                <select id="compliance" class="form-control">
+                                    <option value="full">Full Compliance</option>
+                                    <option value="partial">Partial Compliance</option>
+                                    <option value="minimal">Minimal Compliance</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-primary btn-block mt-4">
+                                <i class="bi bi-calculator me-2"></i>Calculate ESG Score
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Dashboard Page -->
+            <div id="analytics-page" class="page">
+                <div class="page-header">
+                    <h1>Analytics Dashboard</h1>
+                    <p>Comprehensive investment intelligence</p>
+                </div>
+                
+                <div class="dashboard-carousel">
+                    <div class="dashboard-slide active">
+                        <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
+                        <div class="slide-caption">Executive Summary</div>
+                    </div>
+                    <div class="dashboard-slide">
+                        <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
+                        <div class="slide-caption">Financial Analysis</div>
+                    </div>
+                    <div class="dashboard-slide">
+                        <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
+                        <div class="slide-caption">ESG Scoring</div>
+                    </div>
+                    <div class="dashboard-slide">
+                        <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
+                        <div class="slide-caption">Risk Assessment</div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-controls">
+                    <button class="dashboard-control prev">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <div class="dashboard-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                    <button class="dashboard-control next">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="dashboard-metrics">
+                    <div class="section-header">
+                        <h2 class="section-title">Key Metrics</h2>
+                    </div>
+                    
+                    <div class="grid-2">
                         <div class="metric-card">
                             <div class="metric-value">15.2%</div>
                             <div class="metric-label">Average IRR</div>
@@ -256,424 +630,24 @@
                                 <span>₦20M</span>
                             </div>
                         </div>
-                    </div>
-                </section>
-                
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Quick Actions</h2>
-                    </div>
-                    <div class="quick-actions">
-                        <div class="action-card" data-page="calculator">
-                            <div class="action-icon">
-                                <i class="bi bi-calculator"></i>
-                            </div>
-                            <div class="action-label">Calculate IRR</div>
-                        </div>
-                        <div class="action-card" data-page="projects">
-                            <div class="action-icon">
-                                <i class="bi bi-plus-lg"></i>
-                            </div>
-                            <div class="action-label">New Project</div>
-                        </div>
-                        <div class="action-card" data-page="esg">
-                            <div class="action-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="action-label">ESG Score</div>
-                        </div>
-                    </div>
-                </section>
-                
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Recent Projects</h2>
-                        <a href="#" class="section-action" data-page="projects">View All</a>
-                    </div>
-                    <div class="project-list">
-                        <div class="project-card">
-                            <div class="project-header">
-                                <div class="project-info">
-                                    <h3>Lagos Solar Farm</h3>
-                                    <p>5MW Solar PV Project</p>
-                                </div>
-                                <div class="project-status active">Active</div>
-                            </div>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <div class="project-metric-value">16.8%</div>
-                                    <div class="project-metric-label">IRR</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">9.2</div>
-                                    <div class="project-metric-label">ESG Score</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">₦45M</div>
-                                    <div class="project-metric-label">Investment</div>
-                                </div>
-                            </div>
-                            <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">View Details</button>
-                                <button class="btn btn-outline-primary btn-sm">Edit</button>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card">
-                            <div class="project-header">
-                                <div class="project-info">
-                                    <h3>Abuja Wind Farm</h3>
-                                    <p>2.5MW Wind Project</p>
-                                </div>
-                                <div class="project-status pending">Pending</div>
-                            </div>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <div class="project-metric-value">14.5%</div>
-                                    <div class="project-metric-label">IRR</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">8.5</div>
-                                    <div class="project-metric-label">ESG Score</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">₦35M</div>
-                                    <div class="project-metric-label">Investment</div>
-                                </div>
-                            </div>
-                            <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">View Details</button>
-                                <button class="btn btn-outline-primary btn-sm">Edit</button>
+                        <div class="metric-card">
+                            <div class="metric-value">Low</div>
+                            <div class="metric-label">Risk Level</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-down"></i>
+                                <span>Improved</span>
                             </div>
                         </div>
                     </div>
-                </section>
-                
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Market Insights</h2>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Renewable Energy Trends</h3>
-                            <p class="card-subtitle">Updated today</p>
-                        </div>
-                        <div class="card-body">
-                            <p>Solar PV costs have decreased by 15% in the last quarter, improving IRR projections for new projects in Nigeria and Kenya.</p>
-                            <p>Regulatory changes in East Africa are creating new opportunities for grid-connected projects with simplified approval processes.</p>
-                        </div>
-                        <button class="btn btn-outline-primary">Read Full Report</button>
-                    </div>
-                </section>
-            </div>
-            
-            <!-- IRR Calculator Page -->
-            <div id="calculator-page" class="page">
-                <div class="page-header">
-                    <h1>IRR Calculator</h1>
-                    <p>Calculate Internal Rate of Return for renewable energy projects</p>
                 </div>
                 
-                <div class="calculator-form">
-                    <div class="form-group">
-                        <label for="project-type" class="form-label">Project Type</label>
-                        <select id="project-type" class="form-control">
-                            <option value="solar">Solar PV</option>
-                            <option value="wind">Wind</option>
-                            <option value="hydro">Hydro</option>
-                            <option value="biomass">Biomass</option>
-                            <option value="geothermal">Geothermal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="currency" class="form-label">Currency</label>
-                        <select id="currency" class="form-control">
-                            <option value="NGN">Nigerian Naira (₦)</option>
-                            <option value="USD">US Dollar ($)</option>
-                            <option value="EUR">Euro (€)</option>
-                            <option value="GBP">British Pound (£)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="initial-investment" class="form-label">Initial Investment</label>
-                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 50000000" min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-duration" class="form-label">Project Duration (Years)</label>
-                        <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="50">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
-                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 8000000" min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="terminal-value" class="form-label">Terminal Value</label>
-                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 10000000" min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="discount-rate" class="form-label">Discount Rate (%)</label>
-                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="100" value="10">
-                    </div>
-                    
-                    <div class="calculation-preview">
-                        <!-- Live preview will be shown here -->
-                    </div>
-                    
-                    <button class="btn btn-primary calculate-btn" onclick="calculateIRR()">
-                        <i class="bi bi-calculator"></i>
-                        Calculate IRR
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary btn-block">
+                        <i class="bi bi-download me-2"></i>Export as PDF
                     </button>
-                </div>
-                
-                <div class="calculator-results">
-                    <h3>Results</h3>
-                    
-                    <div class="result-grid">
-                        <div class="result-metric">
-                            <div class="result-value" id="irr-result">--</div>
-                            <div class="result-label">Internal Rate of Return</div>
-                        </div>
-                        <div class="result-metric">
-                            <div class="result-value" id="npv-result">--</div>
-                            <div class="result-label">Net Present Value</div>
-                        </div>
-                        <div class="result-metric">
-                            <div class="result-value" id="payback-result">--</div>
-                            <div class="result-label">Payback Period</div>
-                        </div>
-                    </div>
-                    
-                    <div id="cashflow-chart" class="chart-placeholder">
-                        <i class="bi bi-graph-up"></i>
-                        <p>Calculate IRR to see cash flow projection</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Projects Page -->
-            <div id="projects-page" class="page">
-                <div class="page-header">
-                    <h1>Projects</h1>
-                    <p>Manage your renewable energy investments</p>
-                </div>
-                
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Project Portfolio</h3>
-                        <button class="btn btn-primary btn-sm">
-                            <i class="bi bi-plus-lg"></i>
-                            Add Project
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div id="portfolio-chart" class="chart-placeholder">
-                            <i class="bi bi-pie-chart"></i>
-                            <p>Portfolio distribution by project type</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Active Projects</h2>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-filter"></i>
-                                Filter
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="project-list">
-                        <div class="project-card">
-                            <div class="project-header">
-                                <div class="project-info">
-                                    <h3>Lagos Solar Farm</h3>
-                                    <p>5MW Solar PV Project</p>
-                                </div>
-                                <div class="project-status active">Active</div>
-                            </div>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <div class="project-metric-value">16.8%</div>
-                                    <div class="project-metric-label">IRR</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">9.2</div>
-                                    <div class="project-metric-label">ESG Score</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">₦45M</div>
-                                    <div class="project-metric-label">Investment</div>
-                                </div>
-                            </div>
-                            <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">View Details</button>
-                                <button class="btn btn-outline-primary btn-sm">Edit</button>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-share"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card">
-                            <div class="project-header">
-                                <div class="project-info">
-                                    <h3>Abuja Wind Farm</h3>
-                                    <p>2.5MW Wind Project</p>
-                                </div>
-                                <div class="project-status pending">Pending</div>
-                            </div>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <div class="project-metric-value">14.5%</div>
-                                    <div class="project-metric-label">IRR</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">8.5</div>
-                                    <div class="project-metric-label">ESG Score</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">₦35M</div>
-                                    <div class="project-metric-label">Investment</div>
-                                </div>
-                            </div>
-                            <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">View Details</button>
-                                <button class="btn btn-outline-primary btn-sm">Edit</button>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-share"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="project-card">
-                            <div class="project-header">
-                                <div class="project-info">
-                                    <h3>Kano Solar Array</h3>
-                                    <p>3.2MW Solar PV Project</p>
-                                </div>
-                                <div class="project-status completed">Completed</div>
-                            </div>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <div class="project-metric-value">15.2%</div>
-                                    <div class="project-metric-label">IRR</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">8.8</div>
-                                    <div class="project-metric-label">ESG Score</div>
-                                </div>
-                                <div class="project-metric">
-                                    <div class="project-metric-value">₦40M</div>
-                                    <div class="project-metric-label">Investment</div>
-                                </div>
-                            </div>
-                            <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">View Details</button>
-                                <button class="btn btn-outline-primary btn-sm">Edit</button>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-share"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ESG Scoring Page -->
-            <div id="esg-page" class="page">
-                <div class="page-header">
-                    <h1>ESG Scoring</h1>
-                    <p>Environmental, Social & Governance assessment</p>
-                </div>
-                
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">ESG Overview</h3>
-                    </div>
-                    <div class="card-body">
-                        <div id="esg-chart" class="chart-placeholder">
-                            <i class="bi bi-pie-chart"></i>
-                            <p>ESG score breakdown</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">ESG Calculator</h2>
-                    </div>
-                    
-                    <div class="calculator-form">
-                        <div class="form-group">
-                            <label for="esg-project-type" class="form-label">Project Type</label>
-                            <select id="esg-project-type" class="form-control">
-                                <option value="solar">Solar PV</option>
-                                <option value="wind">Wind</option>
-                                <option value="hydro">Hydro</option>
-                                <option value="biomass">Biomass</option>
-                                <option value="geothermal">Geothermal</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="environmental-impact" class="form-label">Environmental Impact (1-10)</label>
-                            <input type="range" id="environmental-impact" class="form-control" min="1" max="10" value="7">
-                            <div class="range-value">7</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="social-impact" class="form-label">Social Impact (1-10)</label>
-                            <input type="range" id="social-impact" class="form-control" min="1" max="10" value="6">
-                            <div class="range-value">6</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="governance-impact" class="form-label">Governance Impact (1-10)</label>
-                            <input type="range" id="governance-impact" class="form-control" min="1" max="10" value="8">
-                            <div class="range-value">8</div>
-                        </div>
-                        
-                        <button class="btn btn-primary calculate-btn">
-                            <i class="bi bi-shield-check"></i>
-                            Calculate ESG Score
-                        </button>
-                    </div>
-                    
-                    <div class="calculator-results">
-                        <h3>ESG Score Results</h3>
-                        
-                        <div class="result-grid">
-                            <div class="result-metric">
-                                <div class="result-value" id="esg-result">7.0</div>
-                                <div class="result-label">Overall ESG Score</div>
-                            </div>
-                            <div class="result-metric">
-                                <div class="result-value" id="environmental-result">7.0</div>
-                                <div class="result-label">Environmental</div>
-                            </div>
-                            <div class="result-metric">
-                                <div class="result-value" id="social-result">6.0</div>
-                                <div class="result-label">Social</div>
-                            </div>
-                            <div class="result-metric">
-                                <div class="result-value" id="governance-result">8.0</div>
-                                <div class="result-label">Governance</div>
-                            </div>
-                        </div>
-                        
-                        <div id="esg-detail-chart" class="chart-placeholder">
-                            <i class="bi bi-graph-up"></i>
-                            <p>ESG score breakdown</p>
-                        </div>
-                    </div>
+                    <button class="btn btn-outline-primary btn-block">
+                        <i class="bi bi-share me-2"></i>Share Dashboard
+                    </button>
                 </div>
             </div>
             
@@ -681,34 +655,33 @@
             <div id="xgboost-page" class="page">
                 <div class="page-header">
                     <h1>XGBoost AI Model</h1>
-                    <p>Advanced machine learning for risk prediction</p>
+                    <p>Advanced machine learning for project success prediction</p>
                 </div>
                 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Model Status</h3>
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Model Status</h2>
                     </div>
-                    <div class="card-body">
-                        <div id="model-status">
-                            <div class="model-status-badge warning">
-                                <i class="bi bi-hourglass-split"></i>
-                                <span>Loading Model...</span>
-                            </div>
+                    
+                    <div id="model-status" class="text-center mb-4">
+                        <div class="model-status-badge success">
+                            <i class="bi bi-check-circle"></i>
+                            <span>Model Loaded</span>
                         </div>
-                        
-                        <div class="grid-3 model-stats">
-                            <div class="model-stat">
-                                <div class="model-stat-value">92%</div>
-                                <div class="model-stat-label">AUC Score</div>
-                            </div>
-                            <div class="model-stat">
-                                <div class="model-stat-value">87%</div>
-                                <div class="model-stat-label">Accuracy</div>
-                            </div>
-                            <div class="model-stat">
-                                <div class="model-stat-value">14</div>
-                                <div class="model-stat-label">Key Features</div>
-                            </div>
+                    </div>
+                    
+                    <div class="grid-3">
+                        <div class="model-stat">
+                            <div class="model-stat-value">92%</div>
+                            <div class="model-stat-label">AUC Score</div>
+                        </div>
+                        <div class="model-stat">
+                            <div class="model-stat-value">87%</div>
+                            <div class="model-stat-label">Accuracy</div>
+                        </div>
+                        <div class="model-stat">
+                            <div class="model-stat-value">14</div>
+                            <div class="model-stat-label">Key Features</div>
                         </div>
                     </div>
                 </div>
@@ -718,10 +691,47 @@
                         <h2 class="section-title">Feature Importance</h2>
                     </div>
                     
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="feature-importance">
-                                <!-- Feature importance bars will be dynamically generated -->
+                    <div class="feature-importance">
+                        <div class="feature-item">
+                            <div class="feature-name">Grid Stability</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 92%"></div>
+                                <span class="feature-value">92%</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-name">Community Engagement</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 85%"></div>
+                                <span class="feature-value">85%</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-name">Regulatory Navigation</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 78%"></div>
+                                <span class="feature-value">78%</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-name">Solar Irradiation</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 65%"></div>
+                                <span class="feature-value">65%</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-name">Equipment Quality</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 61%"></div>
+                                <span class="feature-value">61%</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-name">Local Workforce</div>
+                            <div class="feature-bar-container">
+                                <div class="feature-bar" style="width: 58%"></div>
+                                <span class="feature-value">58%</span>
                             </div>
                         </div>
                     </div>
@@ -732,13 +742,9 @@
                         <h2 class="section-title">Model Performance</h2>
                     </div>
                     
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="model-performance-chart" class="chart-placeholder">
-                                <i class="bi bi-graph-up"></i>
-                                <p>Model performance metrics</p>
-                            </div>
-                        </div>
+                    <div id="model-performance-chart" class="chart-placeholder">
+                        <i class="bi bi-graph-up"></i>
+                        <p>ROC Curve (AUC = 0.92)</p>
                     </div>
                 </div>
                 
@@ -747,56 +753,58 @@
                         <h2 class="section-title">Run Prediction</h2>
                     </div>
                     
-                    <div class="calculator-form">
-                        <div class="form-group">
-                            <label for="project-type-xgboost" class="form-label">Project Type</label>
-                            <select id="project-type-xgboost" class="form-control">
-                                <option value="solar">Solar PV</option>
-                                <option value="wind">Wind</option>
-                                <option value="hydro">Hydro</option>
-                                <option value="biomass">Biomass</option>
-                                <option value="geothermal">Geothermal</option>
-                            </select>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="project-type-xgboost" class="form-label">Project Type</label>
+                                <select id="project-type-xgboost" class="form-control">
+                                    <option value="solar">Solar PV</option>
+                                    <option value="wind">Wind</option>
+                                    <option value="hydro">Hydro</option>
+                                    <option value="biomass">Biomass</option>
+                                    <option value="geothermal">Geothermal</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="project-location" class="form-label">Location</label>
+                                <select id="project-location" class="form-control">
+                                    <option value="lagos">Lagos</option>
+                                    <option value="abuja">Abuja</option>
+                                    <option value="kano">Kano</option>
+                                    <option value="port_harcourt">Port Harcourt</option>
+                                    <option value="ibadan">Ibadan</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="grid-stability" class="form-label">Grid Stability</label>
+                                <select id="grid-stability" class="form-control">
+                                    <option value="high">High</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="community-engagement" class="form-label">Community Engagement</label>
+                                <select id="community-engagement" class="form-control">
+                                    <option value="extensive">Extensive</option>
+                                    <option value="moderate" selected>Moderate</option>
+                                    <option value="minimal">Minimal</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="project-size" class="form-label">Project Size (MW)</label>
+                                <input type="number" id="project-size" class="form-control" placeholder="e.g., 5" value="5">
+                            </div>
+                            
+                            <button id="predict-btn" class="btn btn-primary btn-block">
+                                <i class="bi bi-cpu"></i>
+                                Run AI Prediction
+                            </button>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="project-location" class="form-label">Project Location</label>
-                            <select id="project-location" class="form-control">
-                                <option value="lagos">Lagos</option>
-                                <option value="abuja">Abuja</option>
-                                <option value="kano">Kano</option>
-                                <option value="port-harcourt">Port Harcourt</option>
-                                <option value="ibadan">Ibadan</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="grid-stability" class="form-label">Grid Stability</label>
-                            <select id="grid-stability" class="form-control">
-                                <option value="high">High</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="low">Low</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="community-engagement" class="form-label">Community Engagement</label>
-                            <select id="community-engagement" class="form-control">
-                                <option value="extensive">Extensive</option>
-                                <option value="moderate" selected>Moderate</option>
-                                <option value="minimal">Minimal</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="project-size" class="form-label">Project Size (MW)</label>
-                            <input type="number" id="project-size" class="form-control" placeholder="e.g., 5" min="0.1" value="5">
-                        </div>
-                        
-                        <button id="predict-btn" class="btn btn-primary calculate-btn">
-                            <i class="bi bi-cpu"></i>
-                            Run AI Prediction
-                        </button>
                     </div>
                     
                     <div id="prediction-result" class="prediction-result" style="display: none;">
@@ -807,27 +815,42 @@
                         
                         <div class="prediction-metrics">
                             <div class="prediction-metric">
-                                <div class="prediction-metric-value" id="predicted-irr">15.2%</div>
+                                <div class="prediction-metric-value" id="predicted-irr">16.5%</div>
                                 <div class="prediction-metric-label">Predicted IRR</div>
                             </div>
                             <div class="prediction-metric">
-                                <div class="prediction-metric-value" id="success-probability">78%</div>
+                                <div class="prediction-metric-value" id="success-probability">92%</div>
                                 <div class="prediction-metric-label">Success Probability</div>
                             </div>
                             <div class="prediction-metric">
-                                <div class="prediction-metric-value" id="risk-level">Medium Risk</div>
+                                <div class="prediction-metric-value" id="risk-level">Low Risk</div>
                                 <div class="prediction-metric-label">Risk Level</div>
                             </div>
                             <div class="prediction-metric">
                                 <div class="prediction-metric-value" id="confidence-score">High</div>
-                                <div class="prediction-metric-label">Confidence Score</div>
+                                <div class="prediction-metric-label">Confidence</div>
                             </div>
                         </div>
                         
                         <div class="key-factors">
-                            <h5>Key Factors Affecting Prediction</h5>
+                            <h5>Key Factors</h5>
                             <div id="key-factors-list">
-                                <!-- Key factors will be dynamically generated -->
+                                <div class="factor-item">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                    <span>Grid stability is a critical factor for project success</span>
+                                </div>
+                                <div class="factor-item">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                    <span>Community engagement directly correlates with +2.3% IRR</span>
+                                </div>
+                                <div class="factor-item">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                    <span>Regulatory navigation expertise reduces delays by 35%</span>
+                                </div>
+                                <div class="factor-item">
+                                    <i class="bi bi-arrow-right-circle"></i>
+                                    <span>Equipment quality is optimized for local conditions</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -840,25 +863,34 @@
                     
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lagos Solar Project</h3>
-                            <p class="card-subtitle">5MW Solar PV</p>
+                            <h3 class="card-title">Lagos Solar Farm (5MW)</h3>
+                            <p class="card-subtitle">Model Validation</p>
                         </div>
                         <div class="card-body">
-                            <p>Our XGBoost model accurately predicted the 16.8% IRR for this project, identifying grid stability and community engagement as key success factors.</p>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Predicted IRR:</span>
+                                <span class="text-primary">16.5%</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Actual IRR:</span>
+                                <span class="text-success">16.8%</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Prediction Error:</span>
+                                <span class="text-success">0.3%</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Success Probability:</span>
+                                <span class="text-primary">92%</span>
+                            </div>
                             
-                            <div class="case-study-metrics">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Predicted IRR:</span>
-                                    <span class="text-primary">16.5%</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Actual IRR:</span>
-                                    <span class="text-success">16.8%</span>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <span>Prediction Accuracy:</span>
-                                    <span class="text-primary">98.2%</span>
-                                </div>
+                            <div class="case-study-metrics mt-4">
+                                <h5>Key Insights:</h5>
+                                <ul>
+                                    <li>Grid stability was identified as the most critical risk factor</li>
+                                    <li>Community engagement programs contributed +2.3% to IRR</li>
+                                    <li>Equipment quality selection optimized for local conditions</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -869,49 +901,127 @@
             <div id="blog-page" class="page">
                 <div class="page-header">
                     <h1>Blog</h1>
-                    <p>Latest insights and updates</p>
+                    <p>Insights on renewable energy investment</p>
                 </div>
                 
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Featured Article</h2>
+                <div class="featured-post-mobile">
+                    <div class="post-image">
+                        <img src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg" alt="XGBoost Model" class="img-fluid rounded-3">
+                        <div class="post-category">AI & Technology</div>
                     </div>
-                    
-                    <div class="featured-post-mobile">
-                        <!-- Featured post content will be dynamically loaded -->
-                    </div>
-                </section>
-                
-                <section class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Recent Articles</h2>
-                        <a href="https://finergycloud.com/blog.html" target="_blank" class="section-action">View All</a>
-                    </div>
-                    
-                    <div class="blog-posts-mobile">
-                        <!-- Blog posts will be dynamically loaded -->
-                    </div>
-                </section>
-                
-                <section class="section">
-                    <div class="newsletter-mobile">
-                        <h3>Stay Informed</h3>
-                        <p>Get weekly insights on AI-driven renewable energy investment</p>
-                        <div class="newsletter-form">
-                            <input type="email" id="newsletter-email" class="form-control" placeholder="Your email">
-                            <button class="btn" onclick="mobileBlog.subscribeNewsletter()">
-                                <i class="bi bi-send"></i>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span><i class="bi bi-calendar"></i> Dec 18, 2024</span>
+                            <span><i class="bi bi-clock"></i> 8 min read</span>
+                        </div>
+                        <h3>Building Our XGBoost Model: How We're Predicting Solar Project Success in Nigeria</h3>
+                        <p>Our XGBoost model achieves 87% accuracy in predicting solar project success in Nigeria's complex market. Learn how we built it and the surprising insights we discovered.</p>
+                        <div class="post-actions">
+                            <button class="btn btn-primary" onclick="mobileBlog.readPost('post-xgboost')">
+                                <i class="bi bi-book-open me-2"></i>Read Article
+                            </button>
+                            <button class="btn btn-outline-primary" onclick="mobileBlog.shareOnLinkedIn('post-xgboost')">
+                                <i class="bi bi-linkedin me-2"></i>Share
                             </button>
                         </div>
                     </div>
-                </section>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Articles</h2>
+                        <a href="#" class="section-action">View All</a>
+                    </div>
+                    
+                    <div class="blog-posts-mobile">
+                        <div class="blog-post-mobile" data-post-id="post-1">
+                            <div class="post-image-small">
+                                <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="AI Revolution" class="img-fluid rounded">
+                                <div class="post-category-small">AI & Technology</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 15, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 5 min</span>
+                                </div>
+                                <h4>The AI Revolution in Renewable Energy Investment</h4>
+                                <p>Discover how AI is transforming renewable energy investment decisions and why traditional models are failing.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('post-1')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="mobileBlog.shareOnLinkedIn('post-1')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-post-mobile" data-post-id="post-2">
+                            <div class="post-image-small">
+                                <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring" class="img-fluid rounded">
+                                <div class="post-category-small">ESG & Sustainability</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 12, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 4 min</span>
+                                </div>
+                                <h4>ESG Scoring Revolution: Making Sustainability Measurable</h4>
+                                <p>How AI is revolutionizing ESG scoring and making environmental impact quantifiable.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('post-2')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="mobileBlog.shareOnLinkedIn('post-2')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-post-mobile" data-post-id="post-3">
+                            <div class="post-image-small">
+                                <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Emerging Markets" class="img-fluid rounded">
+                                <div class="post-category-small">Emerging Markets</div>
+                            </div>
+                            <div class="post-content-small">
+                                <div class="post-meta-small">
+                                    <span><i class="bi bi-calendar"></i> Dec 10, 2024</span>
+                                    <span><i class="bi bi-clock"></i> 6 min</span>
+                                </div>
+                                <h4>The $2.8 Trillion Opportunity in Emerging Markets</h4>
+                                <p>Why emerging markets represent the future of renewable energy investment.</p>
+                                <div class="post-actions-small">
+                                    <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('post-3')">
+                                        Read More
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="mobileBlog.shareOnLinkedIn('post-3')">
+                                        <i class="bi bi-linkedin"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="newsletter-mobile">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p>Get weekly insights on AI-driven renewable energy investment</p>
+                    <div class="newsletter-form">
+                        <input type="email" id="newsletter-email" class="form-control" placeholder="Your email address">
+                        <button class="btn" onclick="mobileBlog.subscribeNewsletter()">
+                            <i class="bi bi-send"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <!-- Legal Page -->
             <div id="legal-page" class="page">
                 <div class="page-header">
-                    <h1>Legal Documents</h1>
-                    <p>Privacy, terms, and security information</p>
+                    <h1>Legal Information</h1>
+                    <p>Privacy, terms, and security policies</p>
                 </div>
                 
                 <div class="legal-cards">
@@ -921,7 +1031,7 @@
                         </div>
                         <div class="legal-card-content">
                             <h3>Privacy Policy</h3>
-                            <p>Learn how we collect, use, and protect your personal information when you use our mobile application.</p>
+                            <p>Learn how we collect, use, and protect your personal information when you use our services.</p>
                             <div class="legal-card-action">
                                 <i class="bi bi-arrow-right"></i>
                                 <span>Read Privacy Policy</span>
@@ -935,7 +1045,7 @@
                         </div>
                         <div class="legal-card-content">
                             <h3>Terms of Service</h3>
-                            <p>The legal agreement between you and FinergyCloud governing your use of our mobile application.</p>
+                            <p>The rules and guidelines that govern your use of our platform and services.</p>
                             <div class="legal-card-action">
                                 <i class="bi bi-arrow-right"></i>
                                 <span>Read Terms of Service</span>
@@ -949,7 +1059,7 @@
                         </div>
                         <div class="legal-card-content">
                             <h3>Security Policy</h3>
-                            <p>Understand the security measures we implement to protect your data and ensure safe use of our platform.</p>
+                            <p>How we protect your data and ensure the security of our platform.</p>
                             <div class="legal-card-action">
                                 <i class="bi bi-arrow-right"></i>
                                 <span>Read Security Policy</span>
@@ -958,40 +1068,26 @@
                     </a>
                 </div>
                 
-                <div class="section mt-4">
+                <div class="section">
                     <div class="section-header">
                         <h2 class="section-title">Contact Information</h2>
                     </div>
                     
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="contact-info-list">
-                                <div class="contact-info-item">
-                                    <i class="bi bi-envelope"></i>
-                                    <div>
-                                        <h4>Email</h4>
-                                        <p>For legal inquiries: <a href="mailto:legal@finergycloud.com">legal@finergycloud.com</a></p>
-                                        <p>For privacy questions: <a href="mailto:privacy@finergycloud.com">privacy@finergycloud.com</a></p>
-                                        <p>For security concerns: <a href="mailto:security@finergycloud.com">security@finergycloud.com</a></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="contact-info-item">
-                                    <i class="bi bi-geo-alt"></i>
-                                    <div>
-                                        <h4>Address</h4>
-                                        <p>FinergyCloud Ltd.<br>123 Innovation Street<br>London, EC1V 9XX<br>United Kingdom</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="contact-info-item">
-                                    <i class="bi bi-shield"></i>
-                                    <div>
-                                        <h4>Data Protection</h4>
-                                        <p>We are committed to protecting your data in compliance with GDPR and other applicable data protection laws.</p>
-                                        <p>Data Protection Officer: <a href="mailto:dpo@finergycloud.com">dpo@finergycloud.com</a></p>
-                                    </div>
-                                </div>
+                    <div class="contact-info-list">
+                        <div class="contact-info-item">
+                            <i class="bi bi-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>For legal inquiries: <a href="mailto:legal@finergycloud.com">legal@finergycloud.com</a></p>
+                                <p>For privacy questions: <a href="mailto:privacy@finergycloud.com">privacy@finergycloud.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <i class="bi bi-geo-alt"></i>
+                            <div>
+                                <h4>Address</h4>
+                                <p>FinergyCloud Ltd.<br>123 Innovation Street<br>London, EC1V 9XX<br>United Kingdom</p>
                             </div>
                         </div>
                     </div>
@@ -1002,7 +1098,7 @@
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <button class="nav-btn active" data-page="dashboard">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </button>
             <button class="nav-btn" data-page="calculator">
@@ -1010,16 +1106,16 @@
                 <span>Calculator</span>
             </button>
             <button class="nav-btn" data-page="projects">
-                <i class="bi bi-kanban"></i>
+                <i class="bi bi-folder2"></i>
                 <span>Projects</span>
-            </button>
-            <button class="nav-btn" data-page="esg">
-                <i class="bi bi-leaf"></i>
-                <span>ESG</span>
             </button>
             <button class="nav-btn" data-page="analytics">
                 <i class="bi bi-graph-up"></i>
                 <span>Analytics</span>
+            </button>
+            <button class="nav-btn" data-page="xgboost">
+                <i class="bi bi-cpu"></i>
+                <span>AI</span>
             </button>
         </nav>
     </div>
@@ -1030,9 +1126,8 @@
     <script src="scripts/charts.js"></script>
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/xgboost-model.js"></script>
-    <script src="scripts/cross-platform-navigation.js"></script>
     <script src="scripts/dashboard.js"></script>
-    <script src="scripts/email-integration.js"></script>
+    <script src="scripts/cross-platform-navigation.js"></script>
     
     <!-- Service Worker Registration -->
     <script>
