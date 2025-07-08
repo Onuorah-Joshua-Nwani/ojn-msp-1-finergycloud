@@ -12,6 +12,27 @@ class IRRCalculator {
         this.currentCurrency = 'NGN';
         this.setupCalculator();
         this.loadSavedCalculations();
+        
+        // Initialize IRR Dashboard if available
+        if (window.irrDashboard) {
+            window.irrDashboard.loadIRRData();
+            window.irrDashboard.initializeCharts();
+        } else {
+            // Load IRR dashboard script if not already loaded
+            if (!document.querySelector('script[src="scripts/irr-dashboard.js"]')) {
+                const script = document.createElement('script');
+                script.src = 'scripts/irr-dashboard.js';
+                script.async = true;
+                document.head.appendChild(script);
+                
+                script.onload = () => {
+                    if (window.irrDashboard) {
+                        window.irrDashboard.loadIRRData();
+                        window.irrDashboard.initializeCharts();
+                    }
+                };
+            }
+        }
     }
 
     setupCalculator() {
@@ -407,6 +428,11 @@ class IRRCalculator {
         // Show success animation
         this.animateResults();
     }
+        // Update IRR dashboard if available
+        if (window.irrDashboard) {
+            window.irrDashboard.updateDashboard();
+        }
+        
 
     updateResultElement(elementId, value) {
         const element = document.getElementById(elementId);
