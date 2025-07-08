@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors on mobile">
+    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors. Advanced IRR simulation, ESG scoring, and risk profiling on your mobile device.">
     <meta name="theme-color" content="#004d40">
     
     <title>FinergyCloud Mobile - AI Risk Intelligence</title>
@@ -15,8 +15,8 @@
     <meta name="application-name" content="FinergyCloud">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/finergycloud-logo.png">
-    <link rel="apple-touch-icon" href="assets/images/finergycloud-logo.png">
+    <link rel="icon" type="image/png" href="../assets/images/android-chrome-192x192.png">
+    <link rel="apple-touch-icon" href="../assets/images/android-chrome-192x192.png">
     
     <!-- Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -31,18 +31,6 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="styles/app.css">
-    
-    <!-- iOS Splash Screens -->
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
-    <link rel="apple-touch-startup-image" href="assets/images/finergycloud-logo.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
 </head>
 <body>
     <div class="app-container">
@@ -57,7 +45,7 @@
                     <p class="header-subtitle">AI Risk Intelligence</p>
                 </div>
             </div>
-            <div class="header-right nav-right">
+            <div class="header-right">
                 <button class="notification-btn" aria-label="Notifications">
                     <i class="bi bi-bell"></i>
                 </button>
@@ -65,6 +53,7 @@
         </header>
         
         <!-- Side Navigation -->
+        <div id="nav-overlay" class="nav-overlay"></div>
         <nav id="side-nav" class="side-nav">
             <div class="nav-header">
                 <div class="nav-user">
@@ -92,7 +81,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#projects" class="nav-link" data-page="projects">
-                        <i class="bi bi-folder"></i>
+                        <i class="bi bi-kanban"></i>
                         <span>Projects</span>
                     </a>
                 </li>
@@ -102,20 +91,39 @@
                         <span>ESG Scoring</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="#xgboost" class="nav-link" data-page="xgboost">
+                        <i class="bi bi-cpu"></i>
+                        <span>XGBoost Model</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#blog" class="nav-link" data-page="blog">
+                        <i class="bi bi-journal-text"></i>
+                        <span>Blog</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#legal" class="nav-link" data-page="legal">
+                        <i class="bi bi-shield-lock"></i>
+                        <span>Legal</span>
+                    </a>
+                </li>
             </ul>
             <div class="nav-footer">
-                <button class="upgrade-btn">
-                    <i class="bi bi-star me-2"></i>
+                <button class="website-link-btn" onclick="window.open('https://finergycloud.com', '_blank')">
+                    <i class="bi bi-globe"></i>
+                    <span>Visit Website</span>
+                </button>
+                <button class="btn btn-primary upgrade-btn">
+                    <i class="bi bi-star"></i>
                     <span>Upgrade to Pro</span>
                 </button>
                 <div class="nav-version">
-                    <small>Version 1.0.0 (Beta)</small>
+                    <small>Version 1.0.0</small>
                 </div>
             </div>
         </nav>
-        
-        <!-- Navigation Overlay -->
-        <div id="nav-overlay" class="nav-overlay"></div>
         
         <!-- Main Content -->
         <main id="main-content" class="main-content">
@@ -126,36 +134,40 @@
                     <p>Welcome to FinergyCloud Mobile</p>
                 </div>
                 
-                <!-- Dashboard Stats -->
-                <div class="dashboard-stats">
-                    <div class="metric-card">
-                        <div class="metric-value">15.2%</div>
-                        <div class="metric-label">Average IRR</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>2.3%</span>
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Investment Overview</h2>
+                        <a href="#" class="section-action" data-page="projects">View All</a>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="metric-card">
+                            <div class="metric-value">15.2%</div>
+                            <div class="metric-label">Average IRR</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>2.3%</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">8.7</div>
+                            <div class="metric-label">ESG Score</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>0.5</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">₦120M+</div>
+                            <div class="metric-label">Analyzed Value</div>
+                            <div class="metric-change positive">
+                                <i class="bi bi-arrow-up"></i>
+                                <span>₦20M</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-value">8.7/10</div>
-                        <div class="metric-label">ESG Score</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>0.5</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">₦120M+</div>
-                        <div class="metric-label">Analyzed Value</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>₦15M</span>
-                        </div>
-                    </div>
-                </div>
+                </section>
                 
-                <!-- Quick Actions -->
-                <div class="section">
+                <section class="section">
                     <div class="section-header">
                         <h2 class="section-title">Quick Actions</h2>
                     </div>
@@ -164,11 +176,11 @@
                             <div class="action-icon">
                                 <i class="bi bi-calculator"></i>
                             </div>
-                            <div class="action-label">IRR Calculator</div>
+                            <div class="action-label">Calculate IRR</div>
                         </div>
                         <div class="action-card" data-page="projects">
                             <div class="action-icon">
-                                <i class="bi bi-folder-plus"></i>
+                                <i class="bi bi-plus-lg"></i>
                             </div>
                             <div class="action-label">New Project</div>
                         </div>
@@ -179,13 +191,12 @@
                             <div class="action-label">ESG Score</div>
                         </div>
                     </div>
-                </div>
+                </section>
                 
-                <!-- Recent Projects -->
-                <div class="section">
+                <section class="section">
                     <div class="section-header">
                         <h2 class="section-title">Recent Projects</h2>
-                        <a href="#projects" class="section-action" data-page="projects">View All</a>
+                        <a href="#" class="section-action" data-page="projects">View All</a>
                     </div>
                     <div class="project-list">
                         <div class="project-card">
@@ -202,8 +213,8 @@
                                     <div class="project-metric-label">IRR</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">9.2/10</div>
-                                    <div class="project-metric-label">ESG</div>
+                                    <div class="project-metric-value">9.2</div>
+                                    <div class="project-metric-label">ESG Score</div>
                                 </div>
                                 <div class="project-metric">
                                     <div class="project-metric-value">₦45M</div>
@@ -211,21 +222,16 @@
                                 </div>
                             </div>
                             <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
-                                    <span>View Details</span>
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                    <span>Edit</span>
-                                </button>
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
                             </div>
                         </div>
+                        
                         <div class="project-card">
                             <div class="project-header">
                                 <div class="project-info">
                                     <h3>Abuja Wind Farm</h3>
-                                    <p>10MW Wind Project</p>
+                                    <p>2.5MW Wind Project</p>
                                 </div>
                                 <div class="project-status pending">Pending</div>
                             </div>
@@ -235,58 +241,41 @@
                                     <div class="project-metric-label">IRR</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">8.5/10</div>
-                                    <div class="project-metric-label">ESG</div>
+                                    <div class="project-metric-value">8.5</div>
+                                    <div class="project-metric-label">ESG Score</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">₦75M</div>
+                                    <div class="project-metric-value">₦35M</div>
                                     <div class="project-metric-label">Investment</div>
                                 </div>
                             </div>
                             <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
-                                    <span>View Details</span>
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                    <span>Edit</span>
-                                </button>
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
                 
-                <!-- Market Insights -->
-                <div class="section">
+                <section class="section">
                     <div class="section-header">
                         <h2 class="section-title">Market Insights</h2>
-                        <a href="#blog" class="section-action" data-page="blog">View All</a>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Latest Trends</h3>
+                            <h3 class="card-title">Renewable Energy Trends</h3>
+                            <p class="card-subtitle">Updated today</p>
                         </div>
                         <div class="card-body">
-                            <p>Nigeria's renewable energy sector is experiencing significant growth, with solar projects leading the way. Recent regulatory changes have improved the investment landscape.</p>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Solar IRR Trend</span>
-                                <span class="text-primary">15.2% (+2.3%)</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span>Wind IRR Trend</span>
-                                <span class="text-primary">14.8% (+1.5%)</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Hydro IRR Trend</span>
-                                <span class="text-primary">13.5% (-0.8%)</span>
-                            </div>
+                            <p>Solar PV costs have decreased by 15% in the last quarter, improving IRR projections for new projects in Nigeria and Kenya.</p>
+                            <p>Regulatory changes in East Africa are creating new opportunities for grid-connected projects with simplified approval processes.</p>
                         </div>
+                        <button class="btn btn-outline-primary">Read Full Report</button>
                     </div>
-                </div>
+                </section>
             </div>
             
-            <!-- Calculator Page -->
+            <!-- IRR Calculator Page -->
             <div id="calculator-page" class="page">
                 <div class="page-header">
                     <h1>IRR Calculator</h1>
@@ -298,8 +287,8 @@
                         <label for="project-type" class="form-label">Project Type</label>
                         <select id="project-type" class="form-control">
                             <option value="solar">Solar PV</option>
-                            <option value="wind">Wind Farm</option>
-                            <option value="hydro">Hydro Power</option>
+                            <option value="wind">Wind</option>
+                            <option value="hydro">Hydro</option>
                             <option value="biomass">Biomass</option>
                             <option value="geothermal">Geothermal</option>
                         </select>
@@ -315,13 +304,9 @@
                         </select>
                     </div>
                     
-                    <div class="calculation-preview">
-                        <!-- Live preview will be shown here -->
-                    </div>
-                    
                     <div class="form-group">
                         <label for="initial-investment" class="form-label">Initial Investment</label>
-                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 1,000,000" min="1000" max="1000000000">
+                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 50000000" min="0">
                     </div>
                     
                     <div class="form-group">
@@ -331,17 +316,21 @@
                     
                     <div class="form-group">
                         <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
-                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 150,000" min="1000" max="100000000">
+                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 8000000" min="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="terminal-value" class="form-label">Terminal Value</label>
-                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 500,000" min="0" max="1000000000">
+                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 10000000" min="0">
                     </div>
                     
                     <div class="form-group">
                         <label for="discount-rate" class="form-label">Discount Rate (%)</label>
-                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="30" value="10">
+                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="100" value="10">
+                    </div>
+                    
+                    <div class="calculation-preview">
+                        <!-- Live preview will be shown here -->
                     </div>
                     
                     <button class="btn btn-primary calculate-btn" onclick="calculateIRR()">
@@ -351,26 +340,26 @@
                 </div>
                 
                 <div class="calculator-results">
-                    <h3 class="text-center mb-4">Results</h3>
+                    <h3>Results</h3>
                     
                     <div class="result-grid">
                         <div class="result-metric">
-                            <div id="irr-result" class="result-value">--</div>
+                            <div class="result-value" id="irr-result">--</div>
                             <div class="result-label">Internal Rate of Return</div>
                         </div>
                         <div class="result-metric">
-                            <div id="npv-result" class="result-value">--</div>
+                            <div class="result-value" id="npv-result">--</div>
                             <div class="result-label">Net Present Value</div>
                         </div>
                         <div class="result-metric">
-                            <div id="payback-result" class="result-value">--</div>
+                            <div class="result-value" id="payback-result">--</div>
                             <div class="result-label">Payback Period</div>
                         </div>
                     </div>
                     
                     <div id="cashflow-chart" class="chart-placeholder">
                         <i class="bi bi-graph-up"></i>
-                        <p>Cash flow projection will appear here</p>
+                        <p>Calculate IRR to see cash flow projection</p>
                     </div>
                 </div>
             </div>
@@ -382,13 +371,31 @@
                     <p>Manage your renewable energy investments</p>
                 </div>
                 
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Project Portfolio</h3>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg"></i>
+                            Add Project
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="portfolio-chart" class="chart-placeholder">
+                            <i class="bi bi-pie-chart"></i>
+                            <p>Portfolio distribution by project type</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="section">
                     <div class="section-header">
-                        <h2 class="section-title">Your Projects</h2>
-                        <button class="btn btn-primary btn-sm">
-                            <i class="bi bi-plus"></i>
-                            <span>Add Project</span>
-                        </button>
+                        <h2 class="section-title">Active Projects</h2>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-filter"></i>
+                                Filter
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="project-list">
@@ -406,8 +413,8 @@
                                     <div class="project-metric-label">IRR</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">9.2/10</div>
-                                    <div class="project-metric-label">ESG</div>
+                                    <div class="project-metric-value">9.2</div>
+                                    <div class="project-metric-label">ESG Score</div>
                                 </div>
                                 <div class="project-metric">
                                     <div class="project-metric-value">₦45M</div>
@@ -415,13 +422,10 @@
                                 </div>
                             </div>
                             <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
-                                    <span>View Details</span>
-                                </button>
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
                                 <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                    <span>Edit</span>
+                                    <i class="bi bi-share"></i>
                                 </button>
                             </div>
                         </div>
@@ -430,7 +434,7 @@
                             <div class="project-header">
                                 <div class="project-info">
                                     <h3>Abuja Wind Farm</h3>
-                                    <p>10MW Wind Project</p>
+                                    <p>2.5MW Wind Project</p>
                                 </div>
                                 <div class="project-status pending">Pending</div>
                             </div>
@@ -440,22 +444,19 @@
                                     <div class="project-metric-label">IRR</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">8.5/10</div>
-                                    <div class="project-metric-label">ESG</div>
+                                    <div class="project-metric-value">8.5</div>
+                                    <div class="project-metric-label">ESG Score</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">₦75M</div>
+                                    <div class="project-metric-value">₦35M</div>
                                     <div class="project-metric-label">Investment</div>
                                 </div>
                             </div>
                             <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
-                                    <span>View Details</span>
-                                </button>
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
                                 <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                    <span>Edit</span>
+                                    <i class="bi bi-share"></i>
                                 </button>
                             </div>
                         </div>
@@ -463,8 +464,8 @@
                         <div class="project-card">
                             <div class="project-header">
                                 <div class="project-info">
-                                    <h3>Kano Solar Installation</h3>
-                                    <p>2MW Solar PV Project</p>
+                                    <h3>Kano Solar Array</h3>
+                                    <p>3.2MW Solar PV Project</p>
                                 </div>
                                 <div class="project-status completed">Completed</div>
                             </div>
@@ -474,36 +475,21 @@
                                     <div class="project-metric-label">IRR</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">8.8/10</div>
-                                    <div class="project-metric-label">ESG</div>
+                                    <div class="project-metric-value">8.8</div>
+                                    <div class="project-metric-label">ESG Score</div>
                                 </div>
                                 <div class="project-metric">
-                                    <div class="project-metric-value">₦25M</div>
+                                    <div class="project-metric-value">₦40M</div>
                                     <div class="project-metric-label">Investment</div>
                                 </div>
                             </div>
                             <div class="project-actions">
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="bi bi-eye"></i>
-                                    <span>View Details</span>
-                                </button>
+                                <button class="btn btn-primary btn-sm">View Details</button>
+                                <button class="btn btn-outline-primary btn-sm">Edit</button>
                                 <button class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                    <span>Edit</span>
+                                    <i class="bi bi-share"></i>
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Portfolio Performance</h2>
-                    </div>
-                    <div class="card">
-                        <div id="portfolio-chart" class="chart-placeholder">
-                            <i class="bi bi-pie-chart"></i>
-                            <p>Portfolio distribution chart</p>
                         </div>
                     </div>
                 </div>
@@ -513,162 +499,88 @@
             <div id="esg-page" class="page">
                 <div class="page-header">
                     <h1>ESG Scoring</h1>
-                    <p>Environmental, Social & Governance Assessment</p>
+                    <p>Environmental, Social & Governance assessment</p>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">ESG Overview</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="esg-chart" class="chart-placeholder">
+                            <i class="bi bi-pie-chart"></i>
+                            <p>ESG score breakdown</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="section">
                     <div class="section-header">
                         <h2 class="section-title">ESG Calculator</h2>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p>Assess the ESG performance of your renewable energy projects with our comprehensive scoring system.</p>
-                            
-                            <div class="form-group">
-                                <label for="esg-project" class="form-label">Select Project</label>
-                                <select id="esg-project" class="form-control">
-                                    <option value="">-- Select a project --</option>
-                                    <option value="lagos-solar">Lagos Solar Farm</option>
-                                    <option value="abuja-wind">Abuja Wind Farm</option>
-                                    <option value="kano-solar">Kano Solar Installation</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Environmental Factors</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="env-factor-1">
-                                    <label class="form-check-label" for="env-factor-1">
-                                        Carbon emissions reduction
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="env-factor-2">
-                                    <label class="form-check-label" for="env-factor-2">
-                                        Biodiversity impact assessment
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="env-factor-3">
-                                    <label class="form-check-label" for="env-factor-3">
-                                        Water usage optimization
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="env-factor-4">
-                                    <label class="form-check-label" for="env-factor-4">
-                                        Waste management plan
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Social Factors</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="social-factor-1">
-                                    <label class="form-check-label" for="social-factor-1">
-                                        Community engagement
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="social-factor-2">
-                                    <label class="form-check-label" for="social-factor-2">
-                                        Local employment opportunities
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="social-factor-3">
-                                    <label class="form-check-label" for="social-factor-3">
-                                        Health and safety standards
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="social-factor-4">
-                                    <label class="form-check-label" for="social-factor-4">
-                                        Diversity and inclusion policies
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Governance Factors</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gov-factor-1">
-                                    <label class="form-check-label" for="gov-factor-1">
-                                        Transparent reporting
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gov-factor-2">
-                                    <label class="form-check-label" for="gov-factor-2">
-                                        Anti-corruption policies
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gov-factor-3">
-                                    <label class="form-check-label" for="gov-factor-3">
-                                        Regulatory compliance
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gov-factor-4">
-                                    <label class="form-check-label" for="gov-factor-4">
-                                        Board diversity
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary">
-                                <i class="bi bi-shield-check"></i>
-                                Calculate ESG Score
-                            </button>
+                    
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="esg-project-type" class="form-label">Project Type</label>
+                            <select id="esg-project-type" class="form-control">
+                                <option value="solar">Solar PV</option>
+                                <option value="wind">Wind</option>
+                                <option value="hydro">Hydro</option>
+                                <option value="biomass">Biomass</option>
+                                <option value="geothermal">Geothermal</option>
+                            </select>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">ESG Benchmarks</h2>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="esg-chart" class="chart-placeholder">
-                                <i class="bi bi-bar-chart"></i>
-                                <p>ESG benchmark comparison</p>
-                            </div>
+                        
+                        <div class="form-group">
+                            <label for="environmental-impact" class="form-label">Environmental Impact (1-10)</label>
+                            <input type="range" id="environmental-impact" class="form-control" min="1" max="10" value="7">
+                            <div class="range-value">7</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Blog Page -->
-            <div id="blog-page" class="page">
-                <div class="page-header">
-                    <h1>Blog</h1>
-                    <p>Insights on renewable energy investment</p>
-                </div>
-                
-                <div class="featured-post-mobile">
-                    <!-- Featured post will be loaded here -->
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Recent Articles</h2>
-                    </div>
-                    <div class="blog-posts-mobile">
-                        <!-- Blog posts will be loaded here -->
-                    </div>
-                </div>
-                
-                <div class="newsletter-mobile">
-                    <h3>Stay Informed</h3>
-                    <p>Get weekly insights on AI-driven renewable energy investment</p>
-                    <div class="newsletter-form">
-                        <input type="email" id="newsletter-email" class="form-control" placeholder="Your email">
-                        <button class="btn" onclick="mobileBlog.subscribeNewsletter()">
-                            <i class="bi bi-send"></i>
+                        
+                        <div class="form-group">
+                            <label for="social-impact" class="form-label">Social Impact (1-10)</label>
+                            <input type="range" id="social-impact" class="form-control" min="1" max="10" value="6">
+                            <div class="range-value">6</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="governance-impact" class="form-label">Governance Impact (1-10)</label>
+                            <input type="range" id="governance-impact" class="form-control" min="1" max="10" value="8">
+                            <div class="range-value">8</div>
+                        </div>
+                        
+                        <button class="btn btn-primary calculate-btn">
+                            <i class="bi bi-shield-check"></i>
+                            Calculate ESG Score
                         </button>
+                    </div>
+                    
+                    <div class="calculator-results">
+                        <h3>ESG Score Results</h3>
+                        
+                        <div class="result-grid">
+                            <div class="result-metric">
+                                <div class="result-value" id="esg-result">7.0</div>
+                                <div class="result-label">Overall ESG Score</div>
+                            </div>
+                            <div class="result-metric">
+                                <div class="result-value" id="environmental-result">7.0</div>
+                                <div class="result-label">Environmental</div>
+                            </div>
+                            <div class="result-metric">
+                                <div class="result-value" id="social-result">6.0</div>
+                                <div class="result-label">Social</div>
+                            </div>
+                            <div class="result-metric">
+                                <div class="result-value" id="governance-result">8.0</div>
+                                <div class="result-label">Governance</div>
+                            </div>
+                        </div>
+                        
+                        <div id="esg-detail-chart" class="chart-placeholder">
+                            <i class="bi bi-graph-up"></i>
+                            <p>ESG score breakdown</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -676,33 +588,35 @@
             <!-- XGBoost Model Page -->
             <div id="xgboost-page" class="page">
                 <div class="page-header">
-                    <h1>XGBoost Model</h1>
-                    <p>AI-powered project success prediction</p>
+                    <h1>XGBoost AI Model</h1>
+                    <p>Advanced machine learning for risk prediction</p>
                 </div>
                 
-                <div id="model-status">
-                    <div class="model-status-badge warning">
-                        <i class="bi bi-hourglass-split"></i>
-                        <span>Loading Model...</span>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Model Status</h3>
                     </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Model Performance</h2>
-                    </div>
-                    <div class="grid grid-3">
-                        <div class="model-stat">
-                            <div class="model-stat-value">92%</div>
-                            <div class="model-stat-label">AUC Score</div>
+                    <div class="card-body">
+                        <div id="model-status">
+                            <div class="model-status-badge warning">
+                                <i class="bi bi-hourglass-split"></i>
+                                <span>Loading Model...</span>
+                            </div>
                         </div>
-                        <div class="model-stat">
-                            <div class="model-stat-value">87%</div>
-                            <div class="model-stat-label">Accuracy</div>
-                        </div>
-                        <div class="model-stat">
-                            <div class="model-stat-value">14</div>
-                            <div class="model-stat-label">Key Features</div>
+                        
+                        <div class="grid-3 model-stats">
+                            <div class="model-stat">
+                                <div class="model-stat-value">92%</div>
+                                <div class="model-stat-label">AUC Score</div>
+                            </div>
+                            <div class="model-stat">
+                                <div class="model-stat-value">87%</div>
+                                <div class="model-stat-label">Accuracy</div>
+                            </div>
+                            <div class="model-stat">
+                                <div class="model-stat-value">14</div>
+                                <div class="model-stat-label">Key Features</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -711,105 +625,12 @@
                     <div class="section-header">
                         <h2 class="section-title">Feature Importance</h2>
                     </div>
+                    
                     <div class="card">
                         <div class="card-body">
                             <div class="feature-importance">
-                                <!-- Feature importance bars will be loaded here -->
+                                <!-- Feature importance bars will be dynamically generated -->
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Run Prediction</h2>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="project-type-xgboost" class="form-label">Project Type</label>
-                                <select id="project-type-xgboost" class="form-control">
-                                    <option value="solar">Solar PV</option>
-                                    <option value="wind">Wind Farm</option>
-                                    <option value="hydro">Hydro Power</option>
-                                    <option value="biomass">Biomass</option>
-                                    <option value="geothermal">Geothermal</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="project-location" class="form-label">Location</label>
-                                <select id="project-location" class="form-control">
-                                    <option value="lagos">Lagos</option>
-                                    <option value="abuja">Abuja</option>
-                                    <option value="kano">Kano</option>
-                                    <option value="port-harcourt">Port Harcourt</option>
-                                    <option value="ibadan">Ibadan</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="grid-stability" class="form-label">Grid Stability</label>
-                                <select id="grid-stability" class="form-control">
-                                    <option value="high">High</option>
-                                    <option value="medium" selected>Medium</option>
-                                    <option value="low">Low</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="community-engagement" class="form-label">Community Engagement</label>
-                                <select id="community-engagement" class="form-control">
-                                    <option value="extensive">Extensive</option>
-                                    <option value="moderate" selected>Moderate</option>
-                                    <option value="minimal">Minimal</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="project-size" class="form-label">Project Size (MW)</label>
-                                <input type="number" id="project-size" class="form-control" value="5" min="0.1" max="100">
-                            </div>
-                            
-                            <button id="predict-btn" class="btn btn-primary">
-                                <i class="bi bi-cpu"></i>
-                                Run AI Prediction
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="prediction-result" class="prediction-result" style="display: none;">
-                    <div class="prediction-header">
-                        <h3 class="prediction-title">Prediction Results</h3>
-                        <div class="prediction-timestamp">
-                            <small>Generated: <span id="prediction-time">Just now</span></small>
-                        </div>
-                    </div>
-                    
-                    <div class="prediction-metrics">
-                        <div class="prediction-metric">
-                            <div id="predicted-irr" class="prediction-metric-value">--</div>
-                            <div class="prediction-metric-label">Predicted IRR</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div id="success-probability" class="prediction-metric-value">--</div>
-                            <div class="prediction-metric-label">Success Probability</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div id="risk-level" class="prediction-metric-value">--</div>
-                            <div class="prediction-metric-label">Risk Level</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div id="confidence-score" class="prediction-metric-value">--</div>
-                            <div class="prediction-metric-label">Confidence Score</div>
-                        </div>
-                    </div>
-                    
-                    <div class="key-factors">
-                        <h5>Key Factors Affecting Prediction</h5>
-                        <div id="key-factors-list">
-                            <!-- Key factors will be loaded here -->
                         </div>
                     </div>
                 </div>
@@ -818,6 +639,7 @@
                     <div class="section-header">
                         <h2 class="section-title">Model Performance</h2>
                     </div>
+                    
                     <div class="card">
                         <div class="card-body">
                             <div id="model-performance-chart" class="chart-placeholder">
@@ -830,14 +652,107 @@
                 
                 <div class="section">
                     <div class="section-header">
+                        <h2 class="section-title">Run Prediction</h2>
+                    </div>
+                    
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="project-type-xgboost" class="form-label">Project Type</label>
+                            <select id="project-type-xgboost" class="form-control">
+                                <option value="solar">Solar PV</option>
+                                <option value="wind">Wind</option>
+                                <option value="hydro">Hydro</option>
+                                <option value="biomass">Biomass</option>
+                                <option value="geothermal">Geothermal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-location" class="form-label">Project Location</label>
+                            <select id="project-location" class="form-control">
+                                <option value="lagos">Lagos</option>
+                                <option value="abuja">Abuja</option>
+                                <option value="kano">Kano</option>
+                                <option value="port-harcourt">Port Harcourt</option>
+                                <option value="ibadan">Ibadan</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="grid-stability" class="form-label">Grid Stability</label>
+                            <select id="grid-stability" class="form-control">
+                                <option value="high">High</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="community-engagement" class="form-label">Community Engagement</label>
+                            <select id="community-engagement" class="form-control">
+                                <option value="extensive">Extensive</option>
+                                <option value="moderate" selected>Moderate</option>
+                                <option value="minimal">Minimal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-size" class="form-label">Project Size (MW)</label>
+                            <input type="number" id="project-size" class="form-control" placeholder="e.g., 5" min="0.1" value="5">
+                        </div>
+                        
+                        <button id="predict-btn" class="btn btn-primary calculate-btn">
+                            <i class="bi bi-cpu"></i>
+                            Run AI Prediction
+                        </button>
+                    </div>
+                    
+                    <div id="prediction-result" class="prediction-result" style="display: none;">
+                        <div class="prediction-header">
+                            <h3 class="prediction-title">Prediction Results</h3>
+                            <div class="prediction-timestamp">Generated just now</div>
+                        </div>
+                        
+                        <div class="prediction-metrics">
+                            <div class="prediction-metric">
+                                <div class="prediction-metric-value" id="predicted-irr">15.2%</div>
+                                <div class="prediction-metric-label">Predicted IRR</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-metric-value" id="success-probability">78%</div>
+                                <div class="prediction-metric-label">Success Probability</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-metric-value" id="risk-level">Medium Risk</div>
+                                <div class="prediction-metric-label">Risk Level</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-metric-value" id="confidence-score">High</div>
+                                <div class="prediction-metric-label">Confidence Score</div>
+                            </div>
+                        </div>
+                        
+                        <div class="key-factors">
+                            <h5>Key Factors Affecting Prediction</h5>
+                            <div id="key-factors-list">
+                                <!-- Key factors will be dynamically generated -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
                         <h2 class="section-title">Case Studies</h2>
                     </div>
+                    
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Lagos Solar Project</h3>
+                            <p class="card-subtitle">5MW Solar PV</p>
                         </div>
                         <div class="card-body">
-                            <p>Our XGBoost model correctly predicted the success of this 5MW solar project with 92% accuracy.</p>
+                            <p>Our XGBoost model accurately predicted the 16.8% IRR for this project, identifying grid stability and community engagement as key success factors.</p>
                             
                             <div class="case-study-metrics">
                                 <div class="d-flex justify-content-between mb-2">
@@ -853,227 +768,136 @@
                                     <span class="text-primary">98.2%</span>
                                 </div>
                             </div>
-                            
-                            <p class="mt-4">Key success factors identified by the model:</p>
-                            <ul>
-                                <li>Strong grid stability in Lagos area</li>
-                                <li>Extensive community engagement</li>
-                                <li>Optimal project sizing for local demand</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Legal Page -->
-            <div id="legal-page" class="page">
+            <!-- Blog Page -->
+            <div id="blog-page" class="page">
                 <div class="page-header">
-                    <h1>Legal Information</h1>
-                    <p>Privacy, Terms, and Security</p>
+                    <h1>Blog</h1>
+                    <p>Latest insights and updates</p>
                 </div>
                 
-                <div class="section">
+                <section class="section">
                     <div class="section-header">
-                        <h2 class="section-title">Legal Documents</h2>
+                        <h2 class="section-title">Featured Article</h2>
                     </div>
                     
-                    <div class="legal-links">
-                        <a href="privacy.html" class="legal-link-card">
-                            <div class="legal-icon">
-                                <i class="bi bi-shield-lock"></i>
-                            </div>
-                            <div class="legal-content">
-                                <h3>Privacy Policy</h3>
-                                <p>Learn how we collect, use, and protect your personal information</p>
-                                <div class="legal-meta">
-                                    <span><i class="bi bi-calendar"></i> Updated June 2025</span>
-                                </div>
-                            </div>
-                            <div class="legal-arrow">
-                                <i class="bi bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        
-                        <a href="terms.html" class="legal-link-card">
-                            <div class="legal-icon">
-                                <i class="bi bi-file-text"></i>
-                            </div>
-                            <div class="legal-content">
-                                <h3>Terms of Service</h3>
-                                <p>The rules and guidelines for using our mobile application</p>
-                                <div class="legal-meta">
-                                    <span><i class="bi bi-calendar"></i> Updated June 2025</span>
-                                </div>
-                            </div>
-                            <div class="legal-arrow">
-                                <i class="bi bi-chevron-right"></i>
-                            </div>
-                        </a>
-                        
-                        <a href="security.html" class="legal-link-card">
-                            <div class="legal-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="legal-content">
-                                <h3>Security Policy</h3>
-                                <p>How we protect your data and ensure secure use of our app</p>
-                                <div class="legal-meta">
-                                    <span><i class="bi bi-calendar"></i> Updated June 2025</span>
-                                </div>
-                            </div>
-                            <div class="legal-arrow">
-                                <i class="bi bi-chevron-right"></i>
-                            </div>
-                        </a>
+                    <div class="featured-post-mobile">
+                        <!-- Featured post content will be dynamically loaded -->
                     </div>
-                </div>
+                </section>
                 
-                <div class="section">
+                <section class="section">
                     <div class="section-header">
-                        <h2 class="section-title">Data & Privacy</h2>
+                        <h2 class="section-title">Recent Articles</h2>
+                        <a href="https://finergycloud.com/blog.html" target="_blank" class="section-action">View All</a>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="mb-3">Your Data Control</h3>
-                            <p>At FinergyCloud, we believe in transparency and giving you control over your data. Here's what you can do:</p>
-                            
-                            <div class="data-control-options">
-                                <div class="data-control-option">
-                                    <i class="bi bi-download"></i>
-                                    <span>Download your data</span>
-                                </div>
-                                <div class="data-control-option">
-                                    <i class="bi bi-trash"></i>
-                                    <span>Delete your account</span>
-                                </div>
-                                <div class="data-control-option">
-                                    <i class="bi bi-bell"></i>
-                                    <span>Manage notifications</span>
-                                </div>
-                                <div class="data-control-option">
-                                    <i class="bi bi-gear"></i>
-                                    <span>Privacy settings</span>
-                                </div>
-                            </div>
-                            
-                            <p class="mt-3">To exercise any of these options, please contact our support team at <a href="mailto:privacy@finergycloud.com">privacy@finergycloud.com</a>.</p>
+                    
+                    <div class="blog-posts-mobile">
+                        <!-- Blog posts will be dynamically loaded -->
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <div class="newsletter-mobile">
+                        <h3>Stay Informed</h3>
+                        <p>Get weekly insights on AI-driven renewable energy investment</p>
+                        <div class="newsletter-form">
+                            <input type="email" id="newsletter-email" class="form-control" placeholder="Your email">
+                            <button class="btn" onclick="mobileBlog.subscribeNewsletter()">
+                                <i class="bi bi-send"></i>
+                            </button>
                         </div>
                     </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Contact Us</h2>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <p>If you have any questions about our legal policies or data practices, please contact us:</p>
-                            
-                            <div class="contact-options">
-                                <a href="mailto:privacy@finergycloud.com" class="contact-option">
-                                    <i class="bi bi-shield-lock"></i>
-                                    <span>Privacy Questions</span>
-                                </a>
-                                <a href="mailto:legal@finergycloud.com" class="contact-option">
-                                    <i class="bi bi-file-text"></i>
-                                    <span>Legal Inquiries</span>
-                                </a>
-                                <a href="mailto:security@finergycloud.com" class="contact-option">
-                                    <i class="bi bi-shield-check"></i>
-                                    <span>Security Concerns</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </section>
             </div>
             
             <!-- Legal Page -->
             <div id="legal-page" class="page">
                 <div class="page-header">
-                    <h1>Legal Information</h1>
-                    <p>Privacy, Terms, and Security policies</p>
+                    <h1>Legal Documents</h1>
+                    <p>Privacy, terms, and security information</p>
                 </div>
                 
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">Legal Documents</h2>
-                    </div>
-                    <div class="legal-cards">
-                        <a href="privacy.html" class="legal-link-card">
-                            <div class="legal-card-icon">
-                                <i class="bi bi-shield-lock"></i>
+                <div class="legal-cards">
+                    <a href="privacy.html" class="legal-link-card">
+                        <div class="legal-card-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <div class="legal-card-content">
+                            <h3>Privacy Policy</h3>
+                            <p>Learn how we collect, use, and protect your personal information when you use our mobile application.</p>
+                            <div class="legal-card-action">
+                                <i class="bi bi-arrow-right"></i>
+                                <span>Read Privacy Policy</span>
                             </div>
-                            <div class="legal-card-content">
-                                <h3>Privacy Policy</h3>
-                                <p>How we collect, use, and protect your data</p>
-                                <div class="legal-card-action">
-                                    <span>Read Policy</span>
-                                    <i class="bi bi-arrow-right"></i>
-                                </div>
+                        </div>
+                    </a>
+                    
+                    <a href="terms.html" class="legal-link-card">
+                        <div class="legal-card-icon">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <div class="legal-card-content">
+                            <h3>Terms of Service</h3>
+                            <p>The legal agreement between you and FinergyCloud governing your use of our mobile application.</p>
+                            <div class="legal-card-action">
+                                <i class="bi bi-arrow-right"></i>
+                                <span>Read Terms of Service</span>
                             </div>
-                        </a>
-                        
-                        <a href="terms.html" class="legal-link-card">
-                            <div class="legal-card-icon">
-                                <i class="bi bi-file-text"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="security.html" class="legal-link-card">
+                        <div class="legal-card-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="legal-card-content">
+                            <h3>Security Policy</h3>
+                            <p>Understand the security measures we implement to protect your data and ensure safe use of our platform.</p>
+                            <div class="legal-card-action">
+                                <i class="bi bi-arrow-right"></i>
+                                <span>Read Security Policy</span>
                             </div>
-                            <div class="legal-card-content">
-                                <h3>Terms of Service</h3>
-                                <p>Rules and guidelines for using our app</p>
-                                <div class="legal-card-action">
-                                    <span>Read Terms</span>
-                                    <i class="bi bi-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a href="security.html" class="legal-link-card">
-                            <div class="legal-card-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="legal-card-content">
-                                <h3>Security Policy</h3>
-                                <p>How we protect your information</p>
-                                <div class="legal-card-action">
-                                    <span>Read Policy</span>
-                                    <i class="bi bi-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
                 
-                <div class="section">
+                <div class="section mt-4">
                     <div class="section-header">
                         <h2 class="section-title">Contact Information</h2>
                     </div>
+                    
                     <div class="card">
                         <div class="card-body">
-                            <p>If you have any questions about our legal policies, please contact us:</p>
-                            
                             <div class="contact-info-list">
                                 <div class="contact-info-item">
                                     <i class="bi bi-envelope"></i>
                                     <div>
                                         <h4>Email</h4>
-                                        <p><a href="mailto:legal@finergycloud.com">legal@finergycloud.com</a></p>
+                                        <p>For legal inquiries: <a href="mailto:legal@finergycloud.com">legal@finergycloud.com</a></p>
+                                        <p>For privacy questions: <a href="mailto:privacy@finergycloud.com">privacy@finergycloud.com</a></p>
+                                        <p>For security concerns: <a href="mailto:security@finergycloud.com">security@finergycloud.com</a></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <div>
+                                        <h4>Address</h4>
+                                        <p>FinergyCloud Ltd.<br>123 Innovation Street<br>London, EC1V 9XX<br>United Kingdom</p>
                                     </div>
                                 </div>
                                 
                                 <div class="contact-info-item">
                                     <i class="bi bi-shield"></i>
                                     <div>
-                                        <h4>Security</h4>
-                                        <p><a href="mailto:security@finergycloud.com">security@finergycloud.com</a></p>
-                                    </div>
-                                </div>
-                                
-                                <div class="contact-info-item">
-                                    <i class="bi bi-building"></i>
-                                    <div>
-                                        <h4>Company Address</h4>
-                                        <p>FinergyCloud Ltd.<br>123 Innovation Street<br>London, EC1V 9XX<br>United Kingdom</p>
+                                        <h4>Data Protection</h4>
+                                        <p>We are committed to protecting your data in compliance with GDPR and other applicable data protection laws.</p>
+                                        <p>Data Protection Officer: <a href="mailto:dpo@finergycloud.com">dpo@finergycloud.com</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -1081,7 +905,6 @@
                     </div>
                 </div>
             </div>
-            
         </main>
         
         <!-- Bottom Navigation -->
@@ -1095,20 +918,12 @@
                 <span>Calculator</span>
             </button>
             <button class="nav-btn" data-page="projects">
-                <i class="bi bi-folder"></i>
+                <i class="bi bi-kanban"></i>
                 <span>Projects</span>
             </button>
             <button class="nav-btn" data-page="esg">
                 <i class="bi bi-leaf"></i>
                 <span>ESG</span>
-            </button>
-            <button class="nav-btn" data-page="blog">
-                <i class="bi bi-journal-text"></i>
-                <span>Blog</span>
-            </button>
-            <button class="nav-btn" data-page="legal">
-                <i class="bi bi-shield-lock"></i>
-                <span>Legal</span>
             </button>
         </nav>
     </div>
@@ -1118,141 +933,9 @@
     <script src="scripts/calculator.js"></script>
     <script src="scripts/charts.js"></script>
     <script src="scripts/blog-integration.js"></script>
+    <script src="scripts/xgboost-model.js"></script>
     <script src="scripts/cross-platform-navigation.js"></script>
     <script src="scripts/email-integration.js"></script>
-    <script src="scripts/xgboost-model.js"></script>
-    
-    <style>
-        /* Legal Page Styles */
-        .legal-links {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .legal-link-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-md);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            text-decoration: none;
-            color: var(--text-dark);
-            transition: var(--transition-normal);
-            border: 1px solid rgba(0, 77, 64, 0.05);
-        }
-        
-        .legal-link-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .legal-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        
-        .legal-content {
-            flex: 1;
-        }
-        
-        .legal-content h3 {
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-            font-size: 1.1rem;
-        }
-        
-        .legal-content p {
-            color: var(--text-light);
-            margin-bottom: var(--spacing-xs);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
-        .legal-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        
-        .legal-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        
-        .legal-arrow {
-            color: var(--accent-teal);
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-        
-        .data-control-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-            margin: var(--spacing-md) 0;
-        }
-        
-        .data-control-option {
-            background: var(--light-green);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            font-size: 0.9rem;
-            color: var(--primary-green);
-        }
-        
-        .data-control-option i {
-            font-size: 1.25rem;
-        }
-        
-        .contact-options {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-md);
-        }
-        
-        .contact-option {
-            background: var(--light-green);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            text-decoration: none;
-            color: var(--primary-green);
-            transition: var(--transition-fast);
-        }
-        
-        .contact-option:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-        
-        .contact-option i {
-            font-size: 1.5rem;
-        }
-        
-        @media (max-width: 480px) {
-            .data-control-options {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
     
     <!-- Service Worker Registration -->
     <script>
@@ -1262,8 +945,8 @@
                     .then(registration => {
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
                     })
-                    .catch(err => {
-                        console.log('ServiceWorker registration failed: ', err);
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
                     });
             });
         }
