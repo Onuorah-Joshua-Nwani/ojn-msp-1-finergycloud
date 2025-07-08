@@ -13,7 +13,7 @@ const STATIC_FILES = [
     '/mobile-app/scripts/calculator.js',
     '/mobile-app/scripts/charts.js',
     '/mobile-app/manifest.json',
-    '/assets/images/finergycloud-logo.png',
+    '/assets/images/android-chrome-192x192.png',
     'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
     'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css'
 ];
@@ -188,8 +188,8 @@ self.addEventListener('push', (event) => {
     
     const options = {
         body: event.data ? event.data.text() : 'New update available',
-        icon: '/assets/images/finergycloud-logo.png',
-        badge: '/assets/images/finergycloud-logo.png',
+        icon: '/assets/images/android-chrome-192x192.png',
+        badge: '/assets/images/android-chrome-192x192.png',
         vibrate: [200, 100, 200],
         data: {
             dateOfArrival: Date.now(),
@@ -199,12 +199,12 @@ self.addEventListener('push', (event) => {
             {
                 action: 'explore',
                 title: 'Open App',
-                icon: '/assets/images/finergycloud-logo.png'
+                icon: '/assets/images/android-chrome-192x192.png'
             },
             {
                 action: 'close',
                 title: 'Close',
-                icon: '/assets/images/finergycloud-logo.png'
+                icon: '/assets/images/android-chrome-192x192.png'
             }
         ]
     };
