@@ -4,7 +4,7 @@
 
 FinergyCloud is an AI-driven risk intelligence platform for renewable energy investors. Born from an MBA distinction project, it has evolved into a comprehensive solution offering IRR simulation, ESG scoring, and AI-powered risk profiling specifically designed for emerging market renewable energy investments.
 
-![mockup](documentation/rm-images/amiresponsive.png)
+![Responsive Mockup](documentation/rm-images/amiresponsive.png)
 
 ## Index - Table of Contents
 
@@ -45,6 +45,8 @@ FinergyCloud transforms renewable energy investment decisions through AI-powered
 
 FinergyCloud aims to democratize access to sophisticated renewable energy investment analysis by providing:
 
+![Dashboard Preview](documentation/rm-images/j02-landing-page.png)
+
 1. **Transparent Risk Assessment**: Clear, data-driven risk profiling for renewable projects
 2. **Comprehensive Financial Modeling**: Advanced IRR simulation with Monte Carlo analysis
 3. **ESG Integration**: Seamless incorporation of sustainability factors into investment decisions
@@ -76,18 +78,26 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 ### Current Features (MVP)
 
+![Navigation Bar](documentation/rm-images/j01-nav-bar.png)
+
 #### **F01 Advanced Navigation**
 - Clean, professional navigation with FinergyCloud branding
 - Responsive design across all devices
 - Clear call-to-action buttons for demo booking and getting started
 
 #### **F02 Hero Section with Value Proposition**
+
+![Hero Section](documentation/rm-images/j03-why-finergycloud-title-body.png)
+
 - Clear positioning as AI-driven risk intelligence platform
 - Timeline showcasing journey from MBA project to startup
 - Interactive dashboard preview with live metrics
 - Compelling call-to-action for MVP exploration
 
 #### **F03 Platform Capabilities Showcase**
+
+![Platform Capabilities](documentation/rm-images/j06-our-products-and-services.png)
+
 - **IRR Simulation Engine**: Monte Carlo analysis with JavaScript implementation
 - **ESG Scoring Framework**: Comprehensive sustainability assessment
 - **Risk Profiling System**: AI-powered risk analysis (roadmap 2025)
@@ -99,30 +109,45 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 - Emphasis on emerging market complexities and solutions
 
 #### **F05 MVP Demonstration**
+
+![Code Preview](documentation/rm-images/j07a-services-cloud-accounting-solutions.png)
+
 - Live GitHub repository integration
 - Code preview with actual IRR calculation algorithms
 - GitHub statistics and development metrics
 - Direct access to working prototype
 
 #### **F06 Recognition and Credibility**
+
+![Team Section](documentation/rm-images/j05-our-team.png)
+
 - MBA distinction achievement highlighting
 - Academic supervisor endorsements
 - Beta user feedback and testimonials
 - Professional milestone timeline
 
 #### **F07 Comprehensive About Section**
+
+![Founder Message](documentation/rm-images/j04-team's-message.png)
+
 - Detailed founder story and background
 - Mission and vision statements
 - Technology philosophy and approach
 - Academic and professional credentials
 
 #### **F08 Solution Deep Dive**
+
+![Solution Features](documentation/rm-images/j07d-investment-and-portfolio-management.png)
+
 - Platform feature breakdown with technical details
 - Technology roadmap with clear timelines
 - Use case scenarios for different user types
 - Pricing structure preview
 
 #### **F09 Professional Contact System**
+
+![Contact Page](documentation/rm-images/j08-contact-us-page.png)
+
 - Multi-channel contact options (email, LinkedIn, GitHub)
 - Comprehensive contact form with role-specific fields
 - FAQ section addressing common questions
@@ -191,6 +216,8 @@ FinergyCloud employs a modern, professional design system inspired by leading fi
 
 ### Comprehensive Testing Strategy
 
+![Testing Results](documentation/browser-testing/lighthouse.png)
+
 #### **Code Validation**
 - **HTML Validation**: W3C Markup Validator compliance across all pages
 - **CSS Validation**: W3C CSS Validator verification
@@ -215,6 +242,8 @@ FinergyCloud employs a modern, professional design system inspired by leading fi
 - **Accessibility**: Screen reader and keyboard navigation testing
 
 ### Testing Results
+
+![Traceability Matrix](documentation/rm-images/traceability-matrix.png)
 
 All testing documentation is available in the `documentation/` directory:
 - HTML validation reports for all pages
@@ -262,6 +291,8 @@ npm run dev
 
 ### 2025 Development Plan
 
+![Footer Section](documentation/rm-images/j09-footer.png)
+
 #### **Q1 2025: AI Engine Foundation**
 - Python backend development
 - XGBoost model training and integration
@@ -297,6 +328,8 @@ npm run dev
 
 ### Project Leadership
 
+![Responsive Testing](documentation/responsiveness-testing/mobile-home.png)
+
 **O.J. Nwani** - Founder & CEO
 - MBA with Distinction in Renewable Energy Finance
 - Professional background: ICAS trainee, SAP consultant, NatWest banking
@@ -311,12 +344,16 @@ npm run dev
 
 ### Technology Stack
 
+![Browser Testing](documentation/browser-testing/microsoft-edge-home.png)
+
 - **Frontend Frameworks**: Bootstrap 5 for responsive design
 - **Icon Library**: Bootstrap Icons for consistent visual elements
 - **Typography**: Google Fonts (Poppins) for professional appearance
 - **Image Sources**: Unsplash for high-quality renewable energy photography
 
 ### Industry Validation
+
+![Validation Results](documentation/validation-results/html-validator-index.pdf)
 
 - **Beta Users**: Positive feedback from renewable energy investment firms
 - **Technology Reviewers**: Recognition from fintech innovation labs
