@@ -4,7 +4,9 @@
 
 FinergyCloud is an AI-driven risk intelligence platform for renewable energy investors. Born from an MBA distinction project, it has evolved into a comprehensive solution offering IRR simulation, ESG scoring, and AI-powered risk profiling specifically designed for emerging market renewable energy investments.
 
-![Responsive Mockup](documentation/rm-images/amiresponsive.png)
+<p align="center">
+  <img src="documentation/rm-images/amiresponsive.png" alt="Responsive Mockup" width="100%">
+</p>
 
 ## Index - Table of Contents
 
@@ -43,9 +45,11 @@ FinergyCloud transforms renewable energy investment decisions through AI-powered
 
 ### Site Goals
 
-FinergyCloud aims to democratize access to sophisticated renewable energy investment analysis by providing:
+<div align="center">
+  <img src="documentation/rm-images/j02-landing-page.png" alt="FinergyCloud Landing Page" width="80%">
+</div>
 
-![Dashboard Preview](documentation/rm-images/j02-landing-page.png)
+FinergyCloud aims to democratize access to sophisticated renewable energy investment analysis by providing:
 
 1. **Transparent Risk Assessment**: Clear, data-driven risk profiling for renewable projects
 2. **Comprehensive Financial Modeling**: Advanced IRR simulation with Monte Carlo analysis
@@ -78,7 +82,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 ### Current Features (MVP)
 
-![Navigation Bar](documentation/rm-images/j01-nav-bar.png)
+<div align="center">
+  <img src="documentation/rm-images/j01-nav-bar.png" alt="Navigation Bar" width="80%">
+  <p><em>Professional navigation with clear call-to-action buttons</em></p>
+</div>
 
 #### **F01 Advanced Navigation**
 - Clean, professional navigation with FinergyCloud branding
@@ -87,7 +94,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F02 Hero Section with Value Proposition**
 
-![Hero Section](documentation/rm-images/j03-why-finergycloud-title-body.png)
+<div align="center">
+  <img src="documentation/rm-images/j03-why-finergycloud-title-body.png" alt="Hero Section" width="80%">
+  <p><em>Clear value proposition and compelling visuals</em></p>
+</div>
 
 - Clear positioning as AI-driven risk intelligence platform
 - Timeline showcasing journey from MBA project to startup
@@ -96,7 +106,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F03 Platform Capabilities Showcase**
 
-![Platform Capabilities](documentation/rm-images/j06-our-products-and-services.png)
+<div align="center">
+  <img src="documentation/rm-images/j06-our-products-and-services.png" alt="Platform Capabilities" width="80%">
+  <p><em>Comprehensive platform capabilities with visual representation</em></p>
+</div>
 
 - **IRR Simulation Engine**: Monte Carlo analysis with JavaScript implementation
 - **ESG Scoring Framework**: Comprehensive sustainability assessment
@@ -110,7 +123,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F05 MVP Demonstration**
 
-![Code Preview](documentation/rm-images/j07a-services-cloud-accounting-solutions.png)
+<div align="center">
+  <img src="documentation/rm-images/j07a-services-cloud-accounting-solutions.png" alt="Code Preview" width="80%">
+  <p><em>Live code preview showing actual IRR calculation algorithms</em></p>
+</div>
 
 - Live GitHub repository integration
 - Code preview with actual IRR calculation algorithms
@@ -119,7 +135,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F06 Recognition and Credibility**
 
-![Team Section](documentation/rm-images/j05-our-team.png)
+<div align="center">
+  <img src="documentation/rm-images/j05-our-team.png" alt="Team Section" width="80%">
+  <p><em>Professional team presentation building credibility</em></p>
+</div>
 
 - MBA distinction achievement highlighting
 - Academic supervisor endorsements
@@ -128,7 +147,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F07 Comprehensive About Section**
 
-![Founder Message](documentation/rm-images/j04-team's-message.png)
+<div align="center">
+  <img src="documentation/rm-images/j04-team's-message.png" alt="Founder Message" width="80%">
+  <p><em>Founder story and company mission</em></p>
+</div>
 
 - Detailed founder story and background
 - Mission and vision statements
@@ -137,7 +159,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F08 Solution Deep Dive**
 
-![Solution Features](documentation/rm-images/j07d-investment-and-portfolio-management.png)
+<div align="center">
+  <img src="documentation/rm-images/j07d-investment-and-portfolio-management.png" alt="Solution Features" width="80%">
+  <p><em>Detailed solution features with technical specifications</em></p>
+</div>
 
 - Platform feature breakdown with technical details
 - Technology roadmap with clear timelines
@@ -146,7 +171,10 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 
 #### **F09 Professional Contact System**
 
-![Contact Page](documentation/rm-images/j08-contact-us-page.png)
+<div align="center">
+  <img src="documentation/rm-images/j08-contact-us-page.png" alt="Contact Page" width="80%">
+  <p><em>Comprehensive contact form with role-specific fields</em></p>
+</div>
 
 - Multi-channel contact options (email, LinkedIn, GitHub)
 - Comprehensive contact form with role-specific fields
@@ -154,6 +182,11 @@ FinergyCloud aims to democratize access to sophisticated renewable energy invest
 - Response time commitments and privacy assurances
 
 ### Planned Features (2025 Roadmap)
+
+<div align="center">
+  <img src="mobile-app/screenshots/dashboard.png" alt="Mobile App Dashboard" width="40%">
+  <p><em>Mobile app dashboard preview (coming in 2025)</em></p>
+</div>
 
 #### **AI Engine Integration**
 - **XGBoost Models**: Advanced machine learning for risk prediction
@@ -216,7 +249,10 @@ FinergyCloud employs a modern, professional design system inspired by leading fi
 
 ### Comprehensive Testing Strategy
 
-![Testing Results](documentation/browser-testing/lighthouse.png)
+<div align="center">
+  <img src="documentation/browser-testing/lighthouse.png" alt="Lighthouse Testing Results" width="80%">
+  <p><em>Lighthouse performance scores showing excellent results</em></p>
+</div>
 
 #### **Code Validation**
 - **HTML Validation**: W3C Markup Validator compliance across all pages
@@ -243,7 +279,10 @@ FinergyCloud employs a modern, professional design system inspired by leading fi
 
 ### Testing Results
 
-![Traceability Matrix](documentation/rm-images/traceability-matrix.png)
+<div align="center">
+  <img src="documentation/rm-images/traceability-matrix.png" alt="Traceability Matrix" width="80%">
+  <p><em>Comprehensive testing traceability matrix</em></p>
+</div>
 
 All testing documentation is available in the `documentation/` directory:
 - HTML validation reports for all pages
@@ -291,7 +330,10 @@ npm run dev
 
 ### 2025 Development Plan
 
-![Footer Section](documentation/rm-images/j09-footer.png)
+<div align="center">
+  <img src="documentation/rm-images/j09-footer.png" alt="Footer Section" width="80%">
+  <p><em>Professional footer with comprehensive navigation and contact options</em></p>
+</div>
 
 #### **Q1 2025: AI Engine Foundation**
 - Python backend development
@@ -328,7 +370,18 @@ npm run dev
 
 ### Project Leadership
 
-![Responsive Testing](documentation/responsiveness-testing/mobile-home.png)
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px; max-width: 45%;">
+      <img src="documentation/responsiveness-testing/mobile-home.png" alt="Mobile View" width="100%">
+      <p><em>Mobile responsiveness</em></p>
+    </div>
+    <div style="flex: 1; min-width: 300px; max-width: 45%;">
+      <img src="documentation/responsiveness-testing/tablet-home.png" alt="Tablet View" width="100%">
+      <p><em>Tablet responsiveness</em></p>
+    </div>
+  </div>
+</div>
 
 **O.J. Nwani** - Founder & CEO
 - MBA with Distinction in Renewable Energy Finance
@@ -344,7 +397,18 @@ npm run dev
 
 ### Technology Stack
 
-![Browser Testing](documentation/browser-testing/microsoft-edge-home.png)
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px; max-width: 45%;">
+      <img src="documentation/browser-testing/microsoft-edge-home.png" alt="Edge Browser Testing" width="100%">
+      <p><em>Microsoft Edge browser testing</em></p>
+    </div>
+    <div style="flex: 1; min-width: 300px; max-width: 45%;">
+      <img src="documentation/browser-testing/brave-browser-home.png" alt="Brave Browser Testing" width="100%">
+      <p><em>Brave browser testing</em></p>
+    </div>
+  </div>
+</div>
 
 - **Frontend Frameworks**: Bootstrap 5 for responsive design
 - **Icon Library**: Bootstrap Icons for consistent visual elements
@@ -353,7 +417,10 @@ npm run dev
 
 ### Industry Validation
 
-![Validation Results](documentation/validation-results/html-validator-index.pdf)
+<div align="center">
+  <img src="mobile-app/screenshots/calculator.png" alt="Mobile IRR Calculator" width="40%">
+  <p><em>Mobile IRR calculator preview (coming in 2025)</em></p>
+</div>
 
 - **Beta Users**: Positive feedback from renewable energy investment firms
 - **Technology Reviewers**: Recognition from fintech innovation labs
@@ -387,6 +454,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Email**: contact@finergycloud.com
 - **LinkedIn**: [Connect with Founder](https://linkedin.com/in/yourprofile)
 - **GitHub**: [Project Repository](https://github.com/onuorah-joshua-nwani/ojn-msp-1-finergycloud)
+
+<div align="center">
+  <img src="mobile-app/screenshots/projects.png" alt="Mobile Projects View" width="40%">
+  <p><em>Mobile projects view preview (coming in 2025)</em></p>
+</div>
 
 ---
 
