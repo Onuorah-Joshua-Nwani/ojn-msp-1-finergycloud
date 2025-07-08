@@ -5,13 +5,13 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description"
-        content="FinergyCloud XGBoost Model - Technical documentation of our AI-driven risk intelligence model for renewable energy investment."/>
+        content="FinergyCloud XGBoost Model - Technical documentation for our AI-driven risk intelligence model for renewable energy investments."/>
     <meta name="keywords"
         content="XGBoost, machine learning, renewable energy investment, AI risk intelligence, predictive analytics"/>
     <meta name="author" content="O.J. Nwani"/>
     <meta property="og:title" content="FinergyCloud XGBoost Model Documentation"/>
     <meta property="og:description"
-        content="Technical documentation of FinergyCloud's XGBoost machine learning model for renewable energy investment risk intelligence."/>
+        content="Technical documentation for FinergyCloud's XGBoost machine learning model for renewable energy investment risk intelligence."/>
     <meta property="og:image" content="https://finergycloud.com/assets/images/finergycloud-logo.png"/>
     <meta property="og:url" content="https://finergycloud.com/xgboost-model"/>
     
@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>XGBoost Model - FinergyCloud</title>
+    <title>XGBoost Model Documentation - FinergyCloud</title>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                         </span>
                         <li class="breadcrumb-item">
                             <a href="services.html">
-                                <i class="bi bi-gear breadcrumb-icon"></i>Solutions
+                                <i class="bi bi-gear breadcrumb-icon"></i>Solution
                             </a>
                         </li>
                         <span class="breadcrumb-separator">
@@ -108,8 +108,8 @@
                         <span>10 min read</span>
                     </div>
                     <div class="page-meta">
-                        <i class="bi bi-graph-up"></i>
-                        <span>87% Accuracy</span>
+                        <i class="bi bi-calendar"></i>
+                        <span>Updated Dec 2024</span>
                     </div>
                 </div>
             </div>
@@ -123,34 +123,21 @@
                 <div class="col-lg-6">
                     <div class="hero-content">
                         <div class="hero-badge">
-                            <i class="bi bi-cpu me-2"></i>Machine Learning
+                            87% Accuracy • 92% AUC Score • 14 Key Features
                         </div>
                         <h1 class="hero-title">
                             XGBoost Model for 
                             <span class="text-gradient">Renewable Energy Investment</span>
                         </h1>
                         <p class="hero-description">
-                            Our advanced machine learning model achieves 87% accuracy in predicting project success and IRR for renewable energy investments in emerging markets.
+                            Our advanced machine learning model predicts project success and IRR with remarkable accuracy, 
+                            transforming renewable energy investment decisions in emerging markets.
                         </p>
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <div class="stat-number">87%</div>
-                                <div class="stat-label">Accuracy</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">92%</div>
-                                <div class="stat-label">AUC Score</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">14</div>
-                                <div class="stat-label">Key Features</div>
-                            </div>
-                        </div>
                         <div class="hero-actions">
                             <a href="#model-architecture" class="btn btn-primary btn-lg">
-                                <i class="bi bi-diagram-3 me-2"></i>Model Architecture
+                                <i class="bi bi-cpu me-2"></i>Explore the Model
                             </a>
-                            <a href="mobile-app/#xgboost" class="btn btn-outline-light btn-lg">
+                            <a href="mobile-app/" class="btn btn-outline-light btn-lg">
                                 <i class="bi bi-phone me-2"></i>Try on Mobile
                             </a>
                         </div>
@@ -165,66 +152,117 @@
         </div>
     </section>
 
-    <!-- Documentation Navigation -->
+    <!-- Introduction Section -->
     <section class="section-padding bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="doc-navigation">
-                        <div class="doc-nav-item">
-                            <a href="#introduction" class="xgboost-doc-link" data-target="introduction-section">
-                                <div class="doc-nav-icon">
-                                    <i class="bi bi-info-circle"></i>
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section active" id="introduction">
+                        <h2 class="section-title">Introduction</h2>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Problem Statement</h3>
+                            <p>Renewable energy investments in emerging markets face unique challenges that traditional financial models fail to capture:</p>
+                            
+                            <ul>
+                                <li>Limited historical data for accurate risk assessment</li>
+                                <li>Complex interplay of local factors (grid stability, regulatory environment, etc.)</li>
+                                <li>High variability in project outcomes due to market-specific conditions</li>
+                                <li>Difficulty in quantifying non-financial risks</li>
+                            </ul>
+                            
+                            <p>Our XGBoost model addresses these challenges by combining machine learning with domain expertise to provide accurate predictions of project success probability and expected IRR.</p>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
+                            
+                            <div class="technical-details">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-title">Problem Formulation</span>
+                                        <button class="code-action" onclick="showCodeExample('python', pythonXGBoostExample)">
+                                            <i class="bi bi-code-slash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="code-content">
+                                        <pre><code>
+# Problem formulation:
+# 1. Regression task: Predict IRR (continuous value)
+# 2. Classification task: Predict success probability (binary outcome)
+# 3. Feature importance: Identify key factors affecting outcomes
+                                        </code></pre>
+                                    </div>
                                 </div>
-                                <div class="doc-nav-content">
-                                    <h3>Introduction</h3>
-                                    <p>Overview and problem statement</p>
-                                </div>
-                            </a>
+                            </div>
                         </div>
-                        <div class="doc-nav-item">
-                            <a href="#model-architecture" class="xgboost-doc-link" data-target="architecture-section">
-                                <div class="doc-nav-icon">
-                                    <i class="bi bi-diagram-3"></i>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Why XGBoost?</h3>
+                            <p>XGBoost (eXtreme Gradient Boosting) was selected after evaluating multiple algorithms for the following reasons:</p>
+                            
+                            <ol>
+                                <li><strong>Superior Performance:</strong> Consistently outperformed other algorithms (Random Forest, Neural Networks) in our tests</li>
+                                <li><strong>Feature Importance:</strong> Provides clear insights into which factors most influence project outcomes</li>
+                                <li><strong>Handling of Mixed Data:</strong> Effectively processes both numerical and categorical features</li>
+                                <li><strong>Robustness to Outliers:</strong> Important for emerging markets with high variability</li>
+                                <li><strong>Efficiency:</strong> Fast training and inference even with limited computational resources</li>
+                            </ol>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
+                            
+                            <div class="technical-details">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-title">Algorithm Comparison</span>
+                                    </div>
+                                    <div class="code-content">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Algorithm</th>
+                                                    <th>Accuracy</th>
+                                                    <th>AUC</th>
+                                                    <th>RMSE</th>
+                                                    <th>Training Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>XGBoost</td>
+                                                    <td>87%</td>
+                                                    <td>0.92</td>
+                                                    <td>1.5%</td>
+                                                    <td>Fast</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Random Forest</td>
+                                                    <td>82%</td>
+                                                    <td>0.88</td>
+                                                    <td>1.9%</td>
+                                                    <td>Medium</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Neural Network</td>
+                                                    <td>80%</td>
+                                                    <td>0.85</td>
+                                                    <td>2.1%</td>
+                                                    <td>Slow</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Logistic Regression</td>
+                                                    <td>75%</td>
+                                                    <td>0.81</td>
+                                                    <td>2.8%</td>
+                                                    <td>Very Fast</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="doc-nav-content">
-                                    <h3>Model Architecture</h3>
-                                    <p>XGBoost implementation details</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="doc-nav-item">
-                            <a href="#feature-engineering" class="xgboost-doc-link" data-target="features-section">
-                                <div class="doc-nav-icon">
-                                    <i class="bi bi-tools"></i>
-                                </div>
-                                <div class="doc-nav-content">
-                                    <h3>Feature Engineering</h3>
-                                    <p>Data sources and feature creation</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="doc-nav-item">
-                            <a href="#model-evaluation" class="xgboost-doc-link" data-target="evaluation-section">
-                                <div class="doc-nav-icon">
-                                    <i class="bi bi-graph-up"></i>
-                                </div>
-                                <div class="doc-nav-content">
-                                    <h3>Model Evaluation</h3>
-                                    <p>Performance metrics and results</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="doc-nav-item">
-                            <a href="#case-studies" class="xgboost-doc-link" data-target="cases-section">
-                                <div class="doc-nav-icon">
-                                    <i class="bi bi-file-earmark-text"></i>
-                                </div>
-                                <div class="doc-nav-content">
-                                    <h3>Case Studies</h3>
-                                    <p>Real-world applications</p>
-                                </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,103 +270,39 @@
         </div>
     </section>
 
-    <!-- Introduction Section -->
-    <section id="introduction-section" class="section-padding xgboost-doc-section active">
+    <!-- Model Architecture Section -->
+    <section class="section-padding" id="model-architecture">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
-                        <h2 class="section-title">Introduction</h2>
-                        <div class="section-content">
-                            <h3>Problem Statement</h3>
-                            <p>Renewable energy investments in emerging markets face unique challenges that traditional financial models fail to capture:</p>
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
+                        <h2 class="section-title">Model Architecture</h2>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>XGBoost Overview</h3>
+                            <p>XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. The algorithm works by:</p>
                             
-                            <ul class="feature-list">
-                                <li>
-                                    <i class="bi bi-exclamation-triangle text-warning"></i>
-                                    <span>Limited historical data for accurate risk assessment</span>
-                                </li>
-                                <li>
-                                    <i class="bi bi-exclamation-triangle text-warning"></i>
-                                    <span>Complex interplay of local factors (grid stability, regulatory environment, etc.)</span>
-                                </li>
-                                <li>
-                                    <i class="bi bi-exclamation-triangle text-warning"></i>
-                                    <span>High variability in project outcomes due to market-specific conditions</span>
-                                </li>
-                                <li>
-                                    <i class="bi bi-exclamation-triangle text-warning"></i>
-                                    <span>Difficulty in quantifying non-financial risks</span>
-                                </li>
-                            </ul>
+                            <ol>
+                                <li>Building an ensemble of weak prediction models (decision trees)</li>
+                                <li>Training each subsequent tree to correct errors made by previous trees</li>
+                                <li>Combining all trees to make the final prediction</li>
+                            </ol>
                             
-                            <p>Our XGBoost model addresses these challenges by combining machine learning with domain expertise to provide accurate predictions of project success probability and expected IRR.</p>
-                            
-                            <h3>Why XGBoost?</h3>
-                            <p>XGBoost (eXtreme Gradient Boosting) was selected after evaluating multiple algorithms for the following reasons:</p>
-                            
-                            <div class="row g-4 mt-3">
-                                <div class="col-md-6">
-                                    <div class="feature-card">
-                                        <div class="feature-icon">
-                                            <i class="bi bi-graph-up"></i>
-                                        </div>
-                                        <h4>Superior Performance</h4>
-                                        <p>Consistently outperformed other algorithms (Random Forest, Neural Networks) in our tests</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-card">
-                                        <div class="feature-icon">
-                                            <i class="bi bi-eye"></i>
-                                        </div>
-                                        <h4>Feature Importance</h4>
-                                        <p>Provides clear insights into which factors most influence project outcomes</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-card">
-                                        <div class="feature-icon">
-                                            <i class="bi bi-grid-3x3"></i>
-                                        </div>
-                                        <h4>Handling of Mixed Data</h4>
-                                        <p>Effectively processes both numerical and categorical features</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-card">
-                                        <div class="feature-icon">
-                                            <i class="bi bi-shield-check"></i>
-                                        </div>
-                                        <h4>Robustness to Outliers</h4>
-                                        <p>Important for emerging markets with high variability</p>
-                                    </div>
-                                </div>
+                            <div class="text-center my-4">
+                                <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="XGBoost Architecture" class="img-fluid rounded-3 shadow-lg" style="max-width: 600px;">
                             </div>
                             
-                            <div class="technical-details-toggle mt-4">
-                                <button class="btn btn-outline-primary" onclick="toggleTechnicalDetails(this)">
-                                    <i class="bi bi-plus-circle me-2"></i>Show Technical Details
-                                </button>
-                            </div>
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
                             
                             <div class="technical-details">
-                                <div class="code-preview mt-4">
+                                <div class="code-block">
                                     <div class="code-header">
-                                        <div class="code-dots">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="code-title">XGBoost Algorithm Overview</div>
-                                        <div class="code-actions">
-                                            <button class="code-action" onclick="showCodeExample('python', pythonXGBoostExample)">
-                                                <i class="bi bi-code-square"></i>
-                                            </button>
-                                        </div>
+                                        <span class="code-title">XGBoost Algorithm Pseudocode</span>
                                     </div>
                                     <div class="code-content">
-                                        <pre><code class="language-python">
+                                        <pre><code>
 # Pseudocode for XGBoost algorithm
 def xgboost_algorithm(data, labels, num_trees):
     ensemble = []
@@ -349,39 +323,14 @@ def xgboost_algorithm(data, labels, num_trees):
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Model Architecture Section -->
-    <section id="architecture-section" class="section-padding xgboost-doc-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
-                        <h2 class="section-title">Model Architecture</h2>
-                        <div class="section-content">
-                            <h3>XGBoost Overview</h3>
-                            <p>XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. The algorithm works by:</p>
-                            
-                            <ol>
-                                <li>Building an ensemble of weak prediction models (decision trees)</li>
-                                <li>Training each subsequent tree to correct errors made by previous trees</li>
-                                <li>Combining all trees to make the final prediction</li>
-                            </ol>
-                            
-                            <div class="architecture-diagram mt-4 mb-5">
-                                <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="XGBoost Architecture Diagram" class="img-fluid rounded-3 shadow-lg">
-                            </div>
-                            
+                        
+                        <div class="xgboost-section mb-5">
                             <h3>Model Parameters</h3>
                             <p>Our optimized XGBoost model uses the following key parameters:</p>
                             
                             <div class="table-responsive">
                                 <table class="table table-bordered">
-                                    <thead class="table-light">
+                                    <thead>
                                         <tr>
                                             <th>Parameter</th>
                                             <th>Value</th>
@@ -433,29 +382,19 @@ def xgboost_algorithm(data, labels, num_trees):
                                 </table>
                             </div>
                             
-                            <p class="mt-3">These parameters were determined through Bayesian hyperparameter optimization to maximize model performance while preventing overfitting.</p>
+                            <p>These parameters were determined through Bayesian hyperparameter optimization to maximize model performance while preventing overfitting.</p>
                             
-                            <div class="technical-details-toggle mt-4">
-                                <button class="btn btn-outline-primary" onclick="toggleTechnicalDetails(this)">
-                                    <i class="bi bi-plus-circle me-2"></i>Show Technical Details
-                                </button>
-                            </div>
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
                             
                             <div class="technical-details">
-                                <h4 class="mt-4">Hyperparameter Tuning</h4>
-                                <p>We used Bayesian optimization to find optimal hyperparameters:</p>
-                                
-                                <div class="code-preview mt-3">
+                                <div class="code-block">
                                     <div class="code-header">
-                                        <div class="code-dots">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="code-title">Hyperparameter Optimization</div>
+                                        <span class="code-title">Hyperparameter Optimization</span>
                                     </div>
                                     <div class="code-content">
-                                        <pre><code class="language-python">
+                                        <pre><code>
 def optimize_hyperparameters(X_train, y_train):
     def objective(params):
         model = xgb.XGBRegressor(
@@ -507,120 +446,82 @@ def optimize_hyperparameters(X_train, y_train):
     </section>
 
     <!-- Feature Engineering Section -->
-    <section id="features-section" class="section-padding xgboost-doc-section">
+    <section class="section-padding bg-light" id="feature-engineering">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
                         <h2 class="section-title">Feature Engineering</h2>
-                        <div class="section-content">
+                        
+                        <div class="xgboost-section mb-5">
                             <h3>Data Sources</h3>
                             <p>The model integrates data from multiple sources:</p>
                             
-                            <div class="row g-4 mt-3">
-                                <div class="col-md-6">
-                                    <div class="data-source-card">
-                                        <div class="data-source-icon">
-                                            <i class="bi bi-file-earmark-text"></i>
-                                        </div>
-                                        <h4>Historical Project Data</h4>
-                                        <p>120+ completed renewable energy projects in Nigeria</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="data-source-card">
-                                        <div class="data-source-icon">
-                                            <i class="bi bi-cloud-sun"></i>
-                                        </div>
-                                        <h4>Weather Data</h4>
-                                        <p>10 years of solar irradiation, temperature, and precipitation data</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="data-source-card">
-                                        <div class="data-source-icon">
-                                            <i class="bi bi-lightning"></i>
-                                        </div>
-                                        <h4>Grid Stability Metrics</h4>
-                                        <p>Power outage frequency and duration by region</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="data-source-card">
-                                        <div class="data-source-icon">
-                                            <i class="bi bi-cash-coin"></i>
-                                        </div>
-                                        <h4>Economic Indicators</h4>
-                                        <p>Currency stability, inflation rates, interest rates</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <h3 class="mt-5">Feature Creation</h3>
+                            <ol>
+                                <li><strong>Historical Project Data:</strong> 120+ completed renewable energy projects in Nigeria</li>
+                                <li><strong>Weather Data:</strong> 10 years of solar irradiation, temperature, and precipitation data</li>
+                                <li><strong>Grid Stability Metrics:</strong> Power outage frequency and duration by region</li>
+                                <li><strong>Economic Indicators:</strong> Currency stability, inflation rates, interest rates</li>
+                                <li><strong>Regulatory Data:</strong> Policy changes, incentive programs, approval timelines</li>
+                                <li><strong>Social Factors:</strong> Community engagement levels, local employment metrics</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Feature Creation</h3>
                             <p>We engineered several composite features to capture complex interactions:</p>
                             
-                            <div class="feature-importance-container mt-4">
-                                <div class="row mb-4">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="doc-project-type" class="form-label">Project Type</label>
-                                            <select id="doc-project-type" class="form-control">
-                                                <option value="solar">Solar</option>
-                                                <option value="wind">Wind</option>
-                                                <option value="hydro">Hydro</option>
-                                                <option value="biomass">Biomass</option>
-                                                <option value="geothermal">Geothermal</option>
-                                            </select>
-                                        </div>
+                            <div class="row g-4 mt-3">
+                                <div class="col-md-4">
+                                    <div class="feature-card">
+                                        <h4>Grid Stability Index</h4>
+                                        <p>Combines outage frequency, duration, and backup availability into a single metric.</p>
+                                        <button class="btn btn-sm btn-outline-primary mt-2" onclick="showCodeExample('python', featureEngineeringExample)">
+                                            <i class="bi bi-code-slash me-1"></i>View Code
+                                        </button>
                                     </div>
                                 </div>
-                                
-                                <div class="feature-importance-viz">
-                                    <!-- Will be populated by JavaScript -->
+                                <div class="col-md-4">
+                                    <div class="feature-card">
+                                        <h4>Regulatory Risk Score</h4>
+                                        <p>Measures regulatory environment based on approval times, policy changes, and incentive stability.</p>
+                                        <button class="btn btn-sm btn-outline-primary mt-2" onclick="showCodeExample('python', featureEngineeringExample)">
+                                            <i class="bi bi-code-slash me-1"></i>View Code
+                                        </button>
+                                    </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="feature-card">
+                                        <h4>Community Engagement Index</h4>
+                                        <p>Quantifies community support through local employment, programs, and stakeholder meetings.</p>
+                                        <button class="btn btn-sm btn-outline-primary mt-2" onclick="showCodeExample('python', featureEngineeringExample)">
+                                            <i class="bi bi-code-slash me-1"></i>View Code
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Feature Importance</h3>
+                            <p>After training, the model identified the following features as most influential:</p>
+                            
+                            <div class="form-group mb-4">
+                                <label for="doc-project-type" class="form-label">Select Project Type</label>
+                                <select id="doc-project-type" class="form-control">
+                                    <option value="solar">Solar PV</option>
+                                    <option value="wind">Wind</option>
+                                    <option value="hydro">Hydro</option>
+                                    <option value="biomass">Biomass</option>
+                                    <option value="geothermal">Geothermal</option>
+                                </select>
                             </div>
                             
-                            <div class="technical-details-toggle mt-4">
-                                <button class="btn btn-outline-primary" onclick="toggleTechnicalDetails(this)">
-                                    <i class="bi bi-plus-circle me-2"></i>Show Technical Details
-                                </button>
+                            <div class="feature-importance-viz">
+                                <!-- Feature importance bars will be dynamically generated -->
                             </div>
                             
-                            <div class="technical-details">
-                                <h4 class="mt-4">Composite Feature Calculation</h4>
-                                
-                                <div class="code-preview mt-3">
-                                    <div class="code-header">
-                                        <div class="code-dots">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="code-title">Feature Engineering Code</div>
-                                        <div class="code-actions">
-                                            <button class="code-action" onclick="showCodeExample('python', featureEngineeringExample)">
-                                                <i class="bi bi-code-square"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="code-content">
-                                        <pre><code class="language-python">
-def calculate_grid_stability_index(outage_frequency, outage_duration, backup_availability):
-    # Normalize inputs to 0-1 scale
-    norm_freq = normalize(outage_frequency)
-    norm_dur = normalize(outage_duration)
-    norm_backup = normalize(backup_availability)
-    
-    # Weighted combination
-    gsi = (0.4 * (1 - norm_freq) + 
-           0.4 * (1 - norm_dur) + 
-           0.2 * norm_backup)
-    
-    return gsi
-                                        </code></pre>
-                                    </div>
-                                </div>
-                            </div>
+                            <p class="mt-4">The model's ability to identify these key factors enables investors to focus on the most critical aspects of project development and risk mitigation.</p>
                         </div>
                     </div>
                 </div>
@@ -629,127 +530,94 @@ def calculate_grid_stability_index(outage_frequency, outage_duration, backup_ava
     </section>
 
     <!-- Model Evaluation Section -->
-    <section id="evaluation-section" class="section-padding xgboost-doc-section">
+    <section class="section-padding" id="model-evaluation">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
                         <h2 class="section-title">Model Evaluation</h2>
-                        <div class="section-content">
+                        
+                        <div class="xgboost-section mb-5">
                             <h3>Performance Metrics</h3>
                             <p>The model achieved the following performance on the test set:</p>
                             
-                            <div class="row g-4 mt-3">
-                                <div class="col-md-3">
-                                    <div class="metric-card">
-                                        <div class="metric-value">87%</div>
-                                        <div class="metric-label">Accuracy</div>
-                                        <div class="metric-description">Percentage of correctly predicted success/failure</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric-card">
-                                        <div class="metric-value">0.92</div>
-                                        <div class="metric-label">AUC</div>
-                                        <div class="metric-description">Area under ROC curve</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric-card">
-                                        <div class="metric-value">1.5%</div>
-                                        <div class="metric-label">RMSE</div>
-                                        <div class="metric-description">Root mean squared error for IRR prediction</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric-card">
-                                        <div class="metric-value">0.83</div>
-                                        <div class="metric-label">R²</div>
-                                        <div class="metric-description">Coefficient of determination</div>
-                                    </div>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Accuracy</td>
+                                            <td>87%</td>
+                                            <td>Percentage of correctly predicted success/failure</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AUC</td>
+                                            <td>0.92</td>
+                                            <td>Area under ROC curve</td>
+                                        </tr>
+                                        <tr>
+                                            <td>RMSE</td>
+                                            <td>1.5%</td>
+                                            <td>Root mean squared error for IRR prediction</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MAE</td>
+                                            <td>1.2%</td>
+                                            <td>Mean absolute error for IRR prediction</td>
+                                        </tr>
+                                        <tr>
+                                            <td>R²</td>
+                                            <td>0.83</td>
+                                            <td>Coefficient of determination</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            
-                            <h3 class="mt-5">ROC Curve</h3>
-                            <div class="model-performance-viz mt-4">
-                                <!-- Will be populated by JavaScript -->
-                            </div>
-                            
-                            <h3 class="mt-5">Confusion Matrix</h3>
-                            <div class="confusion-matrix mt-4">
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Confusion Matrix</h3>
+                            <div class="confusion-matrix">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered confusion-table">
+                                    <table class="table table-bordered text-center">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th colspan="2" class="text-center">Predicted</th>
+                                                <th colspan="2" rowspan="2"></th>
+                                                <th colspan="2">Predicted</th>
                                             </tr>
                                             <tr>
-                                                <th></th>
-                                                <th class="text-center">Failure</th>
-                                                <th class="text-center">Success</th>
+                                                <th>Failure</th>
+                                                <th>Success</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th rowspan="2" class="vertical-header">Actual</th>
-                                                <td class="true-negative">45</td>
-                                                <td class="false-positive">5</td>
+                                                <th rowspan="2">Actual</th>
+                                                <th>Failure</th>
+                                                <td class="bg-success bg-opacity-25">45</td>
+                                                <td class="bg-danger bg-opacity-25">5</td>
                                             </tr>
                                             <tr>
-                                                <td class="false-negative">8</td>
-                                                <td class="true-positive">42</td>
+                                                <th>Success</th>
+                                                <td class="bg-danger bg-opacity-25">8</td>
+                                                <td class="bg-success bg-opacity-25">42</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            
-                            <div class="technical-details-toggle mt-4">
-                                <button class="btn btn-outline-primary" onclick="toggleTechnicalDetails(this)">
-                                    <i class="bi bi-plus-circle me-2"></i>Show Technical Details
-                                </button>
-                            </div>
-                            
-                            <div class="technical-details">
-                                <h4 class="mt-4">Model Evaluation Code</h4>
-                                
-                                <div class="code-preview mt-3">
-                                    <div class="code-header">
-                                        <div class="code-dots">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="code-title">Evaluation Metrics Calculation</div>
-                                    </div>
-                                    <div class="code-content">
-                                        <pre><code class="language-python">
-# Evaluate regression model
-y_pred = reg_model.predict(X_test)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-mae = mean_absolute_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
-
-print(f"RMSE: {rmse:.4f}")
-print(f"MAE: {mae:.4f}")
-print(f"R²: {r2:.4f}")
-
-# Evaluate classification model
-y_clf_pred = clf_model.predict(X_test)
-y_clf_prob = clf_model.predict_proba(X_test)[:, 1]
-
-accuracy = accuracy_score(y_clf_test, y_clf_pred)
-auc = roc_auc_score(y_clf_test, y_clf_prob)
-cm = confusion_matrix(y_clf_test, y_clf_pred)
-
-print(f"Accuracy: {accuracy:.4f}")
-print(f"AUC: {auc:.4f}")
-print("Confusion Matrix:")
-print(cm)
-                                        </code></pre>
-                                    </div>
-                                </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>ROC Curve</h3>
+                            <div class="model-performance-viz">
+                                <!-- ROC curve will be dynamically generated -->
                             </div>
                         </div>
                     </div>
@@ -759,202 +627,248 @@ print(cm)
     </section>
 
     <!-- Case Studies Section -->
-    <section id="cases-section" class="section-padding xgboost-doc-section">
+    <section class="section-padding bg-light" id="case-studies">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
                         <h2 class="section-title">Case Studies</h2>
-                        <div class="section-content">
-                            <div class="row g-4">
-                                <div class="col-lg-6">
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Case Study 1: Lagos Solar Farm (5MW)</h3>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="case-study-card">
-                                        <div class="case-study-header">
-                                            <h3>Lagos Solar Farm (5MW)</h3>
-                                            <div class="case-study-badge success">Success</div>
-                                        </div>
-                                        <div class="case-study-body">
-                                            <div class="case-study-params">
-                                                <div class="param-item">
-                                                    <div class="param-label">Location</div>
-                                                    <div class="param-value">Lagos, Nigeria</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Technology</div>
-                                                    <div class="param-value">Solar PV with single-axis tracking</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Grid Stability</div>
-                                                    <div class="param-value">Medium (GSI = 0.65)</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Community Engagement</div>
-                                                    <div class="param-value">High (CEI = 0.85)</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Regulatory Environment</div>
-                                                    <div class="param-value">Medium (RRS = 0.45)</div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="case-study-results">
-                                                <div class="result-item">
-                                                    <div class="result-label">Predicted IRR</div>
-                                                    <div class="result-value">16.5%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Actual IRR</div>
-                                                    <div class="result-value">16.8%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Prediction Error</div>
-                                                    <div class="result-value">0.3%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Success Probability</div>
-                                                    <div class="result-value">92%</div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="case-study-insights">
-                                                <h4>Key Insights</h4>
-                                                <ul>
-                                                    <li>Grid stability was identified as the most critical risk factor</li>
-                                                    <li>Community engagement programs contributed +2.3% to IRR</li>
-                                                    <li>Equipment quality selection optimized for local conditions</li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        <h4>Project Parameters</h4>
+                                        <ul>
+                                            <li><strong>Location:</strong> Lagos, Nigeria</li>
+                                            <li><strong>Technology:</strong> Solar PV with single-axis tracking</li>
+                                            <li><strong>Grid Stability:</strong> Medium (GSI = 0.65)</li>
+                                            <li><strong>Community Engagement:</strong> High (CEI = 0.85)</li>
+                                            <li><strong>Regulatory Environment:</strong> Medium (RRS = 0.45)</li>
+                                        </ul>
                                     </div>
                                 </div>
-                                
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <div class="case-study-card">
-                                        <div class="case-study-header">
-                                            <h3>Abuja Wind Project (2.5MW)</h3>
-                                            <div class="case-study-badge success">Success</div>
-                                        </div>
-                                        <div class="case-study-body">
-                                            <div class="case-study-params">
-                                                <div class="param-item">
-                                                    <div class="param-label">Location</div>
-                                                    <div class="param-value">Abuja, Nigeria</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Technology</div>
-                                                    <div class="param-value">Wind turbines</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Grid Stability</div>
-                                                    <div class="param-value">High (GSI = 0.78)</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Community Engagement</div>
-                                                    <div class="param-value">Medium (CEI = 0.62)</div>
-                                                </div>
-                                                <div class="param-item">
-                                                    <div class="param-label">Regulatory Environment</div>
-                                                    <div class="param-value">Medium (RRS = 0.50)</div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="case-study-results">
-                                                <div class="result-item">
-                                                    <div class="result-label">Predicted IRR</div>
-                                                    <div class="result-value">14.2%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Actual IRR</div>
-                                                    <div class="result-value">14.5%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Prediction Error</div>
-                                                    <div class="result-value">0.3%</div>
-                                                </div>
-                                                <div class="result-item">
-                                                    <div class="result-label">Success Probability</div>
-                                                    <div class="result-value">85%</div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="case-study-insights">
-                                                <h4>Key Insights</h4>
-                                                <ul>
-                                                    <li>Wind resource variability was accurately captured by the model</li>
-                                                    <li>Grid connection quality was a significant positive factor</li>
-                                                    <li>Regulatory navigation expertise reduced delays by 35%</li>
-                                                </ul>
-                                            </div>
-                                        </div>
+                                        <h4>Model Prediction</h4>
+                                        <ul>
+                                            <li><strong>Predicted IRR:</strong> 16.5%</li>
+                                            <li><strong>Actual IRR:</strong> 16.8%</li>
+                                            <li><strong>Prediction Error:</strong> 0.3%</li>
+                                            <li><strong>Success Probability:</strong> 92%</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="mobile-integration mt-5">
-                                <h3>Try the Model on Mobile</h3>
-                                <p>Experience the XGBoost model in action with our mobile app. Input your project parameters and get instant predictions.</p>
-                                
-                                <div class="row align-items-center">
-                                    <div class="col-md-6">
-                                        <div class="mobile-features">
-                                            <div class="mobile-feature">
-                                                <i class="bi bi-lightning-charge text-primary"></i>
-                                                <span>Real-time predictions on your mobile device</span>
-                                            </div>
-                                            <div class="mobile-feature">
-                                                <i class="bi bi-sliders text-primary"></i>
-                                                <span>Adjust parameters and see instant results</span>
-                                            </div>
-                                            <div class="mobile-feature">
-                                                <i class="bi bi-graph-up text-primary"></i>
-                                                <span>Visualize feature importance for your project</span>
-                                            </div>
-                                            <div class="mobile-feature">
-                                                <i class="bi bi-save text-primary"></i>
-                                                <span>Save and compare multiple scenarios</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mt-4">
-                                            <a href="mobile-app/#xgboost" class="btn btn-primary">
-                                                <i class="bi bi-phone me-2"></i>Try on Mobile
-                                            </a>
-                                            <a href="technical-documentation/xgboost-notebook.ipynb" target="_blank" class="btn btn-outline-primary ms-2">
-                                                <i class="bi bi-journal-code me-2"></i>View Notebook
-                                            </a>
-                                        </div>
+                            <div class="case-study-card mt-4">
+                                <h4>Key Insights</h4>
+                                <ul>
+                                    <li>Grid stability was identified as the most critical risk factor</li>
+                                    <li>Community engagement programs contributed +2.3% to IRR</li>
+                                    <li>Equipment quality selection optimized for local conditions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Case Study 2: Abuja Wind Project (2.5MW)</h3>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="case-study-card">
+                                        <h4>Project Parameters</h4>
+                                        <ul>
+                                            <li><strong>Location:</strong> Abuja, Nigeria</li>
+                                            <li><strong>Technology:</strong> Wind turbines</li>
+                                            <li><strong>Grid Stability:</strong> High (GSI = 0.78)</li>
+                                            <li><strong>Community Engagement:</strong> Medium (CEI = 0.62)</li>
+                                            <li><strong>Regulatory Environment:</strong> Medium (RRS = 0.50)</li>
+                                        </ul>
                                     </div>
-                                    <div class="col-md-6">
-                                        <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg" alt="Mobile XGBoost Interface" class="img-fluid rounded-3 shadow-lg">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="case-study-card">
+                                        <h4>Model Prediction</h4>
+                                        <ul>
+                                            <li><strong>Predicted IRR:</strong> 14.2%</li>
+                                            <li><strong>Actual IRR:</strong> 14.5%</li>
+                                            <li><strong>Prediction Error:</strong> 0.3%</li>
+                                            <li><strong>Success Probability:</strong> 85%</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="technical-details-toggle mt-4">
-                                <button class="btn btn-outline-primary" onclick="toggleTechnicalDetails(this)">
-                                    <i class="bi bi-plus-circle me-2"></i>Show Technical Details
-                                </button>
+                            <div class="case-study-card mt-4">
+                                <h4>Key Insights</h4>
+                                <ul>
+                                    <li>Wind resource variability was accurately captured by the model</li>
+                                    <li>Grid connection quality was a significant positive factor</li>
+                                    <li>Regulatory navigation expertise reduced delays by 35%</li>
+                                </ul>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Details Section -->
+    <section class="section-padding" id="implementation">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
+                        <h2 class="section-title">Implementation Details</h2>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Model Serialization</h3>
+                            <p>The trained model is serialized for deployment using the following approach:</p>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
                             
                             <div class="technical-details">
-                                <h4 class="mt-4">Mobile API Integration</h4>
-                                
-                                <div class="code-preview mt-3">
+                                <div class="code-block">
                                     <div class="code-header">
-                                        <div class="code-dots">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="code-title">JavaScript API Integration</div>
-                                        <div class="code-actions">
-                                            <button class="code-action" onclick="showCodeExample('javascript', javascriptAPIExample)">
-                                                <i class="bi bi-code-square"></i>
-                                            </button>
-                                        </div>
+                                        <span class="code-title">Model Serialization Code</span>
                                     </div>
                                     <div class="code-content">
-                                        <pre><code class="language-javascript">
+                                        <pre><code>
+def save_model(model, filename='xgboost_model.json'):
+    # Save model to JSON format
+    model.save_model(filename)
+    
+    # Save feature names and preprocessing parameters
+    with open('model_metadata.json', 'w') as f:
+        json.dump({
+            'feature_names': feature_names,
+            'scaler_params': {
+                'mean': scaler.mean_.tolist(),
+                'scale': scaler.scale_.tolist()
+            },
+            'categorical_encoders': categorical_encoders,
+            'model_version': '1.0.0',
+            'training_date': datetime.now().isoformat()
+        }, f)
+                                        </code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Inference Pipeline</h3>
+                            <p>The prediction pipeline processes input data and generates predictions with explanations:</p>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
+                            
+                            <div class="technical-details">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-title">Inference Pipeline Code</span>
+                                    </div>
+                                    <div class="code-content">
+                                        <pre><code>
+def prediction_pipeline(input_data):
+    # Load model and metadata
+    model = xgb.XGBRegressor()
+    model.load_model('xgboost_model.json')
+    
+    with open('model_metadata.json', 'r') as f:
+        metadata = json.load(f)
+    
+    # Preprocess input data
+    processed_data = preprocess_input(input_data, metadata)
+    
+    # Make prediction
+    irr_prediction = model.predict(processed_data)[0]
+    
+    # Calculate success probability
+    success_probability = calculate_success_probability(processed_data, model)
+    
+    # Get feature importance for this prediction
+    explanation = explain_prediction(processed_data, model, metadata['feature_names'])
+    
+    return {
+        'predicted_irr': irr_prediction,
+        'success_probability': success_probability,
+        'explanation': explanation
+    }
+                                        </code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Web API Integration</h3>
+                            <p>The model is exposed through a RESTful API for integration with the FinergyCloud platform:</p>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
+                            
+                            <div class="technical-details">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-title">API Endpoint Code</span>
+                                    </div>
+                                    <div class="code-content">
+                                        <pre><code>
+@app.route('/api/predict', methods=['POST'])
+def predict():
+    # Get input data from request
+    input_data = request.json
+    
+    # Validate input data
+    validation_result = validate_input(input_data)
+    if not validation_result['valid']:
+        return jsonify({
+            'error': 'Invalid input data',
+            'details': validation_result['errors']
+        }), 400
+    
+    # Run prediction
+    try:
+        result = prediction_pipeline(input_data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({
+            'error': 'Prediction failed',
+            'details': str(e)
+        }), 500
+                                        </code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Mobile App Integration</h3>
+                            <p>The model is integrated with the FinergyCloud mobile app for on-the-go predictions:</p>
+                            
+                            <button class="btn btn-outline-primary mt-3" onclick="toggleTechnicalDetails(this)">
+                                <i class="bi bi-plus-circle me-2"></i>Show Technical Details
+                            </button>
+                            
+                            <div class="technical-details">
+                                <div class="code-block">
+                                    <div class="code-header">
+                                        <span class="code-title">Mobile Integration Code</span>
+                                        <button class="code-action" onclick="showCodeExample('javascript', javascriptAPIExample)">
+                                            <i class="bi bi-code-slash"></i>
+                                        </button>
+                                    </div>
+                                    <div class="code-content">
+                                        <pre><code>
 // Mobile app integration with XGBoost model API
 async function predictProjectSuccess(projectData) {
     try {
@@ -990,102 +904,125 @@ async function predictProjectSuccess(projectData) {
     </section>
 
     <!-- Future Enhancements Section -->
-    <section class="section-padding bg-light">
+    <section class="section-padding bg-light" id="future-enhancements">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="xgboost-section">
+                <div class="col-lg-8 mx-auto">
+                    <div class="xgboost-doc-section">
                         <h2 class="section-title">Future Enhancements</h2>
-                        <div class="section-content">
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Model Improvements</h3>
                             <div class="row g-4">
                                 <div class="col-md-6">
-                                    <div class="enhancement-card">
-                                        <div class="enhancement-icon">
-                                            <i class="bi bi-layers"></i>
-                                        </div>
+                                    <div class="feature-card">
                                         <h4>Ensemble Approach</h4>
                                         <p>Combine XGBoost with other models (Neural Networks, Random Forest) for improved accuracy</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="enhancement-card">
-                                        <div class="enhancement-icon">
-                                            <i class="bi bi-arrow-repeat"></i>
-                                        </div>
+                                    <div class="feature-card">
                                         <h4>Transfer Learning</h4>
                                         <p>Adapt the model to new geographic regions with limited data</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="enhancement-card">
-                                        <div class="enhancement-icon">
-                                            <i class="bi bi-clock-history"></i>
-                                        </div>
+                                    <div class="feature-card">
                                         <h4>Temporal Features</h4>
                                         <p>Incorporate time-series analysis for better trend prediction</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="enhancement-card">
-                                        <div class="enhancement-icon">
-                                            <i class="bi bi-percent"></i>
-                                        </div>
+                                    <div class="feature-card">
                                         <h4>Uncertainty Quantification</h4>
                                         <p>Implement prediction intervals for more robust risk assessment</p>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="roadmap mt-5">
-                                <h3>Technical Roadmap</h3>
-                                <div class="roadmap-timeline">
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-date">Q3 2025</div>
-                                        <div class="roadmap-content">
-                                            <h4>Enhanced XGBoost Model</h4>
-                                            <ul>
-                                                <li>Improved feature engineering pipeline</li>
-                                                <li>Automated hyperparameter optimization</li>
-                                                <li>Model explainability enhancements</li>
-                                                <li>Uncertainty quantification</li>
-                                            </ul>
-                                        </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Data Enhancements</h3>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="feature-card">
+                                        <h4>Satellite Imagery</h4>
+                                        <p>Integrate remote sensing data for site assessment</p>
                                     </div>
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-date">Q4 2025</div>
-                                        <div class="roadmap-content">
-                                            <h4>Multi-Model Ensemble</h4>
-                                            <ul>
-                                                <li>Neural network integration</li>
-                                                <li>Random Forest complementary model</li>
-                                                <li>Weighted ensemble prediction</li>
-                                                <li>Confidence scoring system</li>
-                                            </ul>
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-card">
+                                        <h4>Social Media Analysis</h4>
+                                        <p>Use NLP to analyze local sentiment and social acceptance</p>
                                     </div>
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-date">Q1 2026</div>
-                                        <div class="roadmap-content">
-                                            <h4>Advanced Data Integration</h4>
-                                            <ul>
-                                                <li>Satellite imagery processing</li>
-                                                <li>Social media sentiment analysis</li>
-                                                <li>IoT data streaming architecture</li>
-                                                <li>Climate change projection integration</li>
-                                            </ul>
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-card">
+                                        <h4>IoT Integration</h4>
+                                        <p>Real-time performance data from operational projects</p>
                                     </div>
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-date">Q2 2026</div>
-                                        <div class="roadmap-content">
-                                            <h4>Global Model Adaptation</h4>
-                                            <ul>
-                                                <li>Transfer learning for new markets</li>
-                                                <li>Region-specific feature importance</li>
-                                                <li>Automated model retraining pipeline</li>
-                                                <li>Continuous validation framework</li>
-                                            </ul>
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="feature-card">
+                                        <h4>Climate Change Projections</h4>
+                                        <p>Long-term resource availability forecasting</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xgboost-section mb-5">
+                            <h3>Technical Roadmap</h3>
+                            <div class="roadmap">
+                                <div class="roadmap-item">
+                                    <div class="roadmap-date">Q3 2025</div>
+                                    <div class="roadmap-content">
+                                        <h4>Enhanced XGBoost Model</h4>
+                                        <ul>
+                                            <li>Improved feature engineering pipeline</li>
+                                            <li>Automated hyperparameter optimization</li>
+                                            <li>Model explainability enhancements</li>
+                                            <li>Uncertainty quantification</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="roadmap-item">
+                                    <div class="roadmap-date">Q4 2025</div>
+                                    <div class="roadmap-content">
+                                        <h4>Multi-Model Ensemble</h4>
+                                        <ul>
+                                            <li>Neural network integration</li>
+                                            <li>Random Forest complementary model</li>
+                                            <li>Weighted ensemble prediction</li>
+                                            <li>Confidence scoring system</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="roadmap-item">
+                                    <div class="roadmap-date">Q1 2026</div>
+                                    <div class="roadmap-content">
+                                        <h4>Advanced Data Integration</h4>
+                                        <ul>
+                                            <li>Satellite imagery processing</li>
+                                            <li>Social media sentiment analysis</li>
+                                            <li>IoT data streaming architecture</li>
+                                            <li>Climate change projection integration</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="roadmap-item">
+                                    <div class="roadmap-date">Q2 2026</div>
+                                    <div class="roadmap-content">
+                                        <h4>Global Model Adaptation</h4>
+                                        <ul>
+                                            <li>Transfer learning for new markets</li>
+                                            <li>Region-specific feature importance</li>
+                                            <li>Automated model retraining pipeline</li>
+                                            <li>Continuous validation framework</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -1096,22 +1033,28 @@ async function predictProjectSuccess(projectData) {
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Try the Model Section -->
+    <section class="section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="cta-title">Experience AI-Driven Investment Intelligence</h2>
-                    <p class="cta-description">
-                        Ready to transform your renewable energy investment decisions with our XGBoost model? 
-                        Book a demo or try our mobile app today.
+                    <h2 class="section-title">Try the XGBoost Model</h2>
+                    <p class="section-subtitle">
+                        Experience the power of our AI model on your own renewable energy projects
                     </p>
-                    <div class="cta-actions">
-                        <a href="contact.html" class="btn btn-primary btn-lg me-3">
-                            <i class="bi bi-calendar-check me-2"></i>Book Demo
+                    
+                    <div class="cta-actions mt-5">
+                        <a href="mobile-app/" class="btn btn-primary btn-lg me-3">
+                            <i class="bi bi-phone me-2"></i>Try on Mobile App
                         </a>
-                        <a href="mobile-app/#xgboost" class="btn btn-outline-light btn-lg">
-                            <i class="bi bi-phone me-2"></i>Try Mobile App
+                        <a href="contact.html" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-calendar-check me-2"></i>Schedule Demo
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="technical-documentation/xgboost-model.md" target="_blank" class="btn btn-link">
+                            <i class="bi bi-file-earmark-text me-2"></i>Download Technical Documentation
                         </a>
                     </div>
                 </div>
@@ -1213,95 +1156,20 @@ async function predictProjectSuccess(projectData) {
 
     <style>
         /* XGBoost Documentation Styles */
-        .min-vh-50 {
-            min-height: 50vh;
-        }
-        
-        .doc-navigation {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .doc-nav-item {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition-normal);
-            overflow: hidden;
-        }
-        
-        .doc-nav-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .xgboost-doc-link {
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            height: 100%;
-        }
-        
-        .doc-nav-icon {
-            font-size: 2rem;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-        
-        .doc-nav-content h3 {
-            font-size: 1.25rem;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-        
-        .doc-nav-content p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin: 0;
-        }
-        
         .xgboost-doc-section {
-            display: none;
-        }
-        
-        .xgboost-doc-section.active {
-            display: block;
+            margin-bottom: 3rem;
         }
         
         .xgboost-section {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 1.5rem 0;
-        }
-        
-        .feature-list li {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            gap: 0.75rem;
-        }
-        
-        .feature-list li i {
-            margin-top: 0.25rem;
+            margin-bottom: 2.5rem;
         }
         
         .technical-details {
-            display: none;
             background: var(--light-gray);
-            padding: 1.5rem;
             border-radius: var(--radius-md);
-            margin-top: 1.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            display: none;
         }
         
         .technical-details.show {
@@ -1309,10 +1177,11 @@ async function predictProjectSuccess(projectData) {
             animation: fadeIn 0.3s ease;
         }
         
-        .code-preview {
+        .code-block {
             background: #1e1e1e;
             border-radius: var(--radius-md);
             overflow: hidden;
+            margin-bottom: 1rem;
         }
         
         .code-header {
@@ -1321,44 +1190,20 @@ async function predictProjectSuccess(projectData) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-        
-        .code-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .code-dots span {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #666;
-        }
-        
-        .code-dots span:nth-child(1) { background: #ff5f56; }
-        .code-dots span:nth-child(2) { background: #ffbd2e; }
-        .code-dots span:nth-child(3) { background: #27ca3f; }
-        
-        .code-title {
-            color: #fff;
-            font-size: 0.9rem;
-        }
-        
-        .code-actions {
-            display: flex;
-            gap: 0.5rem;
+            color: #e0e0e0;
+            font-family: monospace;
         }
         
         .code-action {
             background: none;
             border: none;
-            color: #ccc;
+            color: #e0e0e0;
             cursor: pointer;
             transition: var(--transition-fast);
         }
         
         .code-action:hover {
-            color: #fff;
+            color: var(--accent-teal);
         }
         
         .code-content {
@@ -1368,13 +1213,13 @@ async function predictProjectSuccess(projectData) {
         
         .code-content pre {
             margin: 0;
-            color: #f8f8f2;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            color: #e0e0e0;
+            font-family: monospace;
             font-size: 0.9rem;
             line-height: 1.5;
         }
         
-        .data-source-card {
+        .feature-card {
             background: var(--white);
             border-radius: var(--radius-md);
             padding: 1.5rem;
@@ -1384,365 +1229,122 @@ async function predictProjectSuccess(projectData) {
             border: 1px solid rgba(0, 77, 64, 0.1);
         }
         
-        .data-source-card:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-md);
         }
         
-        .data-source-icon {
-            font-size: 2rem;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-        
-        .data-source-card h4 {
+        .feature-card h4 {
             color: var(--primary-green);
             margin-bottom: 0.75rem;
             font-size: 1.1rem;
         }
         
-        .data-source-card p {
+        .feature-card p {
             color: var(--text-light);
-            margin: 0;
+            margin-bottom: 0.75rem;
             font-size: 0.9rem;
         }
         
-        .feature-importance-container {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .feature-importance-viz {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
         .feature-bar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            margin-bottom: 0.75rem;
         }
         
         .feature-name {
-            width: 180px;
+            font-size: 0.9rem;
             font-weight: var(--font-weight-medium);
             color: var(--text-dark);
+            margin-bottom: 0.25rem;
         }
         
         .feature-bar-container {
-            flex: 1;
-            height: 24px;
+            height: 12px;
             background: var(--light-gray);
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             position: relative;
             overflow: hidden;
         }
         
         .feature-bar-fill {
             height: 100%;
-            background: var(--gradient-primary);
-            border-radius: 12px;
+            background: var(--accent-teal);
+            border-radius: var(--radius-sm);
         }
         
         .feature-value {
             position: absolute;
-            right: 10px;
+            right: 0.5rem;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.8rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--white);
-        }
-        
-        .metric-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            height: 100%;
-            transition: var(--transition-normal);
-            border: 1px solid rgba(0, 77, 64, 0.1);
-        }
-        
-        .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .metric-value {
-            font-size: 2rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-        
-        .metric-label {
-            font-size: 1rem;
+            font-size: 0.7rem;
             font-weight: var(--font-weight-semibold);
             color: var(--text-dark);
-            margin-bottom: 0.75rem;
-        }
-        
-        .metric-description {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-        
-        .confusion-table {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-        
-        .confusion-table th,
-        .confusion-table td {
-            text-align: center;
-            padding: 1rem;
-        }
-        
-        .vertical-header {
-            writing-mode: vertical-lr;
-            transform: rotate(180deg);
-            text-align: center;
-        }
-        
-        .true-positive {
-            background: rgba(40, 167, 69, 0.2);
-            color: var(--success);
-            font-weight: var(--font-weight-bold);
-        }
-        
-        .true-negative {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-            font-weight: var(--font-weight-bold);
-        }
-        
-        .false-positive {
-            background: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-        }
-        
-        .false-negative {
-            background: rgba(220, 53, 69, 0.2);
-            color: var(--danger);
         }
         
         .case-study-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            height: 100%;
-            transition: var(--transition-normal);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0, 77, 64, 0.1);
         }
         
-        .case-study-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .case-study-header {
-            background: var(--light-green);
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .case-study-header h3 {
+        .case-study-card h4 {
             color: var(--primary-green);
-            margin: 0;
-            font-size: 1.25rem;
-        }
-        
-        .case-study-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-            font-weight: var(--font-weight-semibold);
-        }
-        
-        .case-study-badge.success {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-        }
-        
-        .case-study-badge.warning {
-            background: rgba(255, 193, 7, 0.1);
-            color: var(--warning);
-        }
-        
-        .case-study-badge.danger {
-            background: rgba(220, 53, 69, 0.1);
-            color: var(--danger);
-        }
-        
-        .case-study-body {
-            padding: 1.5rem;
-        }
-        
-        .case-study-params {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .param-item {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .param-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.25rem;
-        }
-        
-        .param-value {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            font-weight: var(--font-weight-medium);
-        }
-        
-        .case-study-results {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            background: var(--light-green);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-        }
-        
-        .result-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .result-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.25rem;
-        }
-        
-        .result-value {
+            margin-bottom: 1rem;
             font-size: 1.1rem;
-            color: var(--primary-green);
-            font-weight: var(--font-weight-bold);
         }
         
-        .case-study-insights h4 {
-            color: var(--primary-green);
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        .case-study-insights ul {
+        .case-study-card ul {
             padding-left: 1.5rem;
             margin-bottom: 0;
         }
         
-        .case-study-insights li {
+        .case-study-card li {
             margin-bottom: 0.5rem;
             color: var(--text-dark);
         }
         
-        .mobile-feature {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        
-        .mobile-feature i {
-            font-size: 1.25rem;
-        }
-        
-        .enhancement-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            height: 100%;
-            transition: var(--transition-normal);
-            border: 1px solid rgba(0, 77, 64, 0.1);
-        }
-        
-        .enhancement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .enhancement-icon {
-            font-size: 2rem;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-        
-        .enhancement-card h4 {
-            color: var(--primary-green);
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-        
-        .enhancement-card p {
-            color: var(--text-light);
-            margin: 0;
-            font-size: 0.9rem;
-        }
-        
-        .roadmap-timeline {
+        .roadmap {
             position: relative;
-            padding: 2rem 0;
+            padding: 1rem 0;
         }
         
-        .roadmap-timeline::before {
+        .roadmap::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
             bottom: 0;
+            left: 120px;
             width: 2px;
             background: var(--accent-teal);
         }
         
         .roadmap-item {
             position: relative;
-            padding-left: 2rem;
+            padding-left: 150px;
             margin-bottom: 2rem;
         }
         
-        .roadmap-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .roadmap-item::before {
-            content: '';
-            position: absolute;
-            left: -8px;
-            top: 0;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--accent-teal);
-        }
-        
         .roadmap-date {
-            font-weight: var(--font-weight-bold);
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .roadmap-content {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 77, 64, 0.1);
         }
         
         .roadmap-content h4 {
@@ -1752,12 +1354,12 @@ async function predictProjectSuccess(projectData) {
         }
         
         .roadmap-content ul {
-            padding-left: 1.25rem;
+            padding-left: 1.5rem;
             margin-bottom: 0;
         }
         
         .roadmap-content li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             color: var(--text-dark);
         }
         
@@ -1776,6 +1378,7 @@ async function predictProjectSuccess(projectData) {
             visibility: hidden;
             transition: all 0.3s ease;
             padding: 1rem;
+            backdrop-filter: blur(3px);
         }
         
         .code-example-modal.show {
@@ -1786,13 +1389,11 @@ async function predictProjectSuccess(projectData) {
         .code-example-content {
             background: var(--white);
             border-radius: var(--radius-lg);
-            width: 100%;
             max-width: 800px;
+            width: 100%;
             max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: scale(0.9);
+            overflow-y: auto;
+            transform: scale(0.8);
             transition: transform 0.3s ease;
         }
         
@@ -1801,17 +1402,21 @@ async function predictProjectSuccess(projectData) {
         }
         
         .code-example-header {
-            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 1rem 1.5rem;
             border-bottom: 1px solid rgba(0, 77, 64, 0.1);
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 1;
         }
         
         .code-example-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
             color: var(--primary-green);
+            margin: 0;
+            font-size: 1.1rem;
         }
         
         .code-example-close {
@@ -1820,30 +1425,31 @@ async function predictProjectSuccess(projectData) {
             font-size: 1.5rem;
             color: var(--gray);
             cursor: pointer;
+            padding: 0.25rem;
+            border-radius: var(--radius-sm);
             transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .code-example-close:hover {
+            background: var(--light-gray);
             color: var(--primary-green);
         }
         
         .code-example-body {
             padding: 1.5rem;
-            overflow-y: auto;
-            flex: 1;
         }
         
         .code-example-body pre {
             margin: 0;
             background: #1e1e1e;
+            color: #e0e0e0;
             padding: 1rem;
             border-radius: var(--radius-md);
             overflow-x: auto;
-        }
-        
-        .code-example-body code {
-            color: #f8f8f2;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-family: monospace;
             font-size: 0.9rem;
             line-height: 1.5;
         }
@@ -1851,29 +1457,21 @@ async function predictProjectSuccess(projectData) {
         .code-example-footer {
             padding: 1rem 1.5rem;
             border-top: 1px solid rgba(0, 77, 64, 0.1);
-            display: flex;
-            justify-content: flex-end;
+            text-align: right;
         }
         
         @media (max-width: 768px) {
-            .doc-navigation {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .xgboost-section {
-                padding: 1.5rem;
-            }
-            
-            .case-study-params {
-                grid-template-columns: 1fr;
-            }
-            
-            .case-study-results {
-                grid-template-columns: 1fr;
+            .roadmap::before {
+                left: 80px;
             }
             
             .roadmap-item {
-                padding-left: 1.5rem;
+                padding-left: 100px;
+            }
+            
+            .roadmap-date {
+                width: 80px;
+                font-size: 0.8rem;
             }
         }
         
