@@ -68,6 +68,54 @@ class FinergyCloudApp {
     setupNavigation() {
         // Side navigation links
         const navLinks = document.querySelectorAll('.nav-link[data-page]');
+        
+        // Add analytics link to side navigation if not already present
+        const navMenu = document.querySelector('.nav-menu');
+        if (navMenu && !document.querySelector('.nav-link[data-page="analytics"]')) {
+            const analyticsNavItem = document.createElement('li');
+            analyticsNavItem.className = 'nav-item';
+            analyticsNavItem.innerHTML = `
+                <a href="#analytics" class="nav-link" data-page="analytics">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Analytics</span>
+                </a>
+            `;
+            
+            // Insert after dashboard
+            const dashboardNavItem = document.querySelector('.nav-link[data-page="dashboard"]').parentNode;
+            if (dashboardNavItem && dashboardNavItem.nextSibling) {
+                navMenu.insertBefore(analyticsNavItem, dashboardNavItem.nextSibling);
+            } else {
+                navMenu.appendChild(analyticsNavItem);
+            }
+        }
+        
+        // Add analytics to bottom navigation if not already present
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (bottomNav && !document.querySelector('.nav-btn[data-page="analytics"]')) {
+            const analyticsNavBtn = document.createElement('button');
+            analyticsNavBtn.className = 'nav-btn';
+            analyticsNavBtn.setAttribute('data-page', 'analytics');
+            analyticsNavBtn.innerHTML = `
+                <i class="bi bi-graph-up"></i>
+                <span>Analytics</span>
+            `;
+            
+            // Insert after dashboard
+            const dashboardNavBtn = document.querySelector('.nav-btn[data-page="dashboard"]');
+            if (dashboardNavBtn && dashboardNavBtn.nextSibling) {
+                bottomNav.insertBefore(analyticsNavBtn, dashboardNavBtn.nextSibling);
+            } else {
+                bottomNav.appendChild(analyticsNavBtn);
+            }
+            
+            // Add event listener
+            analyticsNavBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.navigateToPage('analytics');
+            });
+        }
+        
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -241,6 +289,7 @@ class FinergyCloudApp {
     initializePages() {
         // Initialize all pages that need setup
         this.initializePage('dashboard');
+        this.initializePage('analytics');
         this.initializePage('calculator');
         this.initializePage('projects');
         this.initializePage('esg');
