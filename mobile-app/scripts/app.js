@@ -424,8 +424,28 @@ class FinergyCloudApp {
     }
 
     setupESGCalculator() {
-        // Setup ESG calculator functionality
-        console.log('Setting up ESG calculator...');
+        console.log('Initializing ESG dashboard...');
+        
+        // Initialize ESG dashboard if available
+        if (window.esgDashboard) {
+            window.esgDashboard.loadESGData();
+            window.esgDashboard.initializeCharts();
+        } else {
+            // Load ESG dashboard script if not already loaded
+            if (!document.querySelector('script[src="scripts/esg-dashboard.js"]')) {
+                const script = document.createElement('script');
+                script.src = 'scripts/esg-dashboard.js';
+                script.async = true;
+                document.head.appendChild(script);
+                
+                script.onload = () => {
+                    if (window.esgDashboard) {
+                        window.esgDashboard.loadESGData();
+                        window.esgDashboard.initializeCharts();
+                    }
+                };
+            }
+        }
     }
 
     loadESGBenchmarks() {
