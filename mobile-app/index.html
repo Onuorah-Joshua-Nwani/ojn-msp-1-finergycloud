@@ -2116,6 +2116,134 @@
                 </div>
             </div>
             
+            <!-- Analytics Page -->
+            <div id="analytics-page" class="page">
+                <div class="page-header">
+                    <h1>Analytics Dashboard</h1>
+                    <p>Comprehensive investment intelligence</p>
+                </div>
+                
+                <div class="analytics-container">
+                    <!-- Portfolio Analysis Section -->
+                    <div class="analytics-section">
+                        <h2 class="analytics-section-title">Portfolio Analysis</h2>
+                        
+                        <div class="analytics-metrics">
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="total-capacity">16.7 MW</div>
+                                <div class="analytics-metric-label">Total Capacity</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="weighted-irr">15.2%</div>
+                                <div class="analytics-metric-label">Weighted IRR</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="project-count">5</div>
+                                <div class="analytics-metric-label">Projects</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="low-risk-percentage">60%</div>
+                                <div class="analytics-metric-label">Low Risk Projects</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="irr-distribution-chart-container">
+                                <canvas id="irr-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="sensitivity-analysis-chart-container">
+                                <canvas id="sensitivity-analysis-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Risk Assessment Section -->
+                    <div class="analytics-section">
+                        <h2 class="analytics-section-title">Risk Assessment</h2>
+                        
+                        <div class="analytics-metrics">
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="avg-risk-score">7.8</div>
+                                <div class="analytics-metric-label">Avg Risk Score</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="high-impact-factors">3</div>
+                                <div class="analytics-metric-label">High Impact Factors</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="risk-distribution-chart-container">
+                                <canvas id="risk-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="risk-matrix-chart-container">
+                                <!-- Risk matrix will be rendered here -->
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="risk-trend-chart-container">
+                                <canvas id="risk-trend-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ESG Analysis Section -->
+                    <div class="analytics-section">
+                        <h2 class="analytics-section-title">ESG Analysis</h2>
+                        
+                        <div class="analytics-metrics">
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="env-score">8.7</div>
+                                <div class="analytics-metric-label">Environmental</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="soc-score">7.9</div>
+                                <div class="analytics-metric-label">Social</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="gov-score">8.4</div>
+                                <div class="analytics-metric-label">Governance</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="overall-esg">8.4</div>
+                                <div class="analytics-metric-label">Overall ESG</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="esg-trend-chart-container">
+                                <canvas id="esg-trend-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="esg-breakdown-chart-container">
+                                <canvas id="esg-breakdown-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="peer-comparison-chart-container">
+                                <canvas id="peer-comparison-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <div class="esg-factor-impact-chart-container">
+                                <canvas id="esg-factor-impact-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- XGBoost Model Page -->
             <div id="xgboost-page" class="page">
                 <div class="page-header">
