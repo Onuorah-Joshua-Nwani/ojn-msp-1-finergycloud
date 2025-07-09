@@ -92,12 +92,6 @@
                         <span>ESG Scoring</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#analytics" class="nav-link" data-page="analytics">
-                        <i class="bi bi-graph-up"></i>
-                        <span>Analytics</span>
-                    </a>
-                </li>
             </ul>
             <div class="nav-footer">
                 <button class="upgrade-btn">
