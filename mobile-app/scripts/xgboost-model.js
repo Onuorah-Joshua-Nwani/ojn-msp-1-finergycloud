@@ -31,8 +31,8 @@ class XGBoostModelManager {
         };
         this.rocCurveChart = null;
         this.rocCurveData = {
-            fpr: [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-            tpr: [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0]
+            fpr: [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // False Positive Rate
+            tpr: [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0] // True Positive Rate
         };
         this.init();
     }
@@ -295,7 +295,7 @@ class XGBoostModelManager {
                                 }
                             }
                             ,
-                            title: {
+                            title: { 
                                 display: true,
                                 text: 'ROC Curve - Model Performance',
                                 color: '#004d40',
@@ -307,7 +307,7 @@ class XGBoostModelManager {
                         },
                         scales: {
                             x: {
-                                title: {
+                                title: { 
                                     display: true,
                                     text: 'False Positive Rate',
                                     color: '#004d40',
@@ -324,7 +324,7 @@ class XGBoostModelManager {
                                 }
                             },
                             y: {
-                                title: {
+                                title: { 
                                     display: true,
                                     text: 'True Positive Rate',
                                     color: '#004d40',
@@ -695,7 +695,7 @@ const xgboostModelStyles = `
 /* XGBoost Model Page Styles */
 .model-status-badge {
     display: inline-flex;
-    align-items: center;
+    align-items: center; 
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: var(--radius-md);
@@ -705,7 +705,7 @@ const xgboostModelStyles = `
 }
 
 .model-status-badge.success {
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.15);
     color: var(--success);
 }
 
@@ -724,7 +724,7 @@ const xgboostModelStyles = `
 }
 
 .model-stat {
-    text-align: center;
+    text-align: center; 
     padding: var(--spacing-md);
     background: var(--light-green);
     border-radius: var(--radius-md);
@@ -732,7 +732,7 @@ const xgboostModelStyles = `
 }
 
 .model-stat-value {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
     color: var(--primary-green);
     margin-bottom: var(--spacing-xs);
@@ -740,7 +740,7 @@ const xgboostModelStyles = `
 
 .model-stat-label {
     font-size: 0.8rem;
-    color: var(--text-dark);
+    color: var(--text-medium);
 }
 
 .feature-importance {
@@ -756,7 +756,7 @@ const xgboostModelStyles = `
 .feature-name {
     font-size: 0.9rem;
     font-weight: var(--font-weight-medium);
-    color: var(--primary-green);
+    color: var(--text-dark);
     margin-bottom: 4px;
 }
 
@@ -799,13 +799,13 @@ const xgboostModelStyles = `
 /* Enhanced ROC Curve Chart */
 .chart-annotation {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     z-index: 5;
 }
 
 .auc-badge {
-    background: rgba(0, 77, 64, 0.9);
+    background: rgba(0, 77, 64, 0.95);
     color: white;
     padding: 6px 12px;
     border-radius: 20px;
@@ -817,7 +817,7 @@ const xgboostModelStyles = `
 }
 
 .auc-label {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .auc-value {
@@ -834,8 +834,8 @@ const xgboostModelStyles = `
 }
 
 .prediction-metrics {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
 }

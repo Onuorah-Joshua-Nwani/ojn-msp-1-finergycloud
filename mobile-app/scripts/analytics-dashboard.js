@@ -3,6 +3,18 @@
 class AnalyticsDashboard {
     constructor() {
         this.charts = {};
+        this.chartColors = {
+            primary: '#00bfa5',
+            secondary: '#004d40',
+            success: '#10B981',
+            warning: '#F59E0B',
+            danger: '#EF4444',
+            info: '#3B82F6',
+            purple: '#8B5CF6',
+            gray: '#9e9e9e',
+            lightGray: '#e5e7eb',
+            white: '#ffffff'
+        };
         this.portfolioData = {
             distribution: {
                 labels: ['Solar', 'Wind', 'Hydro', 'Biomass', 'Geothermal'],
@@ -15,6 +27,14 @@ class AnalyticsDashboard {
                 target: [12.0, 12.0, 12.5, 12.5, 13.0, 13.0, 13.5, 13.5, 14.0, 14.0, 14.5, 14.5],
                 benchmark: [11.2, 11.5, 11.8, 12.0, 12.3, 12.5, 12.8, 13.0, 13.2, 13.5, 13.8, 14.0]
             },
+            irrDistribution: {
+                labels: ['<10%', '10-12%', '12-14%', '14-16%', '16-18%', '18-20%', '>20%'],
+                data: [500, 1500, 2500, 3000, 1800, 500, 200]
+            },
+            sensitivityAnalysis: {
+                factors: ['Energy Price', 'Construction Cost', 'O&M Expenses', 'Discount Rate', 'Project Timeline'],
+                impact: [3.5, -2.8, -1.5, 2.0, -1.0]
+            },
             sensitivity: [
                 { factor: 'Energy Price Growth', impact: 3.5 },
                 { factor: 'Construction Cost', impact: -2.8 },
@@ -22,10 +42,6 @@ class AnalyticsDashboard {
                 { factor: 'Discount Rate', impact: 2.0 },
                 { factor: 'Project Completion Time', impact: -1.0 }
             ],
-            irrDistribution: {
-                labels: ['<10%', '10-12%', '12-14%', '14-16%', '16-18%', '18-20%', '>20%'],
-                data: [500, 1500, 2500, 3000, 1800, 500, 200]
-            },
             projects: [
                 { name: 'Lagos Solar Farm', type: 'Solar', capacity: 5.0, irr: 16.8, risk: 'Low' },
                 { name: 'Abuja Wind Project', type: 'Wind', capacity: 2.5, irr: 14.5, risk: 'Medium' },
@@ -142,6 +158,38 @@ class AnalyticsDashboard {
         this.setupEventListeners();
     }
 
+    initializeCharts() {
+        // Create IRR Distribution Chart
+        this.createIRRDistributionChart();
+        
+        // Create Sensitivity Analysis Chart
+        this.createSensitivityChart();
+        
+        // Create Risk Distribution Chart
+        this.createRiskDistributionChart();
+        
+        // Create Risk Matrix Chart
+        this.createRiskMatrixChart();
+        
+        // Create Risk Trend Chart
+        this.createRiskTrendChart();
+        
+        // Create ESG Trend Chart
+        this.createESGTrendChart();
+        
+        // Create ESG Breakdown Chart
+        this.createESGBreakdownChart();
+        
+        // Create Peer Comparison Chart
+        this.createPeerComparisonChart();
+        
+        // Create ESG Factor Impact Chart
+        this.createESGFactorImpactChart();
+        
+        // Create ROC Curve Chart
+        this.createROCCurveChart();
+    }
+
     setupEventListeners() {
         document.addEventListener('pageActivated', (e) => {
             if (e.detail.pageId === 'analytics') {
@@ -230,6 +278,200 @@ class AnalyticsDashboard {
         if (accuracyEl) accuracyEl.textContent = `${(performance.accuracy * 100).toFixed(0)}%`;
         if (aucEl) aucEl.textContent = performance.auc.toFixed(2);
         if (rmseEl) rmseEl.textContent = performance.rmse.toFixed(3);
+    }
+
+    createIRRDistributionChart() {
+        const ctx = document.getElementById('irr-distribution-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.irrDistributionChart) {
+            this.charts.irrDistributionChart.destroy();
+        }
+        
+        // Create chart
+        this.charts.irrDistributionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: this.portfolioData.irrDistribution.labels,
+                datasets: [{
+                    label: 'Number of Simulations',
+                    data: this.portfolioData.irrDistribution.data,
+                    backgroundColor: this.chartColors.primary,
+                    borderColor: this.chartColors.secondary,
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${value} simulations (${percentage}%)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monte Carlo Simulation Results (10,000 iterations)',
+                        color: this.chartColors.secondary,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Frequency',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'IRR Range',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add probability indicator
+        const chartArea = document.querySelector('.portfolio-distribution-chart-container');
+        if (chartArea) {
+            const indicator = document.createElement('div');
+            indicator.className = 'chart-annotation';
+            indicator.innerHTML = `
+                <div class="probability-badge">
+                    <span class="probability-label">Probability > 15% IRR:</span>
+                    <span class="probability-value">55%</span>
+                </div>
+            `;
+            chartArea.appendChild(indicator);
+        }
+    }
+
+    createSensitivityChart() {
+        const ctx = document.getElementById('sensitivity-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.sensitivityChart) {
+            this.charts.sensitivityChart.destroy();
+        }
+        
+        // Prepare data
+        const data = this.portfolioData.sensitivityAnalysis;
+        
+        // Create chart
+        this.charts.sensitivityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.factors,
+                datasets: [{
+                    label: 'Impact on IRR (%)',
+                    data: data.impact,
+                    backgroundColor: data.impact.map(val => val >= 0 ? this.chartColors.success : this.chartColors.danger),
+                    borderColor: data.impact.map(val => val >= 0 ? '#059669' : '#DC2626'),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                return `Impact: ${value > 0 ? '+' : ''}${value.toFixed(1)}% IRR`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Impact on IRR (%)',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Factors',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    }
+                }
+            }
+        });
     }
 
     initializeCharts() {
@@ -684,27 +926,54 @@ class AnalyticsDashboard {
         });
     }
 
-    createRiskDistributionChart() {
-        const ctx = document.getElementById('risk-distribution-chart');
+    createESGTrendChart() {
+        const ctx = document.getElementById('esg-trend-chart');
         if (!ctx) return;
         
         // Clear existing chart if any
-        if (this.charts.riskDistributionChart) {
-            this.charts.riskDistributionChart.destroy();
+        if (this.charts.esgTrendChart) {
+            this.charts.esgTrendChart.destroy();
         }
         
+        // Sample ESG trend data
+        const labels = ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025'];
+        const projectData = [7.8, 8.1, 8.3, 8.4, 8.4];
+        const industryData = [7.2, 7.3, 7.4, 7.5, 7.6];
+        
         // Create chart
-        this.charts.riskDistributionChart = new Chart(ctx, {
-            type: 'pie',
+        this.charts.esgTrendChart = new Chart(ctx, {
+            type: 'line',
             data: {
-                labels: this.riskData.distribution.labels,
-                datasets: [{
-                    data: this.riskData.distribution.data,
-                    backgroundColor: this.riskData.distribution.colors,
-                    borderColor: '#ffffff',
-                    borderWidth: 2,
-                    hoverOffset: 15
-                }]
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Your Project',
+                        data: projectData,
+                        borderColor: this.chartColors.primary,
+                        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: this.chartColors.primary,
+                        pointBorderColor: '#fff',
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Industry Average',
+                        data: industryData,
+                        borderColor: this.chartColors.gray,
+                        backgroundColor: 'rgba(158, 158, 158, 0.1)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: this.chartColors.gray,
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
             },
             options: {
                 responsive: true,
@@ -728,6 +997,600 @@ class AnalyticsDashboard {
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                return `${label}: ${value.toFixed(1)}/10`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 5,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'ESG Score (0-10)',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add annotation for target score
+        const chartArea = document.querySelector('.esg-trend-chart-container');
+        if (chartArea) {
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="target-badge">
+                    <span class="target-label">Target Score:</span>
+                    <span class="target-value">8.5</span>
+                </div>
+            `;
+            chartArea.appendChild(annotation);
+        }
+    }
+
+    createESGBreakdownChart() {
+        const ctx = document.getElementById('esg-breakdown-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.esgBreakdownChart) {
+            this.charts.esgBreakdownChart.destroy();
+        }
+        
+        // Prepare data for radar chart
+        const labels = [
+            'Carbon Emissions', 'Resource Usage', 'Waste Management', 'Biodiversity',
+            'Community Relations', 'Labor Practices', 'Human Rights', 'Health & Safety',
+            'Board Structure', 'Business Ethics', 'Transparency', 'Risk Management'
+        ];
+        
+        const projectData = [9.2, 8.5, 8.9, 8.3, 8.7, 7.5, 8.2, 7.4, 8.6, 8.2, 8.5, 8.3];
+        const industryData = projectData.map(val => Math.max(5, val - 0.5 - Math.random() * 0.5));
+        
+        // Create chart
+        this.charts.esgBreakdownChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Your Project',
+                        data: projectData,
+                        backgroundColor: 'rgba(0, 191, 165, 0.2)',
+                        borderColor: this.chartColors.primary,
+                        borderWidth: 2,
+                        pointBackgroundColor: this.chartColors.primary,
+                        pointBorderColor: '#ffffff',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: this.chartColors.primary,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    },
+                    {
+                        label: 'Industry Benchmark',
+                        data: industryData,
+                        backgroundColor: 'rgba(158, 158, 158, 0.2)',
+                        borderColor: this.chartColors.gray,
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: this.chartColors.gray,
+                        pointBorderColor: '#ffffff',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: this.chartColors.gray,
+                        pointRadius: 3,
+                        pointHoverRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        min: 5,
+                        max: 10,
+                        ticks: {
+                            stepSize: 1,
+                            backdropColor: 'transparent',
+                            color: this.chartColors.secondary
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        angleLines: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        pointLabels: {
+                            color: this.chartColors.secondary,
+                            font: {
+                                size: 10
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.raw;
+                                return `${label}: ${value.toFixed(1)}/10`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add legend for ESG categories
+        const chartArea = document.querySelector('.esg-breakdown-chart-container');
+        if (chartArea) {
+            const legend = document.createElement('div');
+            legend.className = 'esg-category-legend';
+            legend.innerHTML = `
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #10B981;"></span>
+                    <span class="category-label">Environmental (1-4)</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #3B82F6;"></span>
+                    <span class="category-label">Social (5-8)</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #8B5CF6;"></span>
+                    <span class="category-label">Governance (9-12)</span>
+                </div>
+            `;
+            chartArea.appendChild(legend);
+        }
+    }
+
+    createPeerComparisonChart() {
+        const ctx = document.getElementById('peer-comparison-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.peerComparisonChart) {
+            this.charts.peerComparisonChart.destroy();
+        }
+        
+        // Prepare data
+        const peers = [
+            { name: 'Your Project', score: 8.4 },
+            { name: 'Peer A', score: 7.8 },
+            { name: 'Peer B', score: 8.1 },
+            { name: 'Peer C', score: 7.2 },
+            { name: 'Peer D', score: 6.9 }
+        ];
+        
+        // Sort peers by score
+        const sortedPeers = [...peers].sort((a, b) => b.score - a.score);
+        
+        // Create chart
+        this.charts.peerComparisonChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sortedPeers.map(peer => peer.name),
+                datasets: [{
+                    label: 'ESG Score',
+                    data: sortedPeers.map(peer => peer.score),
+                    backgroundColor: sortedPeers.map(peer => 
+                        peer.name === 'Your Project' ? this.chartColors.primary : this.chartColors.gray
+                    ),
+                    borderColor: sortedPeers.map(peer => 
+                        peer.name === 'Your Project' ? this.chartColors.secondary : '#757575'
+                    ),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                return `ESG Score: ${value.toFixed(1)}/10`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: 5,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'ESG Score (0-10)',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: (value) => {
+                                    return sortedPeers[value].name === 'Your Project' ? 'bold' : 'normal';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add industry average line
+        const chartArea = document.querySelector('.peer-comparison-chart-container');
+        if (chartArea) {
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="industry-badge">
+                    <span class="industry-label">Industry Average:</span>
+                    <span class="industry-value">7.6</span>
+                </div>
+            `;
+            chartArea.appendChild(annotation);
+        }
+    }
+
+    createESGFactorImpactChart() {
+        const ctx = document.getElementById('esg-factor-impact-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.esgFactorImpactChart) {
+            this.charts.esgFactorImpactChart.destroy();
+        }
+        
+        // Prepare data
+        const factors = [
+            { factor: 'Carbon Reduction', impact: 3.2, industry: 2.1 },
+            { factor: 'Community Programs', impact: 2.8, industry: 1.8 },
+            { factor: 'Governance Structure', impact: 2.5, industry: 2.2 },
+            { factor: 'Transparency', impact: 2.3, industry: 1.9 },
+            { factor: 'Resource Efficiency', impact: 2.1, industry: 1.7 }
+        ];
+        
+        // Sort factors by impact
+        const sortedFactors = [...factors].sort((a, b) => b.impact - a.impact);
+        
+        // Create chart
+        this.charts.esgFactorImpactChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sortedFactors.map(item => item.factor),
+                datasets: [
+                    {
+                        label: 'Your Project',
+                        data: sortedFactors.map(item => item.impact),
+                        backgroundColor: function(context) {
+                            const value = context.raw;
+                            const alpha = 0.7 + (value / 5) * 0.3; // Higher values are more opaque
+                            return `rgba(0, 191, 165, ${alpha})`;
+                        },
+                        borderColor: this.chartColors.secondary,
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Industry Average',
+                        data: sortedFactors.map(item => item.industry),
+                        backgroundColor: 'rgba(158, 158, 158, 0.5)',
+                        borderColor: '#757575',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.raw;
+                                return `${label}: ${value.toFixed(1)} impact points`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Impact on ESG Score',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary,
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    createROCCurveChart() {
+        const ctx = document.getElementById('roc-curve-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.rocCurveChart) {
+            this.charts.rocCurveChart.destroy();
+        }
+        
+        // ROC curve data points
+        const fpr = [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+        const tpr = [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0];
+        
+        // Create chart
+        this.charts.rocCurveChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: fpr.map(val => (val * 100).toFixed(0) + '%'),
+                datasets: [
+                    {
+                        label: 'XGBoost Model (AUC = 0.92)',
+                        data: tpr,
+                        borderColor: this.chartColors.primary,
+                        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: this.chartColors.primary,
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Random Classifier (AUC = 0.5)',
+                        data: fpr,
+                        borderColor: this.chartColors.gray,
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                const datasetLabel = context.dataset.label || '';
+                                const index = context.dataIndex;
+                                return `${datasetLabel}: (FPR: ${fpr[index].toFixed(2)}, TPR: ${tpr[index].toFixed(2)})`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'ROC Curve - Model Performance',
+                        color: this.chartColors.secondary,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'False Positive Rate',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'True Positive Rate',
+                            color: this.chartColors.secondary,
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: this.chartColors.secondary
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add AUC annotation
+        const chartArea = document.querySelector('.model-performance-chart-container');
+        if (chartArea) {
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="auc-badge">
+                    <span class="auc-label">AUC Score:</span>
+                    <span class="auc-value">0.92</span>
+                </div>
+            `;
+            chartArea.appendChild(annotation);
+        }
+    }
+
+    createRiskDistributionChart() {
+        const ctx = document.getElementById('risk-distribution-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.riskDistributionChart) {
+            this.charts.riskDistributionChart.destroy();
+        }
+        
+        // Create chart
+        this.charts.riskDistributionChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: this.riskData.distribution.labels,
+                datasets: [{
+                    data: this.riskData.distribution.data,
+                    backgroundColor: [
+                        this.chartColors.success,
+                        this.chartColors.warning,
+                        this.chartColors.danger
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.9)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
                                 const label = context.label || '';
                                 const value = context.raw;
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
@@ -740,6 +1603,12 @@ class AnalyticsDashboard {
                 animation: {
                     animateScale: true,
                     animateRotate: true
+                },
+                layout: {
+                    padding: {
+                        top: 20,
+                        bottom: 20
+                    }
                 }
             }
         });
@@ -776,7 +1645,7 @@ class AnalyticsDashboard {
             // Create heatmap title
             const title = document.createElement('div');
             title.className = 'risk-matrix-title';
-            title.textContent = 'Project Risk Matrix';
+            title.textContent = 'Risk Matrix by Project & Category';
             heatmapContainer.appendChild(title);
             
             // Create heatmap grid
@@ -822,10 +1691,10 @@ class AnalyticsDashboard {
                     let riskClass = '';
                     let riskLabel = '';
                     
-                    if (riskValue === 1) {
+                    if (riskValue <= 1) {
                         riskClass = 'low-risk';
                         riskLabel = 'Low';
-                    } else if (riskValue === 2) {
+                    } else if (riskValue <= 2) {
                         riskClass = 'medium-risk';
                         riskLabel = 'Med';
                     } else {
@@ -860,15 +1729,15 @@ class AnalyticsDashboard {
             
             const lowRisk = document.createElement('div');
             lowRisk.className = 'legend-item';
-            lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk</span>';
+            lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk (1)</span>';
             
             const mediumRisk = document.createElement('div');
             mediumRisk.className = 'legend-item';
-            mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk</span>';
+            mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk (2)</span>';
             
             const highRisk = document.createElement('div');
             highRisk.className = 'legend-item';
-            highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk</span>';
+            highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk (3+)</span>';
             
             legend.appendChild(lowRisk);
             legend.appendChild(mediumRisk);
@@ -896,10 +1765,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Overall Risk',
                         data: this.riskData.trends.overall,
-                        borderColor: '#00bfa5',
+                        borderColor: this.chartColors.primary,
                         backgroundColor: 'rgba(0, 191, 165, 0.1)',
                         borderWidth: 3,
-                        pointBackgroundColor: '#00bfa5',
+                        pointBackgroundColor: this.chartColors.primary,
                         pointBorderColor: '#fff',
                         pointRadius: 4,
                         pointHoverRadius: 6,
@@ -909,10 +1778,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Grid Risk',
                         data: this.riskData.trends.grid,
-                        borderColor: '#F59E0B',
+                        borderColor: this.chartColors.warning,
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#F59E0B',
+                        pointBackgroundColor: this.chartColors.warning,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -922,10 +1791,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Regulatory Risk',
                         data: this.riskData.trends.regulatory,
-                        borderColor: '#3B82F6',
+                        borderColor: this.chartColors.info,
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#3B82F6',
+                        pointBackgroundColor: this.chartColors.info,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -935,10 +1804,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Currency Risk',
                         data: this.riskData.trends.currency,
-                        borderColor: '#8B5CF6',
+                        borderColor: this.chartColors.purple,
                         backgroundColor: 'rgba(139, 92, 246, 0.1)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#8B5CF6',
+                        pointBackgroundColor: this.chartColors.purple,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -962,7 +1831,7 @@ class AnalyticsDashboard {
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        backgroundColor: 'rgba(0, 77, 64, 0.9)',
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
                         borderColor: '#00bfa5',
@@ -977,6 +1846,15 @@ class AnalyticsDashboard {
                                 return `${label}: ${value.toFixed(1)} (${riskLevel})`;
                             }
                         }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Risk Trends Over Time',
+                        color: this.chartColors.secondary,
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
                     }
                 },
                 scales: {
@@ -987,17 +1865,17 @@ class AnalyticsDashboard {
                         title: {
                             display: true,
                             text: 'Risk Level (1-5)',
-                            color: '#004d40',
+                            color: this.chartColors.secondary,
                             font: {
                                 weight: 'bold'
                             }
                         },
                         grid: {
-                            color: 'rgba(0, 77, 64, 0.1)'
+                            color: 'rgba(0, 77, 64, 0.15)'
                         },
                         ticks: {
                             stepSize: 1,
-                            color: '#004d40',
+                            color: this.chartColors.secondary,
                             callback: function(value) {
                                 let label = '';
                                 if (value === 1) label = '1 - Low';
@@ -1010,10 +1888,10 @@ class AnalyticsDashboard {
                     },
                     x: {
                         grid: {
-                            color: 'rgba(0, 77, 64, 0.1)'
+                            color: 'rgba(0, 77, 64, 0.15)'
                         },
                         ticks: {
-                            color: '#004d40'
+                            color: this.chartColors.secondary
                         }
                     }
                 }
@@ -1737,6 +2615,7 @@ const analyticsDashboardStyles = `
 /* Analytics Dashboard Styles */
 .analytics-container {
     margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
 }
 
 .analytics-section {
@@ -1744,12 +2623,13 @@ const analyticsDashboardStyles = `
 }
 
 .analytics-section-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: var(--font-weight-semibold);
     color: var(--primary-green);
     margin-bottom: var(--spacing-md);
     padding-bottom: var(--spacing-xs);
     border-bottom: 2px solid var(--light-green);
+    text-align: left;
 }
 
 .analytics-metrics {
@@ -1787,7 +2667,7 @@ const analyticsDashboardStyles = `
 .analytics-chart-card {
     background: var(--white);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     box-shadow: var(--shadow-sm);
     margin-bottom: var(--spacing-lg);
     border: 1px solid rgba(0, 77, 64, 0.1);
@@ -1795,7 +2675,7 @@ const analyticsDashboardStyles = `
 }
 
 .analytics-chart-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
     color: var(--primary-green);
     margin-bottom: var(--spacing-md);
@@ -1803,7 +2683,7 @@ const analyticsDashboardStyles = `
 }
 
 .analytics-chart-container {
-    height: 250px;
+    height: 300px;
     position: relative;
 }
 
@@ -2093,6 +2973,7 @@ const analyticsDashboardStyles = `
     background-color: rgba(239, 68, 68, 0.7);
 }
 
+/* ESG Category Legend */
 .esg-category-legend {
     display: flex;
     justify-content: center;
@@ -2118,6 +2999,30 @@ const analyticsDashboardStyles = `
     color: var(--text-dark);
 }
 
+/* Chart Badges */
+.auc-badge,
+.target-badge,
+.industry-badge,
+.probability-badge {
+    background: rgba(0, 77, 64, 0.9);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.auc-value,
+.target-value,
+.industry-value,
+.probability-value {
+    font-weight: 700;
+    color: #00bfa5;
+}
+
 @media (min-width: 768px) {
     .analytics-metrics {
         grid-template-columns: repeat(4, 1fr);
@@ -2134,12 +3039,12 @@ const analyticsDashboardStyles = `
     .risk-matrix-legend {
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+        gap: 8px;
     }
     
     .risk-matrix-cell {
-        padding: 6px 4px;
-        font-size: 0.7rem;
+        padding: 8px 4px;
+        font-size: 0.75rem;
     }
 }
 </style>
