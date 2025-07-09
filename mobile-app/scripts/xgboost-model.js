@@ -15,6 +15,15 @@ class XGBoostModelManager {
             info: '#3B82F6',
             light: 'rgba(0, 191, 165, 0.15)'
         };
+        this.chartColors = {
+            primary: '#00bfa5',
+            secondary: '#004d40',
+            success: '#10B981',
+            warning: '#F59E0B',
+            danger: '#EF4444',
+            info: '#3B82F6',
+            light: 'rgba(0, 191, 165, 0.15)'
+        };
         this.featureImportance = {
             'Grid Stability': 0.92,
             'Community Engagement': 0.85,
@@ -58,6 +67,25 @@ class XGBoostModelManager {
         this.charts = {
             riskMatrixChart: null
         };
+        this.rocCurveData = {
+            fpr: [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // False Positive Rate
+            tpr: [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0] // True Positive Rate
+        };
+        this.riskData = {
+            matrix: {
+                categories: ['Technical', 'Financial', 'Regulatory', 'Environmental', 'Social'],
+                projects: ['Solar Farm A', 'Wind Project B', 'Hydro Plant C', 'Biomass D'],
+                data: [
+                    [1, 2, 1, 1, 2], // Solar Farm A
+                    [2, 1, 2, 2, 1], // Wind Project B
+                    [1, 3, 3, 2, 2], // Hydro Plant C
+                    [3, 2, 2, 3, 1]  // Biomass D
+                ]
+            }
+        };
+        this.charts = {
+            riskMatrixChart: null
+        };
         this.init();
     }
 
@@ -82,18 +110,23 @@ class XGBoostModelManager {
         document.addEventListener('DOMContentLoaded', () => {
             const predictBtn = document.getElementById('predict-btn');
             console.log('Found predict button:', predictBtn);
-            if (predictBtn) {
-                predictBtn.addEventListener('click', () => {
-                    console.log('Predict button clicked');
-                    this.runPrediction();
-                });
-            }
+            console.log('DOM loaded, setting up XGBoost event listeners');
             
             // Set up project type change handler
             const projectTypeSelect = document.getElementById('project-type-xgboost');
             if (projectTypeSelect) {
                 projectTypeSelect.addEventListener('change', () => {
                     this.updateFeatureImportanceForProjectType(projectTypeSelect.value);
+                });
+            }
+            
+            // Set up prediction button
+            const predictBtn = document.getElementById('predict-btn');
+            console.log('Found predict button:', predictBtn);
+            if (predictBtn) {
+                predictBtn.addEventListener('click', () => {
+                    console.log('Predict button clicked');
+                    this.runPrediction();
                 });
             }
         });
@@ -144,12 +177,52 @@ class XGBoostModelManager {
             this.animateModelStats();
             
             // Set model as loaded
+            console.log('Model metadata loaded');
+            // Update model stats with animation
+            this.animateModelStats();
+            
+            // Set model as loaded
             this.modelLoaded = true;
             this.showModelLoadedStatus();
             
             // Create risk matrix
             this.createRiskMatrixTable();
+            
+            // Create risk matrix
+            this.createRiskMatrixTable();
         }, 1500);
+    }
+    
+    animateModelStats() {
+        const modelAUC = document.getElementById('model-auc');
+        const modelAccuracy = document.getElementById('model-accuracy');
+        const modelFeatures = document.getElementById('model-features');
+        
+        if (modelAUC) {
+            this.animateValue(modelAUC, 0, this.modelAUC * 100, 1500, '%');
+        }
+        
+        if (modelAccuracy) {
+            this.animateValue(modelAccuracy, 0, this.modelAccuracy * 100, 1800, '%');
+        }
+        
+        if (modelFeatures) {
+            this.animateValue(modelFeatures, 0, this.keyFeatures, 1200);
+        }
+    }
+    
+    animateValue(element, start, end, duration, suffix = '') {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const value = Math.floor(progress * (end - start) + start);
+            element.textContent = value + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
     }
     
     animateModelStats() {
@@ -188,6 +261,7 @@ class XGBoostModelManager {
         if (this.modelLoaded) {
             const statusElement = document.getElementById('model-status');
             console.log('Updating model status element:', statusElement);
+            console.log('Updating model status element:', statusElement);
             if (statusElement) {
                 statusElement.innerHTML = `
                     <div class="model-status-badge success">
@@ -202,6 +276,7 @@ class XGBoostModelManager {
     refreshModelContent() {
         this.updateModelStats();
         this.updateFeatureImportance();
+        console.log('Refreshing model content');
         console.log('Refreshing model content');
         this.updateModelPerformance();
         this.updateCaseStudies();
@@ -228,6 +303,7 @@ class XGBoostModelManager {
     updateFeatureImportanceForProjectType(projectType) {
         // Update feature importance bars based on project type
         const featureImportanceContainer = document.querySelector('.feature-importance');
+        console.log('Updating feature importance for project type:', projectType);
         console.log('Updating feature importance for project type:', projectType);
         if (!featureImportanceContainer) {
             console.log('Feature importance container not found');
@@ -292,6 +368,7 @@ class XGBoostModelManager {
         console.log('Updating model performance chart');
         const rocCurveChart = document.getElementById('roc-curve-chart'); 
         if (rocCurveChart) {
+        if (rocCurveChart) {
             if (performanceChart) {
                 performanceChart.classList.remove('chart-placeholder');
             }
@@ -306,6 +383,7 @@ class XGBoostModelManager {
                 // ROC curve data points
                 const fpr = this.rocCurveData.fpr;
                 const tpr = this.rocCurveData.tpr;
+                const auc = this.modelAUC;
                 const auc = this.modelAUC;
                 
                 // Create chart
@@ -349,6 +427,7 @@ class XGBoostModelManager {
                                     padding: 20,
                                     font: {
                                         size: 12,
+                                        size: 12,
                                         family: "'Poppins', sans-serif"
                                     }
                                 }
@@ -379,6 +458,17 @@ class XGBoostModelManager {
                                     family: "'Poppins', sans-serif"
                                 }
                             }
+                            ,
+                            title: { 
+                                display: true,
+                                text: 'ROC Curve - Model Performance',
+                                color: this.chartColors.secondary,
+                                font: {
+                                    size: 16,
+                                    weight: 'bold',
+                                    family: "'Poppins', sans-serif"
+                                }
+                            }
                         },
                         scales: {
                             x: {
@@ -390,6 +480,7 @@ class XGBoostModelManager {
                                         weight: 'bold', 
                                         size: 13,
                                         family: "'Poppins', sans-serif"
+                                    }
                                     }
                                 },
                                 grid: {
@@ -409,6 +500,7 @@ class XGBoostModelManager {
                                         size: 13,
                                         family: "'Poppins', sans-serif"
                                     }
+                                    }
                                 },
                                 grid: {
                                     color: 'rgba(0, 77, 64, 0.1)'
@@ -417,6 +509,9 @@ class XGBoostModelManager {
                                     color: '#004d40'
                                 }
                             }
+                        },
+                        layout: {
+                            padding: 15
                         },
                         layout: {
                             padding: 15
@@ -437,9 +532,14 @@ class XGBoostModelManager {
                 if (container) {
                     container.appendChild(chartArea);
                 }
+                if (container) {
+                    container.appendChild(chartArea);
+                }
             } else {
                 // Fallback if Chart.js is not loaded
                 if (performanceChart) {
+                    performanceChart.innerHTML = this.createPerformanceChart();
+                }
                     performanceChart.innerHTML = this.createPerformanceChart();
                 }
             }
@@ -606,6 +706,7 @@ class XGBoostModelManager {
         // Get input values
         const projectType = document.getElementById('project-type-xgboost')?.value || 'solar';
         console.log('Running prediction for project type:', projectType);
+        console.log('Running prediction for project type:', projectType);
         const location = document.getElementById('project-location')?.value || 'lagos';
         const gridStability = document.getElementById('grid-stability')?.value || 'medium';
         const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
@@ -617,6 +718,7 @@ class XGBoostModelManager {
             predictBtn.innerHTML = `
                 <div class="loading-spinner"></div>
                 Processing...
+                <small>Loading Chart.js...</small>
             `;
             predictBtn.disabled = true;
         }
@@ -658,6 +760,7 @@ class XGBoostModelManager {
     predictProjectSuccess(projectData) {
         // Simulate XGBoost prediction
         if (!this.modelLoaded) {
+            console.log('Model not loaded yet');
             console.log('Model not loaded yet');
             this.showToast('Model not fully loaded yet. Please try again.', 'warning');
             return null;
@@ -808,6 +911,7 @@ class XGBoostModelManager {
         if (!result) return;
         
         console.log('Displaying prediction results:', result);
+        console.log('Displaying prediction results:', result);
         // Update prediction result elements
         document.getElementById('predicted-irr').textContent = `${(result.predictedIRR * 100).toFixed(1)}%`;
         document.getElementById('success-probability').textContent = `${(result.successProbability * 100).toFixed(0)}%`;
@@ -834,6 +938,7 @@ class XGBoostModelManager {
         const predictionResult = document.getElementById('prediction-result');
         if (predictionResult) {
             console.log('Showing prediction result');
+            console.log('Showing prediction result');
             predictionResult.style.display = 'block';
             
             // Scroll to result
@@ -858,6 +963,146 @@ class XGBoostModelManager {
             </div>
         `;
         
+
+    createRiskMatrixChart() {
+        const ctx = document.getElementById('risk-matrix-chart');
+        if (!ctx || !window.Chart) {
+            this.createRiskMatrixTable();
+            return;
+        }
+        
+        // Clear existing chart if any
+        if (this.charts.riskMatrixChart) {
+            this.charts.riskMatrixChart.destroy();
+        }
+    }
+
+    createRiskMatrixTable() {
+        // Create a table-based risk matrix as fallback when Chart.js is not available
+        const container = document.querySelector('.risk-matrix-chart-container');
+        console.log('Creating risk matrix table in container:', container);
+        if (!container) {
+            return;
+        }
+        
+        container.innerHTML = '';
+        
+        // Create risk matrix title
+        const title = document.createElement('div');
+        title.className = 'risk-matrix-title';
+        title.textContent = 'Project Risk Matrix';
+        container.appendChild(title);
+        
+        // Add description
+        const description = document.createElement('p');
+        description.className = 'risk-matrix-description';
+        description.textContent = 'Risk assessment across different categories for renewable energy projects';
+        container.appendChild(description);
+        
+        // Create risk matrix grid
+        const grid = document.createElement('div');
+        grid.className = 'risk-matrix-grid';
+        
+        // Add column headers (risk categories)
+        const headerRow = document.createElement('div');
+        headerRow.className = 'risk-matrix-row header-row';
+        
+        // Add empty cell for top-left corner
+        const cornerCell = document.createElement('div');
+        cornerCell.className = 'risk-matrix-cell corner-cell';
+        headerRow.appendChild(cornerCell);
+        
+        // Add category headers
+        const riskMatrix = this.riskData.matrix;
+        riskMatrix.categories.forEach(category => {
+            const headerCell = document.createElement('div');
+            headerCell.className = 'risk-matrix-cell header-cell';
+            headerCell.textContent = category;
+            headerRow.appendChild(headerCell);
+        });
+        
+        grid.appendChild(headerRow);
+        
+        // Add rows with project names and risk cells
+        riskMatrix.projects.forEach((project, rowIndex) => {
+            const row = document.createElement('div');
+            row.className = 'risk-matrix-row';
+            
+            // Add project name cell
+            const projectCell = document.createElement('div');
+            projectCell.className = 'risk-matrix-cell project-cell';
+            projectCell.textContent = project;
+            row.appendChild(projectCell);
+            
+            // Add risk cells
+            riskMatrix.categories.forEach((category, colIndex) => {
+                const riskCell = document.createElement('div');
+                riskCell.className = 'risk-matrix-cell risk-cell';
+                
+                const riskValue = riskMatrix.data[rowIndex][colIndex];
+                let riskClass = '';
+                let riskLabel = ''; 
+                
+                if (riskValue === 1) {
+                    riskClass = 'low-risk';
+                    riskLabel = 'Low';
+                } else if (riskValue === 2) {
+                    riskClass = 'medium-risk';
+                    riskLabel = 'Med';
+                } else {
+                    riskClass = 'high-risk';
+                    riskLabel = 'High';
+                }
+                
+                riskCell.classList.add(riskClass);
+                riskCell.textContent = riskLabel;
+                
+                // Add tooltip data
+                riskCell.setAttribute('data-project', project);
+                riskCell.setAttribute('data-category', category);
+                riskCell.setAttribute('data-risk', riskLabel);
+                
+                // Add click handler for details
+                riskCell.addEventListener('click', () => {
+                    this.showRiskDetails(project, category, riskLabel);
+                });
+                
+                row.appendChild(riskCell);
+            });
+            
+            grid.appendChild(row);
+        });
+        
+        container.appendChild(grid);
+        
+        // Add legend
+        const legend = document.createElement('div');
+        legend.className = 'risk-matrix-legend';
+        
+        const lowRisk = document.createElement('div');
+        lowRisk.className = 'legend-item';
+        lowRisk.innerHTML = `<span class="legend-color low-risk"></span><span>Low Risk</span>`;
+        
+        const mediumRisk = document.createElement('div');
+        mediumRisk.className = 'legend-item';
+        mediumRisk.innerHTML = `<span class="legend-color medium-risk"></span><span>Medium Risk</span>`;
+        
+        const highRisk = document.createElement('div');
+        highRisk.className = 'legend-item';
+        highRisk.innerHTML = `<span class="legend-color high-risk"></span><span>High Risk</span>`;
+        
+        legend.appendChild(lowRisk);
+        legend.appendChild(mediumRisk);
+        legend.appendChild(highRisk);
+        
+        container.appendChild(legend);
+    }
+
+    showRiskDetails(project, category, riskLevel) {
+        // Show risk details in a modal or toast
+        const message = `${project}: ${category} risk is ${riskLevel}`;
+        this.showToast(message, 'info');
+    }
         document.body.appendChild(toast);
         
         setTimeout(() => {

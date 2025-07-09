@@ -3,6 +3,7 @@
 class ESGDashboard {
     constructor() {
         this.charts = {};
+        this.currentProjectType = 'solar';
         this.esgData = {
             scores: {
                 solar: {
@@ -240,13 +241,11 @@ class ESGDashboard {
                 ]
             }
         };
-        this.currentProjectType = 'solar';
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        this.currentProjectType = 'solar';
     }
 
     setupEventListeners() {
@@ -262,6 +261,7 @@ class ESGDashboard {
     setupProjectTypeSelector() {
         const projectTypeSelector = document.getElementById('esg-project-type');
         if (projectTypeSelector) {
+            console.log('Setting up project type selector with initial value:', this.currentProjectType);
             // Set initial value and update UI
             projectTypeSelector.value = this.currentProjectType;
             
@@ -301,8 +301,8 @@ class ESGDashboard {
     }
 
     initializeCharts() {
-        // Load Chart.js if not already loaded
         if (window.Chart) {
+            console.log('Chart.js is loaded, creating charts');
             // Create charts
             this.createESGTrendChart();
             this.createESGBreakdownChart();
