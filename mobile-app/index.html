@@ -14,6 +14,9 @@
     <meta name="apple-mobile-web-app-title" content="FinergyCloud">
     <meta name="application-name" content="FinergyCloud">
     
+    <!-- Load Chart.js directly in head for immediate availability -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    
     <!-- Favicon and Icons -->
     <link rel="icon" type="image/png" href="../assets/images/android-chrome-192x192.png">
     <link rel="apple-touch-icon" href="../assets/images/android-chrome-192x192.png">
@@ -521,7 +524,18 @@
             <div id="esg-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">ESG Scoring</h2>
-                    <p class="page-subtitle">Environmental, Social & Governance assessment</p>
+                    <p class="page-subtitle">Comprehensive sustainability assessment</p>
+                </div>
+                
+                <div class="esg-project-type-selector">
+                    <label for="esg-project-type">Select Project Type:</label>
+                    <select id="esg-project-type" class="form-control">
+                        <option value="solar">Solar Energy</option>
+                        <option value="wind">Wind Energy</option>
+                        <option value="hydro">Hydroelectric</option>
+                        <option value="biomass">Biomass</option>
+                        <option value="geothermal">Geothermal</option>
+                    </select>
                 </div>
                 
                 <!-- ESG Scores -->
@@ -597,7 +611,7 @@
             <div id="analytics-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">Analytics</h2>
-                    <p class="page-subtitle">Advanced investment insights</p>
+                    <p class="page-subtitle">Comprehensive investment intelligence</p>
                 </div>
                 
                 <div class="analytics-container">
@@ -611,7 +625,7 @@
                                 <div class="analytics-metric-label">Total Capacity</div>
                             </div>
                             <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="weighted-irr">15.1%</div>
+                                <div class="analytics-metric-value" id="weighted-irr">15.2%</div>
                                 <div class="analytics-metric-label">Weighted IRR</div>
                             </div>
                             <div class="analytics-metric-card">
@@ -682,7 +696,7 @@
             <div id="xgboost-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">XGBoost Model</h2>
-                    <p class="page-subtitle">AI-powered risk prediction</p>
+                    <p class="page-subtitle">Advanced predictive analytics</p>
                 </div>
                 
                 <div class="card mb-3">
@@ -695,15 +709,15 @@
                     
                     <div class="grid-3">
                         <div class="model-stat">
-                            <div class="model-stat-value">92%</div>
+                            <div class="model-stat-value" id="model-auc">92%</div>
                             <div class="model-stat-label">AUC Score</div>
                         </div>
                         <div class="model-stat">
-                            <div class="model-stat-value">87%</div>
+                            <div class="model-stat-value" id="model-accuracy">87%</div>
                             <div class="model-stat-label">Accuracy</div>
                         </div>
                         <div class="model-stat">
-                            <div class="model-stat-value">14</div>
+                            <div class="model-stat-value" id="model-features">14</div>
                             <div class="model-stat-label">Key Features</div>
                         </div>
                     </div>
