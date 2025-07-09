@@ -1309,6 +1309,24 @@ const xgboostModelStyles = `
         font-size: 0.7rem;
     }
 }
+        justify-content: center;
+        color: var(--white);
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .prediction-value {
+        font-size: 1.25rem;
+        font-weight: var(--font-weight-bold);
+        color: var(--primary-green);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .prediction-label {
+        font-size: 0.7rem;
+        color: var(--text-light);
+    }
+}
 </style>
 `;
 
