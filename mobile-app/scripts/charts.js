@@ -426,7 +426,6 @@ class ChartsManager {
     
     renderFallbackChart(container, title) {
         // Create a fallback visualization when Chart.js is not available
-        const container = document.getElementById(containerId);
         if (!container) return;
 
         container.innerHTML = `
@@ -459,6 +458,10 @@ class ChartsManager {
 // Initialize charts manager
 document.addEventListener('DOMContentLoaded', () => {
     window.chartsManager = new ChartsManager();
+});
+
+const chartStyles = `
+    <style>
         .chart-title {
             font-weight: 600;
             color: var(--primary-green);
