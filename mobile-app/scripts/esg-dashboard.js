@@ -246,6 +246,7 @@ class ESGDashboard {
 
     init() {
         this.setupEventListeners();
+        this.currentProjectType = 'solar';
     }
 
     setupEventListeners() {
@@ -261,12 +262,13 @@ class ESGDashboard {
     setupProjectTypeSelector() {
         const projectTypeSelector = document.getElementById('esg-project-type');
         if (projectTypeSelector) {
-            // Set initial value
-            this.currentProjectType = projectTypeSelector.value || 'solar';
+            // Set initial value and update UI
+            projectTypeSelector.value = this.currentProjectType;
             
             // Add change event listener
             projectTypeSelector.addEventListener('change', (e) => {
                 this.currentProjectType = e.target.value;
+                console.log('Project type changed to:', this.currentProjectType);
                 this.loadESGData();
                 this.updateCharts();
             });
@@ -276,6 +278,7 @@ class ESGDashboard {
     loadESGData() {
         // Get current project type
         const projectType = this.currentProjectType;
+        console.log('Loading ESG data for project type:', projectType);
         
         // Update ESG score cards based on project type
         this.updateESGScoreCards(projectType);
@@ -283,6 +286,7 @@ class ESGDashboard {
 
     updateESGScoreCards(projectType) {
         const scores = this.esgData.scores[projectType];
+        console.log('Updating ESG score cards with scores:', scores);
         
         // Update score cards if they exist
         const environmentalScore = document.getElementById('environmental-score');
@@ -298,30 +302,21 @@ class ESGDashboard {
 
     initializeCharts() {
         // Load Chart.js if not already loaded
-        this.loadChartJS(() => {
+        if (window.Chart) {
             // Create charts
             this.createESGTrendChart();
             this.createESGBreakdownChart();
             this.createPeerComparisonChart();
             this.createESGFactorImpactChart();
-        });
-    }
-
-    loadChartJS(callback) {
-        if (window.Chart) {
-            callback();
-            return;
+        } else {
+            console.error('Chart.js not loaded');
+            this.showToast('Chart.js not loaded. Please refresh the page.', 'warning');
         }
-        
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        script.onload = callback;
-        document.head.appendChild(script);
     }
 
     updateCharts() {
         // Update all charts with new data based on current project type
+        console.log('Updating charts for project type:', this.currentProjectType);
         this.createESGTrendChart();
         this.createESGBreakdownChart();
         this.createPeerComparisonChart();
@@ -331,6 +326,7 @@ class ESGDashboard {
     createESGTrendChart() {
         const ctx = document.getElementById('esg-trend-chart');
         if (!ctx || !window.Chart) return;
+        console.log('Creating ESG trend chart');
         
         // Clear existing chart if any
         if (this.charts.trendChart) {
@@ -461,6 +457,7 @@ class ESGDashboard {
     createESGBreakdownChart() {
         const ctx = document.getElementById('esg-breakdown-chart');
         if (!ctx || !window.Chart) return;
+        console.log('Creating ESG breakdown chart');
         
         // Clear existing chart if any
         if (this.charts.breakdownChart) {
@@ -618,6 +615,7 @@ class ESGDashboard {
     createPeerComparisonChart() {
         const ctx = document.getElementById('peer-comparison-chart');
         if (!ctx || !window.Chart) return;
+        console.log('Creating peer comparison chart');
         
         // Clear existing chart if any
         if (this.charts.peerChart) {
@@ -732,6 +730,7 @@ class ESGDashboard {
     createESGFactorImpactChart() {
         const ctx = document.getElementById('esg-factor-impact-chart');
         if (!ctx || !window.Chart) return;
+        console.log('Creating ESG factor impact chart');
         
         // Clear existing chart if any
         if (this.charts.factorChart) {
@@ -838,23 +837,35 @@ class ESGDashboard {
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+    
+    showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `mobile-toast ${type}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
 }
 
 // Initialize ESG Dashboard
 document.addEventListener('DOMContentLoaded', () => {
-    // Load Chart.js if not already loaded
-    if (!window.Chart) {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        document.head.appendChild(script);
-        
-        script.onload = () => {
-            window.esgDashboard = new ESGDashboard();
-        };
-    } else {
-        window.esgDashboard = new ESGDashboard();
-    }
+    window.esgDashboard = new ESGDashboard();
 });
 
 // Add ESG Dashboard styles

@@ -64,24 +64,9 @@ class XGBoostModelManager {
     init() {
         this.setupEventListeners();
         this.loadModelMetadata();
-        this.loadChartJS(() => {
-            this.setupModelVisualizations();
-        });
+        this.setupModelVisualizations();
     }
     
-    loadChartJS(callback) {
-        if (window.Chart) {
-            callback();
-            return;
-        }
-        
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        script.onload = callback;
-        document.head.appendChild(script);
-    }
-
     setupEventListeners() {
         // Listen for page activation
         document.addEventListener('pageActivated', (e) => {
@@ -96,8 +81,10 @@ class XGBoostModelManager {
         // Set up prediction button
         document.addEventListener('DOMContentLoaded', () => {
             const predictBtn = document.getElementById('predict-btn');
+            console.log('Found predict button:', predictBtn);
             if (predictBtn) {
                 predictBtn.addEventListener('click', () => {
+                    console.log('Predict button clicked');
                     this.runPrediction();
                 });
             }
@@ -152,6 +139,7 @@ class XGBoostModelManager {
     loadModelMetadata() {
         // Simulate loading model metadata
         setTimeout(() => {
+            console.log('Model metadata loaded');
             // Update model stats with animation
             this.animateModelStats();
             
@@ -199,6 +187,7 @@ class XGBoostModelManager {
     showModelLoadedStatus() {
         if (this.modelLoaded) {
             const statusElement = document.getElementById('model-status');
+            console.log('Updating model status element:', statusElement);
             if (statusElement) {
                 statusElement.innerHTML = `
                     <div class="model-status-badge success">
@@ -213,6 +202,7 @@ class XGBoostModelManager {
     refreshModelContent() {
         this.updateModelStats();
         this.updateFeatureImportance();
+        console.log('Refreshing model content');
         this.updateModelPerformance();
         this.updateCaseStudies();
     }
@@ -238,6 +228,7 @@ class XGBoostModelManager {
     updateFeatureImportanceForProjectType(projectType) {
         // Update feature importance bars based on project type
         const featureImportanceContainer = document.querySelector('.feature-importance');
+        console.log('Updating feature importance for project type:', projectType);
         if (!featureImportanceContainer) {
             console.log('Feature importance container not found');
             return;
@@ -298,6 +289,7 @@ class XGBoostModelManager {
     updateModelPerformance() {
         // Update model performance chart
         const performanceChart = document.getElementById('model-performance-chart');
+        console.log('Updating model performance chart');
         const rocCurveChart = document.getElementById('roc-curve-chart'); 
         if (rocCurveChart) {
             if (performanceChart) {
@@ -481,6 +473,7 @@ class XGBoostModelManager {
     createRiskMatrixTable() {
         // Create a table-based risk matrix as fallback when Chart.js is not available
         const container = document.querySelector('.risk-matrix-chart-container');
+        console.log('Creating risk matrix table in container:', container);
         if (!container) {
             return;
         }
@@ -612,6 +605,7 @@ class XGBoostModelManager {
     runPrediction() {
         // Get input values
         const projectType = document.getElementById('project-type-xgboost')?.value || 'solar';
+        console.log('Running prediction for project type:', projectType);
         const location = document.getElementById('project-location')?.value || 'lagos';
         const gridStability = document.getElementById('grid-stability')?.value || 'medium';
         const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
@@ -632,6 +626,10 @@ class XGBoostModelManager {
             // Run prediction
             const result = this.predictProjectSuccess({
                 projectType,
+                location,
+                gridStability,
+                communityEngagement,
+                projectSize
                 location,
                 gridStability,
                 communityEngagement,
@@ -660,6 +658,7 @@ class XGBoostModelManager {
     predictProjectSuccess(projectData) {
         // Simulate XGBoost prediction
         if (!this.modelLoaded) {
+            console.log('Model not loaded yet');
             this.showToast('Model not fully loaded yet. Please try again.', 'warning');
             return null;
         }
@@ -808,6 +807,7 @@ class XGBoostModelManager {
     displayPredictionResults(result) {
         if (!result) return;
         
+        console.log('Displaying prediction results:', result);
         // Update prediction result elements
         document.getElementById('predicted-irr').textContent = `${(result.predictedIRR * 100).toFixed(1)}%`;
         document.getElementById('success-probability').textContent = `${(result.successProbability * 100).toFixed(0)}%`;
@@ -833,6 +833,7 @@ class XGBoostModelManager {
         // Show prediction result
         const predictionResult = document.getElementById('prediction-result');
         if (predictionResult) {
+            console.log('Showing prediction result');
             predictionResult.style.display = 'block';
             
             // Scroll to result
@@ -910,16 +911,6 @@ class XGBoostModelManager {
 // Initialize XGBoost model manager
 document.addEventListener('DOMContentLoaded', () => {
     window.xgboostModel = new XGBoostModelManager();
-    
-    // Add click handler for predict button
-    const predictBtn = document.getElementById('predict-btn');
-    if (predictBtn) {
-        predictBtn.addEventListener('click', () => {
-            if (window.xgboostModel) {
-                window.xgboostModel.runPrediction();
-            }
-        });
-    }
 });
 
 // Add XGBoost model styles
