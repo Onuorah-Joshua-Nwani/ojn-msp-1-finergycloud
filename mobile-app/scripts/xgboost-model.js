@@ -36,7 +36,32 @@ class XGBoostModelManager {
     init() {
         console.log('Initializing XGBoost Model Manager');
         this.setupEventListeners();
-        this.loadModelMetadata();
+        
+        // Check if Chart.js is loaded
+        if (window.Chart) {
+            this.loadModelMetadata();
+        } else {
+            // Load Chart.js first
+            this.loadChartJS(() => {
+                this.loadModelMetadata();
+            });
+        }
+    }
+
+    loadChartJS(callback) {
+        console.log('Loading Chart.js');
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = () => {
+            console.log('Chart.js loaded successfully');
+            callback();
+        };
+        script.onerror = () => {
+            console.error('Failed to load Chart.js');
+            this.showToast('Failed to load Chart.js. Some features may not work properly.', 'warning');
+        };
+        document.head.appendChild(script);
     }
 
     setupEventListeners() {
@@ -55,8 +80,12 @@ class XGBoostModelManager {
             // Set up prediction button
             const predictBtn = document.getElementById('predict-btn');
             if (predictBtn) {
-                console.log('Adding click handler to predict button');
-                predictBtn.addEventListener('click', () => {
+                // Remove any existing event listeners to prevent duplicates
+                const newPredictBtn = predictBtn.cloneNode(true);
+                predictBtn.parentNode.replaceChild(newPredictBtn, predictBtn);
+                
+                console.log('Adding click handler to predict button (new)');
+                newPredictBtn.addEventListener('click', () => {
                     this.runPrediction();
                 });
             } else {
@@ -64,15 +93,29 @@ class XGBoostModelManager {
             }
             
             // Set up project type change handler
-            const projectTypeSelect = document.getElementById('project-type-xgboost');
-            if (projectTypeSelect) {
+            // Fix the duplicate ID issue by using a class selector instead
+            const projectTypeSelects = document.querySelectorAll('.project-type-select');
+            
+            projectTypeSelects.forEach(select => {
+                // Remove any existing event listeners to prevent duplicates
+                const newSelect = select.cloneNode(true);
+                select.parentNode.replaceChild(newSelect, select);
+                
                 console.log('Adding change handler to project type selector');
-                projectTypeSelect.addEventListener('change', () => {
-                    this.updateFeatureImportanceForProjectType(projectTypeSelect.value);
+                newSelect.addEventListener('change', () => {
+                    const value = newSelect.value;
+                    console.log('Project type changed to:', value);
+                    
+                    // Update all other selectors with the same class
+                    projectTypeSelects.forEach(otherSelect => {
+                        if (otherSelect !== newSelect) {
+                            otherSelect.value = value;
+                        }
+                    });
+                    
+                    this.updateFeatureImportanceForProjectType(value);
                 });
-            } else {
-                console.warn('Project type selector not found');
-            }
+            });
         });
     }
 
@@ -158,7 +201,7 @@ class XGBoostModelManager {
 
     updateFeatureImportance() {
         // Get current project type
-        const projectTypeSelect = document.getElementById('project-type-xgboost');
+        const projectTypeSelect = document.querySelector('.project-type-select');
         const projectType = projectTypeSelect ? projectTypeSelect.value : 'solar';
         
         console.log('Updating feature importance for project type:', projectType);
@@ -228,32 +271,38 @@ class XGBoostModelManager {
     updateModelPerformance() {
         console.log('Updating model performance chart');
         // Update model performance chart
-        const performanceChart = document.getElementById('model-performance-chart');
+        const performanceChartContainer = document.querySelector('.model-performance-chart-container');
         const rocCurveChart = document.getElementById('roc-curve-chart');
-        if (performanceChart && rocCurveChart) {
-            performanceChart.classList.remove('chart-placeholder');
+        if (performanceChartContainer && rocCurveChart) {
+            // Remove placeholder if exists
+            const placeholder = performanceChartContainer.querySelector('.chart-placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
             
             // Create ROC curve using Chart.js
             this.createROCCurveChart(rocCurveChart);
             
             // Add AUC annotation
-            const chartArea = document.querySelector('.model-performance-chart-container');
-            if (chartArea) {
-                // Remove existing annotation if any
-                const existingAnnotation = chartArea.querySelector('.chart-annotation');
-                if (existingAnnotation) {
-                    existingAnnotation.remove();
-                }
-                
-                const annotation = document.createElement('div');
-                annotation.className = 'chart-annotation';
-                annotation.innerHTML = `
-                    <div class="auc-badge">
-                        <span class="auc-label">AUC Score:</span>
-                        <span class="auc-value">0.92</span>
-                    </div>
-                `;
-                chartArea.appendChild(annotation);
+            // Remove existing annotation if any
+            const existingAnnotation = performanceChartContainer.querySelector('.chart-annotation');
+            if (existingAnnotation) {
+                existingAnnotation.remove();
+            }
+            
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="auc-badge">
+                    <span class="auc-label">AUC Score:</span>
+                    <span class="auc-value">0.92</span>
+                </div>
+            `;
+            performanceChartContainer.appendChild(annotation);
+        } else {
+            console.warn('Performance chart container or ROC curve chart not found');
+            if (!rocCurveChart) {
+                console.warn('ROC curve chart element not found');
             }
         }
     }
@@ -261,6 +310,8 @@ class XGBoostModelManager {
     createROCCurveChart(canvas) {
         if (!canvas || !window.Chart) {
             console.warn('Canvas element or Chart.js not available');
+            // Create fallback visualization
+            this.createFallbackROCCurve(canvas);
             return;
         }
         
@@ -373,6 +424,24 @@ class XGBoostModelManager {
         });
     }
 
+    createFallbackROCCurve(container) {
+        if (!container) return;
+        
+        // Create a simple fallback visualization when Chart.js is not available
+        container.innerHTML = `
+            <div style="height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 8px;">
+                <div style="font-size: 24px; color: #004d40; margin-bottom: 10px;">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <div style="font-weight: 600; color: #004d40; margin-bottom: 5px;">ROC Curve</div>
+                <div style="font-size: 14px; color: #666; text-align: center;">
+                    XGBoost Model (AUC = 0.92)<br>
+                    Loading visualization...
+                </div>
+            </div>
+        `;
+    }
+
     updateCaseStudies() {
         console.log('Updating case studies section');
         // Update case studies section
@@ -382,7 +451,7 @@ class XGBoostModelManager {
     runPrediction() {
         console.log('Running prediction');
         // Get input values
-        const projectType = document.getElementById('project-type-xgboost')?.value || 'solar';
+        const projectType = document.getElementById('prediction-project-type')?.value || 'solar';
         const location = document.getElementById('project-location')?.value || 'lagos';
         const gridStability = document.getElementById('grid-stability')?.value || 'medium';
         const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
