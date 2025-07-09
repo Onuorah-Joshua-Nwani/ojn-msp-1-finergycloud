@@ -4,16 +4,21 @@ class ESGDashboard {
     constructor() {
         this.charts = {};
         this.esgData = {
-            overall: {
+            scores: {
                 environmental: 8.7,
                 social: 7.9,
-                governance: 8.5,
+                governance: 8.4,
                 overall: 8.4
+            },
+            trends: {
+                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025'],
+                project: [7.8, 8.1, 8.3, 8.4, 8.4],
+                industry: [7.2, 7.3, 7.4, 7.5, 7.6]
             },
             breakdown: {
                 environmental: {
                     'Carbon Emissions': 9.2,
-                    'Resource Use': 8.5,
+                    'Resource Usage': 8.5,
                     'Waste Management': 8.9,
                     'Biodiversity Impact': 8.3
                 },
@@ -21,36 +26,30 @@ class ESGDashboard {
                     'Community Relations': 8.7,
                     'Labor Practices': 7.5,
                     'Human Rights': 8.2,
-                    'Health & Safety': 7.3
+                    'Health & Safety': 7.4
                 },
                 governance: {
-                    'Board Structure': 8.8,
-                    'Business Ethics': 8.3,
-                    'Transparency': 8.6,
-                    'Risk Management': 8.2
+                    'Board Structure': 8.6,
+                    'Business Ethics': 8.2,
+                    'Transparency': 8.5,
+                    'Risk Management': 8.3
                 }
             },
-            projects: [
-                { name: 'Lagos Solar Farm', e: 9.1, s: 8.5, g: 8.9, overall: 8.8 },
-                { name: 'Abuja Wind Project', e: 8.7, s: 7.8, g: 8.3, overall: 8.3 },
-                { name: 'Kano Solar Array', e: 8.9, s: 7.6, g: 8.6, overall: 8.4 },
-                { name: 'Port Harcourt Hydro', e: 9.3, s: 7.5, g: 8.2, overall: 8.3 },
-                { name: 'Ibadan Solar Park', e: 8.8, s: 8.2, g: 8.7, overall: 8.6 }
+            peers: [
+                { name: 'Your Project', score: 8.4 },
+                { name: 'Peer A', score: 7.8 },
+                { name: 'Peer B', score: 8.1 },
+                { name: 'Peer C', score: 7.2 },
+                { name: 'Peer D', score: 6.9 }
             ],
-            benchmarks: {
-                industry: 7.2,
-                regional: 6.8,
-                global: 7.5
-            },
-            trends: {
-                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025'],
-                environmental: [8.2, 8.4, 8.5, 8.6, 8.7],
-                social: [7.5, 7.6, 7.8, 7.9, 7.9],
-                governance: [8.1, 8.2, 8.3, 8.4, 8.5],
-                overall: [7.9, 8.1, 8.2, 8.3, 8.4]
-            }
+            factors: [
+                { factor: 'Carbon Reduction', impact: 3.2, industry: 2.1 },
+                { factor: 'Community Programs', impact: 2.8, industry: 1.8 },
+                { factor: 'Governance Structure', impact: 2.5, industry: 2.2 },
+                { factor: 'Transparency', impact: 2.3, industry: 1.9 },
+                { factor: 'Resource Efficiency', impact: 2.1, industry: 1.7 }
+            ]
         };
-        
         this.init();
     }
 
@@ -71,32 +70,23 @@ class ESGDashboard {
         // In a real app, this would fetch data from an API
         console.log('Loading ESG data...');
         
-        // Update ESG metrics
-        this.updateESGMetrics();
+        // Update ESG score cards
+        this.updateESGScoreCards();
     }
 
-    updateESGMetrics() {
-        // Update ESG score cards
-        const overallScoreEl = document.getElementById('overall-esg-score');
-        const environmentalScoreEl = document.getElementById('environmental-score');
-        const socialScoreEl = document.getElementById('social-score');
-        const governanceScoreEl = document.getElementById('governance-score');
+    updateESGScoreCards() {
+        const scores = this.esgData.scores;
         
-        if (overallScoreEl) overallScoreEl.textContent = this.esgData.overall.overall.toFixed(1);
-        if (environmentalScoreEl) environmentalScoreEl.textContent = this.esgData.overall.environmental.toFixed(1);
-        if (socialScoreEl) socialScoreEl.textContent = this.esgData.overall.social.toFixed(1);
-        if (governanceScoreEl) governanceScoreEl.textContent = this.esgData.overall.governance.toFixed(1);
+        // Update score cards if they exist
+        const environmentalScore = document.getElementById('environmental-score');
+        const socialScore = document.getElementById('social-score');
+        const governanceScore = document.getElementById('governance-score');
+        const overallScore = document.getElementById('overall-esg-score');
         
-        // Update benchmark comparison
-        const industryBenchmarkEl = document.getElementById('industry-benchmark');
-        const aboveIndustryEl = document.getElementById('above-industry');
-        
-        if (industryBenchmarkEl) industryBenchmarkEl.textContent = this.esgData.benchmarks.industry.toFixed(1);
-        
-        if (aboveIndustryEl) {
-            const difference = this.esgData.overall.overall - this.esgData.benchmarks.industry;
-            aboveIndustryEl.textContent = `+${difference.toFixed(1)}`;
-        }
+        if (environmentalScore) environmentalScore.textContent = scores.environmental.toFixed(1);
+        if (socialScore) socialScore.textContent = scores.social.toFixed(1);
+        if (governanceScore) governanceScore.textContent = scores.governance.toFixed(1);
+        if (overallScore) overallScore.textContent = scores.overall.toFixed(1);
     }
 
     initializeCharts() {
@@ -108,328 +98,22 @@ class ESGDashboard {
             document.head.appendChild(script);
             
             script.onload = () => {
-                // Create charts
-                this.createESGRadarChart();
-                this.createESGBreakdownChart();
-                this.createESGComparisonChart();
-                this.createESGTrendChart();
+                // Register Chart.js plugins if needed
+                if (window.Chart) {
+                    // Create charts
+                    this.createESGTrendChart();
+                    this.createESGBreakdownChart();
+                    this.createPeerComparisonChart();
+                    this.createESGFactorImpactChart();
+                }
             };
         } else if (window.Chart) {
             // Create charts directly if Chart.js is already loaded
-            this.createESGRadarChart();
-            this.createESGBreakdownChart();
-            this.createESGComparisonChart();
             this.createESGTrendChart();
+            this.createESGBreakdownChart();
+            this.createPeerComparisonChart();
+            this.createESGFactorImpactChart();
         }
-    }
-
-    createESGRadarChart() {
-        const ctx = document.getElementById('esg-radar-chart');
-        if (!ctx) return;
-        
-        // Clear existing chart if any
-        if (this.charts.radarChart) {
-            this.charts.radarChart.destroy();
-        }
-        
-        // Create chart
-        this.charts.radarChart = new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: ['Environmental', 'Social', 'Governance'],
-                datasets: [{
-                    label: 'ESG Score',
-                    data: [
-                        this.esgData.overall.environmental,
-                        this.esgData.overall.social,
-                        this.esgData.overall.governance
-                    ],
-                    backgroundColor: 'rgba(0, 191, 165, 0.2)',
-                    borderColor: '#00bfa5',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#00bfa5',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#00bfa5',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }, {
-                    label: 'Industry Average',
-                    data: [7.0, 6.8, 7.5],
-                    backgroundColor: 'rgba(158, 158, 158, 0.2)',
-                    borderColor: '#9e9e9e',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#9e9e9e',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#9e9e9e',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        min: 0,
-                        max: 10,
-                        ticks: {
-                            stepSize: 2,
-                            backdropColor: 'transparent',
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0, 77, 64, 0.1)'
-                        },
-                        pointLabels: {
-                            color: '#004d40',
-                            font: {
-                                size: 12,
-                                weight: 'bold'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            usePointStyle: true,
-                            padding: 15,
-                            font: {
-                                size: 11
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
-    }
-
-    createESGBreakdownChart() {
-        const ctx = document.getElementById('esg-breakdown-chart');
-        if (!ctx) return;
-        
-        // Clear existing chart if any
-        if (this.charts.breakdownChart) {
-            this.charts.breakdownChart.destroy();
-        }
-        
-        // Prepare data
-        const categories = [];
-        const scores = [];
-        const colors = [];
-        
-        // Environmental factors
-        Object.entries(this.esgData.breakdown.environmental).forEach(([category, score]) => {
-            categories.push(`E: ${category}`);
-            scores.push(score);
-            colors.push('#10B981'); // Green for environmental
-        });
-        
-        // Social factors
-        Object.entries(this.esgData.breakdown.social).forEach(([category, score]) => {
-            categories.push(`S: ${category}`);
-            scores.push(score);
-            colors.push('#3B82F6'); // Blue for social
-        });
-        
-        // Governance factors
-        Object.entries(this.esgData.breakdown.governance).forEach(([category, score]) => {
-            categories.push(`G: ${category}`);
-            scores.push(score);
-            colors.push('#8B5CF6'); // Purple for governance
-        });
-        
-        // Create chart
-        this.charts.breakdownChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: 'Score (0-10)',
-                    data: scores,
-                    backgroundColor: colors,
-                    borderColor: colors.map(color => color.replace(')', ', 0.8)')),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        min: 0,
-                        max: 10,
-                        grid: {
-                            color: 'rgba(0, 77, 64, 0.1)'
-                        },
-                        ticks: {
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        }
-                    },
-                    y: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
-    }
-
-    createESGComparisonChart() {
-        const ctx = document.getElementById('esg-comparison-chart');
-        if (!ctx) return;
-        
-        // Clear existing chart if any
-        if (this.charts.comparisonChart) {
-            this.charts.comparisonChart.destroy();
-        }
-        
-        // Prepare data
-        const projectNames = this.esgData.projects.map(p => p.name);
-        const environmentalScores = this.esgData.projects.map(p => p.e);
-        const socialScores = this.esgData.projects.map(p => p.s);
-        const governanceScores = this.esgData.projects.map(p => p.g);
-        const overallScores = this.esgData.projects.map(p => p.overall);
-        
-        // Create chart
-        this.charts.comparisonChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: projectNames,
-                datasets: [
-                    {
-                        label: 'Environmental',
-                        data: environmentalScores,
-                        backgroundColor: 'rgba(16, 185, 129, 0.7)',
-                        borderColor: '#059669',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Social',
-                        data: socialScores,
-                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                        borderColor: '#2563EB',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Governance',
-                        data: governanceScores,
-                        backgroundColor: 'rgba(139, 92, 246, 0.7)',
-                        borderColor: '#7C3AED',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Overall',
-                        data: overallScores,
-                        backgroundColor: 'rgba(0, 191, 165, 0.7)',
-                        borderColor: '#00bfa5',
-                        borderWidth: 1,
-                        type: 'line',
-                        fill: false,
-                        tension: 0.3,
-                        pointBackgroundColor: '#00bfa5',
-                        pointBorderColor: '#fff',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        }
-                    },
-                    y: {
-                        min: 0,
-                        max: 10,
-                        grid: {
-                            color: 'rgba(0, 77, 64, 0.1)'
-                        },
-                        ticks: {
-                            stepSize: 2,
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Score (0-10)',
-                            color: '#004d40',
-                            font: {
-                                size: 12,
-                                weight: 'bold'
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            usePointStyle: true,
-                            padding: 15,
-                            font: {
-                                size: 11
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
     }
 
     createESGTrendChart() {
@@ -448,8 +132,8 @@ class ESGDashboard {
                 labels: this.esgData.trends.labels,
                 datasets: [
                     {
-                        label: 'Overall ESG',
-                        data: this.esgData.trends.overall,
+                        label: 'Your Project',
+                        data: this.esgData.trends.project,
                         borderColor: '#00bfa5',
                         backgroundColor: 'rgba(0, 191, 165, 0.1)',
                         borderWidth: 3,
@@ -461,42 +145,17 @@ class ESGDashboard {
                         tension: 0.3
                     },
                     {
-                        label: 'Environmental',
-                        data: this.esgData.trends.environmental,
-                        borderColor: '#10B981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        label: 'Industry Average',
+                        data: this.esgData.trends.industry,
+                        borderColor: '#9e9e9e',
+                        backgroundColor: 'rgba(158, 158, 158, 0.1)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#10B981',
+                        borderDash: [5, 5],
+                        pointBackgroundColor: '#9e9e9e',
                         pointBorderColor: '#fff',
                         pointRadius: 4,
                         pointHoverRadius: 6,
-                        fill: false,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Social',
-                        data: this.esgData.trends.social,
-                        borderColor: '#3B82F6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#3B82F6',
-                        pointBorderColor: '#fff',
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        fill: false,
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Governance',
-                        data: this.esgData.trends.governance,
-                        borderColor: '#8B5CF6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#8B5CF6',
-                        pointBorderColor: '#fff',
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        fill: false,
+                        fill: true,
                         tension: 0.3
                     }
                 ]
@@ -504,28 +163,50 @@ class ESGDashboard {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                return `${label}: ${value.toFixed(1)}/10`;
+                            }
+                        }
+                    }
+                },
                 scales: {
                     y: {
-                        min: 6,
+                        min: 5,
                         max: 10,
+                        title: {
+                            display: true,
+                            text: 'ESG Score (0-10)',
+                            color: '#004d40',
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
                         grid: {
                             color: 'rgba(0, 77, 64, 0.1)'
                         },
                         ticks: {
                             stepSize: 1,
-                            color: '#004d40',
-                            font: {
-                                size: 10
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Score (0-10)',
-                            color: '#004d40',
-                            font: {
-                                size: 12,
-                                weight: 'bold'
-                            }
+                            color: '#004d40'
                         }
                     },
                     x: {
@@ -533,6 +214,116 @@ class ESGDashboard {
                             color: 'rgba(0, 77, 64, 0.1)'
                         },
                         ticks: {
+                            color: '#004d40'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add annotation for target score
+        const chartArea = document.querySelector('.esg-trend-chart-container');
+        if (chartArea) {
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="target-badge">
+                    <span class="target-label">Target Score:</span>
+                    <span class="target-value">8.5</span>
+                </div>
+            `;
+            chartArea.appendChild(annotation);
+        }
+    }
+
+    createESGBreakdownChart() {
+        const ctx = document.getElementById('esg-breakdown-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.breakdownChart) {
+            this.charts.breakdownChart.destroy();
+        }
+        
+        // Prepare data for radar chart
+        const labels = [
+            'Carbon Emissions', 'Resource Usage', 'Waste Management', 'Biodiversity',
+            'Community Relations', 'Labor Practices', 'Human Rights', 'Health & Safety',
+            'Board Structure', 'Business Ethics', 'Transparency', 'Risk Management'
+        ];
+        
+        const projectData = [
+            this.esgData.breakdown.environmental['Carbon Emissions'],
+            this.esgData.breakdown.environmental['Resource Usage'],
+            this.esgData.breakdown.environmental['Waste Management'],
+            this.esgData.breakdown.environmental['Biodiversity Impact'],
+            this.esgData.breakdown.social['Community Relations'],
+            this.esgData.breakdown.social['Labor Practices'],
+            this.esgData.breakdown.social['Human Rights'],
+            this.esgData.breakdown.social['Health & Safety'],
+            this.esgData.breakdown.governance['Board Structure'],
+            this.esgData.breakdown.governance['Business Ethics'],
+            this.esgData.breakdown.governance['Transparency'],
+            this.esgData.breakdown.governance['Risk Management']
+        ];
+        
+        // Industry benchmark data (slightly lower than project data)
+        const industryData = projectData.map(val => Math.max(5, val - 0.5 - Math.random() * 0.5));
+        
+        // Create chart
+        this.charts.breakdownChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Your Project',
+                        data: projectData,
+                        backgroundColor: 'rgba(0, 191, 165, 0.2)',
+                        borderColor: '#00bfa5',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#00bfa5',
+                        pointBorderColor: '#ffffff',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#00bfa5',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    },
+                    {
+                        label: 'Industry Benchmark',
+                        data: industryData,
+                        backgroundColor: 'rgba(158, 158, 158, 0.2)',
+                        borderColor: '#9e9e9e',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: '#9e9e9e',
+                        pointBorderColor: '#ffffff',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#9e9e9e',
+                        pointRadius: 3,
+                        pointHoverRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        min: 5,
+                        max: 10,
+                        ticks: {
+                            stepSize: 1,
+                            backdropColor: 'transparent',
+                            color: '#004d40'
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        angleLines: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        pointLabels: {
                             color: '#004d40',
                             font: {
                                 size: 10
@@ -556,49 +347,246 @@ class ESGDashboard {
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
                         borderColor: '#00bfa5',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.raw;
+                                return `${label}: ${value.toFixed(1)}/10`;
+                            }
+                        }
                     }
                 }
             }
         });
         
-        // Add trend indicator
-        const chartArea = document.querySelector('.esg-trend-chart-container');
+        // Add legend for ESG categories
+        const chartArea = document.querySelector('.esg-breakdown-chart-container');
         if (chartArea) {
-            const indicator = document.createElement('div');
-            indicator.className = 'trend-indicator';
-            indicator.innerHTML = `
-                <div class="indicator-badge positive">
-                    <i class="bi bi-arrow-up-right"></i>
-                    <span>+0.5 YTD</span>
+            const legend = document.createElement('div');
+            legend.className = 'esg-category-legend';
+            legend.innerHTML = `
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #10B981;"></span>
+                    <span class="category-label">Environmental (1-4)</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #3B82F6;"></span>
+                    <span class="category-label">Social (5-8)</span>
+                </div>
+                <div class="category-item">
+                    <span class="category-color" style="background-color: #8B5CF6;"></span>
+                    <span class="category-label">Governance (9-12)</span>
                 </div>
             `;
-            chartArea.appendChild(indicator);
+            chartArea.appendChild(legend);
         }
     }
 
-    showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `mobile-toast ${type}`;
-        toast.innerHTML = `
-            <div class="toast-content">
-                <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            </div>
-        `;
+    createPeerComparisonChart() {
+        const ctx = document.getElementById('peer-comparison-chart');
+        if (!ctx) return;
         
-        document.body.appendChild(toast);
+        // Clear existing chart if any
+        if (this.charts.peerChart) {
+            this.charts.peerChart.destroy();
+        }
         
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
+        // Sort peers by score
+        const sortedPeers = [...this.esgData.peers].sort((a, b) => b.score - a.score);
         
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
-        }, 3000);
+        // Create chart
+        this.charts.peerChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sortedPeers.map(peer => peer.name),
+                datasets: [{
+                    label: 'ESG Score',
+                    data: sortedPeers.map(peer => peer.score),
+                    backgroundColor: sortedPeers.map(peer => 
+                        peer.name === 'Your Project' ? '#00bfa5' : '#9e9e9e'
+                    ),
+                    borderColor: sortedPeers.map(peer => 
+                        peer.name === 'Your Project' ? '#004d40' : '#757575'
+                    ),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                return `ESG Score: ${value.toFixed(1)}/10`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        min: 5,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: 'ESG Score (0-10)',
+                            color: '#004d40',
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: '#004d40'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#004d40',
+                            font: {
+                                weight: (value) => {
+                                    return sortedPeers[value].name === 'Your Project' ? 'bold' : 'normal';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Add industry average line
+        const chartArea = document.querySelector('.peer-comparison-chart-container');
+        if (chartArea) {
+            const annotation = document.createElement('div');
+            annotation.className = 'chart-annotation';
+            annotation.innerHTML = `
+                <div class="industry-badge">
+                    <span class="industry-label">Industry Average:</span>
+                    <span class="industry-value">7.6</span>
+                </div>
+            `;
+            chartArea.appendChild(annotation);
+        }
+    }
+
+    createESGFactorImpactChart() {
+        const ctx = document.getElementById('esg-factor-impact-chart');
+        if (!ctx) return;
+        
+        // Clear existing chart if any
+        if (this.charts.factorChart) {
+            this.charts.factorChart.destroy();
+        }
+        
+        // Sort factors by impact
+        const sortedFactors = [...this.esgData.factors].sort((a, b) => b.impact - a.impact);
+        
+        // Create chart
+        this.charts.factorChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sortedFactors.map(item => item.factor),
+                datasets: [
+                    {
+                        label: 'Your Project',
+                        data: sortedFactors.map(item => item.impact),
+                        backgroundColor: function(context) {
+                            const value = context.raw;
+                            const alpha = 0.7 + (value / 5) * 0.3; // Higher values are more opaque
+                            return `rgba(0, 191, 165, ${alpha})`;
+                        },
+                        borderColor: '#004d40',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Industry Average',
+                        data: sortedFactors.map(item => item.industry),
+                        backgroundColor: 'rgba(158, 158, 158, 0.5)',
+                        borderColor: '#757575',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.raw;
+                                return `${label}: ${value.toFixed(1)} impact points`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Impact on ESG Score',
+                            color: '#004d40',
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: '#004d40'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#004d40',
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                }
+            }
+        });
     }
 }
 
@@ -623,24 +611,11 @@ document.addEventListener('DOMContentLoaded', () => {
 const esgDashboardStyles = `
 <style>
 /* ESG Dashboard Styles */
-.esg-container {
+.esg-dashboard-container {
     margin-bottom: var(--spacing-lg);
 }
 
-.esg-section {
-    margin-bottom: var(--spacing-xl);
-}
-
-.esg-section-title {
-    font-size: 1.2rem;
-    font-weight: var(--font-weight-semibold);
-    color: var(--primary-green);
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-xs);
-    border-bottom: 2px solid var(--light-green);
-}
-
-.esg-metrics {
+.esg-score-cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
@@ -667,75 +642,52 @@ const esgDashboardStyles = `
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 4px;
 }
 
-.esg-score-card.overall::before {
-    background: var(--gradient-primary);
-}
-
 .esg-score-card.environmental::before {
-    background: #10B981;
+    background-color: #10B981; /* Green for environmental */
 }
 
 .esg-score-card.social::before {
-    background: #3B82F6;
+    background-color: #3B82F6; /* Blue for social */
 }
 
 .esg-score-card.governance::before {
-    background: #8B5CF6;
+    background-color: #8B5CF6; /* Purple for governance */
+}
+
+.esg-score-card.overall::before {
+    background: linear-gradient(to right, #10B981, #3B82F6, #8B5CF6);
 }
 
 .esg-score-value {
     font-size: 2rem;
     font-weight: var(--font-weight-bold);
-    color: var(--primary-green);
     margin-bottom: var(--spacing-xs);
 }
 
-.esg-score-label {
-    font-size: 0.8rem;
-    color: var(--text-light);
-}
-
-.esg-benchmark-card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid rgba(0, 77, 64, 0.1);
-    margin-bottom: var(--spacing-lg);
-}
-
-.benchmark-label {
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-medium);
-    color: var(--text-dark);
-}
-
-.benchmark-values {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
-.benchmark-score {
-    font-size: 1.2rem;
-    font-weight: var(--font-weight-bold);
-    color: var(--text-dark);
-}
-
-.benchmark-difference {
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-semibold);
+.esg-score-card.environmental .esg-score-value {
     color: #10B981;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 4px 8px;
-    border-radius: 12px;
+}
+
+.esg-score-card.social .esg-score-value {
+    color: #3B82F6;
+}
+
+.esg-score-card.governance .esg-score-value {
+    color: #8B5CF6;
+}
+
+.esg-score-card.overall .esg-score-value {
+    color: var(--primary-green);
+}
+
+.esg-score-label {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-medium);
 }
 
 .esg-chart-card {
@@ -761,55 +713,79 @@ const esgDashboardStyles = `
     position: relative;
 }
 
-.esg-radar-chart-container,
+.esg-trend-chart-container,
 .esg-breakdown-chart-container,
-.esg-comparison-chart-container,
-.esg-trend-chart-container {
+.peer-comparison-chart-container,
+.esg-factor-impact-chart-container {
     position: relative;
 }
 
-/* Trend indicator */
-.trend-indicator {
+.chart-annotation {
     position: absolute;
     top: 10px;
     right: 10px;
     z-index: 5;
 }
 
-.indicator-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.target-badge,
+.industry-badge {
+    background: rgba(0, 77, 64, 0.9);
+    color: white;
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.indicator-badge.positive {
-    background: rgba(16, 185, 129, 0.9);
-    color: white;
+.target-label,
+.industry-label {
+    font-weight: 500;
 }
 
-.indicator-badge.negative {
-    background: rgba(239, 68, 68, 0.9);
-    color: white;
+.target-value,
+.industry-value {
+    font-weight: 700;
+    color: #00bfa5;
 }
 
-.indicator-badge i {
-    font-size: 0.9rem;
+.esg-category-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.category-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.category-label {
+    color: var(--text-dark);
 }
 
 @media (min-width: 768px) {
-    .esg-metrics {
+    .esg-score-cards {
         grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 480px) {
-    .benchmark-values {
+    .esg-category-legend {
         flex-direction: column;
-        align-items: flex-end;
+        align-items: flex-start;
         gap: 5px;
     }
 }

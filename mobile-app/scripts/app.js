@@ -1,1310 +1,1023 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors on mobile">
-    <meta name="theme-color" content="#004d40">
-    
-    <title>FinergyCloud Mobile</title>
-    
-    <!-- PWA Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="FinergyCloud">
-    <meta name="application-name" content="FinergyCloud">
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/png" href="../assets/images/android-chrome-192x192.png">
-    <link rel="apple-touch-icon" href="../assets/images/android-chrome-192x192.png">
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/app.css">
-    
-    <!-- Chart.js for professional analytics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <div class="app-container">
-        <!-- Side Navigation -->
-        <nav id="side-nav" class="side-nav">
-            <div class="nav-header">
-                <div class="nav-brand">
-                    <h1>FinergyCloud</h1>
-                    <p>AI Risk Intelligence</p>
-                </div>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#dashboard" class="nav-link active" data-page="dashboard">
-                        <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#calculator" class="nav-link" data-page="calculator">
-                        <i class="bi bi-calculator"></i>
-                        <span>IRR Calculator</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link" data-page="projects">
-                        <i class="bi bi-kanban"></i>
-                        <span>Projects</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#esg" class="nav-link" data-page="esg">
-                        <i class="bi bi-shield-check"></i>
-                        <span>ESG Scoring</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#blog" class="nav-link" data-page="blog">
-                        <i class="bi bi-journal-text"></i>
-                        <span>Blog</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#xgboost" class="nav-link" data-page="xgboost">
-                        <i class="bi bi-cpu"></i>
-                        <span>XGBoost Model</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="nav-footer">
-                <button class="upgrade-btn">
-                    <i class="bi bi-star"></i>
-                    <span>Upgrade to Pro</span>
-                </button>
-                <div class="user-info">
-                    <div class="user-avatar">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                    <div class="user-details">
-                        <h3>Demo User</h3>
-                        <p>demo@finergycloud.com</p>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div id="nav-overlay" class="nav-overlay"></div>
+// FinergyCloud Mobile App - Main Application Script
+
+class FinergyCloudApp {
+    constructor() {
+        this.currentPage = 'dashboard';
+        this.isNavOpen = false;
+        this.userPreferences = this.loadUserPreferences();
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.setupNavigation();
+        this.setupPageSwitching();
+        this.initializePages();
+        this.checkForUpdates();
+        this.setupOfflineSupport();
+        this.setupTheme();
+       this.setupLegalNavigation();
+        console.log('FinergyCloud Mobile App initialized');
+    }
+
+    setupEventListeners() {
+        // Menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navOverlay = document.getElementById('nav-overlay');
+        const sideNav = document.getElementById('side-nav');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => this.toggleNavigation());
+        }
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', () => this.closeNavigation());
+        }
+
+        // Close navigation when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth >= 1024) return; // Don't close on desktop
+            
+            if (sideNav && menuToggle && !sideNav.contains(e.target) && !menuToggle.contains(e.target) && this.isNavOpen) {
+                this.closeNavigation();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                this.closeNavigation();
+            }
+        });
+
+        // Handle escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isNavOpen) {
+                this.closeNavigation();
+            }
+        });
+
+        // Handle pull-to-refresh
+        this.setupPullToRefresh();
+
+        // Handle online/offline status
+        window.addEventListener('online', () => this.handleOnlineStatus(true));
+        window.addEventListener('offline', () => this.handleOnlineStatus(false));
+    }
+
+    setupNavigation() {
+        // Side navigation links
+        const navLinks = document.querySelectorAll('.nav-link[data-page]');
         
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <button id="menu-toggle" class="menu-btn" aria-label="Menu">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="header-brand">
-                    <h1 class="header-title">Dashboard</h1>
-                    <p class="header-subtitle">Welcome back</p>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="notification-btn" aria-label="Notifications">
-                    <i class="bi bi-bell"></i>
-                    <span class="notification-badge">3</span>
-                </button>
-                <button class="profile-btn" aria-label="Profile">
-                    <i class="bi bi-person-circle"></i>
-                </button>
-            </div>
-        </header>
+        // Add analytics link to side navigation if not already present
+        const navMenu = document.querySelector('.nav-menu');
+        if (navMenu && !document.querySelector('.nav-link[data-page="analytics"]')) {
+            const analyticsNavItem = document.createElement('li');
+            analyticsNavItem.className = 'nav-item';
+            analyticsNavItem.innerHTML = `
+                <a href="#analytics" class="nav-link" data-page="analytics">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Analytics</span>
+                </a>
+            `;
+            
+            // Insert after dashboard
+            const dashboardNavItem = document.querySelector('.nav-link[data-page="dashboard"]').parentNode;
+            if (dashboardNavItem && dashboardNavItem.nextSibling) {
+                navMenu.insertBefore(analyticsNavItem, dashboardNavItem.nextSibling);
+            } else {
+                navMenu.appendChild(analyticsNavItem);
+            }
+        }
         
-        <!-- Main Content -->
-        <main id="main-content" class="main-content">
-            <!-- Dashboard Page -->
-            <div id="dashboard-page" class="page active">
-                <div class="page-header">
-                    <h2>Overview</h2>
-                    <p>Your renewable energy investment insights</p>
-                </div>
-                
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="bi bi-graph-up"></i>
-                        </div>
-                        <div class="metric-value">15.2%</div>
-                        <div class="metric-label">Average IRR</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>2.3%</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div class="metric-value">8.7</div>
-                        <div class="metric-label">ESG Score</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>0.5</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="bi bi-currency-exchange"></i>
-                        </div>
-                        <div class="metric-value">₦120M+</div>
-                        <div class="metric-label">Analyzed Value</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-up"></i>
-                            <span>₦20M</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i class="bi bi-exclamation-triangle"></i>
-                        </div>
-                        <div class="metric-value">Low</div>
-                        <div class="metric-label">Risk Level</div>
-                        <div class="metric-change positive">
-                            <i class="bi bi-arrow-down"></i>
-                            <span>Improved</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-header">
-                    <h3>Recent Projects</h3>
-                    <a href="#projects" class="section-action" data-page="projects">View All</a>
-                </div>
-                
-                <div class="project-list">
-                    <div class="project-card">
-                        <div class="project-type solar">
-                            <i class="bi bi-sun"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Lagos Solar Farm</h4>
-                            <p>5.0 MW • Lagos, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">16.8%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.9</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Low</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status active">
-                            <span>Active</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type wind">
-                            <i class="bi bi-wind"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Abuja Wind Farm</h4>
-                            <p>2.5 MW • Abuja, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">14.5%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.5</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Medium</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status pending">
-                            <span>Pending</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type solar">
-                            <i class="bi bi-sun"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Kano Solar Array</h4>
-                            <p>3.2 MW • Kano, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">15.2%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.8</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Low</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status completed">
-                            <span>Completed</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-header">
-                    <h3>Quick Actions</h3>
-                </div>
-                
-                <div class="action-grid">
-                    <div class="action-card" data-page="calculator">
-                        <div class="action-icon">
-                            <i class="bi bi-calculator"></i>
-                        </div>
-                        <h4>Calculate IRR</h4>
-                        <p>Run financial simulations</p>
-                    </div>
-                    <div class="action-card" data-page="esg">
-                        <div class="action-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h4>ESG Scoring</h4>
-                        <p>Assess sustainability metrics</p>
-                    </div>
-                    <div class="action-card" data-page="projects">
-                        <div class="action-icon">
-                            <i class="bi bi-plus-circle"></i>
-                        </div>
-                        <h4>New Project</h4>
-                        <p>Add investment opportunity</p>
-                    </div>
-                    <div class="action-card" data-page="xgboost">
-                        <div class="action-icon">
-                            <i class="bi bi-cpu"></i>
-                        </div>
-                        <h4>AI Prediction</h4>
-                        <p>Get risk intelligence</p>
-                    </div>
-                </div>
-                
-                <div class="section-header">
-                    <h3>Market Insights</h3>
-                </div>
-                
-                <div class="insights-card">
-                    <div class="insights-header">
-                        <h4>Renewable Energy Trends</h4>
-                        <span class="insights-date">Updated today</span>
-                    </div>
-                    <div class="insights-content">
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-sun"></i>
-                            </div>
-                            <div class="insight-text">
-                                <h5>Solar PV Costs Declining</h5>
-                                <p>Solar PV module prices have decreased by 7.5% in the last quarter, improving project economics.</p>
-                            </div>
-                        </div>
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-currency-exchange"></i>
-                            </div>
-                            <div class="insight-text">
-                                <h5>Financing Rates Stabilizing</h5>
-                                <p>Interest rates for renewable projects have stabilized at 8-10% in emerging markets.</p>
-                            </div>
-                        </div>
-                        <div class="insight-item">
-                            <div class="insight-icon">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                            <div class="insight-text">
-                                <h5>New Regulatory Framework</h5>
-                                <p>Nigeria's energy commission has approved new net metering regulations for solar projects.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // Add analytics to bottom navigation if not already present
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (bottomNav && !document.querySelector('.nav-btn[data-page="analytics"]')) {
+            const analyticsNavBtn = document.createElement('button');
+            analyticsNavBtn.className = 'nav-btn';
+            analyticsNavBtn.setAttribute('data-page', 'analytics');
+            analyticsNavBtn.innerHTML = `
+                <i class="bi bi-graph-up"></i>
+                <span>Analytics</span>
+            `;
             
-            <!-- Analytics Dashboard Page -->
-            <div id="analytics-page" class="page">
-                <div class="page-header">
-                    <h2>Analytics Dashboard</h2>
-                    <p>Comprehensive investment intelligence</p>
-                </div>
-                
-                <div class="analytics-container">
-                    <!-- Key Metrics -->
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="metric-value">15.2%</div>
-                            <div class="metric-label">Average IRR</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>2.3%</span>
-                            </div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="metric-value">8.7</div>
-                            <div class="metric-label">ESG Score</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>0.5</span>
-                            </div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-currency-exchange"></i>
-                            </div>
-                            <div class="metric-value">₦120M+</div>
-                            <div class="metric-label">Analyzed Value</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>₦20M</span>
-                            </div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-exclamation-triangle"></i>
-                            </div>
-                            <div class="metric-value">Low</div>
-                            <div class="metric-label">Risk Level</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-down"></i>
-                                <span>Improved</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dashboard Carousel -->
-                    <div class="dashboard-carousel">
-                        <div class="dashboard-slide active">
-                            <img src="../assets/images/dashboards/executive-summary-mobile.png" alt="Executive Summary" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Executive Summary</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/financial-analysis-mobile.png" alt="Financial Analysis" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Financial Analysis</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/esg-scoring-mobile.png" alt="ESG Scoring" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">ESG Scoring</div>
-                        </div>
-                        <div class="dashboard-slide">
-                            <img src="../assets/images/dashboards/risk-assessment-mobile.png" alt="Risk Assessment" class="img-fluid rounded-3 shadow-lg">
-                            <div class="slide-caption">Risk Assessment</div>
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-controls">
-                        <button class="dashboard-control prev">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        <div class="dashboard-indicators">
-                            <span class="indicator active"></span>
-                            <span class="indicator"></span>
-                            <span class="indicator"></span>
-                            <span class="indicator"></span>
-                        </div>
-                        <button class="dashboard-control next">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    </div>
-                    
-                    <!-- Portfolio Analysis -->
-                    <div class="section-header">
-                        <h3>Portfolio Analysis</h3>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Portfolio Distribution</h4>
-                        <div class="chart-container" id="portfolio-chart"></div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Performance Trend</h4>
-                        <div class="chart-container" id="performance-chart"></div>
-                    </div>
-                    
-                    <!-- Risk Analysis -->
-                    <div class="section-header">
-                        <h3>Risk Analysis</h3>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Risk Distribution</h4>
-                        <div class="chart-container" id="risk-chart"></div>
-                    </div>
-                    
-                    <div class="dashboard-actions">
-                        <button class="btn btn-primary btn-block">
-                            <i class="bi bi-download me-2"></i>Export as PDF
-                        </button>
-                        <button class="btn btn-outline-primary btn-block">
-                            <i class="bi bi-share me-2"></i>Share Dashboard
-                        </button>
-                    </div>
-                </div>
-            </div>
+            // Insert after dashboard
+            const dashboardNavBtn = document.querySelector('.nav-btn[data-page="dashboard"]');
+            if (dashboardNavBtn && dashboardNavBtn.nextSibling) {
+                bottomNav.insertBefore(analyticsNavBtn, dashboardNavBtn.nextSibling);
+            } else {
+                bottomNav.appendChild(analyticsNavBtn);
+            }
             
-            <!-- Analytics Page -->
-            <div id="analytics-page" class="page">
-                <div class="page-header">
-                    <h2>Analytics Dashboard</h2>
-                    <p>Comprehensive investment intelligence</p>
-                </div>
-                
-                <div class="analytics-container">
-                    <!-- Portfolio Analysis Section -->
-                    <div class="analytics-section">
-                        <h3 class="analytics-section-title">Portfolio Analysis</h3>
-                        
-                        <div class="analytics-metrics">
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="total-capacity">16.7 MW</div>
-                                <div class="analytics-metric-label">Total Capacity</div>
-                            </div>
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="weighted-irr">15.2%</div>
-                                <div class="analytics-metric-label">Weighted IRR</div>
-                            </div>
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="project-count">5</div>
-                                <div class="analytics-metric-label">Projects</div>
-                            </div>
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="low-risk-percentage">60%</div>
-                                <div class="analytics-metric-label">Low Risk Projects</div>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-chart-card">
-                            <h4 class="analytics-chart-title">Portfolio Distribution by Technology</h4>
-                            <div class="analytics-chart-container portfolio-distribution-chart-container">
-                                <canvas id="portfolio-distribution-chart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-chart-card">
-                            <h4 class="analytics-chart-title">Portfolio Performance Trend</h4>
-                            <div class="analytics-chart-container portfolio-performance-chart-container">
-                                <canvas id="portfolio-performance-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Risk Analysis Section -->
-                    <div class="analytics-section">
-                        <h3 class="analytics-section-title">Risk Analysis</h3>
-                        
-                        <div class="analytics-metrics">
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="avg-risk-score">7.8</div>
-                                <div class="analytics-metric-label">Avg. Risk Score</div>
-                            </div>
-                            <div class="analytics-metric-card">
-                                <div class="analytics-metric-value" id="high-impact-factors">3</div>
-                                <div class="analytics-metric-label">High Impact Factors</div>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-chart-card">
-                            <h4 class="analytics-chart-title">Risk Level Distribution</h4>
-                            <div class="analytics-chart-container risk-distribution-chart-container">
-                                <canvas id="risk-distribution-chart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-chart-card">
-                            <h4 class="analytics-chart-title">Risk Assessment Matrix</h4>
-                            <div class="analytics-chart-container risk-matrix-chart-container">
-                                <div id="risk-matrix-chart"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="analytics-chart-card">
-                            <h4 class="analytics-chart-title">Risk Trend Analysis</h4>
-                            <div class="analytics-chart-container risk-trend-chart-container">
-                                <canvas id="risk-trend-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- IRR Calculator Page -->
-            <div id="calculator-page" class="page">
-                <div class="page-header">
-                    <h2>IRR Calculator</h2>
-                    <p>Simulate investment returns</p>
-                </div>
-                
-                <div class="calculator-form card">
-                    <div class="form-group">
-                        <label for="project-type" class="form-label">Project Type</label>
-                        <select id="project-type" class="form-control">
-                            <option value="solar">Solar PV</option>
-                            <option value="wind">Wind</option>
-                            <option value="hydro">Hydro</option>
-                            <option value="biomass">Biomass</option>
-                            <option value="geothermal">Geothermal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="currency" class="form-label">Currency</label>
-                        <select id="currency" class="form-control">
-                            <option value="NGN">Nigerian Naira (₦)</option>
-                            <option value="USD">US Dollar ($)</option>
-                            <option value="EUR">Euro (€)</option>
-                            <option value="GBP">British Pound (£)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="initial-investment" class="form-label">Initial Investment</label>
-                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 10000000" min="0" step="1000">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-duration" class="form-label">Project Duration (Years)</label>
-                        <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="50">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
-                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 1500000" min="0" step="1000">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="terminal-value" class="form-label">Terminal Value</label>
-                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 5000000" min="0" step="1000">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="discount-rate" class="form-label">Discount Rate (%)</label>
-                        <input type="number" id="discount-rate" class="form-control" value="10" min="0" max="100" step="0.1">
-                    </div>
-                    
-                    <div class="calculation-preview">
-                        <div class="preview-metric">
-                            <span>Simple ROI</span>
-                            <span class="text-primary">0.0%</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary calculate-btn" onclick="calculateIRR()">
-                        <i class="bi bi-calculator"></i>
-                        Calculate IRR
-                    </button>
-                </div>
-                
-                <div class="calculator-results card">
-                    <h3>Calculation Results</h3>
-                    
-                    <div class="result-metrics">
-                        <div class="result-metric">
-                            <div class="result-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="result-value" id="irr-result">--</div>
-                            <div class="result-label">Internal Rate of Return</div>
-                        </div>
-                        <div class="result-metric">
-                            <div class="result-icon">
-                                <i class="bi bi-cash-stack"></i>
-                            </div>
-                            <div class="result-value" id="npv-result">--</div>
-                            <div class="result-label">Net Present Value</div>
-                        </div>
-                        <div class="result-metric">
-                            <div class="result-icon">
-                                <i class="bi bi-calendar-check"></i>
-                            </div>
-                            <div class="result-value" id="payback-result">--</div>
-                            <div class="result-label">Payback Period</div>
-                        </div>
-                    </div>
-                    
-                    <div id="cashflow-chart" class="chart-placeholder">
-                        <i class="bi bi-graph-up"></i>
-                        <p>Cash flow chart will appear here after calculation</p>
-                    </div>
-                </div>
-                
-                <!-- IRR Simulation Dashboard -->
-                <div class="irr-dashboard-container">
-                    <div class="section-header">
-                        <h3>IRR Simulation Dashboard</h3>
-                    </div>
-                    
-                    <!-- Key Metrics -->
-                    <div class="irr-metrics">
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">15.2%</div>
-                            <div class="irr-metric-label">Average Simulated IRR</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">14.8%</div>
-                            <div class="irr-metric-label">Median Simulated IRR</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">10,000+</div>
-                            <div class="irr-metric-label">Simulations Run</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">85%</div>
-                            <div class="irr-metric-label">Prob. of >12% IRR</div>
-                        </div>
-                    </div>
-                    
-                    <!-- IRR Distribution Chart -->
-                    <div class="irr-chart-card">
-                        <h4 class="irr-chart-title">IRR Distribution Histogram</h4>
-                        <div class="irr-chart-container">
-                            <canvas id="irr-distribution-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- IRR CDF Chart -->
-                    <div class="irr-chart-card">
-                        <h4 class="irr-chart-title">Cumulative Distribution Function (CDF)</h4>
-                        <div class="irr-chart-container">
-                            <canvas id="irr-cdf-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Sensitivity Analysis Chart -->
-                    <div class="irr-chart-card">
-                        <h4 class="irr-chart-title">Sensitivity Analysis (Tornado Chart)</h4>
-                        <div class="irr-chart-container">
-                            <canvas id="sensitivity-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Scenario Comparison Chart -->
-                    <div class="irr-chart-card">
-                        <h4 class="irr-chart-title">Scenario Comparison</h4>
-                        <div class="irr-chart-container">
-                            <canvas id="scenario-comparison-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Interactive Controls -->
-                    <div class="irr-controls">
-                        <div class="irr-control-group">
-                            <label for="scenario-selector" class="irr-control-label">Scenario Selector</label>
-                            <select id="scenario-selector" class="irr-control-select">
-                                <option>Base Case</option>
-                                <option>Optimistic</option>
-                                <option>Pessimistic</option>
-                                <option>Custom Scenario</option>
-                            </select>
-                        </div>
-                        <div class="irr-control-group">
-                            <label for="target-irr" class="irr-control-label">Target IRR (%)</label>
-                            <input type="number" id="target-irr" value="12" class="irr-control-input">
-                        </div>
-                        <div class="irr-control-group">
-                            <label for="confidence-level" class="irr-control-label">VaR Confidence Level (%)</label>
-                            <select id="confidence-level" class="irr-control-select">
-                                <option>90%</option>
-                                <option selected>95%</option>
-                                <option>99%</option>
-                            </select>
-                        </div>
-                        <div class="irr-action-buttons">
-                            <button class="btn btn-primary">
-                                <i class="bi bi-play-circle me-2"></i>Run New Simulation
-                            </button>
-                            <button class="btn btn-secondary">
-                                <i class="bi bi-download me-2"></i>Export Results
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Projects Page -->
-            <div id="projects-page" class="page">
-                <div class="page-header">
-                    <h2>Projects</h2>
-                    <p>Manage your investment portfolio</p>
-                </div>
-                
-                <div class="project-filters">
-                    <div class="filter-group">
-                        <label for="project-filter" class="filter-label">Filter</label>
-                        <select id="project-filter" class="filter-select">
-                            <option value="all">All Projects</option>
-                            <option value="active">Active</option>
-                            <option value="pending">Pending</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="project-sort" class="filter-label">Sort By</label>
-                        <select id="project-sort" class="filter-select">
-                            <option value="date-desc">Newest First</option>
-                            <option value="date-asc">Oldest First</option>
-                            <option value="irr-desc">Highest IRR</option>
-                            <option value="irr-asc">Lowest IRR</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary add-project-btn">
-                        <i class="bi bi-plus"></i>
-                        Add Project
-                    </button>
-                </div>
-                
-                <div class="project-list">
-                    <div class="project-card">
-                        <div class="project-type solar">
-                            <i class="bi bi-sun"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Lagos Solar Farm</h4>
-                            <p>5.0 MW • Lagos, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">16.8%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.9</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Low</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status active">
-                            <span>Active</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type wind">
-                            <i class="bi bi-wind"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Abuja Wind Farm</h4>
-                            <p>2.5 MW • Abuja, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">14.5%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.5</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Medium</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status pending">
-                            <span>Pending</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type solar">
-                            <i class="bi bi-sun"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Kano Solar Array</h4>
-                            <p>3.2 MW • Kano, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">15.2%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.8</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Low</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status completed">
-                            <span>Completed</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type hydro">
-                            <i class="bi bi-water"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Port Harcourt Hydro</h4>
-                            <p>1.8 MW • Port Harcourt, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">13.8%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.8</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Medium</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status active">
-                            <span>Active</span>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-type solar">
-                            <i class="bi bi-sun"></i>
-                        </div>
-                        <div class="project-info">
-                            <h4>Ibadan Solar Park</h4>
-                            <p>4.2 MW • Ibadan, Nigeria</p>
-                            <div class="project-metrics">
-                                <div class="project-metric">
-                                    <span class="metric-label">IRR</span>
-                                    <span class="metric-value">15.9%</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">ESG</span>
-                                    <span class="metric-value">8.9</span>
-                                </div>
-                                <div class="project-metric">
-                                    <span class="metric-label">Risk</span>
-                                    <span class="metric-value">Low</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-status active">
-                            <span>Active</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ESG Scoring Page -->
-            <div id="esg-page" class="page">
-                <div class="page-header">
-                    <h2>ESG Analytics</h2>
-                    <p>Comprehensive sustainability assessment</p>
-                </div>
-                
-                <div class="esg-dashboard-container">
-                    <div class="esg-score-cards">
-                        <div class="esg-score-card environmental">
-                            <div class="esg-score-value" id="environmental-score">8.7</div>
-                            <div class="esg-score-label">Environmental</div>
-                        </div>
-                        <div class="esg-score-card social">
-                            <div class="esg-score-value" id="social-score">7.9</div>
-                            <div class="esg-score-label">Social</div>
-                        </div>
-                        <div class="esg-score-card governance">
-                            <div class="esg-score-value" id="governance-score">8.4</div>
-                            <div class="esg-score-label">Governance</div>
-                        </div>
-                        <div class="esg-score-card overall">
-                            <div class="esg-score-value" id="overall-esg-score">8.4</div>
-                            <div class="esg-score-label">Overall ESG</div>
-                        </div>
-                    </div>
-                    
-                    <div class="esg-chart-card">
-                        <h4 class="esg-chart-title">ESG Score Trend</h4>
-                        <div class="esg-chart-container esg-trend-chart-container">
-                            <canvas id="esg-trend-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="esg-chart-card">
-                        <h4 class="esg-chart-title">ESG Score Breakdown</h4>
-                        <div class="esg-chart-container esg-breakdown-chart-container">
-                            <canvas id="esg-breakdown-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="esg-chart-card">
-                        <h4 class="esg-chart-title">Peer Comparison</h4>
-                        <div class="esg-chart-container peer-comparison-chart-container">
-                            <canvas id="peer-comparison-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <div class="esg-chart-card">
-                        <h4 class="esg-chart-title">ESG Factor Impact</h4>
-                        <div class="esg-chart-container esg-factor-impact-chart-container">
-                            <canvas id="esg-factor-impact-chart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Blog Page -->
-            <div id="blog-page" class="page">
-                <div class="page-header">
-                    <h2>Blog</h2>
-                    <p>Industry insights & updates</p>
-                </div>
-                
-                <div class="featured-post-mobile">
-                    <div class="post-image">
-                        <img src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg" alt="XGBoost Model Development" class="img-fluid rounded-3">
-                        <div class="post-category">AI & Technology</div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <span><i class="bi bi-calendar"></i> Dec 18, 2024</span>
-                            <span><i class="bi bi-clock"></i> 8 min read</span>
-                        </div>
-                        <h3>Building Our XGBoost Model: How We're Predicting Solar Project Success in Nigeria</h3>
-                        <p>Our XGBoost model achieves 87% accuracy in predicting solar project success in Nigeria's complex market. Learn how we built it and the surprising insights we discovered.</p>
-                        <div class="post-actions">
-                            <button class="btn btn-primary" onclick="mobileBlog.readPost('post-xgboost')">
-                                <i class="bi bi-book-open me-2"></i>Read Article
-                            </button>
-                            <button class="btn btn-outline-primary" onclick="mobileBlog.shareOnLinkedIn('post-xgboost')">
-                                <i class="bi bi-linkedin me-2"></i>Share
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-header">
-                    <h3>Recent Articles</h3>
-                </div>
-                
-                <div class="blog-posts-mobile">
-                    <!-- Blog posts will be loaded dynamically -->
-                </div>
-                
-                <div class="newsletter-mobile">
-                    <h3>Subscribe to Updates</h3>
-                    <p>Get the latest renewable energy investment insights delivered to your inbox</p>
-                    <div class="newsletter-form">
-                        <input type="email" id="newsletter-email" class="form-control" placeholder="Your email address">
-                        <button class="btn btn-primary" onclick="mobileBlog.subscribeNewsletter()">
-                            <i class="bi bi-envelope"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- XGBoost Model Page -->
-            <div id="xgboost-page" class="page">
-                <div class="page-header">
-                    <h2>XGBoost Model</h2>
-                    <p>AI-powered risk intelligence</p>
-                </div>
-                
-                <div class="card">
-                    <div id="model-status">
-                        <div class="model-status-badge warning">
-                            <i class="bi bi-hourglass-split"></i>
-                            <span>Loading Model...</span>
-                        </div>
-                    </div>
-                    
-                    <h3>Model Performance</h3>
-                    <div class="model-stats">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="model-stat auc-stat">
-                                    <div class="model-stat-value">92%</div>
-                                    <div class="model-stat-label">AUC Score</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="model-stat accuracy-stat">
-                                    <div class="model-stat-value">87%</div>
-                                    <div class="model-stat-label">Accuracy</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="model-stat features-stat">
-                                    <div class="model-stat-value">14</div>
-                                    <div class="model-stat-label">Key Features</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card mb-4">
-                        <div class="card-header bg-light">
-                            <h5 class="mb-0">Feature Importance</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="feature-importance">
-                                <!-- Feature importance bars will be loaded dynamically -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card mb-4">
-                        <div class="card-header bg-light">
-                            <h5 class="mb-0">Model Performance</h5>
-                        </div>
-                        <div class="card-body">
-                            <div id="model-performance-chart" class="chart-container">
-                                <canvas id="roc-curve-chart" height="250"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>Run Prediction</h3>
-                    <div class="form-group">
-                        <label for="project-type-xgboost" class="form-label">Project Type</label>
-                        <select id="project-type-xgboost" class="form-control">
-                            <option value="solar">Solar PV</option>
-                            <option value="wind">Wind</option>
-                            <option value="hydro">Hydro</option>
-                            <option value="biomass">Biomass</option>
-                            <option value="geothermal">Geothermal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-location" class="form-label">Location</label>
-                        <select id="project-location" class="form-control">
-                            <option value="lagos">Lagos</option>
-                            <option value="abuja">Abuja</option>
-                            <option value="kano">Kano</option>
-                            <option value="port_harcourt">Port Harcourt</option>
-                            <option value="ibadan">Ibadan</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="grid-stability" class="form-label">Grid Stability</label>
-                        <select id="grid-stability" class="form-control">
-                            <option value="high">High</option>
-                            <option value="medium" selected>Medium</option>
-                            <option value="low">Low</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="community-engagement" class="form-label">Community Engagement</label>
-                        <select id="community-engagement" class="form-control">
-                            <option value="extensive">Extensive</option>
-                            <option value="moderate" selected>Moderate</option>
-                            <option value="minimal">Minimal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-size" class="form-label">Project Size (MW)</label>
-                        <input type="number" id="project-size" class="form-control" value="5" min="0.1" step="0.1">
-                    </div>
-                    
-                    <button id="predict-btn" class="btn btn-primary">
-                        <i class="bi bi-cpu"></i>
-                        Run AI Prediction
-                    </button>
-                </div>
-                
-                <div id="prediction-result" style="display: none;">
-                    <div class="card mb-4 prediction-result-card">
-                        <div class="card-header bg-light">
-                            <h5 class="mb-0">Prediction Results</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="prediction-metrics">
-                                <div class="prediction-metric">
-                                    <div class="prediction-icon">
-                                        <i class="bi bi-graph-up"></i>
-                                    </div>
-                                    <div class="prediction-value" id="predicted-irr">--</div>
-                                    <div class="prediction-label">Predicted IRR</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-icon">
-                                        <i class="bi bi-percent"></i>
-                                    </div>
-                                    <div class="prediction-value" id="success-probability">--</div>
-                                    <div class="prediction-label">Success Probability</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-icon">
-                                        <i class="bi bi-shield-check"></i>
-                                    </div>
-                                    <div class="prediction-value" id="risk-level">--</div>
-                                    <div class="prediction-label">Risk Level</div>
-                                </div>
-                                <div class="prediction-metric">
-                                    <div class="prediction-icon">
-                                        <i class="bi bi-check-circle"></i>
-                                    </div>
-                                    <div class="prediction-value" id="confidence-score">--</div>
-                                    <div class="prediction-label">Confidence Score</div>
-                                </div>
-                            </div>
-                            
-                            <div class="key-factors">
-                                <h4>Key Factors</h4>
-                                <div id="key-factors-list">
-                                    <!-- Key factors will be loaded dynamically -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>Case Studies</h3>
-                    
-                    <div class="case-study">
-                        <h4>Lagos Solar Farm (5MW)</h4>
-                        <p>Our model accurately predicted the IRR within 0.3%, identifying grid stability as the critical success factor.</p>
-                        <div class="case-study-metrics">
-                            <div class="case-metric">
-                                <span class="metric-label">Predicted IRR</span>
-                                <span class="metric-value">16.5%</span>
-                            </div>
-                            <div class="case-metric">
-                                <span class="metric-label">Actual IRR</span>
-                                <span class="metric-value">16.8%</span>
-                            </div>
-                            <div class="case-metric">
-                                <span class="metric-label">Success Probability</span>
-                                <span class="metric-value">92%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Legal Page -->
-            <div id="legal-page" class="page">
-                <div class="page-header">
-                    <h2>Legal Documents</h2>
-                    <p>Terms, privacy, and security</p>
-                </div>
-                
-                <div class="legal-cards">
-                    <div class="legal-link-card" onclick="window.location.href='privacy.html'">
-                        <div class="legal-icon">
-                            <i class="bi bi-shield-lock"></i>
-                        </div>
-                        <div class="legal-content">
-                            <h3>Privacy Policy</h3>
-                            <p>Learn how we protect your data and privacy</p>
-                        </div>
-                        <div class="legal-arrow">
-                            <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="legal-link-card" onclick="window.location.href='terms.html'">
-                        <div class="legal-icon">
-                            <i class="bi bi-file-text"></i>
-                        </div>
-                        <div class="legal-content">
-                            <h3>Terms of Service</h3>
-                            <p>Terms and conditions for using our platform</p>
-                        </div>
-                        <div class="legal-arrow">
-                            <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="legal-link-card" onclick="window.location.href='security.html'">
-                        <div class="legal-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div class="legal-content">
-                            <h3>Security Policy</h3>
-                            <p>How we keep your information secure</p>
-                        </div>
-                        <div class="legal-arrow">
-                            <i class="bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>Data Protection</h3>
-                    <p>FinergyCloud is committed to protecting your data and privacy. We implement industry-standard security measures and follow best practices for data protection.</p>
-                    <p>For any questions or concerns regarding our legal policies, please contact us at <a href="mailto:legal@finergycloud.com">legal@finergycloud.com</a>.</p>
-                </div>
-            </div>
-        </main>
+            // Add event listener
+            analyticsNavBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.navigateToPage('analytics');
+            });
+        }
         
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-page="dashboard">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </button>
-            <button class="nav-btn" data-page="calculator">
-                <i class="bi bi-calculator"></i>
-                <span>Calculator</span>
-            </button>
-            <button class="nav-btn" data-page="projects">
-                <i class="bi bi-kanban"></i>
-                <span>Projects</span>
-            </button>
-            <button class="nav-btn" data-page="esg">
-                <i class="bi bi-shield-check"></i>
-                <span>ESG</span>
-            </button>
-            <button class="nav-btn" data-page="blog">
-                <i class="bi bi-journal-text"></i>
-                <span>Blog</span>
-            </button>
-        </nav>
-    </div>
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                this.navigateToPage(page);
+                if (window.innerWidth < 1024) {
+                    this.closeNavigation();
+                }
+            });
+        });
+
+        // Bottom navigation buttons
+        const navBtns = document.querySelectorAll('.nav-btn[data-page]');
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = btn.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
+
+        // Quick action cards
+        const actionCards = document.querySelectorAll('.action-card[data-page]');
+        actionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const page = card.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
+
+        // Section actions
+        const sectionActions = document.querySelectorAll('.section-action[data-page]');
+        sectionActions.forEach(action => {
+            action.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = action.getAttribute('data-page');
+                this.navigateToPage(page);
+            });
+        });
+    }
+
+    setupPageSwitching() {
+        // Handle hash changes for deep linking
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && this.isValidPage(hash)) {
+                this.navigateToPage(hash);
+            }
+        });
+
+        // Handle initial page load
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash && this.isValidPage(initialHash)) {
+            this.navigateToPage(initialHash);
+        }
+    }
+
+    toggleNavigation() {
+        if (this.isNavOpen) {
+            this.closeNavigation();
+        } else {
+            this.openNavigation();
+        }
+    }
+
+    openNavigation() {
+        const sideNav = document.getElementById('side-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        
+        if (sideNav && navOverlay) {
+            sideNav.classList.add('open');
+            navOverlay.classList.add('active');
+            this.isNavOpen = true;
+            
+            // Prevent body scroll when nav is open
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    closeNavigation() {
+        const sideNav = document.getElementById('side-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+        
+        if (sideNav && navOverlay) {
+            sideNav.classList.remove('open');
+            navOverlay.classList.remove('active');
+            this.isNavOpen = false;
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+    }
+
+    navigateToPage(pageId) {
+        if (!this.isValidPage(pageId)) {
+            console.warn(`Invalid page: ${pageId}`);
+            return;
+        }
+
+        // Add page transition effect
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.classList.add('page-transition');
+            setTimeout(() => {
+                mainContent.classList.remove('page-transition');
+            }, 300);
+        }
+
+        // Hide all pages
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
+
+        // Show target page
+        const targetPage = document.getElementById(`${pageId}-page`);
+        if (targetPage) {
+            targetPage.classList.add('active');
+            this.currentPage = pageId;
+            
+            // Update navigation states
+            this.updateNavigationState(pageId);
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // Initialize page-specific functionality
+            this.initializePage(pageId);
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Save last visited page
+            this.saveUserPreference('lastPage', pageId);
+            
+            console.log(`Navigated to page: ${pageId}`);
+            
+            // Dispatch page activated event
+            const event = new CustomEvent('pageActivated', {
+                detail: { pageId: pageId }
+            });
+            document.dispatchEvent(event);
+        }
+    }
+
+    updateNavigationState(activePageId) {
+        // Update side navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === activePageId) {
+                link.classList.add('active');
+            }
+        });
+
+        // Update bottom navigation
+        const navBtns = document.querySelectorAll('.nav-btn');
+        navBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-page') === activePageId) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    isValidPage(pageId) {
+       const validPages = ['dashboard', 'calculator', 'projects', 'esg', 'blog', 'xgboost', 'legal', 'analytics'];
+        return validPages.includes(pageId);
+    }
+
+    initializePages() {
+        // Initialize all pages that need setup
+        this.initializePage('dashboard');
+        this.initializePage('analytics');
+        this.initializePage('calculator');
+        this.initializePage('projects');
+        this.initializePage('esg');
+        this.initializePage('blog');
+        this.initializePage('xgboost');
+       this.initializePage('legal');
+       this.initializePage('analytics');
+        
+        // Restore last visited page if available
+        const lastPage = this.userPreferences.lastPage;
+        if (lastPage && this.isValidPage(lastPage)) {
+            this.navigateToPage(lastPage);
+        }
+    }
+
+    initializePage(pageId) {
+        switch (pageId) {
+            case 'dashboard':
+                this.initializeDashboard();
+                break;
+            case 'calculator':
+                this.initializeCalculator();
+                break;
+            case 'projects':
+                this.initializeProjects();
+                break;
+            case 'esg':
+                this.initializeESG();
+                break;
+            case 'blog':
+                this.initializeBlog();
+                break;
+            case 'xgboost':
+                this.initializeXGBoost();
+                break;
+           case 'legal':
+               this.initializeLegal();
+               break;
+          case 'analytics':
+              this.initializeAnalytics();
+              break;
+          case 'analytics':
+              this.initializeAnalytics();
+              break;
+        }
+    }
+
+    initializeDashboard() {
+        this.animateMetrics();
+        this.loadRecentProjects();
+        this.loadMarketInsights();
+    }
+
+    initializeCalculator() {
+        this.setupCalculatorValidation();
+        this.loadSavedCalculations();
+    }
+
+    initializeProjects() {
+        this.loadProjects();
+        this.setupProjectFilters();
+    }
+
+    initializeESG() {
+        this.setupESGCalculator();
+        this.loadESGBenchmarks();
+    }
+
+    initializeBlog() {
+        // Blog initialization is handled by blog-integration.js
+    }
     
-    <script src="scripts/app.js"></script>
-    <script src="scripts/calculator.js"></script>
-    <script src="scripts/charts.js"></script>
-    <script src="scripts/blog-integration.js"></script>
-    <script src="scripts/xgboost-model.js"></script>
-    <script src="scripts/esg-dashboard.js"></script>
-    <script src="scripts/analytics-dashboard.js"></script>
-    <script src="scripts/irr-dashboard.js"></script>
-    <script src="scripts/cross-platform-navigation.js"></script>
-    <script src="scripts/dashboard.js"></script>
-    <script src="scripts/email-integration.js"></script>
-</body>
-</html>
+    initializeXGBoost() {
+        // XGBoost initialization is handled by xgboost-model.js
+        if (window.xgboostModel) {
+            window.xgboostModel.refreshModelContent();
+        }
+    }
+
+    animateMetrics() {
+        const metrics = document.querySelectorAll('.metric-value');
+        metrics.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+            }, index * 100);
+        });
+    }
+
+    setupCalculatorValidation() {
+        const inputs = document.querySelectorAll('#calculator-page input[type="number"]');
+        inputs.forEach(input => {
+            // Add floating label effect
+            const label = input.previousElementSibling;
+            if (label && label.classList.contains('form-label')) {
+                input.addEventListener('focus', function() {
+                    label.style.transform = 'translateY(-25px) scale(0.8)';
+                    label.style.color = '#007bff';
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!input.value) {
+                        label.style.transform = 'translateY(0) scale(1)';
+                        label.style.color = '#343a40';
+                    }
+                });
+            }
+            
+            input.addEventListener('input', () => {
+                this.validateCalculatorInput(input);
+                this.updateCalculatorPreview();
+            });
+        });
+    }
+
+    validateCalculatorInput(input) {
+        const value = parseFloat(input.value);
+        const min = parseFloat(input.getAttribute('min')) || 0;
+        const max = parseFloat(input.getAttribute('max')) || Infinity;
+
+        input.classList.remove('valid', 'invalid');
+
+        if (isNaN(value) || value < min || value > max) {
+            input.classList.add('invalid');
+            return false;
+        } else {
+            input.classList.add('valid');
+            return true;
+        }
+    }
+
+    updateCalculatorPreview() {
+        // Get input values
+        const initialInvestment = parseFloat(document.getElementById('initial-investment')?.value) || 0;
+        const projectDuration = parseFloat(document.getElementById('project-duration')?.value) || 0;
+        const annualCashflow = parseFloat(document.getElementById('annual-cashflow')?.value) || 0;
+        
+        // Simple ROI calculation for preview
+        if (initialInvestment > 0 && projectDuration > 0 && annualCashflow > 0) {
+            const totalReturns = annualCashflow * projectDuration;
+            const simpleROI = ((totalReturns - initialInvestment) / initialInvestment) * 100;
+            
+            // Update preview element
+            const previewElement = document.querySelector('.calculation-preview');
+            if (previewElement) {
+                previewElement.innerHTML = `
+                    <div class="preview-metric">
+                        <span>Simple ROI: </span>
+                        <span class="text-primary">${simpleROI.toFixed(1)}%</span>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    loadSavedCalculations() {
+        // Load saved calculations from localStorage
+        const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
+        
+        // Display in UI if needed
+        console.log('Loaded saved calculations:', savedCalculations.length);
+    }
+
+    loadProjects() {
+        // In a real app, this would fetch from an API
+        console.log('Loading projects...');
+        
+        // Simulate loading state
+        const projectList = document.querySelector('.project-list');
+        if (projectList) {
+            projectList.classList.add('loading');
+            
+            setTimeout(() => {
+                projectList.classList.remove('loading');
+            }, 1000);
+        }
+    }
+
+    setupProjectFilters() {
+        // Setup project filtering functionality
+        console.log('Setting up project filters...');
+    }
+
+    setupESGCalculator() {
+        console.log('Initializing ESG dashboard...');
+        
+        // Initialize ESG dashboard if available
+        if (window.esgDashboard) {
+            window.esgDashboard.loadESGData();
+            window.esgDashboard.initializeCharts();
+        } else {
+            // Load ESG dashboard script if not already loaded
+            if (!document.querySelector('script[src="scripts/esg-dashboard.js"]')) {
+                const script = document.createElement('script');
+                script.src = 'scripts/esg-dashboard.js';
+                script.async = true;
+                document.head.appendChild(script);
+                
+                script.onload = () => {
+                    if (window.esgDashboard) {
+                        window.esgDashboard.loadESGData();
+                        window.esgDashboard.initializeCharts();
+                    }
+                };
+            }
+        }
+    }
+
+    loadESGBenchmarks() {
+        // Load ESG benchmarks
+        console.log('Loading ESG benchmarks...');
+    }
+    
+    initializeAnalytics() {
+        console.log('Initializing analytics page...');
+        this.loadAnalyticsData();
+        this.setupAnalyticsCharts();
+    }
+    
+    loadAnalyticsData() {
+        console.log('Loading analytics data...');
+        // In a real app, this would fetch data from an API
+        
+        // Simulate loading state
+        const analyticsContainer = document.querySelector('.analytics-container');
+        if (analyticsContainer) {
+            analyticsContainer.classList.add('loading');
+            
+            setTimeout(() => {
+                analyticsContainer.classList.remove('loading');
+                this.animateAnalyticsMetrics();
+            }, 1000);
+        }
+    }
+    
+    setupAnalyticsCharts() {
+        // Setup analytics charts
+        console.log('Setting up analytics charts...');
+        
+        // Initialize charts if they exist
+        if (window.chartsManager) {
+            const chartContainers = document.querySelectorAll('#analytics-page [id$="-chart"]');
+            chartContainers.forEach(container => {
+                window.chartsManager.createChart(container.id);
+            });
+        }
+    }
+    
+    animateAnalyticsMetrics() {
+        const metrics = document.querySelectorAll('#analytics-page .metric-value');
+        metrics.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+            }, index * 100);
+        });
+    }
+    initializeAnalytics() {
+        console.log('Initializing analytics page...');
+        this.loadAnalyticsData();
+        this.setupAnalyticsCharts();
+    }
+    
+    loadAnalyticsData() {
+        console.log('Loading analytics data...');
+        // In a real app, this would fetch data from an API
+        
+        // Simulate loading state
+        const analyticsContainer = document.querySelector('.analytics-container');
+        if (analyticsContainer) {
+            analyticsContainer.classList.add('loading');
+            
+            setTimeout(() => {
+                analyticsContainer.classList.remove('loading');
+                this.animateAnalyticsMetrics();
+            }, 1000);
+        }
+    }
+    
+    setupAnalyticsCharts() {
+        // Setup analytics charts
+        console.log('Setting up analytics charts...');
+        
+        // Initialize charts if they exist
+        if (window.chartsManager) {
+            const chartContainers = document.querySelectorAll('#analytics-page [id$="-chart"]');
+            chartContainers.forEach(container => {
+                window.chartsManager.createChart(container.id);
+            });
+        }
+    }
+    
+    animateAnalyticsMetrics() {
+        const metrics = document.querySelectorAll('#analytics-page .metric-value');
+        metrics.forEach((metric, index) => {
+            setTimeout(() => {
+                metric.style.animation = 'scaleIn 0.5s ease';
+            }, index * 100);
+        });
+    }
+
+    loadRecentProjects() {
+        // Load recent projects for dashboard
+        console.log('Loading recent projects for dashboard...');
+    }
+
+    loadMarketInsights() {
+        // Load market insights for dashboard
+        console.log('Loading market insights...');
+    }
+
+   initializeLegal() {
+       // Initialize legal page
+       console.log('Initializing legal page...');
+       this.setupLegalLinks();
+   }
+
+   setupLegalLinks() {
+       // Set up legal page links
+       const legalLinks = document.querySelectorAll('.legal-link-card');
+       legalLinks.forEach(link => {
+           link.addEventListener('click', (e) => {
+               // Allow normal navigation for these links
+               // They will open the respective HTML pages
+           });
+       });
+   }
+
+   setupLegalNavigation() {
+       // Add legal page to side navigation if not already present
+       const navMenu = document.querySelector('.nav-menu');
+       if (navMenu && !document.querySelector('.nav-link[data-page="legal"]')) {
+           const legalNavItem = document.createElement('li');
+           legalNavItem.className = 'nav-item';
+           legalNavItem.innerHTML = `
+               <a href="#legal" class="nav-link" data-page="legal">
+                   <i class="bi bi-shield-lock"></i>
+                   <span>Legal</span>
+               </a>
+           `;
+           navMenu.appendChild(legalNavItem);
+           
+           // Add event listener
+           const legalLink = legalNavItem.querySelector('.nav-link');
+           legalLink.addEventListener('click', (e) => {
+               e.preventDefault();
+               this.navigateToPage('legal');
+               if (window.innerWidth < 1024) {
+                   this.closeNavigation();
+               }
+           });
+       }
+   }
+    setupPullToRefresh() {
+        let touchStartY = 0;
+        let touchEndY = 0;
+        const threshold = 150;
+        let isRefreshing = false;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (isRefreshing) return;
+            
+            touchEndY = e.touches[0].clientY;
+            const mainContent = document.getElementById('main-content');
+            
+            // Only allow pull to refresh at the top of the page
+            if (mainContent.scrollTop === 0 && touchEndY > touchStartY) {
+                const distance = touchEndY - touchStartY;
+                
+                if (distance > 50) {
+                    // Show pull indicator
+                    this.showPullIndicator(Math.min(distance / threshold, 1));
+                }
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', () => {
+            const distance = touchEndY - touchStartY;
+            
+            if (distance > threshold && !isRefreshing) {
+                isRefreshing = true;
+                this.refreshCurrentPage();
+                
+                // Reset after refresh
+                setTimeout(() => {
+                    this.hidePullIndicator();
+                    isRefreshing = false;
+                }, 2000);
+            } else {
+                this.hidePullIndicator();
+            }
+            
+            touchStartY = 0;
+            touchEndY = 0;
+        }, { passive: true });
+    }
+
+    showPullIndicator(progress) {
+        let indicator = document.getElementById('pull-indicator');
+        
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'pull-indicator';
+            indicator.className = 'pull-indicator';
+            indicator.innerHTML = `
+                <div class="pull-spinner">
+                    <i class="bi bi-arrow-repeat"></i>
+                </div>
+                <span>Pull to refresh</span>
+            `;
+            document.body.appendChild(indicator);
+        }
+        
+        // Update indicator based on pull progress
+        indicator.style.opacity = progress;
+        indicator.style.transform = `translateY(${progress * 20}px)`;
+        
+        if (progress >= 1) {
+            indicator.querySelector('span').textContent = 'Release to refresh';
+        } else {
+            indicator.querySelector('span').textContent = 'Pull to refresh';
+        }
+    }
+
+    hidePullIndicator() {
+        const indicator = document.getElementById('pull-indicator');
+        if (indicator) {
+            indicator.style.opacity = '0';
+            setTimeout(() => {
+                indicator.remove();
+            }, 300);
+        }
+    }
+
+    refreshCurrentPage() {
+        // Show refreshing state
+        this.showToast('Refreshing...', 'info');
+        
+        // Simulate refresh
+        setTimeout(() => {
+            this.initializePage(this.currentPage);
+            this.showToast('Content updated', 'success');
+        }, 1500);
+    }
+
+    handleOnlineStatus(isOnline) {
+        if (isOnline) {
+            this.showToast('You are back online', 'success');
+            // Sync any offline changes
+            this.syncOfflineChanges();
+        } else {
+            this.showToast('You are offline. Some features may be limited.', 'warning');
+        }
+    }
+
+    syncOfflineChanges() {
+        // Sync any changes made while offline
+        console.log('Syncing offline changes...');
+    }
+
+    setupOfflineSupport() {
+        // Check if app is being used offline
+        if (!navigator.onLine) {
+            this.handleOnlineStatus(false);
+        }
+    }
+
+    checkForUpdates() {
+        // Check for app updates
+        console.log('Checking for updates...');
+        
+        // Simulate update check
+        setTimeout(() => {
+            // Uncomment to show update notification
+            // this.showUpdateNotification();
+        }, 3000);
+    }
+
+    showUpdateNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.innerHTML = `
+            <div class="update-content">
+                <i class="bi bi-arrow-repeat"></i>
+                <div class="update-text">
+                    <h4>Update Available</h4>
+                    <p>A new version of FinergyCloud is available.</p>
+                </div>
+            </div>
+            <div class="update-actions">
+                <button class="btn btn-primary btn-sm" id="update-now">Update Now</button>
+                <button class="btn btn-secondary btn-sm" id="update-later">Later</button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Add event listeners
+        document.getElementById('update-now').addEventListener('click', () => {
+            this.performUpdate();
+            notification.remove();
+        });
+        
+        document.getElementById('update-later').addEventListener('click', () => {
+            notification.remove();
+        });
+    }
+
+    performUpdate() {
+        // Perform app update
+        this.showToast('Updating application...', 'info');
+        
+        // Simulate update process
+        setTimeout(() => {
+            this.showToast('Update complete! Reloading...', 'success');
+            
+            // Reload the app
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }, 2000);
+    }
+
+    setupTheme() {
+        // Apply saved theme preference
+        const theme = this.userPreferences.theme || 'light';
+        this.applyTheme(theme);
+        
+        // Setup theme toggle if needed
+    }
+
+    applyTheme(theme) {
+        document.body.classList.remove('theme-light', 'theme-dark');
+        document.body.classList.add(`theme-${theme}`);
+        this.saveUserPreference('theme', theme);
+    }
+
+    loadUserPreferences() {
+        // Load user preferences from localStorage
+        try {
+            return JSON.parse(localStorage.getItem('userPreferences')) || {
+                theme: 'light',
+                lastPage: 'dashboard',
+                notifications: true
+            };
+        } catch (error) {
+            console.error('Error loading user preferences:', error);
+            return {
+                theme: 'light',
+                lastPage: 'dashboard',
+                notifications: true
+            };
+        }
+    }
+
+    saveUserPreference(key, value) {
+        // Save a specific user preference
+        this.userPreferences[key] = value;
+        localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+    }
+
+    showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `mobile-toast ${type}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+}
+
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.finergyApp = new FinergyCloudApp();
+});
+
+// Add additional styles for new features
+const additionalStyles = `
+<style>
+/* Page Transition Effect */
+.page-transition {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+/* Pull to Refresh */
+.pull-indicator {
+    position: fixed;
+    top: calc(var(--header-height) + var(--safe-area-top));
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pull-spinner {
+    animation: spin 1.5s linear infinite;
+    font-size: 1.5rem;
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-xs);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Update Notification */
+.update-notification {
+    position: fixed;
+    bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + var(--spacing-md));
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    z-index: 1001;
+    border-left: 4px solid var(--accent-teal);
+}
+
+.update-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.update-content i {
+    font-size: 1.5rem;
+    color: var(--accent-teal);
+}
+
+.update-text h4 {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.update-text p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+.update-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+}
+
+/* Preview Metric */
+.preview-metric {
+    background: var(--light-green);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+/* Dark Theme Support */
+.theme-dark {
+    --white: #1a1a1a;
+    --light-gray: #2a2a2a;
+    --gray: #999999;
+    --dark-gray: #cccccc;
+    --text-dark: #f0f0f0;
+    --text-light: #cccccc;
+    --text-muted: #999999;
+    
+    color-scheme: dark;
+}
+
+.theme-dark .card,
+.theme-dark .metric-card,
+.theme-dark .action-card,
+.theme-dark .project-card,
+.theme-dark .calculator-form,
+.theme-dark .calculator-results,
+.theme-dark .app-header,
+.theme-dark .side-nav,
+.theme-dark .bottom-nav {
+    background: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .form-control {
+    background: #333333;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f0f0f0;
+}
+
+.theme-dark .btn-secondary {
+    background: #333333;
+    color: #f0f0f0;
+}
+
+.theme-dark .light-green {
+    background: rgba(0, 191, 165, 0.1);
+}
+</style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', additionalStyles);
