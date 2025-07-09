@@ -60,15 +60,31 @@ class IRRDashboard {
     }
 
     initializeCharts() {
-        this.initializeIRRDistributionChart();
-        this.initializeIRRCDFChart();
-        this.initializeSensitivityChart();
-        this.initializeScenarioComparisonChart();
+        // Load Chart.js if not already loaded
+        this.loadChartJS(() => {
+            this.initializeIRRDistributionChart();
+            this.initializeIRRCDFChart();
+            this.initializeSensitivityChart();
+            this.initializeScenarioComparisonChart();
+        });
+    }
+    
+    loadChartJS(callback) {
+        if (window.Chart) {
+            callback();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = callback;
+        document.head.appendChild(script);
     }
 
     initializeIRRDistributionChart() {
         const ctx = document.getElementById('irr-distribution-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
 
         // Clear existing chart if any
         if (this.charts.distributionChart) {
@@ -135,7 +151,7 @@ class IRRDashboard {
 
     initializeIRRCDFChart() {
         const ctx = document.getElementById('irr-cdf-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
 
         // Clear existing chart if any
         if (this.charts.cdfChart) {
@@ -204,7 +220,7 @@ class IRRDashboard {
 
     initializeSensitivityChart() {
         const ctx = document.getElementById('sensitivity-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
 
         // Clear existing chart if any
         if (this.charts.sensitivityChart) {
@@ -284,7 +300,7 @@ class IRRDashboard {
 
     initializeScenarioComparisonChart() {
         const ctx = document.getElementById('scenario-comparison-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
 
         // Clear existing chart if any
         if (this.charts.scenarioChart) {

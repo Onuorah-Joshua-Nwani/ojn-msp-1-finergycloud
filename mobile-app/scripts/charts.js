@@ -3,7 +3,23 @@
 class ChartsManager {
     constructor() {
         this.charts = {};
-        this.initializeCharts();
+        // Load Chart.js first, then initialize charts
+        this.loadChartJS(() => {
+            this.initializeCharts();
+        });
+    }
+
+    loadChartJS(callback) {
+        if (window.Chart) {
+            callback();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = callback;
+        document.head.appendChild(script);
     }
 
     initializeCharts() {
@@ -119,6 +135,13 @@ class ChartsManager {
 
     renderBarChart(container, options) {
         const { labels, data, title, colors } = options;
+        
+        // Check if Chart.js is available
+        if (!window.Chart) {
+            this.renderFallbackChart(container, title);
+            return;
+        }
+        
         const maxValue = Math.max(...data.map(Math.abs));
         const minValue = Math.min(...data);
         
@@ -154,6 +177,13 @@ class ChartsManager {
 
     renderLineChart(container, options) {
         const { labels, data, title, color } = options;
+        
+        // Check if Chart.js is available
+        if (!window.Chart) {
+            this.renderFallbackChart(container, title);
+            return;
+        }
+        
         const maxValue = Math.max(...data);
         const minValue = Math.min(...data);
         const range = maxValue - minValue;
@@ -191,6 +221,13 @@ class ChartsManager {
 
     renderPieChart(container, options) {
         const { data, title } = options;
+        
+        // Check if Chart.js is available
+        if (!window.Chart) {
+            this.renderFallbackChart(container, title);
+            return;
+        }
+        
         const total = data.reduce((sum, item) => sum + item.value, 0);
         let currentAngle = 0;
         
@@ -251,6 +288,13 @@ class ChartsManager {
 
     renderDonutChart(container, options) {
         const { data, title } = options;
+        
+        // Check if Chart.js is available
+        if (!window.Chart) {
+            this.renderFallbackChart(container, title);
+            return;
+        }
+        
         const total = data.reduce((sum, item) => sum + item.value, 0);
         let currentAngle = 0;
         
@@ -377,13 +421,19 @@ class ChartsManager {
     }
 
     createDefaultChart(containerId) {
+        this.renderFallbackChart(document.getElementById(containerId), "Chart");
+    }
+    
+    renderFallbackChart(container, title) {
+        // Create a fallback visualization when Chart.js is not available
         const container = document.getElementById(containerId);
         if (!container) return;
 
         container.innerHTML = `
             <div class="chart-placeholder">
                 <i class="bi bi-graph-up"></i>
-                <p>Chart will be displayed here</p>
+                <p>${title || 'Chart'} will be displayed here</p>
+                <small>Loading visualization...</small>
             </div>
         `;
     }
@@ -409,18 +459,6 @@ class ChartsManager {
 // Initialize charts manager
 document.addEventListener('DOMContentLoaded', () => {
     window.chartsManager = new ChartsManager();
-});
-
-// Add chart styles
-const chartStyles = `
-    <style>
-        .chart-wrapper {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
         .chart-title {
             font-weight: 600;
             color: var(--primary-green);
@@ -540,6 +578,12 @@ const chartStyles = `
         .chart-placeholder i {
             font-size: 2rem;
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .chart-placeholder small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
         
         .chart-tooltip {

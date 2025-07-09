@@ -191,24 +191,347 @@ class AnalyticsDashboard {
 
     initializeCharts() {
         // Load Chart.js if not already loaded
-        if (!window.Chart && !document.querySelector('script[src="https://cdn.jsdelivr.net/npm/chart.js"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-            script.async = true;
-            document.head.appendChild(script);
-            
-            script.onload = () => {
-                // Create charts
-                this.createPortfolioCharts();
-                this.createRiskCharts();
-                this.createESGCharts();
-            };
-        } else if (window.Chart) {
+        this.loadChartJS(() => {
             // Create charts directly if Chart.js is already loaded
-            this.createPortfolioCharts();
-            this.createRiskCharts();
-            this.createESGCharts();
+            this.createPortfolioDistributionChart();
+            this.createPortfolioPerformanceChart();
+            this.createRiskDistributionChart();
+            this.createRiskMatrixChart();
+            this.createRiskTrendChart();
+        });
+    }
+    
+    loadChartJS(callback) {
+        if (window.Chart) {
+            callback();
+            return;
         }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = callback;
+        document.head.appendChild(script);
+    }
+
+    createRiskMatrixTable() {
+        // Create a table-based risk matrix as fallback when Chart.js is not available
+        const container = document.querySelector('.risk-matrix-chart-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        // Create risk matrix title
+        const title = document.createElement('div');
+        title.className = 'risk-matrix-title';
+        title.textContent = 'Project Risk Matrix';
+        container.appendChild(title);
+        
+        // Create risk matrix grid
+        const grid = document.createElement('div');
+        grid.className = 'risk-matrix-grid';
+        
+        // Add column headers (risk categories)
+        const headerRow = document.createElement('div');
+        headerRow.className = 'risk-matrix-row header-row';
+        
+        // Add empty cell for top-left corner
+        const cornerCell = document.createElement('div');
+        cornerCell.className = 'risk-matrix-cell corner-cell';
+        headerRow.appendChild(cornerCell);
+        
+        // Add category headers
+        const categories = ['Grid', 'Regulatory', 'Currency', 'Political', 'Resource'];
+        categories.forEach(category => {
+            const headerCell = document.createElement('div');
+            headerCell.className = 'risk-matrix-cell header-cell';
+            headerCell.textContent = category;
+            headerRow.appendChild(headerCell);
+        });
+        
+        grid.appendChild(headerRow);
+        
+        // Add rows with project names and risk cells
+        const projects = ['Lagos Solar', 'Abuja Wind', 'Kano Solar', 'PH Hydro', 'Ibadan Solar'];
+        const riskData = [
+            [1, 2, 1, 1, 1], // Lagos Solar
+            [2, 2, 2, 1, 1], // Abuja Wind
+            [1, 2, 2, 2, 1], // Kano Solar
+            [2, 3, 2, 2, 1], // PH Hydro
+            [1, 1, 2, 1, 1]  // Ibadan Solar
+        ];
+        
+        projects.forEach((project, rowIndex) => {
+            const row = document.createElement('div');
+            row.className = 'risk-matrix-row';
+            
+            // Add project name cell
+            const projectCell = document.createElement('div');
+            projectCell.className = 'risk-matrix-cell project-cell';
+            projectCell.textContent = project;
+            row.appendChild(projectCell);
+            
+            // Add risk cells
+            categories.forEach((category, colIndex) => {
+                const riskCell = document.createElement('div');
+                riskCell.className = 'risk-matrix-cell risk-cell';
+                
+                const riskValue = riskData[rowIndex][colIndex];
+                let riskClass = '';
+                let riskLabel = '';
+                
+                if (riskValue === 1) {
+                    riskClass = 'low-risk';
+                    riskLabel = 'Low';
+                } else if (riskValue === 2) {
+                    riskClass = 'medium-risk';
+                    riskLabel = 'Med';
+                } else {
+                    riskClass = 'high-risk';
+                    riskLabel = 'High';
+                }
+                
+                riskCell.classList.add(riskClass);
+                riskCell.textContent = riskLabel;
+                
+                row.appendChild(riskCell);
+            });
+            
+            grid.appendChild(row);
+        });
+        
+        container.appendChild(grid);
+        
+        // Add legend
+        const legend = document.createElement('div');
+        legend.className = 'risk-matrix-legend';
+        
+        const lowRisk = document.createElement('div');
+        lowRisk.className = 'legend-item';
+        lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk</span>';
+        
+        const mediumRisk = document.createElement('div');
+        mediumRisk.className = 'legend-item';
+        mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk</span>';
+        
+        const highRisk = document.createElement('div');
+        highRisk.className = 'legend-item';
+        highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk</span>';
+        
+        legend.appendChild(lowRisk);
+        legend.appendChild(mediumRisk);
+        legend.appendChild(highRisk);
+        
+        container.appendChild(legend);
+    }
+
+    createRiskMatrixChart() {
+        const ctx = document.getElementById('risk-matrix-chart');
+        if (!ctx) return;
+        
+        if (!window.Chart) {
+            this.createRiskMatrixTable();
+            return;
+        }
+    }
+
+    createPortfolioDistributionChart() {
+        const ctx = document.getElementById('portfolio-distribution-chart');
+        if (!ctx || !window.Chart) return;
+        
+        // Clear existing chart if any
+        if (this.charts.portfolioDistributionChart) {
+            this.charts.portfolioDistributionChart.destroy();
+        }
+        
+        // Create chart
+        this.charts.portfolioDistributionChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: this.portfolioData.distribution.labels,
+                datasets: [{
+                    data: this.portfolioData.distribution.data,
+                    backgroundColor: this.portfolioData.distribution.colors,
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${label}: ${percentage}% (${value} projects)`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Portfolio Distribution',
+                        color: '#004d40',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    }
+
+    createPortfolioPerformanceChart() {
+        const ctx = document.getElementById('portfolio-performance-chart');
+        if (!ctx || !window.Chart) return;
+        
+        // Clear existing chart if any
+        if (this.charts.portfolioPerformanceChart) {
+            this.charts.portfolioPerformanceChart.destroy();
+        }
+        
+        // Create chart
+        this.charts.portfolioPerformanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: this.portfolioData.performance.labels,
+                datasets: [
+                    {
+                        label: 'Actual Performance',
+                        data: this.portfolioData.performance.actual,
+                        borderColor: '#00bfa5',
+                        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#00bfa5',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Target',
+                        data: this.portfolioData.performance.target,
+                        borderColor: '#F59E0B',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointBackgroundColor: '#F59E0B',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        fill: false,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Benchmark',
+                        data: this.portfolioData.performance.benchmark,
+                        borderColor: '#9e9e9e',
+                        backgroundColor: 'rgba(158, 158, 158, 0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#9e9e9e',
+                        pointBorderColor: '#fff',
+                        pointRadius: 3,
+                        pointHoverRadius: 5,
+                        fill: false,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 77, 64, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00bfa5',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                return `${label}: ${value.toFixed(1)}%`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Portfolio Performance Trend',
+                        color: '#004d40',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 10,
+                        max: 18,
+                        title: {
+                            display: true,
+                            text: 'IRR (%)',
+                            color: '#004d40',
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            stepSize: 1,
+                            color: '#004d40'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 77, 64, 0.1)'
+                        },
+                        ticks: {
+                            color: '#004d40'
+                        }
+                    }
+                }
+            }
+        });
     }
     
     createPortfolioCharts() {
@@ -436,7 +759,7 @@ class AnalyticsDashboard {
 
     createRiskDistributionChart() {
         const ctx = document.getElementById('risk-distribution-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
         
         // Clear existing chart if any
         if (this.charts.riskDistributionChart) {
@@ -504,142 +827,9 @@ class AnalyticsDashboard {
         });
     }
 
-    createRiskMatrixChart() {
-        const ctx = document.getElementById('risk-matrix-chart');
-        if (!ctx) return;
-        
-        // Clear existing chart if any
-        if (this.charts.riskMatrixChart) {
-            this.charts.riskMatrixChart.destroy();
-        }
-        
-        // Prepare data for heatmap
-        const data = [];
-        const riskMatrix = this.riskData.matrix;
-        
-        for (let i = 0; i < riskMatrix.projects.length; i++) {
-            for (let j = 0; j < riskMatrix.categories.length; j++) {
-                data.push({
-                    x: j,
-                    y: i,
-                    v: riskMatrix.data[i][j]
-                });
-            }
-        }
-        
-        // Create custom heatmap
-        const heatmapContainer = document.querySelector('.risk-matrix-chart-container');
-        if (heatmapContainer) {
-            heatmapContainer.innerHTML = '';
-            
-            // Create heatmap title
-            const title = document.createElement('div');
-            title.className = 'risk-matrix-title';
-            title.textContent = 'Project Risk Matrix';
-            heatmapContainer.appendChild(title);
-            
-            // Create heatmap grid
-            const grid = document.createElement('div');
-            grid.className = 'risk-matrix-grid';
-            
-            // Add column headers (risk categories)
-            const headerRow = document.createElement('div');
-            headerRow.className = 'risk-matrix-row header-row';
-            
-            // Add empty cell for top-left corner
-            const cornerCell = document.createElement('div');
-            cornerCell.className = 'risk-matrix-cell corner-cell';
-            headerRow.appendChild(cornerCell);
-            
-            // Add category headers
-            riskMatrix.categories.forEach(category => {
-                const headerCell = document.createElement('div');
-                headerCell.className = 'risk-matrix-cell header-cell';
-                headerCell.textContent = category;
-                headerRow.appendChild(headerCell);
-            });
-            
-            grid.appendChild(headerRow);
-            
-            // Add rows with project names and risk cells
-            riskMatrix.projects.forEach((project, rowIndex) => {
-                const row = document.createElement('div');
-                row.className = 'risk-matrix-row';
-                
-                // Add project name cell
-                const projectCell = document.createElement('div');
-                projectCell.className = 'risk-matrix-cell project-cell';
-                projectCell.textContent = project;
-                row.appendChild(projectCell);
-                
-                // Add risk cells
-                riskMatrix.categories.forEach((category, colIndex) => {
-                    const riskCell = document.createElement('div');
-                    riskCell.className = 'risk-matrix-cell risk-cell';
-                    
-                    const riskValue = riskMatrix.data[rowIndex][colIndex];
-                    let riskClass = '';
-                    let riskLabel = '';
-                    
-                    if (riskValue === 1) {
-                        riskClass = 'low-risk';
-                        riskLabel = 'Low';
-                    } else if (riskValue === 2) {
-                        riskClass = 'medium-risk';
-                        riskLabel = 'Med';
-                    } else {
-                        riskClass = 'high-risk';
-                        riskLabel = 'High';
-                    }
-                    
-                    riskCell.classList.add(riskClass);
-                    riskCell.textContent = riskLabel;
-                    
-                    // Add tooltip data
-                    riskCell.setAttribute('data-project', project);
-                    riskCell.setAttribute('data-category', category);
-                    riskCell.setAttribute('data-risk', riskLabel);
-                    
-                    // Add click handler for details
-                    riskCell.addEventListener('click', () => {
-                        this.showRiskDetails(project, category, riskLabel);
-                    });
-                    
-                    row.appendChild(riskCell);
-                });
-                
-                grid.appendChild(row);
-            });
-            
-            heatmapContainer.appendChild(grid);
-            
-            // Add legend
-            const legend = document.createElement('div');
-            legend.className = 'risk-matrix-legend';
-            
-            const lowRisk = document.createElement('div');
-            lowRisk.className = 'legend-item';
-            lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk</span>';
-            
-            const mediumRisk = document.createElement('div');
-            mediumRisk.className = 'legend-item';
-            mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk</span>';
-            
-            const highRisk = document.createElement('div');
-            highRisk.className = 'legend-item';
-            highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk</span>';
-            
-            legend.appendChild(lowRisk);
-            legend.appendChild(mediumRisk);
-            legend.appendChild(highRisk);
-            
-            heatmapContainer.appendChild(legend);
-        }
-    }
-
     createRiskTrendChart() {
         const ctx = document.getElementById('risk-trend-chart');
-        if (!ctx) return;
+        if (!ctx || !window.Chart) return;
         
         // Clear existing chart if any
         if (this.charts.riskTrendChart) {
