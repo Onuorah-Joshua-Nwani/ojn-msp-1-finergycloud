@@ -1,0 +1,225 @@
+/* Cross-Platform Navigation Styles */
+.mobile-app-banner,
+.desktop-website-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: 15px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-app-banner.show,
+.desktop-website-banner.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.banner-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.2rem;
+}
+
+.banner-text {
+    flex: 1;
+}
+
+.banner-text p {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-green);
+}
+
+.banner-btn {
+    background: var(--gradient-primary);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+
+.banner-close {
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+/* Platform Links Styles */
+.platform-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.platform-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 1px solid rgba(0, 77, 64, 0.1);
+}
+
+.platform-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.platform-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.platform-content {
+    flex: 1;
+}
+
+.platform-content h4 {
+    color: var(--primary-green);
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.platform-content p {
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.platform-link {
+    color: var(--accent-teal);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Website Button in Mobile App */
+.website-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+    position: relative;
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.website-btn:hover {
+    background: var(--light-green);
+    color: var(--primary-green);
+}
+
+.website-link-btn {
+    width: 100%;
+    background: var(--white);
+    color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    min-height: 48px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.website-link-btn:hover {
+    background: var(--light-green);
+}
+
+/* Page Actions */
+.page-actions {
+    margin-top: 10px;
+}
+
+@media (max-width: 480px) {
+    .platform-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .platform-content h4 {
+        margin-top: 10px;
+    }
+    
+    .platform-link {
+        justify-content: center;
+    }
+    
+    .banner-content {
+        gap: 10px;
+    }
+    
+    .banner-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+    
+    .banner-text p {
+        font-size: 0.9rem;
+    }
+    
+    .banner-btn {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+}
