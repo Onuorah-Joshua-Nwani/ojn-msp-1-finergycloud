@@ -30,6 +30,10 @@ class XGBoostModelManager {
             'geothermal': ['Resource Temperature', 'Drilling Success', 'Reservoir Management', 'Plant Efficiency']
         };
         this.rocCurveChart = null;
+        this.rocCurveData = {
+            fpr: [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            tpr: [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0]
+        };
         this.init();
     }
 
@@ -228,8 +232,8 @@ class XGBoostModelManager {
                 }
                 
                 // ROC curve data points
-                const fpr = [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-                const tpr = [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0];
+                const fpr = this.rocCurveData.fpr;
+                const tpr = this.rocCurveData.tpr;
                 
                 // Create chart
                 this.rocCurveChart = new Chart(rocCurveChart, {
@@ -238,7 +242,7 @@ class XGBoostModelManager {
                         labels: fpr.map(val => (val * 100).toFixed(0) + '%'),
                         datasets: [
                             {
-                                label: 'XGBoost Model (AUC = 0.92)',
+                                label: `XGBoost Model (AUC = ${this.modelAUC})`,
                                 data: tpr,
                                 borderColor: '#00bfa5',
                                 backgroundColor: 'rgba(0, 191, 165, 0.1)',
@@ -288,6 +292,16 @@ class XGBoostModelManager {
                                         const index = context.dataIndex;
                                         return `${datasetLabel}: (FPR: ${fpr[index].toFixed(2)}, TPR: ${tpr[index].toFixed(2)})`;
                                     }
+                                }
+                            }
+                            ,
+                            title: {
+                                display: true,
+                                text: 'ROC Curve - Model Performance',
+                                color: '#004d40',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
                                 }
                             }
                         },
