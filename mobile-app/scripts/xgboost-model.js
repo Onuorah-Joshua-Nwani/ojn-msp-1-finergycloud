@@ -34,6 +34,21 @@ class XGBoostModelManager {
             fpr: [0, 0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // False Positive Rate
             tpr: [0, 0.4, 0.7, 0.8, 0.85, 0.88, 0.9, 0.92, 0.94, 0.95, 0.97, 0.98, 1.0] // True Positive Rate
         };
+        this.riskData = {
+            matrix: {
+                categories: ['Technical', 'Financial', 'Regulatory', 'Environmental', 'Social'],
+                projects: ['Solar Farm A', 'Wind Project B', 'Hydro Plant C', 'Biomass D'],
+                data: [
+                    [1, 2, 1, 1, 2], // Solar Farm A
+                    [2, 1, 2, 2, 1], // Wind Project B
+                    [1, 3, 3, 2, 2], // Hydro Plant C
+                    [3, 2, 2, 3, 1]  // Biomass D
+                ]
+            }
+        };
+        this.charts = {
+            riskMatrixChart: null
+        };
         this.init();
     }
 
@@ -369,6 +384,137 @@ class XGBoostModelManager {
                 <p>Loading ROC Curve...</p>
             </div>
         `;
+    }
+
+    createRiskMatrixChart() {
+        const ctx = document.getElementById('risk-matrix-chart');
+        if (!ctx || !window.Chart) {
+            this.createRiskMatrixTable();
+            return;
+        }
+        
+        // Clear existing chart if any
+        if (this.charts.riskMatrixChart) {
+            this.charts.riskMatrixChart.destroy();
+        }
+    }
+
+    createRiskMatrixTable() {
+        // Create a table-based risk matrix as fallback when Chart.js is not available
+        const container = document.querySelector('.risk-matrix-chart-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        // Create risk matrix title
+        const title = document.createElement('div');
+        title.className = 'risk-matrix-title';
+        title.textContent = 'Project Risk Matrix';
+        container.appendChild(title);
+        
+        // Create risk matrix grid
+        const grid = document.createElement('div');
+        grid.className = 'risk-matrix-grid';
+        
+        // Add column headers (risk categories)
+        const headerRow = document.createElement('div');
+        headerRow.className = 'risk-matrix-row header-row';
+        
+        // Add empty cell for top-left corner
+        const cornerCell = document.createElement('div');
+        cornerCell.className = 'risk-matrix-cell corner-cell';
+        headerRow.appendChild(cornerCell);
+        
+        // Add category headers
+        const riskMatrix = this.riskData.matrix;
+        riskMatrix.categories.forEach(category => {
+            const headerCell = document.createElement('div');
+            headerCell.className = 'risk-matrix-cell header-cell';
+            headerCell.textContent = category;
+            headerRow.appendChild(headerCell);
+        });
+        
+        grid.appendChild(headerRow);
+        
+        // Add rows with project names and risk cells
+        riskMatrix.projects.forEach((project, rowIndex) => {
+            const row = document.createElement('div');
+            row.className = 'risk-matrix-row';
+            
+            // Add project name cell
+            const projectCell = document.createElement('div');
+            projectCell.className = 'risk-matrix-cell project-cell';
+            projectCell.textContent = project;
+            row.appendChild(projectCell);
+            
+            // Add risk cells
+            riskMatrix.categories.forEach((category, colIndex) => {
+                const riskCell = document.createElement('div');
+                riskCell.className = 'risk-matrix-cell risk-cell';
+                
+                const riskValue = riskMatrix.data[rowIndex][colIndex];
+                let riskClass = '';
+                let riskLabel = '';
+                
+                if (riskValue === 1) {
+                    riskClass = 'low-risk';
+                    riskLabel = 'Low';
+                } else if (riskValue === 2) {
+                    riskClass = 'medium-risk';
+                    riskLabel = 'Med';
+                } else {
+                    riskClass = 'high-risk';
+                    riskLabel = 'High';
+                }
+                
+                riskCell.classList.add(riskClass);
+                riskCell.textContent = riskLabel;
+                
+                // Add tooltip data
+                riskCell.setAttribute('data-project', project);
+                riskCell.setAttribute('data-category', category);
+                riskCell.setAttribute('data-risk', riskLabel);
+                
+                // Add click handler for details
+                riskCell.addEventListener('click', () => {
+                    this.showRiskDetails(project, category, riskLabel);
+                });
+                
+                row.appendChild(riskCell);
+            });
+            
+            grid.appendChild(row);
+        });
+        
+        container.appendChild(grid);
+        
+        // Add legend
+        const legend = document.createElement('div');
+        legend.className = 'risk-matrix-legend';
+        
+        const lowRisk = document.createElement('div');
+        lowRisk.className = 'legend-item';
+        lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk</span>';
+        
+        const mediumRisk = document.createElement('div');
+        mediumRisk.className = 'legend-item';
+        mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk</span>';
+        
+        const highRisk = document.createElement('div');
+        highRisk.className = 'legend-item';
+        highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk</span>';
+        
+        legend.appendChild(lowRisk);
+        legend.appendChild(mediumRisk);
+        legend.appendChild(highRisk);
+        
+        container.appendChild(legend);
+    }
+
+    showRiskDetails(project, category, riskLevel) {
+        // Show risk details in a modal or toast
+        const message = `${project}: ${category} risk is ${riskLevel}`;
+        this.showToast(message, 'info');
     }
 
     updateCaseStudies() {
@@ -941,6 +1087,110 @@ const xgboostModelStyles = `
     font-weight: var(--font-weight-semibold);
     color: var(--primary-green);
     margin-bottom: 0;
+}
+
+/* Risk Matrix Table Styles */
+.risk-matrix-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.risk-matrix-grid {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-md);
+}
+
+.risk-matrix-row {
+    display: table-row;
+}
+
+.risk-matrix-cell {
+    display: table-cell;
+    padding: var(--spacing-xs);
+    text-align: center;
+    border: 1px solid rgba(0, 77, 64, 0.1);
+    font-size: 0.8rem;
+    vertical-align: middle;
+}
+
+.header-row .risk-matrix-cell {
+    background: var(--light-green);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-dark);
+}
+
+.corner-cell {
+    background: var(--light-gray);
+}
+
+.project-cell {
+    background: var(--light-green);
+    font-weight: var(--font-weight-medium);
+    text-align: left;
+    padding-left: var(--spacing-sm);
+}
+
+.risk-cell {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: var(--font-weight-semibold);
+}
+
+.risk-cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.risk-cell.low-risk {
+    background: #d4edda;
+    color: #155724;
+}
+
+.risk-cell.medium-risk {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.risk-cell.high-risk {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.risk-matrix-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.8rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-color.low-risk {
+    background: #d4edda;
+}
+
+.legend-color.medium-risk {
+    background: #fff3cd;
+}
+
+.legend-color.high-risk {
+    background: #f8d7da;
 }
 </style>
 `;
