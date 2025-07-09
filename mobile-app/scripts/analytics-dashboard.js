@@ -3,11 +3,26 @@
 class AnalyticsDashboard {
     constructor() {
         this.charts = {};
+        this.chartColors = {
+            primary: '#00bfa5',
+            secondary: '#004d40',
+            solar: '#F59E0B',    // Amber for solar
+            wind: '#3B82F6',     // Blue for wind
+            hydro: '#0EA5E9',    // Sky blue for hydro
+            biomass: '#10B981',  // Green for biomass
+            geothermal: '#EC4899' // Pink for geothermal
+        };
         this.portfolioData = {
             distribution: {
-                labels: ['<10%', '10-12%', '12-14%', '14-16%', '16-18%', '18-20%', '>20%'],
-                data: [500, 1500, 2500, 3000, 1800, 500, 200],
-                colors: ['#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#06B6D4', '#10B981']
+                labels: ['Solar', 'Wind', 'Hydro', 'Biomass', 'Geothermal'],
+                data: [45, 30, 15, 7, 3],
+                colors: [
+                    this.chartColors.solar,
+                    this.chartColors.wind,
+                    this.chartColors.hydro,
+                    this.chartColors.biomass,
+                    this.chartColors.geothermal
+                ]
             },
             performance: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -116,7 +131,23 @@ class AnalyticsDashboard {
     }
 
     init() {
-        this.setupEventListeners();
+        // Load Chart.js if not already loaded
+        this.loadChartJS(() => {
+            this.setupEventListeners();
+        });
+    }
+    
+    loadChartJS(callback) {
+        if (window.Chart) {
+            callback();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = callback;
+        document.head.appendChild(script);
     }
 
     setupEventListeners() {
@@ -190,28 +221,21 @@ class AnalyticsDashboard {
     }
 
     initializeCharts() {
-        // Load Chart.js if not already loaded
-        this.loadChartJS(() => {
-            // Create charts directly if Chart.js is already loaded
+        if (!window.Chart) {
+            this.loadChartJS(() => {
+                this.createPortfolioDistributionChart();
+                this.createPortfolioPerformanceChart();
+                this.createRiskDistributionChart();
+                this.createRiskMatrixChart();
+                this.createRiskTrendChart();
+            });
+        } else {
             this.createPortfolioDistributionChart();
             this.createPortfolioPerformanceChart();
             this.createRiskDistributionChart();
             this.createRiskMatrixChart();
             this.createRiskTrendChart();
-        });
-    }
-    
-    loadChartJS(callback) {
-        if (window.Chart) {
-            callback();
-            return;
         }
-        
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        script.onload = callback;
-        document.head.appendChild(script);
     }
 
     createRiskMatrixTable() {
@@ -326,13 +350,7 @@ class AnalyticsDashboard {
     }
 
     createRiskMatrixChart() {
-        const ctx = document.getElementById('risk-matrix-chart');
-        if (!ctx) return;
-        
-        if (!window.Chart) {
-            this.createRiskMatrixTable();
-            return;
-        }
+        this.createRiskMatrixTable();
     }
 
     createPortfolioDistributionChart() {
@@ -352,7 +370,7 @@ class AnalyticsDashboard {
                 datasets: [{
                     data: this.portfolioData.distribution.data,
                     backgroundColor: this.portfolioData.distribution.colors,
-                    borderColor: '#ffffff',
+                    borderColor: 'white',
                     borderWidth: 2,
                     hoverOffset: 15
                 }]
@@ -362,12 +380,13 @@ class AnalyticsDashboard {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom',
+                        position: 'right',
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
+                            padding: 20,
                             font: {
-                                size: 11
+                                size: 12,
+                                family: "'Poppins', sans-serif"
                             }
                         }
                     },
@@ -375,7 +394,7 @@ class AnalyticsDashboard {
                         backgroundColor: 'rgba(0, 77, 64, 0.8)',
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
+                        borderColor: this.chartColors.primary,
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
@@ -400,9 +419,24 @@ class AnalyticsDashboard {
                 animation: {
                     animateScale: true,
                     animateRotate: true
+                },
+                layout: {
+                    padding: 20
                 }
             }
         });
+        
+        // Add center text for doughnut chart
+        const chartArea = document.querySelector('.portfolio-distribution-chart-container');
+        if (chartArea) {
+            const centerText = document.createElement('div');
+            centerText.className = 'doughnut-center-text';
+            centerText.innerHTML = `
+                <div class="center-value">16.7 MW</div>
+                <div class="center-label">Total Portfolio</div>
+            `;
+            chartArea.appendChild(centerText);
+        }
     }
 
     createPortfolioPerformanceChart() {
@@ -421,12 +455,12 @@ class AnalyticsDashboard {
                 labels: this.portfolioData.performance.labels,
                 datasets: [
                     {
-                        label: 'Actual Performance',
+                        label: 'Actual IRR',
                         data: this.portfolioData.performance.actual,
-                        borderColor: '#00bfa5',
-                        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                        borderColor: this.chartColors.primary,
+                        backgroundColor: 'rgba(0, 191, 165, 0.15)',
                         borderWidth: 3,
-                        pointBackgroundColor: '#00bfa5',
+                        pointBackgroundColor: this.chartColors.primary,
                         pointBorderColor: '#fff',
                         pointRadius: 4,
                         pointHoverRadius: 6,
@@ -434,13 +468,13 @@ class AnalyticsDashboard {
                         tension: 0.3
                     },
                     {
-                        label: 'Target',
+                        label: 'Target IRR',
                         data: this.portfolioData.performance.target,
-                        borderColor: '#F59E0B',
-                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        borderColor: this.chartColors.solar,
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
                         borderWidth: 2,
                         borderDash: [5, 5],
-                        pointBackgroundColor: '#F59E0B',
+                        pointBackgroundColor: this.chartColors.solar,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -448,15 +482,16 @@ class AnalyticsDashboard {
                         tension: 0.3
                     },
                     {
-                        label: 'Benchmark',
+                        label: 'Industry Benchmark',
                         data: this.portfolioData.performance.benchmark,
-                        borderColor: '#9e9e9e',
-                        backgroundColor: 'rgba(158, 158, 158, 0.1)',
+                        borderColor: '#757575',
+                        backgroundColor: 'rgba(117, 117, 117, 0.1)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#9e9e9e',
+                        borderDash: [2, 2],
+                        pointBackgroundColor: '#757575',
                         pointBorderColor: '#fff',
-                        pointRadius: 3,
-                        pointHoverRadius: 5,
+                        pointRadius: 2,
+                        pointHoverRadius: 4,
                         fill: false,
                         tension: 0.3
                     }
@@ -470,9 +505,10 @@ class AnalyticsDashboard {
                         position: 'bottom',
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
+                            padding: 20,
                             font: {
-                                size: 11
+                                size: 12,
+                                family: "'Poppins', sans-serif"
                             }
                         }
                     },
@@ -480,7 +516,7 @@ class AnalyticsDashboard {
                         backgroundColor: 'rgba(0, 77, 64, 0.8)',
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
+                        borderColor: this.chartColors.primary,
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
@@ -510,7 +546,7 @@ class AnalyticsDashboard {
                             color: '#004d40',
                             font: {
                                 weight: 'bold',
-                                size: 12
+                                family: "'Poppins', sans-serif"
                             }
                         },
                         grid: {
@@ -518,7 +554,10 @@ class AnalyticsDashboard {
                         },
                         ticks: {
                             stepSize: 1,
-                            color: '#004d40'
+                            color: '#004d40',
+                            font: {
+                                family: "'Poppins', sans-serif"
+                            }
                         }
                     },
                     x: {
@@ -526,9 +565,15 @@ class AnalyticsDashboard {
                             color: 'rgba(0, 77, 64, 0.1)'
                         },
                         ticks: {
-                            color: '#004d40'
+                            color: '#004d40',
+                            font: {
+                                family: "'Poppins', sans-serif"
+                            }
                         }
                     }
+                },
+                layout: {
+                    padding: 10
                 }
             }
         });
@@ -773,8 +818,12 @@ class AnalyticsDashboard {
                 labels: this.riskData.distribution.labels,
                 datasets: [{
                     data: this.riskData.distribution.data,
-                    backgroundColor: this.riskData.distribution.colors,
-                    borderColor: '#ffffff',
+                    backgroundColor: [
+                        '#10B981',  // Low Risk - Green
+                        '#F59E0B',  // Medium Risk - Amber
+                        '#EF4444'   // High Risk - Red
+                    ],
+                    borderColor: 'white',
                     borderWidth: 2,
                     hoverOffset: 15
                 }]
@@ -786,10 +835,11 @@ class AnalyticsDashboard {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            usePointStyle: true,
-                            padding: 15,
+                            usePointStyle: true, 
+                            padding: 20,
                             font: {
-                                size: 11
+                                size: 12,
+                                family: "'Poppins', sans-serif"
                             }
                         }
                     },
@@ -797,7 +847,7 @@ class AnalyticsDashboard {
                         backgroundColor: 'rgba(0, 77, 64, 0.8)',
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
+                        borderColor: this.chartColors.primary,
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
@@ -822,6 +872,9 @@ class AnalyticsDashboard {
                 animation: {
                     animateScale: true,
                     animateRotate: true
+                },
+                layout: {
+                    padding: 10
                 }
             }
         });
@@ -845,10 +898,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Overall Risk',
                         data: this.riskData.trends.overall,
-                        borderColor: '#00bfa5',
-                        backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                        borderColor: this.chartColors.primary,
+                        backgroundColor: 'rgba(0, 191, 165, 0.15)',
                         borderWidth: 3,
-                        pointBackgroundColor: '#00bfa5',
+                        pointBackgroundColor: this.chartColors.primary,
                         pointBorderColor: '#fff',
                         pointRadius: 4,
                         pointHoverRadius: 6,
@@ -858,10 +911,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Grid Risk',
                         data: this.riskData.trends.grid,
-                        borderColor: '#F59E0B',
-                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        borderColor: this.chartColors.solar,
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#F59E0B',
+                        pointBackgroundColor: this.chartColors.solar,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -871,10 +924,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Regulatory Risk',
                         data: this.riskData.trends.regulatory,
-                        borderColor: '#3B82F6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: this.chartColors.wind,
+                        backgroundColor: 'rgba(59, 130, 246, 0.15)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#3B82F6',
+                        pointBackgroundColor: this.chartColors.wind,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -884,10 +937,10 @@ class AnalyticsDashboard {
                     {
                         label: 'Currency Risk',
                         data: this.riskData.trends.currency,
-                        borderColor: '#8B5CF6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        borderColor: this.chartColors.geothermal,
+                        backgroundColor: 'rgba(139, 92, 246, 0.15)',
                         borderWidth: 2,
-                        pointBackgroundColor: '#8B5CF6',
+                        pointBackgroundColor: this.chartColors.geothermal,
                         pointBorderColor: '#fff',
                         pointRadius: 3,
                         pointHoverRadius: 5,
@@ -904,9 +957,10 @@ class AnalyticsDashboard {
                         position: 'bottom',
                         labels: {
                             usePointStyle: true,
-                            padding: 15,
+                            padding: 20,
                             font: {
-                                size: 11
+                                size: 12,
+                                family: "'Poppins', sans-serif"
                             }
                         }
                     },
@@ -914,7 +968,7 @@ class AnalyticsDashboard {
                         backgroundColor: 'rgba(0, 77, 64, 0.8)',
                         titleColor: '#ffffff',
                         bodyColor: '#ffffff',
-                        borderColor: '#00bfa5',
+                        borderColor: this.chartColors.primary,
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
@@ -948,7 +1002,7 @@ class AnalyticsDashboard {
                             color: '#004d40',
                             font: {
                                 weight: 'bold',
-                                size: 12
+                                family: "'Poppins', sans-serif"
                             }
                         },
                         grid: {
@@ -957,6 +1011,9 @@ class AnalyticsDashboard {
                         ticks: {
                             stepSize: 1,
                             color: '#004d40',
+                            font: {
+                                family: "'Poppins', sans-serif"
+                            },
                             callback: function(value) {
                                 let label = '';
                                 if (value === 1) label = '1 - Low';
@@ -972,9 +1029,15 @@ class AnalyticsDashboard {
                             color: 'rgba(0, 77, 64, 0.1)'
                         },
                         ticks: {
-                            color: '#004d40'
+                            color: '#004d40',
+                            font: {
+                                family: "'Poppins', sans-serif"
+                            }
                         }
                     }
+                },
+                layout: {
+                    padding: 10
                 }
             }
         });
@@ -986,7 +1049,7 @@ class AnalyticsDashboard {
             annotation.className = 'chart-annotation';
             annotation.innerHTML = `
                 <div class="risk-threshold-badge">
-                    <span class="threshold-label">Risk Threshold:</span>
+                    <span class="threshold-label">Critical Threshold:</span>
                     <span class="threshold-value">3.0</span>
                 </div>
             `;
@@ -1553,6 +1616,179 @@ document.addEventListener('DOMContentLoaded', () => {
         window.analyticsDashboard = new AnalyticsDashboard();
     }
 });
+
+// Add mobile blog styles
+const mobileBlogStyles = `
+<style>
+/* Mobile Toast */
+.mobile-toast {
+    position: fixed;
+    top: calc(var(--header-height) + var(--safe-area-top) + var(--spacing-md));
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    z-index: var(--z-toast);
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-toast.success {
+    border-left: 4px solid var(--success);
+}
+
+.mobile-toast.warning {
+    border-left: 4px solid var(--warning);
+}
+
+.mobile-toast.info {
+    border-left: 4px solid var(--info);
+}
+
+.mobile-toast .toast-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.mobile-toast.success .toast-content i {
+    color: var(--success);
+}
+
+.mobile-toast.warning .toast-content i {
+    color: var(--warning);
+}
+
+.mobile-toast.info .toast-content i {
+    color: var(--info);
+}
+
+/* Enhanced Risk Matrix Styles */
+.risk-matrix-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    position: relative;
+}
+
+.risk-matrix-title:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--accent-teal);
+    border-radius: 3px;
+}
+
+.risk-matrix-grid {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid rgba(0, 77, 64, 0.1);
+}
+
+.risk-matrix-cell {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+}
+
+.header-cell {
+    background: rgba(0, 191, 165, 0.15);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-green);
+}
+
+.project-cell {
+    background: rgba(0, 191, 165, 0.1);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-green);
+}
+
+.risk-cell {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.risk-cell:hover {
+    transform: scale(1.05);
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.risk-cell.low-risk {
+    background: rgba(16, 185, 129, 0.15);
+    color: #065f46;
+    font-weight: var(--font-weight-medium);
+}
+
+.risk-cell.medium-risk {
+    background: rgba(245, 158, 11, 0.15);
+    color: #92400e;
+    font-weight: var(--font-weight-medium);
+}
+
+.risk-cell.high-risk {
+    background: rgba(239, 68, 68, 0.15);
+    color: #b91c1c;
+    font-weight: var(--font-weight-medium);
+}
+
+.risk-matrix-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    flex-wrap: wrap;
+    padding: var(--spacing-sm);
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--light-gray);
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+.legend-color.low-risk {
+    background: rgba(16, 185, 129, 0.7);
+}
+
+.legend-color.medium-risk {
+    background: rgba(245, 158, 11, 0.7);
+}
+
+.legend-color.high-risk {
+    background: rgba(239, 68, 68, 0.7);
+}
+</style>
+`;
 
 // Add Analytics Dashboard styles
 const analyticsDashboardStyles = `

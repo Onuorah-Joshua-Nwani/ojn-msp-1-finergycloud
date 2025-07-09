@@ -3,9 +3,18 @@
 class XGBoostModelManager {
     constructor() {
         this.modelLoaded = false;
-        this.modelAccuracy = 0.87;
-        this.modelAUC = 0.92;
-        this.keyFeatures = 14;
+        this.modelAccuracy = 0.87; // 87% accuracy
+        this.modelAUC = 0.92;      // 92% AUC score
+        this.keyFeatures = 14;     // 14 key features
+        this.chartColors = {
+            primary: '#00bfa5',
+            secondary: '#004d40',
+            success: '#10B981',
+            warning: '#F59E0B',
+            danger: '#EF4444',
+            info: '#3B82F6',
+            light: 'rgba(0, 191, 165, 0.15)'
+        };
         this.featureImportance = {
             'Grid Stability': 0.92,
             'Community Engagement': 0.85,
@@ -55,7 +64,22 @@ class XGBoostModelManager {
     init() {
         this.setupEventListeners();
         this.loadModelMetadata();
-        this.setupModelVisualizations();
+        this.loadChartJS(() => {
+            this.setupModelVisualizations();
+        });
+    }
+    
+    loadChartJS(callback) {
+        if (window.Chart) {
+            callback();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.async = true;
+        script.onload = callback;
+        document.head.appendChild(script);
     }
 
     setupEventListeners() {
@@ -128,9 +152,48 @@ class XGBoostModelManager {
     loadModelMetadata() {
         // Simulate loading model metadata
         setTimeout(() => {
+            // Update model stats with animation
+            this.animateModelStats();
+            
+            // Set model as loaded
             this.modelLoaded = true;
             this.showModelLoadedStatus();
+            
+            // Create risk matrix
+            this.createRiskMatrixTable();
         }, 1500);
+    }
+    
+    animateModelStats() {
+        const modelAUC = document.getElementById('model-auc');
+        const modelAccuracy = document.getElementById('model-accuracy');
+        const modelFeatures = document.getElementById('model-features');
+        
+        if (modelAUC) {
+            this.animateValue(modelAUC, 0, this.modelAUC * 100, 1500, '%');
+        }
+        
+        if (modelAccuracy) {
+            this.animateValue(modelAccuracy, 0, this.modelAccuracy * 100, 1800, '%');
+        }
+        
+        if (modelFeatures) {
+            this.animateValue(modelFeatures, 0, this.keyFeatures, 1200);
+        }
+    }
+    
+    animateValue(element, start, end, duration, suffix = '') {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const value = Math.floor(progress * (end - start) + start);
+            element.textContent = value + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
     }
 
     showModelLoadedStatus() {
@@ -140,7 +203,7 @@ class XGBoostModelManager {
                 statusElement.innerHTML = `
                     <div class="model-status-badge success">
                         <i class="bi bi-check-circle"></i>
-                        <span>Model Loaded</span>
+                        <span>XGBoost Model Ready</span>
                     </div>
                 `;
             }
@@ -235,9 +298,11 @@ class XGBoostModelManager {
     updateModelPerformance() {
         // Update model performance chart
         const performanceChart = document.getElementById('model-performance-chart');
-        const rocCurveChart = document.getElementById('roc-curve-chart');
-        if (performanceChart && rocCurveChart) {
-            performanceChart.classList.remove('chart-placeholder');
+        const rocCurveChart = document.getElementById('roc-curve-chart'); 
+        if (rocCurveChart) {
+            if (performanceChart) {
+                performanceChart.classList.remove('chart-placeholder');
+            }
             
             // Create ROC curve using Chart.js
             if (window.Chart) {
@@ -249,6 +314,7 @@ class XGBoostModelManager {
                 // ROC curve data points
                 const fpr = this.rocCurveData.fpr;
                 const tpr = this.rocCurveData.tpr;
+                const auc = this.modelAUC;
                 
                 // Create chart
                 this.rocCurveChart = new Chart(rocCurveChart, {
@@ -257,12 +323,12 @@ class XGBoostModelManager {
                         labels: fpr.map(val => (val * 100).toFixed(0) + '%'),
                         datasets: [
                             {
-                                label: `XGBoost Model (AUC = ${this.modelAUC})`,
+                                label: `XGBoost Model (AUC = ${auc})`,
                                 data: tpr,
-                                borderColor: '#00bfa5',
-                                backgroundColor: 'rgba(0, 191, 165, 0.1)',
+                                borderColor: this.chartColors.primary,
+                                backgroundColor: this.chartColors.light,
                                 borderWidth: 3,
-                                pointBackgroundColor: '#00bfa5',
+                                pointBackgroundColor: this.chartColors.primary,
                                 pointBorderColor: '#fff',
                                 pointRadius: 4,
                                 pointHoverRadius: 6,
@@ -272,7 +338,7 @@ class XGBoostModelManager {
                             {
                                 label: 'Random Classifier (AUC = 0.5)',
                                 data: fpr,
-                                borderColor: '#9e9e9e',
+                                borderColor: '#757575',
                                 borderWidth: 2,
                                 borderDash: [5, 5],
                                 pointRadius: 0,
@@ -287,10 +353,11 @@ class XGBoostModelManager {
                             legend: {
                                 position: 'bottom',
                                 labels: {
-                                    usePointStyle: true,
-                                    padding: 15,
+                                    usePointStyle: true, 
+                                    padding: 20,
                                     font: {
-                                        size: 11
+                                        size: 12,
+                                        family: "'Poppins', sans-serif"
                                     }
                                 }
                             },
@@ -298,7 +365,7 @@ class XGBoostModelManager {
                                 backgroundColor: 'rgba(0, 77, 64, 0.8)',
                                 titleColor: '#ffffff',
                                 bodyColor: '#ffffff',
-                                borderColor: '#00bfa5',
+                                borderColor: this.chartColors.primary,
                                 borderWidth: 1,
                                 displayColors: false,
                                 callbacks: {
@@ -313,10 +380,11 @@ class XGBoostModelManager {
                             title: { 
                                 display: true,
                                 text: 'ROC Curve - Model Performance',
-                                color: '#004d40',
+                                color: this.chartColors.secondary,
                                 font: {
-                                    size: 14,
-                                    weight: 'bold'
+                                    size: 16,
+                                    weight: 'bold',
+                                    family: "'Poppins', sans-serif"
                                 }
                             }
                         },
@@ -325,10 +393,11 @@ class XGBoostModelManager {
                                 title: { 
                                     display: true,
                                     text: 'False Positive Rate',
-                                    color: '#004d40',
+                                    color: this.chartColors.secondary,
                                     font: {
-                                        weight: 'bold',
-                                        size: 12
+                                        weight: 'bold', 
+                                        size: 13,
+                                        family: "'Poppins', sans-serif"
                                     }
                                 },
                                 grid: {
@@ -336,16 +405,20 @@ class XGBoostModelManager {
                                 },
                                 ticks: {
                                     color: '#004d40'
+                                    font: {
+                                        family: "'Poppins', sans-serif"
+                                    }
                                 }
                             },
                             y: {
                                 title: { 
                                     display: true,
                                     text: 'True Positive Rate',
-                                    color: '#004d40',
+                                    color: this.chartColors.secondary,
                                     font: {
-                                        weight: 'bold',
-                                        size: 12
+                                        weight: 'bold', 
+                                        size: 13,
+                                        family: "'Poppins', sans-serif"
                                     }
                                 },
                                 grid: {
@@ -353,8 +426,14 @@ class XGBoostModelManager {
                                 },
                                 ticks: {
                                     color: '#004d40'
+                                    font: {
+                                        family: "'Poppins', sans-serif"
+                                    }
                                 }
                             }
+                        },
+                        layout: {
+                            padding: 15
                         }
                     }
                 });
@@ -363,15 +442,20 @@ class XGBoostModelManager {
                 const chartArea = document.createElement('div');
                 chartArea.className = 'chart-annotation';
                 chartArea.innerHTML = `
-                    <div class="auc-badge">
-                        <span class="auc-label">AUC Score:</span>
-                        <span class="auc-value">0.92</span>
+                    <div class="auc-badge" style="background: linear-gradient(135deg, ${this.chartColors.secondary} 0%, ${this.chartColors.primary} 100%);">
+                        <span class="auc-label">AUC Score:</span> 
+                        <span class="auc-value">${this.modelAUC}</span>
                     </div>
                 `;
-                performanceChart.appendChild(chartArea);
+                const container = document.querySelector('.model-performance-chart-container');
+                if (container) {
+                    container.appendChild(chartArea);
+                }
             } else {
                 // Fallback if Chart.js is not loaded
-                performanceChart.innerHTML = this.createPerformanceChart();
+                if (performanceChart) {
+                    performanceChart.innerHTML = this.createPerformanceChart();
+                }
             }
         }
     }
@@ -379,9 +463,10 @@ class XGBoostModelManager {
     createPerformanceChart() {
         // Create a simple ROC curve visualization
         return `
-            <div class="chart-loading">
-                <div class="loading-spinner"></div>
-                <p>Loading ROC Curve...</p>
+            <div class="chart-placeholder">
+                <i class="bi bi-graph-up"></i>
+                <p>ROC Curve Visualization</p>
+                <small>Loading Chart.js...</small>
             </div>
         `;
     }
@@ -402,7 +487,9 @@ class XGBoostModelManager {
     createRiskMatrixTable() {
         // Create a table-based risk matrix as fallback when Chart.js is not available
         const container = document.querySelector('.risk-matrix-chart-container');
-        if (!container) return;
+        if (!container) {
+            return;
+        }
         
         container.innerHTML = '';
         
@@ -411,6 +498,12 @@ class XGBoostModelManager {
         title.className = 'risk-matrix-title';
         title.textContent = 'Project Risk Matrix';
         container.appendChild(title);
+        
+        // Add description
+        const description = document.createElement('p');
+        description.className = 'risk-matrix-description';
+        description.textContent = 'Risk assessment across different categories for renewable energy projects';
+        container.appendChild(description);
         
         // Create risk matrix grid
         const grid = document.createElement('div');
@@ -454,7 +547,7 @@ class XGBoostModelManager {
                 
                 const riskValue = riskMatrix.data[rowIndex][colIndex];
                 let riskClass = '';
-                let riskLabel = '';
+                let riskLabel = ''; 
                 
                 if (riskValue === 1) {
                     riskClass = 'low-risk';
@@ -494,15 +587,15 @@ class XGBoostModelManager {
         
         const lowRisk = document.createElement('div');
         lowRisk.className = 'legend-item';
-        lowRisk.innerHTML = '<span class="legend-color low-risk"></span><span>Low Risk</span>';
+        lowRisk.innerHTML = `<span class="legend-color low-risk"></span><span>Low Risk</span>`;
         
         const mediumRisk = document.createElement('div');
         mediumRisk.className = 'legend-item';
-        mediumRisk.innerHTML = '<span class="legend-color medium-risk"></span><span>Medium Risk</span>';
+        mediumRisk.innerHTML = `<span class="legend-color medium-risk"></span><span>Medium Risk</span>`;
         
         const highRisk = document.createElement('div');
         highRisk.className = 'legend-item';
-        highRisk.innerHTML = '<span class="legend-color high-risk"></span><span>High Risk</span>';
+        highRisk.innerHTML = `<span class="legend-color high-risk"></span><span>High Risk</span>`;
         
         legend.appendChild(lowRisk);
         legend.appendChild(mediumRisk);
@@ -852,7 +945,7 @@ const xgboostModelStyles = `
 
 .model-status-badge.success {
     background: rgba(16, 185, 129, 0.15);
-    color: var(--success);
+    color: #10B981;
 }
 
 .model-status-badge.warning {
@@ -871,22 +964,33 @@ const xgboostModelStyles = `
 
 .model-stat {
     text-align: center; 
-    padding: var(--spacing-md);
-    background: var(--light-green);
-    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(0, 191, 165, 0.1) 0%, rgba(0, 77, 64, 0.05) 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 191, 165, 0.2);
     height: 100%;
+    transition: all 0.3s ease;
+}
+
+.model-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
 }
 
 .model-stat-value {
     font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
-    color: var(--primary-green);
+    background: linear-gradient(135deg, #004d40 0%, #00bfa5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: var(--spacing-xs);
 }
 
 .model-stat-label {
-    font-size: 0.8rem;
-    color: var(--text-medium);
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-medium);
 }
 
 .feature-importance {
@@ -901,14 +1005,14 @@ const xgboostModelStyles = `
 
 .feature-name {
     font-size: 0.9rem;
-    font-weight: var(--font-weight-medium);
-    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-green);
     margin-bottom: 4px;
 }
 
 .feature-impact {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
+    color: var(--text-light);
     margin-top: 4px;
     font-style: italic;
 }
@@ -925,7 +1029,7 @@ const xgboostModelStyles = `
 .feature-bar {
     height: 100%;
     background-color: var(--accent-teal);
-    background-image: linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    background-image: linear-gradient(to right, rgba(0, 191, 165, 1), rgba(0, 77, 64, 0.7));
     border-radius: var(--radius-sm);
     transition: width 0.5s ease-out;
 }
@@ -944,22 +1048,22 @@ const xgboostModelStyles = `
 
 /* Enhanced ROC Curve Chart */
 .chart-annotation {
-    position: absolute;
+    position: absolute; 
     top: 15px;
     right: 15px;
     z-index: 5;
 }
 
 .auc-badge {
-    background: rgba(0, 77, 64, 0.95);
+    background: linear-gradient(135deg, rgba(0, 77, 64, 0.95) 0%, rgba(0, 191, 165, 0.9) 100%);
     color: white;
-    padding: 6px 12px;
+    padding: 8px 15px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     gap: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .auc-label {
@@ -968,7 +1072,7 @@ const xgboostModelStyles = `
 
 .auc-value {
     font-weight: 700;
-    color: #00bfa5;
+    color: white;
 }
 
 .chart-loading {
@@ -981,7 +1085,7 @@ const xgboostModelStyles = `
 
 .prediction-metrics {
     display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
 }
@@ -995,9 +1099,9 @@ const xgboostModelStyles = `
 
 .prediction-icon {
     width: 40px;
-    height: 40px;
+    height: 40px; 
     border-radius: 50%;
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, #004d40 0%, #00bfa5 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1009,7 +1113,8 @@ const xgboostModelStyles = `
 .prediction-value {
     font-size: 1.25rem;
     font-weight: var(--font-weight-bold);
-    color: var(--primary-green);
+    background: linear-gradient(135deg, #004d40 0%, #00bfa5 100%);
+    -webkit-background-clip: text;
     margin-bottom: var(--spacing-xs);
 }
 
@@ -1019,7 +1124,7 @@ const xgboostModelStyles = `
 }
 
 .key-factors {
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-lg); 
 }
 
 .key-factors h4 {
@@ -1029,7 +1134,7 @@ const xgboostModelStyles = `
 
 .factor-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: var(--spacing-xs);
 }
 
@@ -1040,7 +1145,8 @@ const xgboostModelStyles = `
 
 .factor-item span {
     font-size: 0.9rem;
-    color: var(--text-dark);
+    color: var(--text-dark); 
+    line-height: 1.4;
 }
 
 .case-study {
@@ -1049,7 +1155,7 @@ const xgboostModelStyles = `
 
 .case-study:last-child {
     margin-bottom: 0;
-}
+} 
 
 .case-study h4 {
     font-size: 1rem;
@@ -1058,7 +1164,7 @@ const xgboostModelStyles = `
 
 .case-study p {
     font-size: 0.9rem;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm); 
 }
 
 .case-study-metrics {
@@ -1067,7 +1173,7 @@ const xgboostModelStyles = `
     background-color: var(--light-green);
     border-radius: var(--radius-md);
     padding: var(--spacing-sm);
-}
+} 
 
 .case-metric {
     display: flex;
@@ -1076,7 +1182,7 @@ const xgboostModelStyles = `
     flex: 1;
 }
 
-.case-metric .metric-label {
+.case-metric .metric-label { 
     font-size: 0.7rem;
     color: var(--text-dark);
     margin-bottom: 2px;
@@ -1089,13 +1195,22 @@ const xgboostModelStyles = `
     margin-bottom: 0;
 }
 
-/* Risk Matrix Table Styles */
+/* Enhanced Risk Matrix Table Styles */
 .risk-matrix-title {
     font-size: 1.1rem;
     font-weight: var(--font-weight-bold);
     color: var(--text-dark);
     text-align: center;
     margin-bottom: var(--spacing-md);
+}
+
+.risk-matrix-description {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-md);
+    font-style: italic;
 }
 
 .risk-matrix-grid {
@@ -1114,7 +1229,7 @@ const xgboostModelStyles = `
     padding: var(--spacing-xs);
     text-align: center;
     border: 1px solid rgba(0, 77, 64, 0.1);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     vertical-align: middle;
 }
 
@@ -1125,7 +1240,7 @@ const xgboostModelStyles = `
 }
 
 .corner-cell {
-    background: var(--light-gray);
+    background: rgba(0, 77, 64, 0.05);
 }
 
 .project-cell {
@@ -1137,7 +1252,7 @@ const xgboostModelStyles = `
 
 .risk-cell {
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-weight: var(--font-weight-semibold);
 }
 
@@ -1147,17 +1262,17 @@ const xgboostModelStyles = `
 }
 
 .risk-cell.low-risk {
-    background: #d4edda;
-    color: #155724;
+    background: rgba(16, 185, 129, 0.15);
+    color: #065f46;
 }
 
 .risk-cell.medium-risk {
-    background: #fff3cd;
-    color: #856404;
+    background: rgba(245, 158, 11, 0.15);
+    color: #92400e;
 }
 
 .risk-cell.high-risk {
-    background: #f8d7da;
+    background: rgba(239, 68, 68, 0.15);
     color: #721c24;
 }
 
@@ -1165,7 +1280,10 @@ const xgboostModelStyles = `
     display: flex;
     justify-content: center;
     gap: var(--spacing-md);
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
+    background: var(--light-green);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
 }
 
 .legend-item {
@@ -1182,15 +1300,15 @@ const xgboostModelStyles = `
 }
 
 .legend-color.low-risk {
-    background: #d4edda;
+    background: rgba(16, 185, 129, 0.7);
 }
 
 .legend-color.medium-risk {
-    background: #fff3cd;
+    background: rgba(245, 158, 11, 0.7);
 }
 
 .legend-color.high-risk {
-    background: #f8d7da;
+    background: rgba(239, 68, 68, 0.7);
 }
 </style>
 `;
