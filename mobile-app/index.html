@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-title" content="FinergyCloud">
     <meta name="application-name" content="FinergyCloud">
     
-    <!-- Favicon -->
+    <!-- Favicon and Icons -->
     <link rel="icon" type="image/png" href="../assets/images/android-chrome-192x192.png">
     <link rel="apple-touch-icon" href="../assets/images/android-chrome-192x192.png">
     
@@ -34,6 +34,9 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="styles/app.css">
+    
+    <!-- Chart.js for professional analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -470,6 +473,91 @@
                 </div>
             </div>
             
+            <!-- Analytics Page -->
+            <div id="analytics-page" class="page">
+                <div class="page-header">
+                    <h2>Analytics Dashboard</h2>
+                    <p>Comprehensive investment intelligence</p>
+                </div>
+                
+                <div class="analytics-container">
+                    <!-- Portfolio Analysis Section -->
+                    <div class="analytics-section">
+                        <h3 class="analytics-section-title">Portfolio Analysis</h3>
+                        
+                        <div class="analytics-metrics">
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="total-capacity">16.7 MW</div>
+                                <div class="analytics-metric-label">Total Capacity</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="weighted-irr">15.2%</div>
+                                <div class="analytics-metric-label">Weighted IRR</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="project-count">5</div>
+                                <div class="analytics-metric-label">Projects</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="low-risk-percentage">60%</div>
+                                <div class="analytics-metric-label">Low Risk Projects</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <h4 class="analytics-chart-title">Portfolio Distribution by Technology</h4>
+                            <div class="analytics-chart-container portfolio-distribution-chart-container">
+                                <canvas id="portfolio-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <h4 class="analytics-chart-title">Portfolio Performance Trend</h4>
+                            <div class="analytics-chart-container portfolio-performance-chart-container">
+                                <canvas id="portfolio-performance-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Risk Analysis Section -->
+                    <div class="analytics-section">
+                        <h3 class="analytics-section-title">Risk Analysis</h3>
+                        
+                        <div class="analytics-metrics">
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="avg-risk-score">7.8</div>
+                                <div class="analytics-metric-label">Avg. Risk Score</div>
+                            </div>
+                            <div class="analytics-metric-card">
+                                <div class="analytics-metric-value" id="high-impact-factors">3</div>
+                                <div class="analytics-metric-label">High Impact Factors</div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <h4 class="analytics-chart-title">Risk Level Distribution</h4>
+                            <div class="analytics-chart-container risk-distribution-chart-container">
+                                <canvas id="risk-distribution-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <h4 class="analytics-chart-title">Risk Assessment Matrix</h4>
+                            <div class="analytics-chart-container risk-matrix-chart-container">
+                                <div id="risk-matrix-chart"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-chart-card">
+                            <h4 class="analytics-chart-title">Risk Trend Analysis</h4>
+                            <div class="analytics-chart-container risk-trend-chart-container">
+                                <canvas id="risk-trend-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- IRR Calculator Page -->
             <div id="calculator-page" class="page">
                 <div class="page-header">
@@ -836,118 +924,55 @@
             <!-- ESG Scoring Page -->
             <div id="esg-page" class="page">
                 <div class="page-header">
-                    <h2>ESG Scoring</h2>
-                    <p>Environmental, Social & Governance assessment</p>
+                    <h2>ESG Analytics</h2>
+                    <p>Comprehensive sustainability assessment</p>
                 </div>
                 
                 <div class="esg-dashboard-container">
-                    <!-- Key Metrics -->
-                    <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
-                            <div class="metric-value">8.7</div>
-                            <div class="metric-label">Overall ESG Score</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>0.5</span>
-                            </div>
+                    <div class="esg-score-cards">
+                        <div class="esg-score-card environmental">
+                            <div class="esg-score-value" id="environmental-score">8.7</div>
+                            <div class="esg-score-label">Environmental</div>
                         </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-tree"></i>
-                            </div>
-                            <div class="metric-value">8.5</div>
-                            <div class="metric-label">Environmental</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>0.3</span>
-                            </div>
+                        <div class="esg-score-card social">
+                            <div class="esg-score-value" id="social-score">7.9</div>
+                            <div class="esg-score-label">Social</div>
                         </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-people"></i>
-                            </div>
-                            <div class="metric-value">8.9</div>
-                            <div class="metric-label">Social</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>0.7</span>
-                            </div>
+                        <div class="esg-score-card governance">
+                            <div class="esg-score-value" id="governance-score">8.4</div>
+                            <div class="esg-score-label">Governance</div>
                         </div>
-                        <div class="metric-card">
-                            <div class="metric-icon">
-                                <i class="bi bi-building"></i>
-                            </div>
-                            <div class="metric-value">8.6</div>
-                            <div class="metric-label">Governance</div>
-                            <div class="metric-change positive">
-                                <i class="bi bi-arrow-up"></i>
-                                <span>0.4</span>
-                            </div>
+                        <div class="esg-score-card overall">
+                            <div class="esg-score-value" id="overall-esg-score">8.4</div>
+                            <div class="esg-score-label">Overall ESG</div>
                         </div>
                     </div>
                     
-                    <!-- ESG Trend Chart -->
-                    <div class="chart-card">
-                        <h4 class="chart-title">ESG Score Trend</h4>
-                        <div class="chart-container">
+                    <div class="esg-chart-card">
+                        <h4 class="esg-chart-title">ESG Score Trend</h4>
+                        <div class="esg-chart-container esg-trend-chart-container">
                             <canvas id="esg-trend-chart"></canvas>
                         </div>
                     </div>
                     
-                    <!-- ESG Radar Chart -->
-                    <div class="chart-card">
-                        <h4 class="chart-title">ESG Score Breakdown</h4>
-                        <div class="chart-container">
-                            <canvas id="esg-radar-chart"></canvas>
+                    <div class="esg-chart-card">
+                        <h4 class="esg-chart-title">ESG Score Breakdown</h4>
+                        <div class="esg-chart-container esg-breakdown-chart-container">
+                            <canvas id="esg-breakdown-chart"></canvas>
                         </div>
                     </div>
                     
-                    <!-- Peer Comparison Chart -->
-                    <div class="chart-card">
-                        <h4 class="chart-title">Peer Comparison</h4>
-                        <div class="chart-container">
+                    <div class="esg-chart-card">
+                        <h4 class="esg-chart-title">Peer Comparison</h4>
+                        <div class="esg-chart-container peer-comparison-chart-container">
                             <canvas id="peer-comparison-chart"></canvas>
                         </div>
                     </div>
                     
-                    <!-- Factor Impact Chart -->
-                    <div class="chart-card">
-                        <h4 class="chart-title">ESG Factor Impact</h4>
-                        <div class="chart-container">
-                            <canvas id="factor-impact-chart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Interactive Tools -->
-                    <div class="esg-controls card">
-                        <h4>Interactive Tools</h4>
-                        <div class="form-group">
-                            <label for="esg-project-selector" class="form-label">Project Selector</label>
-                            <select id="esg-project-selector" class="form-control">
-                                <option>Project A - Solar Farm</option>
-                                <option>Project B - Wind Park</option>
-                                <option>Project C - Hydro Plant</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="esg-time-period" class="form-label">Time Period</label>
-                            <select id="esg-time-period" class="form-control">
-                                <option>Last 3 Months</option>
-                                <option>Last 6 Months</option>
-                                <option>Last 12 Months</option>
-                                <option>All Time</option>
-                            </select>
-                        </div>
-                        <div class="esg-action-buttons">
-                            <button class="btn btn-primary">
-                                <i class="bi bi-file-earmark-text me-2"></i>Generate ESG Report
-                            </button>
-                            <button class="btn btn-secondary">
-                                <i class="bi bi-lightbulb me-2"></i>View Actionable Insights
-                            </button>
+                    <div class="esg-chart-card">
+                        <h4 class="esg-chart-title">ESG Factor Impact</h4>
+                        <div class="esg-chart-container esg-factor-impact-chart-container">
+                            <canvas id="esg-factor-impact-chart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -1022,19 +1047,19 @@
                     <div class="model-stats">
                         <div class="row">
                             <div class="col-4">
-                                <div class="model-stat">
+                                <div class="model-stat auc-stat">
                                     <div class="model-stat-value">92%</div>
                                     <div class="model-stat-label">AUC Score</div>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="model-stat">
+                                <div class="model-stat accuracy-stat">
                                     <div class="model-stat-value">87%</div>
                                     <div class="model-stat-label">Accuracy</div>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="model-stat">
+                                <div class="model-stat features-stat">
                                     <div class="model-stat-value">14</div>
                                     <div class="model-stat-label">Key Features</div>
                                 </div>
@@ -1042,15 +1067,26 @@
                         </div>
                     </div>
                     
-                    <h3>Feature Importance</h3>
-                    <div class="feature-importance">
-                        <!-- Feature importance bars will be loaded dynamically -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Feature Importance</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="feature-importance">
+                                <!-- Feature importance bars will be loaded dynamically -->
+                            </div>
+                        </div>
                     </div>
                     
-                    <h3>Model Performance</h3>
-                    <div id="model-performance-chart" class="chart-placeholder">
-                        <i class="bi bi-graph-up"></i>
-                        <p>Performance chart will load here</p>
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Model Performance</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="model-performance-chart" class="chart-container">
+                                <canvas id="roc-curve-chart" height="250"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -1107,44 +1143,49 @@
                     </button>
                 </div>
                 
-                <div id="prediction-result" class="card" style="display: none;">
-                    <h3>Prediction Results</h3>
-                    
-                    <div class="prediction-metrics">
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="prediction-value" id="predicted-irr">--</div>
-                            <div class="prediction-label">Predicted IRR</div>
+                <div id="prediction-result" style="display: none;">
+                    <div class="card mb-4 prediction-result-card">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Prediction Results</h5>
                         </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-check-circle"></i>
+                        <div class="card-body">
+                            <div class="prediction-metrics">
+                                <div class="prediction-metric">
+                                    <div class="prediction-icon">
+                                        <i class="bi bi-graph-up"></i>
+                                    </div>
+                                    <div class="prediction-value" id="predicted-irr">--</div>
+                                    <div class="prediction-label">Predicted IRR</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-icon">
+                                        <i class="bi bi-percent"></i>
+                                    </div>
+                                    <div class="prediction-value" id="success-probability">--</div>
+                                    <div class="prediction-label">Success Probability</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-icon">
+                                        <i class="bi bi-shield-check"></i>
+                                    </div>
+                                    <div class="prediction-value" id="risk-level">--</div>
+                                    <div class="prediction-label">Risk Level</div>
+                                </div>
+                                <div class="prediction-metric">
+                                    <div class="prediction-icon">
+                                        <i class="bi bi-check-circle"></i>
+                                    </div>
+                                    <div class="prediction-value" id="confidence-score">--</div>
+                                    <div class="prediction-label">Confidence Score</div>
+                                </div>
                             </div>
-                            <div class="prediction-value" id="success-probability">--</div>
-                            <div class="prediction-label">Success Probability</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-shield-check"></i>
+                            
+                            <div class="key-factors">
+                                <h4>Key Factors</h4>
+                                <div id="key-factors-list">
+                                    <!-- Key factors will be loaded dynamically -->
+                                </div>
                             </div>
-                            <div class="prediction-value" id="risk-level">--</div>
-                            <div class="prediction-label">Risk Level</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="prediction-value" id="confidence-score">--</div>
-                            <div class="prediction-label">Confidence Score</div>
-                        </div>
-                    </div>
-                    
-                    <div class="key-factors">
-                        <h4>Key Factors</h4>
-                        <div id="key-factors-list">
-                            <!-- Key factors will be loaded dynamically -->
                         </div>
                     </div>
                 </div>
@@ -1259,9 +1300,11 @@
     <script src="scripts/charts.js"></script>
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/xgboost-model.js"></script>
-    <script src="scripts/dashboard.js"></script>
-    <script src="scripts/cross-platform-navigation.js"></script>
     <script src="scripts/esg-dashboard.js"></script>
+    <script src="scripts/analytics-dashboard.js"></script>
     <script src="scripts/irr-dashboard.js"></script>
+    <script src="scripts/cross-platform-navigation.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/email-integration.js"></script>
 </body>
 </html>
