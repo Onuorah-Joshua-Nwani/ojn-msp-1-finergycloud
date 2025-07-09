@@ -36,32 +36,7 @@ class XGBoostModelManager {
     init() {
         console.log('Initializing XGBoost Model Manager');
         this.setupEventListeners();
-        
-        // Check if Chart.js is loaded
-        if (window.Chart) {
-            this.loadModelMetadata();
-        } else {
-            // Load Chart.js first
-            this.loadChartJS(() => {
-                this.loadModelMetadata();
-            });
-        }
-    }
-
-    loadChartJS(callback) {
-        console.log('Loading Chart.js');
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.async = true;
-        script.onload = () => {
-            console.log('Chart.js loaded successfully');
-            callback();
-        };
-        script.onerror = () => {
-            console.error('Failed to load Chart.js');
-            this.showToast('Failed to load Chart.js. Some features may not work properly.', 'warning');
-        };
-        document.head.appendChild(script);
+        this.loadModelMetadata();
     }
 
     setupEventListeners() {
@@ -80,12 +55,8 @@ class XGBoostModelManager {
             // Set up prediction button
             const predictBtn = document.getElementById('predict-btn');
             if (predictBtn) {
-                // Remove any existing event listeners to prevent duplicates
-                const newPredictBtn = predictBtn.cloneNode(true);
-                predictBtn.parentNode.replaceChild(newPredictBtn, predictBtn);
-                
-                console.log('Adding click handler to predict button (new)');
-                newPredictBtn.addEventListener('click', () => {
+                console.log('Adding click handler to predict button');
+                predictBtn.addEventListener('click', () => {
                     this.runPrediction();
                 });
             } else {
@@ -93,29 +64,15 @@ class XGBoostModelManager {
             }
             
             // Set up project type change handler
-            // Fix the duplicate ID issue by using a class selector instead
-            const projectTypeSelects = document.querySelectorAll('.project-type-select');
-            
-            projectTypeSelects.forEach(select => {
-                // Remove any existing event listeners to prevent duplicates
-                const newSelect = select.cloneNode(true);
-                select.parentNode.replaceChild(newSelect, select);
-                
+            const projectTypeSelect = document.getElementById('project-type-xgboost');
+            if (projectTypeSelect) {
                 console.log('Adding change handler to project type selector');
-                newSelect.addEventListener('change', () => {
-                    const value = newSelect.value;
-                    console.log('Project type changed to:', value);
-                    
-                    // Update all other selectors with the same class
-                    projectTypeSelects.forEach(otherSelect => {
-                        if (otherSelect !== newSelect) {
-                            otherSelect.value = value;
-                        }
-                    });
-                    
-                    this.updateFeatureImportanceForProjectType(value);
+                projectTypeSelect.addEventListener('change', () => {
+                    this.updateFeatureImportanceForProjectType(projectTypeSelect.value);
                 });
-            });
+            } else {
+                console.warn('Project type selector not found');
+            }
         });
     }
 
@@ -201,7 +158,7 @@ class XGBoostModelManager {
 
     updateFeatureImportance() {
         // Get current project type
-        const projectTypeSelect = document.querySelector('.project-type-select');
+        const projectTypeSelect = document.getElementById('project-type-xgboost');
         const projectType = projectTypeSelect ? projectTypeSelect.value : 'solar';
         
         console.log('Updating feature importance for project type:', projectType);
@@ -271,38 +228,32 @@ class XGBoostModelManager {
     updateModelPerformance() {
         console.log('Updating model performance chart');
         // Update model performance chart
-        const performanceChartContainer = document.querySelector('.model-performance-chart-container');
+        const performanceChart = document.getElementById('model-performance-chart');
         const rocCurveChart = document.getElementById('roc-curve-chart');
-        if (performanceChartContainer && rocCurveChart) {
-            // Remove placeholder if exists
-            const placeholder = performanceChartContainer.querySelector('.chart-placeholder');
-            if (placeholder) {
-                placeholder.remove();
-            }
+        if (performanceChart && rocCurveChart) {
+            performanceChart.classList.remove('chart-placeholder');
             
             // Create ROC curve using Chart.js
             this.createROCCurveChart(rocCurveChart);
             
             // Add AUC annotation
-            // Remove existing annotation if any
-            const existingAnnotation = performanceChartContainer.querySelector('.chart-annotation');
-            if (existingAnnotation) {
-                existingAnnotation.remove();
-            }
-            
-            const annotation = document.createElement('div');
-            annotation.className = 'chart-annotation';
-            annotation.innerHTML = `
-                <div class="auc-badge">
-                    <span class="auc-label">AUC Score:</span>
-                    <span class="auc-value">0.92</span>
-                </div>
-            `;
-            performanceChartContainer.appendChild(annotation);
-        } else {
-            console.warn('Performance chart container or ROC curve chart not found');
-            if (!rocCurveChart) {
-                console.warn('ROC curve chart element not found');
+            const chartArea = document.querySelector('.model-performance-chart-container');
+            if (chartArea) {
+                // Remove existing annotation if any
+                const existingAnnotation = chartArea.querySelector('.chart-annotation');
+                if (existingAnnotation) {
+                    existingAnnotation.remove();
+                }
+                
+                const annotation = document.createElement('div');
+                annotation.className = 'chart-annotation';
+                annotation.innerHTML = `
+                    <div class="auc-badge">
+                        <span class="auc-label">AUC Score:</span>
+                        <span class="auc-value">0.92</span>
+                    </div>
+                `;
+                chartArea.appendChild(annotation);
             }
         }
     }
@@ -310,8 +261,6 @@ class XGBoostModelManager {
     createROCCurveChart(canvas) {
         if (!canvas || !window.Chart) {
             console.warn('Canvas element or Chart.js not available');
-            // Create fallback visualization
-            this.createFallbackROCCurve(canvas);
             return;
         }
         
@@ -424,24 +373,6 @@ class XGBoostModelManager {
         });
     }
 
-    createFallbackROCCurve(container) {
-        if (!container) return;
-        
-        // Create a simple fallback visualization when Chart.js is not available
-        container.innerHTML = `
-            <div style="height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 8px;">
-                <div style="font-size: 24px; color: #004d40; margin-bottom: 10px;">
-                    <i class="bi bi-graph-up"></i>
-                </div>
-                <div style="font-weight: 600; color: #004d40; margin-bottom: 5px;">ROC Curve</div>
-                <div style="font-size: 14px; color: #666; text-align: center;">
-                    XGBoost Model (AUC = 0.92)<br>
-                    Loading visualization...
-                </div>
-            </div>
-        `;
-    }
-
     updateCaseStudies() {
         console.log('Updating case studies section');
         // Update case studies section
@@ -451,7 +382,7 @@ class XGBoostModelManager {
     runPrediction() {
         console.log('Running prediction');
         // Get input values
-        const projectType = document.getElementById('prediction-project-type')?.value || 'solar';
+        const projectType = document.getElementById('project-type-xgboost')?.value || 'solar';
         const location = document.getElementById('project-location')?.value || 'lagos';
         const gridStability = document.getElementById('grid-stability')?.value || 'medium';
         const communityEngagement = document.getElementById('community-engagement')?.value || 'moderate';
@@ -1053,281 +984,4 @@ const xgboostModelStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    font-size: 1.25rem;
-    margin-bottom: var(--spacing-xs);
-}
-
-.prediction-value {
-    font-size: 1.25rem;
-    font-weight: var(--font-weight-bold);
-    color: var(--primary-green);
-    margin-bottom: var(--spacing-xs);
-}
-
-.prediction-label {
-    font-size: 0.7rem;
-    color: var(--text-light);
-}
-
-.key-factors {
-    margin-top: var(--spacing-lg);
-}
-
-.key-factors h4 {
-    font-size: 1rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.factor-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: var(--spacing-xs);
-}
-
-.factor-item i {
-    color: var(--accent-teal);
-    margin-right: var(--spacing-xs);
-}
-
-.factor-item span {
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-.case-study {
-    margin-bottom: var(--spacing-lg);
-}
-
-.case-study:last-child {
-    margin-bottom: 0;
-}
-
-.case-study h4 {
-    font-size: 1rem;
-    margin-bottom: var(--spacing-xs);
-}
-
-.case-study p {
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-sm);
-}
-
-.case-study-metrics {
-    display: flex;
-    gap: var(--spacing-md);
-    background-color: var(--light-green);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-sm);
-}
-
-.case-metric {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-}
-
-.case-metric .metric-label {
-    font-size: 0.7rem;
-    color: var(--text-dark);
-    margin-bottom: 2px;
-}
-
-.case-metric .metric-value {
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-semibold);
-    color: var(--primary-green);
-    margin-bottom: 0;
-}
-
-/* Risk Matrix Styles */
-.risk-matrix-title {
-    font-size: 1rem;
-    font-weight: var(--font-weight-semibold);
-    color: var(--primary-green);
-    margin-bottom: var(--spacing-md);
-    text-align: center;
-}
-
-.risk-matrix-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background-color: rgba(0, 77, 64, 0.1);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-.risk-matrix-row {
-    display: flex;
-    gap: 1px;
-}
-
-.risk-matrix-cell {
-    flex: 1;
-    padding: 8px;
-    text-align: center;
-    background-color: var(--white);
-    font-size: 0.8rem;
-}
-
-.corner-cell {
-    background-color: var(--light-green);
-}
-
-.header-cell {
-    font-weight: var(--font-weight-semibold);
-    background-color: var(--light-green);
-    color: var(--primary-green);
-}
-
-.project-cell {
-    font-weight: var(--font-weight-semibold);
-    background-color: var(--light-green);
-    color: var(--primary-green);
-    text-align: left;
-    padding-left: 12px;
-}
-
-.risk-cell {
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.risk-cell:hover {
-    transform: scale(1.05);
-}
-
-.risk-cell.low-risk {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: #065f46;
-}
-
-.risk-cell.medium-risk {
-    background-color: rgba(245, 158, 11, 0.2);
-    color: #92400e;
-}
-
-.risk-cell.high-risk {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: #b91c1c;
-}
-
-.risk-matrix-legend {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-sm);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
-}
-
-.legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-}
-
-.legend-color.low-risk {
-    background-color: rgba(16, 185, 129, 0.7);
-}
-
-.legend-color.medium-risk {
-    background-color: rgba(245, 158, 11, 0.7);
-}
-
-.legend-color.high-risk {
-    background-color: rgba(239, 68, 68, 0.7);
-}
-
-/* Mobile Toast */
-.mobile-toast {
-    position: fixed;
-    top: calc(var(--header-height) + var(--safe-area-top) + var(--spacing-md));
-    left: var(--spacing-md);
-    right: var(--spacing-md);
-    background: var(--white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    padding: var(--spacing-md);
-    z-index: var(--z-toast);
-    transform: translateY(-100px);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.mobile-toast.show {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.mobile-toast.success {
-    border-left: 4px solid var(--success);
-}
-
-.mobile-toast.warning {
-    border-left: 4px solid var(--warning);
-}
-
-.mobile-toast.info {
-    border-left: 4px solid var(--info);
-}
-
-.mobile-toast .toast-content {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.mobile-toast.success .toast-content i {
-    color: var(--success);
-}
-
-.mobile-toast.warning .toast-content i {
-    color: var(--warning);
-}
-
-.mobile-toast.info .toast-content i {
-    color: var(--info);
-}
-
-@media (max-width: 480px) {
-    .risk-matrix-legend {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    
-    .risk-matrix-cell {
-        padding: 6px 4px;
-        font-size: 0.7rem;
-    }
-}
-        justify-content: center;
-        color: var(--white);
-        font-size: 1.25rem;
-        margin-bottom: var(--spacing-xs);
-    }
-
-    .prediction-value {
-        font-size: 1.25rem;
-        font-weight: var(--font-weight-bold);
-        color: var(--primary-green);
-        margin-bottom: var(--spacing-xs);
-    }
-
-    .prediction-label {
-        font-size: 0.7rem;
-        color: var(--text-light);
-    }
-}
-</style>
-`;
-
-document.head.insertAdjacentHTML('beforeend', xgboostModelStyles);
+</style> 
