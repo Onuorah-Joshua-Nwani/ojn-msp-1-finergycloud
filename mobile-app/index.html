@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors on mobile">
+    <meta name="description" content="FinergyCloud Mobile - AI-driven risk intelligence for renewable energy investors on your mobile device.">
     <meta name="theme-color" content="#004d40">
     
     <title>FinergyCloud Mobile</title>
@@ -39,8 +39,9 @@
             --accent-teal: #00bfa5;
             --light-green: #e8f5e8;
             --dark-green: #00251a;
+            --off-white: #f6f6f6;
             --white: #ffffff;
-            --light-gray: #f5f5f5;
+            --light-gray: #f1f1f1;
             --gray: #9e9e9e;
             --dark-gray: #616161;
             --black: #212121;
@@ -58,24 +59,6 @@
             /* Gradients */
             --gradient-primary: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
             
-            /* Spacing */
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            
-            /* Border Radius */
-            --radius-sm: 0.25rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 1rem;
-            --radius-xl: 1.5rem;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            
             /* Typography */
             --font-weight-light: 300;
             --font-weight-normal: 400;
@@ -83,8 +66,26 @@
             --font-weight-semibold: 600;
             --font-weight-bold: 700;
             
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            
             /* Transitions */
-            --transition-fast: 0.15s ease;
+            --transition-fast: 0.2s ease;
             --transition-normal: 0.3s ease;
             
             /* Layout */
@@ -95,14 +96,13 @@
             
             /* Z-index */
             --z-header: 100;
-            --z-bottom-nav: 100;
             --z-side-nav: 200;
             --z-overlay: 150;
+            --z-bottom-nav: 100;
             --z-modal: 300;
             --z-toast: 400;
         }
         
-        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -116,20 +116,22 @@
         
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--off-white);
             color: var(--text-dark);
-            background-color: var(--light-gray);
             min-height: 100%;
-            padding-top: calc(var(--header-height) + var(--safe-area-top));
-            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
-            position: relative;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        /* App Container */
         .app-container {
-            max-width: 768px;
-            margin: 0 auto;
-            position: relative;
-            min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height) - var(--safe-area-top) - var(--safe-area-bottom));
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: calc(var(--header-height) + var(--safe-area-top));
+            padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
         }
         
         /* Header */
@@ -140,44 +142,19 @@
             right: 0;
             height: calc(var(--header-height) + var(--safe-area-top));
             padding-top: var(--safe-area-top);
-            background: var(--white);
-            box-shadow: var(--shadow-sm);
+            background-color: var(--white);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding-left: var(--spacing-md);
             padding-right: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
             z-index: var(--z-header);
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-        }
-        
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-        
-        .header-brand {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header-title {
-            font-size: 1.25rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin: 0;
-        }
-        
-        .header-subtitle {
-            font-size: 0.75rem;
-            color: var(--accent-teal);
-            margin: 0;
         }
         
         .menu-btn {
@@ -186,20 +163,38 @@
             font-size: 1.5rem;
             color: var(--gray);
             cursor: pointer;
-            padding: var(--spacing-xs);
+            padding: 8px;
             border-radius: var(--radius-sm);
             transition: var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 44px;
-            min-height: 44px;
+            margin-right: var(--spacing-sm);
         }
         
-        .menu-btn:hover,
-        .menu-btn:active {
+        .menu-btn:hover {
             background: var(--light-green);
             color: var(--primary-green);
+        }
+        
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            font-size: 0.7rem;
+            color: var(--accent-teal);
+            margin: 0;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
         }
         
         .notification-btn {
@@ -208,19 +203,13 @@
             font-size: 1.3rem;
             color: var(--gray);
             cursor: pointer;
-            padding: var(--spacing-xs);
+            padding: 8px;
             border-radius: var(--radius-sm);
             transition: var(--transition-fast);
             position: relative;
-            min-width: 44px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         
-        .notification-btn:hover,
-        .notification-btn:active {
+        .notification-btn:hover {
             background: var(--light-green);
             color: var(--primary-green);
         }
@@ -231,7 +220,7 @@
             right: 5px;
             width: 8px;
             height: 8px;
-            background: var(--danger);
+            background-color: var(--danger);
             border-radius: 50%;
         }
         
@@ -242,7 +231,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: var(--z-overlay);
             opacity: 0;
             visibility: hidden;
@@ -260,15 +249,14 @@
             left: 0;
             bottom: 0;
             width: 280px;
-            background: var(--white);
+            background-color: var(--white);
             z-index: var(--z-side-nav);
             transform: translateX(-100%);
             transition: transform var(--transition-normal);
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            padding-top: var(--safe-area-top);
-            padding-bottom: var(--safe-area-bottom);
+            box-shadow: var(--shadow-lg);
         }
         
         .side-nav.open {
@@ -276,103 +264,91 @@
         }
         
         .nav-header {
-            padding: var(--spacing-lg);
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-        
-        .nav-logo {
-            width: 40px;
-            height: 40px;
+            padding: calc(var(--spacing-lg) + var(--safe-area-top)) var(--spacing-lg) var(--spacing-lg);
             background: var(--gradient-primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: var(--white);
-            font-size: 1.5rem;
         }
         
         .nav-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin: 0;
+            margin-bottom: var(--spacing-xs);
         }
         
         .nav-subtitle {
-            font-size: 0.75rem;
-            color: var(--accent-teal);
-            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
         
         .nav-menu {
             list-style: none;
             padding: var(--spacing-md) 0;
-            margin: 0;
             flex: 1;
         }
         
         .nav-item {
-            margin: 0;
-            padding: 0;
+            margin-bottom: 2px;
         }
         
         .nav-link {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
-            padding: var(--spacing-md) var(--spacing-lg);
+            padding: var(--spacing-sm) var(--spacing-lg);
             color: var(--text-dark);
             text-decoration: none;
             transition: var(--transition-fast);
-            font-weight: var(--font-weight-medium);
         }
         
-        .nav-link:hover,
-        .nav-link:active,
-        .nav-link.active {
-            background: var(--light-green);
+        .nav-link:hover {
+            background-color: var(--light-green);
             color: var(--primary-green);
+        }
+        
+        .nav-link.active {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            font-weight: var(--font-weight-medium);
+            border-left: 3px solid var(--accent-teal);
         }
         
         .nav-link i {
-            font-size: 1.25rem;
-            color: var(--gray);
-            transition: var(--transition-fast);
-        }
-        
-        .nav-link:hover i,
-        .nav-link:active i,
-        .nav-link.active i {
-            color: var(--primary-green);
+            font-size: 1.2rem;
+            margin-right: var(--spacing-md);
+            width: 24px;
+            text-align: center;
         }
         
         .nav-footer {
-            padding: var(--spacing-lg);
+            padding: var(--spacing-md) var(--spacing-lg);
             border-top: 1px solid var(--light-gray);
         }
         
         .upgrade-btn {
-            width: 100%;
-            background: var(--gradient-primary);
-            color: var(--white);
-            border: none;
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            font-weight: var(--font-weight-semibold);
-            cursor: pointer;
-            transition: var(--transition-fast);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: var(--spacing-sm);
+            gap: var(--spacing-xs);
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-fast);
         }
         
         .upgrade-btn:hover {
             opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--spacing-md);
+            overflow-x: hidden;
         }
         
         /* Bottom Navigation */
@@ -383,11 +359,11 @@
             right: 0;
             height: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
             padding-bottom: var(--safe-area-bottom);
-            background: var(--white);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            background-color: var(--white);
             display: flex;
-            align-items: center;
             justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
             z-index: var(--z-bottom-nav);
         }
         
@@ -401,26 +377,22 @@
             background: none;
             border: none;
             color: var(--gray);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: var(--transition-fast);
         }
         
         .nav-btn i {
-            font-size: 1.25rem;
-            margin-bottom: var(--spacing-xs);
+            font-size: 1.3rem;
+            margin-bottom: 4px;
         }
         
-        .nav-btn:hover,
-        .nav-btn:active,
+        .nav-btn:hover {
+            color: var(--accent-teal);
+        }
+        
         .nav-btn.active {
             color: var(--primary-green);
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding: var(--spacing-md);
-            min-height: 100%;
         }
         
         /* Pages */
@@ -430,12 +402,6 @@
         
         .page.active {
             display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         
         /* Page Header */
@@ -445,7 +411,7 @@
         
         .page-title {
             font-size: 1.5rem;
-            font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-semibold);
             color: var(--primary-green);
             margin-bottom: var(--spacing-xs);
         }
@@ -453,50 +419,29 @@
         .page-subtitle {
             font-size: 0.9rem;
             color: var(--text-light);
-            margin-bottom: 0;
         }
         
-        /* Section Header */
-        .section-header {
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .section-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 0;
-        }
-        
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
+        /* Dashboard Page */
+        .dashboard-welcome {
+            background: var(--gradient-primary);
+            color: var(--white);
             padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-lg);
             margin-bottom: var(--spacing-lg);
         }
         
-        .card-title {
-            font-size: 1.1rem;
+        .welcome-title {
+            font-size: 1.2rem;
             font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
         }
         
-        .card-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-light);
+        .welcome-message {
+            font-size: 0.9rem;
+            opacity: 0.9;
             margin-bottom: var(--spacing-md);
         }
         
-        /* Metrics */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -506,13 +451,12 @@
         
         .metric-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
         }
         
@@ -528,8 +472,32 @@
             color: var(--text-light);
         }
         
-        /* Action Cards */
-        .action-cards {
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+        }
+        
+        .section-action {
+            font-size: 0.8rem;
+            color: var(--accent-teal);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-action i {
+            margin-left: var(--spacing-xs);
+        }
+        
+        .quick-actions {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: var(--spacing-md);
@@ -538,8 +506,8 @@
         
         .action-card {
             background: var(--white);
+            padding: var(--spacing-md);
             border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
             box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
@@ -549,96 +517,124 @@
             transition: var(--transition-normal);
         }
         
-        .action-card:hover,
-        .action-card:active {
+        .action-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-md);
         }
         
         .action-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: var(--light-green);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: var(--spacing-md);
-            color: var(--primary-green);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .action-icon i {
             font-size: 1.5rem;
+            color: var(--primary-green);
         }
         
         .action-title {
-            font-size: 1rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .action-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-        
-        /* Recent Activity */
-        .activity-list {
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .activity-item {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-md);
-            padding: var(--spacing-md) 0;
-            border-bottom: 1px solid var(--light-gray);
-        }
-        
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-        
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--light-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-green);
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-        
-        .activity-content {
-            flex: 1;
-        }
-        
-        .activity-title {
             font-size: 0.9rem;
             font-weight: var(--font-weight-medium);
             color: var(--text-dark);
             margin-bottom: var(--spacing-xs);
         }
         
-        .activity-meta {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        .action-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-light);
         }
         
-        /* Market Insights */
-        .insight-card {
+        .recent-projects {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .project-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-md);
+        }
+        
+        .project-header {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .project-title {
+            font-size: 1rem;
+            font-weight: var(--font-weight-medium);
+            color: var(--primary-green);
+        }
+        
+        .project-type {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--light-green);
+            color: var(--primary-green);
+        }
+        
+        .project-metrics {
+            display: flex;
             gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .project-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .project-metric-value {
+            font-size: 0.9rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+        }
+        
+        .project-metric-label {
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+        
+        .project-progress {
+            height: 6px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-teal);
+            border-radius: 3px;
+        }
+        
+        .market-insights {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .insight-card {
+            background: var(--white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .insight-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
         }
         
         .insight-icon {
@@ -649,38 +645,48 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-green);
-            font-size: 1.25rem;
-            flex-shrink: 0;
+            margin-right: var(--spacing-sm);
         }
         
-        .insight-content {
-            flex: 1;
+        .insight-icon i {
+            font-size: 1.2rem;
+            color: var(--primary-green);
         }
         
         .insight-title {
             font-size: 0.9rem;
             font-weight: var(--font-weight-medium);
             color: var(--text-dark);
-            margin-bottom: var(--spacing-xs);
         }
         
-        .insight-text {
+        .insight-content {
             font-size: 0.8rem;
             color: var(--text-light);
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
         }
         
-        .insight-meta {
-            font-size: 0.75rem;
+        .insight-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .insight-date {
+            font-size: 0.7rem;
             color: var(--text-muted);
+        }
+        
+        .insight-action {
+            font-size: 0.7rem;
+            color: var(--accent-teal);
+            text-decoration: none;
         }
         
         /* Calculator Page */
         .calculator-form {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
         }
@@ -690,26 +696,25 @@
         }
         
         .form-label {
+            display: block;
             font-size: 0.9rem;
             font-weight: var(--font-weight-medium);
             color: var(--primary-green);
             margin-bottom: var(--spacing-xs);
-            display: block;
         }
         
         .form-control {
             width: 100%;
-            padding: var(--spacing-md);
+            padding: var(--spacing-sm);
             border: 1px solid var(--light-gray);
             border-radius: var(--radius-md);
-            font-size: 1rem;
-            color: var(--text-dark);
+            font-size: 0.9rem;
             transition: var(--transition-fast);
         }
         
         .form-control:focus {
-            outline: none;
             border-color: var(--accent-teal);
+            outline: none;
             box-shadow: 0 0 0 2px rgba(0, 191, 165, 0.2);
         }
         
@@ -721,65 +726,13 @@
             border-color: var(--danger);
         }
         
-        .form-select {
-            width: 100%;
-            padding: var(--spacing-md);
-            border: 1px solid var(--light-gray);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            color: var(--text-dark);
-            transition: var(--transition-fast);
-            background-color: var(--white);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239e9e9e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right var(--spacing-md) center;
-            background-size: 16px 12px;
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
         }
         
-        .form-select:focus {
-            outline: none;
-            border-color: var(--accent-teal);
-            box-shadow: 0 0 0 2px rgba(0, 191, 165, 0.2);
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md) var(--spacing-lg);
-            border-radius: var(--radius-md);
-            font-weight: var(--font-weight-medium);
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            border: none;
-        }
-        
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover,
-        .btn-primary:active {
-            opacity: 0.9;
-        }
-        
-        .btn-secondary {
-            background: var(--light-gray);
-            color: var(--text-dark);
-        }
-        
-        .btn-secondary:hover,
-        .btn-secondary:active {
-            background: var(--gray);
-            color: var(--white);
-        }
-        
-        .btn-block {
-            width: 100%;
+        .form-row .form-group {
+            flex: 1;
         }
         
         .calculation-preview {
@@ -789,12 +742,54 @@
             margin-bottom: var(--spacing-lg);
         }
         
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .btn i {
+            margin-right: var(--spacing-xs);
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+        }
+        
+        .btn-secondary {
+            background: var(--gray);
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
         .calculator-results {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            margin-bottom: var(--spacing-lg);
+        }
+        
+        .result-title {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
         }
         
         .result-metrics {
@@ -811,20 +806,25 @@
             text-align: center;
         }
         
-        .result-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-green);
             margin-bottom: var(--spacing-xs);
         }
         
-        .result-value {
-            font-size: 1.25rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--primary-green);
+        .result-label {
+            font-size: 0.7rem;
+            color: var(--text-dark);
+        }
+        
+        .chart-container {
+            height: 200px;
+            margin-bottom: var(--spacing-lg);
         }
         
         .chart-placeholder {
-            height: 200px;
+            height: 100%;
             background: var(--light-gray);
             border-radius: var(--radius-md);
             display: flex;
@@ -840,160 +840,56 @@
         }
         
         /* Projects Page */
-        .project-filters {
+        .projects-filter {
             display: flex;
             gap: var(--spacing-sm);
             margin-bottom: var(--spacing-lg);
             overflow-x: auto;
-            padding-bottom: var(--spacing-sm);
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: var(--spacing-xs);
         }
         
         .filter-btn {
+            padding: var(--spacing-xs) var(--spacing-sm);
             background: var(--white);
             border: 1px solid var(--light-gray);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-sm) var(--spacing-md);
-            font-size: 0.9rem;
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
             color: var(--text-dark);
             cursor: pointer;
             transition: var(--transition-fast);
             white-space: nowrap;
         }
         
-        .filter-btn:hover,
-        .filter-btn:active,
         .filter-btn.active {
-            background: var(--light-green);
-            border-color: var(--accent-teal);
-            color: var(--primary-green);
+            background: var(--primary-green);
+            color: var(--white);
+            border-color: var(--primary-green);
         }
         
         .project-list {
             margin-bottom: var(--spacing-lg);
         }
         
-        .project-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: var(--spacing-md);
-            transition: var(--transition-normal);
+        .project-list.loading {
+            opacity: 0.7;
         }
         
-        .project-card:hover,
-        .project-card:active {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .project-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .project-title {
-            font-size: 1.1rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .project-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-        
-        .project-status {
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top-color: var(--accent-teal);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
             display: inline-block;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: var(--font-weight-medium);
         }
         
-        .status-active {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-        
-        .status-pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-        
-        .status-completed {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--info);
-        }
-        
-        .project-metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .project-metric {
-            text-align: center;
-        }
-        
-        .project-metric-value {
-            font-size: 1rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .project-metric-label {
-            font-size: 0.7rem;
-            color: var(--text-light);
-        }
-        
-        .project-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .project-meta {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        
-        .project-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-        
-        .project-btn {
-            background: none;
-            border: none;
-            color: var(--accent-teal);
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: var(--spacing-xs);
-            border-radius: var(--radius-sm);
-            transition: var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .project-btn:hover,
-        .project-btn:active {
-            background: var(--light-green);
-            color: var(--primary-green);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* ESG Page */
-        .esg-score-cards {
+        .esg-scores {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: var(--spacing-md);
@@ -1002,13 +898,9 @@
         
         .esg-score-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -1019,7 +911,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 4px;
         }
         
@@ -1040,7 +932,7 @@
         }
         
         .esg-score-value {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: var(--font-weight-bold);
             margin-bottom: var(--spacing-xs);
         }
@@ -1068,8 +960,8 @@
         
         .esg-chart-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
             padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
         }
@@ -1090,9 +982,9 @@
         .featured-post-mobile {
             background: var(--white);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
-            margin-bottom: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
         }
         
         .post-image {
@@ -1111,71 +1003,67 @@
             left: var(--spacing-sm);
             background: var(--gradient-primary);
             color: var(--white);
-            padding: var(--spacing-xs) var(--spacing-sm);
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: var(--font-weight-medium);
         }
         
         .post-content {
-            padding: var(--spacing-lg);
+            padding: var(--spacing-md);
         }
         
         .post-meta {
             display: flex;
-            gap: var(--spacing-md);
+            gap: var(--spacing-sm);
             margin-bottom: var(--spacing-sm);
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            flex-wrap: wrap;
+            font-size: 0.7rem;
+            color: var(--text-light);
         }
         
         .post-meta span {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 4px;
         }
         
         .post-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: var(--font-weight-semibold);
             color: var(--primary-green);
             margin-bottom: var(--spacing-sm);
-            line-height: 1.3;
         }
         
         .post-excerpt {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-light);
             margin-bottom: var(--spacing-md);
-            line-height: 1.5;
         }
         
         .post-actions {
             display: flex;
             gap: var(--spacing-sm);
-            flex-wrap: wrap;
         }
         
         .blog-posts-mobile {
-            margin-bottom: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
         }
         
         .blog-post-mobile {
             background: var(--white);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            padding: var(--spacing-md);
+            padding: var(--spacing-sm);
             margin-bottom: var(--spacing-md);
             display: flex;
-            gap: var(--spacing-md);
-            position: relative;
+            gap: var(--spacing-sm);
         }
         
         .post-image-small {
             width: 80px;
             height: 80px;
-            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
             flex-shrink: 0;
         }
         
@@ -1183,19 +1071,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: var(--radius-sm);
-        }
-        
-        .post-category-small {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: 2px 5px;
-            border-radius: var(--radius-sm);
-            font-size: 0.6rem;
-            font-weight: var(--font-weight-medium);
         }
         
         .post-content-small {
@@ -1203,32 +1078,22 @@
         }
         
         .post-meta-small {
-            display: flex;
-            gap: var(--spacing-sm);
+            font-size: 0.6rem;
+            color: var(--text-light);
             margin-bottom: 2px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        
-        .post-meta-small span {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
         }
         
         .post-content-small h4 {
             font-size: 0.9rem;
-            font-weight: var(--font-weight-semibold);
+            font-weight: var(--font-weight-medium);
             color: var(--primary-green);
-            margin-bottom: 2px;
-            line-height: 1.3;
+            margin-bottom: 4px;
         }
         
         .post-content-small p {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-light);
-            margin-bottom: var(--spacing-sm);
-            line-height: 1.4;
+            margin-bottom: var(--spacing-xs);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -1237,7 +1102,12 @@
         
         .post-actions-small {
             display: flex;
-            gap: var(--spacing-xs);
+            gap: 4px;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.7rem;
         }
         
         .newsletter-mobile {
@@ -1249,16 +1119,15 @@
         }
         
         .newsletter-mobile h3 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: var(--font-weight-semibold);
-            margin-bottom: var(--spacing-sm);
-            color: var(--white);
+            margin-bottom: var(--spacing-xs);
         }
         
         .newsletter-mobile p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            opacity: 0.9;
             margin-bottom: var(--spacing-md);
-            color: rgba(255, 255, 255, 0.9);
         }
         
         .newsletter-form {
@@ -1271,237 +1140,73 @@
         }
         
         /* XGBoost Model Page */
-        .model-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-md);
-            font-size: 0.8rem;
-            font-weight: var(--font-weight-medium);
+        .model-header {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .model-title {
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .model-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
             margin-bottom: var(--spacing-md);
         }
         
-        .model-status-badge.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-        
-        .model-status-badge.warning {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-        
-        .model-status-badge.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-        
-        .model-stats {
+        .model-stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-lg);
         }
         
-        .model-stat {
-            background: var(--light-green);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-md);
-            text-align: center;
-        }
-        
-        .model-stat-value {
-            font-size: 1.25rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .model-stat-label {
-            font-size: 0.75rem;
-            color: var(--text-dark);
-        }
-        
-        .feature-importance {
+        .model-section {
+            background: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
             margin-bottom: var(--spacing-lg);
         }
         
-        .feature-item {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .feature-name {
-            font-size: 0.9rem;
-            font-weight: var(--font-weight-medium);
-            color: var(--text-dark);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .feature-bar-container {
-            height: 8px;
-            background: var(--light-gray);
-            border-radius: var(--radius-sm);
-            position: relative;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .feature-bar {
-            height: 100%;
-            background: var(--accent-teal);
-            border-radius: var(--radius-sm);
-        }
-        
-        .feature-value {
-            position: absolute;
-            right: 0;
-            top: -18px;
-            font-size: 0.75rem;
+        .model-section-title {
+            font-size: 1.1rem;
             font-weight: var(--font-weight-semibold);
             color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
         }
         
-        .feature-impact {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-        
-        .model-form {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
+        .prediction-form {
             margin-bottom: var(--spacing-lg);
         }
         
         .prediction-result {
-            background: var(--white);
-            border-radius: var(--radius-lg);
+            background: var(--light-green);
             padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-lg);
             display: none;
         }
         
-        .prediction-metrics {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .prediction-metric {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .prediction-result-title {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-md);
             text-align: center;
         }
         
-        .prediction-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--light-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-green);
-            font-size: 1.25rem;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .prediction-value {
-            font-size: 1.25rem;
-            font-weight: var(--font-weight-bold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .prediction-label {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-        
-        .key-factors {
-            margin-top: var(--spacing-lg);
-        }
-        
-        .key-factors h4 {
-            font-size: 1rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .factor-item {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .factor-item i {
-            color: var(--accent-teal);
-            font-size: 1rem;
-        }
-        
-        .factor-item span {
-            font-size: 0.85rem;
-            color: var(--text-dark);
-        }
-        
-        /* Legal Page */
-        .legal-link-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-sm);
+        /* Analytics Page */
+        .analytics-page .page-header {
             margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition-normal);
         }
         
-        .legal-link-card:hover,
-        .legal-link-card:active {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .legal-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--light-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-green);
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        
-        .legal-content {
-            flex: 1;
-        }
-        
-        .legal-title {
-            font-size: 1rem;
-            font-weight: var(--font-weight-semibold);
-            color: var(--primary-green);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .legal-description {
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
-        
-        /* Analytics Dashboard */
         .analytics-container {
             margin-bottom: var(--spacing-lg);
         }
@@ -1511,7 +1216,7 @@
         }
         
         .analytics-section-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: var(--font-weight-semibold);
             color: var(--primary-green);
             margin-bottom: var(--spacing-md);
@@ -1570,6 +1275,64 @@
             height: 250px;
         }
         
+        /* Legal Page */
+        .legal-page .page-header {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .legal-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .legal-link-card {
+            background: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: var(--transition-normal);
+        }
+        
+        .legal-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .legal-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .legal-icon i {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+        
+        .legal-content h3 {
+            font-size: 1rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--primary-green);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .legal-content p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+        
         /* Utilities */
         .grid-2 {
             display: grid;
@@ -1583,121 +1346,76 @@
             gap: var(--spacing-md);
         }
         
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-md);
-        }
+        .mb-1 { margin-bottom: var(--spacing-xs); }
+        .mb-2 { margin-bottom: var(--spacing-sm); }
+        .mb-3 { margin-bottom: var(--spacing-md); }
+        .mb-4 { margin-bottom: var(--spacing-lg); }
+        .mb-5 { margin-bottom: var(--spacing-xl); }
         
-        .mb-xs {
-            margin-bottom: var(--spacing-xs);
-        }
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary-green); }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .text-danger { color: var(--danger); }
         
-        .mb-sm {
-            margin-bottom: var(--spacing-sm);
-        }
+        .me-2 { margin-right: var(--spacing-sm); }
         
-        .mb-md {
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .mb-lg {
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .mb-xl {
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .text-primary {
-            color: var(--primary-green);
-        }
-        
-        .text-success {
-            color: var(--success);
-        }
-        
-        .text-warning {
-            color: var(--warning);
-        }
-        
-        .text-danger {
-            color: var(--danger);
-        }
-        
-        .text-info {
-            color: var(--info);
-        }
-        
-        .bg-light {
-            background-color: var(--light-green);
-        }
-        
-        .loading-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-top-color: var(--accent-teal);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .loading .loading-spinner {
-            display: block;
-        }
-        
-        /* Responsive Adjustments */
+        /* Media Queries */
         @media (min-width: 768px) {
             .metrics-grid,
-            .analytics-metrics {
+            .quick-actions {
                 grid-template-columns: repeat(4, 1fr);
             }
             
-            .action-cards {
+            .esg-scores {
                 grid-template-columns: repeat(4, 1fr);
             }
             
-            .esg-score-cards {
-                grid-template-columns: repeat(4, 1fr);
+            .legal-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .app-container {
+                padding-left: 280px;
             }
             
-            .result-metrics {
-                grid-template-columns: repeat(3, 1fr);
+            .side-nav {
+                transform: translateX(0);
+            }
+            
+            .menu-btn {
+                display: none;
+            }
+            
+            .bottom-nav {
+                display: none;
+            }
+            
+            .app-container {
+                padding-bottom: 0;
             }
         }
         
         @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
             .result-metrics {
-                grid-template-columns: repeat(1, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
             }
             
-            .model-stats {
-                grid-template-columns: repeat(1, 1fr);
+            .model-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .prediction-metrics {
-                grid-template-columns: repeat(1, 1fr);
+            .model-stats-grid > div:last-child {
+                grid-column: span 2;
             }
-        }
-        
-        /* Animations */
-        @keyframes scaleIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -1726,13 +1444,8 @@
         <div id="nav-overlay" class="nav-overlay"></div>
         <nav id="side-nav" class="side-nav">
             <div class="nav-header">
-                <div class="nav-logo">
-                    <i class="bi bi-cloud"></i>
-                </div>
-                <div class="nav-brand">
-                    <h2 class="nav-title">FinergyCloud</h2>
-                    <p class="nav-subtitle">AI Risk Intelligence</p>
-                </div>
+                <h2 class="nav-title">FinergyCloud</h2>
+                <p class="nav-subtitle">AI Risk Intelligence</p>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -1772,15 +1485,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#legal" class="nav-link" data-page="legal">
-                        <i class="bi bi-shield-lock"></i>
-                        <span>Legal</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="#analytics" class="nav-link" data-page="analytics">
                         <i class="bi bi-graph-up"></i>
                         <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#legal" class="nav-link" data-page="legal">
+                        <i class="bi bi-shield-lock"></i>
+                        <span>Legal</span>
                     </a>
                 </li>
             </ul>
@@ -1796,35 +1509,33 @@
         <main id="main-content" class="main-content">
             <!-- Dashboard Page -->
             <div id="dashboard-page" class="page active">
-                <div class="page-header">
-                    <h2 class="page-title">Dashboard</h2>
-                    <p class="page-subtitle">Welcome to your investment dashboard</p>
-                </div>
-                
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-value">15.2%</div>
-                        <div class="metric-label">Average IRR</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">8.7</div>
-                        <div class="metric-label">ESG Score</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">5</div>
-                        <div class="metric-label">Active Projects</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">₦120M+</div>
-                        <div class="metric-label">Total Investment</div>
+                <div class="dashboard-welcome">
+                    <h2 class="welcome-title">Welcome to FinergyCloud</h2>
+                    <p class="welcome-message">Your AI-powered renewable energy investment platform</p>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">15.2%</div>
+                            <div class="metric-label">Average IRR</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">8.7/10</div>
+                            <div class="metric-label">ESG Score</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">₦120M+</div>
+                            <div class="metric-label">Analyzed Value</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Low</div>
+                            <div class="metric-label">Risk Level</div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="section-header">
                     <h3 class="section-title">Quick Actions</h3>
                 </div>
-                
-                <div class="action-cards">
+                <div class="quick-actions">
                     <div class="action-card" data-page="calculator">
                         <div class="action-icon">
                             <i class="bi bi-calculator"></i>
@@ -1844,86 +1555,108 @@
                             <i class="bi bi-shield-check"></i>
                         </div>
                         <div class="action-title">ESG Scoring</div>
-                        <div class="action-subtitle">Sustainability metrics</div>
+                        <div class="action-subtitle">Assess sustainability</div>
                     </div>
-                    <div class="action-card" data-page="analytics">
+                    <div class="action-card" data-page="xgboost">
                         <div class="action-icon">
-                            <i class="bi bi-graph-up"></i>
+                            <i class="bi bi-cpu"></i>
                         </div>
-                        <div class="action-title">Analytics</div>
-                        <div class="action-subtitle">Investment intelligence</div>
+                        <div class="action-title">AI Prediction</div>
+                        <div class="action-subtitle">XGBoost model insights</div>
                     </div>
                 </div>
                 
                 <div class="section-header">
-                    <h3 class="section-title">Recent Activity</h3>
+                    <h3 class="section-title">Recent Projects</h3>
+                    <a href="#projects" class="section-action" data-page="projects">
+                        View All <i class="bi bi-chevron-right"></i>
+                    </a>
                 </div>
-                
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="bi bi-calculator"></i>
+                <div class="recent-projects">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Lagos Solar Farm</div>
+                            <div class="project-type">Solar</div>
                         </div>
-                        <div class="activity-content">
-                            <div class="activity-title">IRR Calculation Completed</div>
-                            <div class="activity-meta">
-                                <span>Lagos Solar Project</span>
-                                <span>•</span>
-                                <span>2 hours ago</span>
+                        <div class="project-metrics">
+                            <div class="project-metric">
+                                <div class="project-metric-value">5.0 MW</div>
+                                <div class="project-metric-label">Capacity</div>
                             </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">16.8%</div>
+                                <div class="project-metric-label">IRR</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Low</div>
+                                <div class="project-metric-label">Risk</div>
+                            </div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 75%;"></div>
                         </div>
                     </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="bi bi-shield-check"></i>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Abuja Wind Project</div>
+                            <div class="project-type">Wind</div>
                         </div>
-                        <div class="activity-content">
-                            <div class="activity-title">ESG Score Updated</div>
-                            <div class="activity-meta">
-                                <span>Abuja Wind Farm</span>
-                                <span>•</span>
-                                <span>Yesterday</span>
+                        <div class="project-metrics">
+                            <div class="project-metric">
+                                <div class="project-metric-value">2.5 MW</div>
+                                <div class="project-metric-label">Capacity</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">14.5%</div>
+                                <div class="project-metric-label">IRR</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Medium</div>
+                                <div class="project-metric-label">Risk</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">
-                            <i class="bi bi-kanban"></i>
-                        </div>
-                        <div class="activity-content">
-                            <div class="activity-title">New Project Added</div>
-                            <div class="activity-meta">
-                                <span>Kano Solar Array</span>
-                                <span>•</span>
-                                <span>3 days ago</span>
-                            </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 45%;"></div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="section-header">
                     <h3 class="section-title">Market Insights</h3>
+                    <a href="#blog" class="section-action" data-page="blog">
+                        View All <i class="bi bi-chevron-right"></i>
+                    </a>
                 </div>
-                
-                <div class="insight-card">
-                    <div class="insight-icon">
-                        <i class="bi bi-lightbulb"></i>
+                <div class="market-insights">
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <div class="insight-icon">
+                                <i class="bi bi-lightbulb"></i>
+                            </div>
+                            <div class="insight-title">Nigeria's Solar Capacity to Grow 35% in 2025</div>
+                        </div>
+                        <div class="insight-content">
+                            New government incentives and private investment are driving rapid growth in Nigeria's solar energy sector, with capacity expected to increase by 35% next year.
+                        </div>
+                        <div class="insight-footer">
+                            <div class="insight-date">Dec 15, 2024</div>
+                            <a href="#blog" class="insight-action" data-page="blog">Read More</a>
+                        </div>
                     </div>
-                    <div class="insight-content">
-                        <div class="insight-title">Solar Project IRRs Trending Upward</div>
-                        <div class="insight-text">Solar projects in Nigeria are showing a 2.3% increase in average IRR compared to last quarter.</div>
-                        <div class="insight-meta">Based on 50+ projects • Updated today</div>
-                    </div>
-                </div>
-                
-                <div class="insight-card">
-                    <div class="insight-icon">
-                        <i class="bi bi-graph-up"></i>
-                    </div>
-                    <div class="insight-content">
-                        <div class="insight-title">Grid Stability Improving in Lagos Region</div>
-                        <div class="insight-text">Recent infrastructure investments have reduced outages by 35%, positively impacting project returns.</div>
-                        <div class="insight-meta">Based on utility data • Updated 2 days ago</div>
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <div class="insight-icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <div class="insight-title">ESG Investments Outperform Traditional by 2.3%</div>
+                        </div>
+                        <div class="insight-content">
+                            Recent analysis shows renewable energy projects with high ESG scores consistently outperform traditional investments by an average of 2.3% in annual returns.
+                        </div>
+                        <div class="insight-footer">
+                            <div class="insight-date">Dec 12, 2024</div>
+                            <a href="#blog" class="insight-action" data-page="blog">Read More</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1932,60 +1665,63 @@
             <div id="calculator-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">IRR Calculator</h2>
-                    <p class="page-subtitle">Simulate project returns with Monte Carlo analysis</p>
+                    <p class="page-subtitle">Simulate financial returns for renewable energy projects</p>
                 </div>
                 
                 <div class="calculator-form">
-                    <div class="form-group">
-                        <label for="project-type" class="form-label">Project Type</label>
-                        <select id="project-type" class="form-select">
-                            <option value="solar">Solar</option>
-                            <option value="wind">Wind</option>
-                            <option value="hydro">Hydro</option>
-                            <option value="biomass">Biomass</option>
-                            <option value="geothermal">Geothermal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="currency" class="form-label">Currency</label>
-                        <select id="currency" class="form-select">
-                            <option value="NGN">Nigerian Naira (₦)</option>
-                            <option value="USD">US Dollar ($)</option>
-                            <option value="EUR">Euro (€)</option>
-                            <option value="GBP">British Pound (£)</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="project-type" class="form-label">Project Type</label>
+                            <select id="project-type" class="form-control">
+                                <option value="solar">Solar</option>
+                                <option value="wind">Wind</option>
+                                <option value="hydro">Hydro</option>
+                                <option value="biomass">Biomass</option>
+                                <option value="geothermal">Geothermal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="currency" class="form-label">Currency</label>
+                            <select id="currency" class="form-control">
+                                <option value="NGN">Nigerian Naira (₦)</option>
+                                <option value="USD">US Dollar ($)</option>
+                                <option value="EUR">Euro (€)</option>
+                                <option value="GBP">British Pound (£)</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="initial-investment" class="form-label">Initial Investment</label>
-                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 1,000,000" min="0">
+                        <input type="number" id="initial-investment" class="form-control" placeholder="e.g., 1,000,000" min="0" step="1000">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="project-duration" class="form-label">Project Duration (Years)</label>
-                        <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="50">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="project-duration" class="form-label">Project Duration (Years)</label>
+                            <input type="number" id="project-duration" class="form-control" placeholder="e.g., 25" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
+                            <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 150,000" min="0" step="1000">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="annual-cashflow" class="form-label">Annual Cash Flow</label>
-                        <input type="number" id="annual-cashflow" class="form-control" placeholder="e.g., 150,000" min="0">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="terminal-value" class="form-label">Terminal Value</label>
+                            <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 500,000" min="0" step="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="discount-rate" class="form-label">Discount Rate (%)</label>
+                            <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="100" value="10">
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="terminal-value" class="form-label">Terminal Value</label>
-                        <input type="number" id="terminal-value" class="form-control" placeholder="e.g., 500,000" min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="discount-rate" class="form-label">Discount Rate (%)</label>
-                        <input type="number" id="discount-rate" class="form-control" placeholder="e.g., 10" min="0" max="100" value="10">
-                    </div>
-                    
-                    <div class="calculation-preview">
+                    <div class="calculation-preview mb-4">
                         <div class="preview-metric">
                             <span>Simple ROI</span>
-                            <span class="text-primary">--</span>
+                            <span class="text-primary">0.0%</span>
                         </div>
                     </div>
                     
@@ -1996,109 +1732,80 @@
                 </div>
                 
                 <div class="calculator-results">
-                    <h3 class="card-title">Calculation Results</h3>
+                    <h3 class="result-title">Calculation Results</h3>
                     
                     <div class="result-metrics">
                         <div class="result-metric">
-                            <div class="result-label">IRR</div>
                             <div class="result-value" id="irr-result">--</div>
+                            <div class="result-label">IRR</div>
                         </div>
                         <div class="result-metric">
-                            <div class="result-label">NPV</div>
                             <div class="result-value" id="npv-result">--</div>
+                            <div class="result-label">NPV</div>
                         </div>
                         <div class="result-metric">
-                            <div class="result-label">Payback Period</div>
                             <div class="result-value" id="payback-result">--</div>
+                            <div class="result-label">Payback Period</div>
                         </div>
                     </div>
                     
-                    <div id="cashflow-chart" class="chart-placeholder">
-                        <i class="bi bi-bar-chart"></i>
-                        <p>Calculate IRR to see cash flow projection</p>
-                    </div>
-                </div>
-                
-                <!-- IRR Dashboard -->
-                <div class="irr-dashboard-container">
-                    <div class="section-header">
-                        <h3 class="section-title">IRR Simulation Dashboard</h3>
-                        <p class="section-subtitle">Advanced Monte Carlo analysis</p>
+                    <div class="chart-container">
+                        <div id="cashflow-chart" class="chart-placeholder">
+                            <i class="bi bi-bar-chart"></i>
+                            <p>Cash flow chart will appear here</p>
+                        </div>
                     </div>
                     
-                    <div class="irr-controls">
-                        <div class="irr-control-group">
-                            <label for="scenario-selector" class="irr-control-label">Scenario</label>
-                            <select id="scenario-selector" class="irr-control-select">
-                                <option value="Base Case">Base Case</option>
-                                <option value="Optimistic">Optimistic</option>
-                                <option value="Pessimistic">Pessimistic</option>
-                            </select>
+                    <div class="irr-dashboard-container">
+                        <div class="section-header">
+                            <h3 class="section-title">IRR Simulation Dashboard</h3>
                         </div>
                         
-                        <div class="irr-control-group">
-                            <label for="target-irr" class="irr-control-label">Target IRR (%)</label>
-                            <input type="number" id="target-irr" class="irr-control-input" value="12" min="0" max="30">
+                        <div class="irr-controls mb-4">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="scenario-selector" class="form-label">Scenario</label>
+                                    <select id="scenario-selector" class="form-control">
+                                        <option value="Base Case">Base Case</option>
+                                        <option value="Optimistic">Optimistic</option>
+                                        <option value="Pessimistic">Pessimistic</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confidence-level" class="form-label">Confidence Level</label>
+                                    <select id="confidence-level" class="form-control">
+                                        <option value="90%">90%</option>
+                                        <option value="95%" selected>95%</option>
+                                        <option value="99%">99%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="irr-action-buttons">
+                                <button class="btn btn-primary">
+                                    <i class="bi bi-play-fill"></i>
+                                    Run Simulation
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="bi bi-download"></i>
+                                    Export Results
+                                </button>
+                            </div>
                         </div>
                         
-                        <div class="irr-control-group">
-                            <label for="confidence-level" class="irr-control-label">Confidence Level</label>
-                            <select id="confidence-level" class="irr-control-select">
-                                <option value="90%">90%</option>
-                                <option value="95%" selected>95%</option>
-                                <option value="99%">99%</option>
-                            </select>
+                        <div class="analytics-chart-card">
+                            <div class="analytics-chart-title">IRR Distribution</div>
+                            <div class="analytics-chart-container">
+                                <canvas id="irr-distribution-chart"></canvas>
+                            </div>
                         </div>
                         
-                        <div class="irr-action-buttons">
-                            <button class="btn btn-primary">
-                                <i class="bi bi-play-fill"></i>
-                                Run Simulation
-                            </button>
-                            <button class="btn btn-secondary">
-                                <i class="bi bi-download"></i>
-                                Export Results
-                            </button>
+                        <div class="analytics-chart-card">
+                            <div class="analytics-chart-title">Sensitivity Analysis</div>
+                            <div class="analytics-chart-container">
+                                <canvas id="sensitivity-chart"></canvas>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="irr-metrics">
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">15.2%</div>
-                            <div class="irr-metric-label">Average IRR</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">92%</div>
-                            <div class="irr-metric-label">Success Probability</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">10,000</div>
-                            <div class="irr-metric-label">Simulation Runs</div>
-                        </div>
-                        <div class="irr-metric-card">
-                            <div class="irr-metric-value">13.8%</div>
-                            <div class="irr-metric-label">P90 IRR</div>
-                        </div>
-                    </div>
-                    
-                    <div class="irr-chart-card">
-                        <div class="irr-chart-title">IRR Distribution</div>
-                        <div class="irr-chart-container" id="irr-distribution-chart"></div>
-                    </div>
-                    
-                    <div class="irr-chart-card">
-                        <div class="irr-chart-title">Cumulative Probability</div>
-                        <div class="irr-chart-container" id="irr-cdf-chart"></div>
-                    </div>
-                    
-                    <div class="irr-chart-card">
-                        <div class="irr-chart-title">Sensitivity Analysis</div>
-                        <div class="irr-chart-container" id="sensitivity-chart"></div>
-                    </div>
-                    
-                    <div class="irr-chart-card">
-                        <div class="irr-chart-title">Scenario Comparison</div>
-                        <div class="irr-chart-container" id="scenario-comparison-chart"></div>
                     </div>
                 </div>
             </div>
@@ -2110,131 +1817,129 @@
                     <p class="page-subtitle">Manage your renewable energy investments</p>
                 </div>
                 
-                <div class="project-filters">
+                <div class="projects-filter">
                     <button class="filter-btn active">All Projects</button>
                     <button class="filter-btn">Solar</button>
                     <button class="filter-btn">Wind</button>
                     <button class="filter-btn">Hydro</button>
                     <button class="filter-btn">Active</button>
-                    <button class="filter-btn">Pending</button>
                     <button class="filter-btn">Completed</button>
                 </div>
                 
                 <div class="project-list">
                     <div class="project-card">
                         <div class="project-header">
-                            <div>
-                                <h3 class="project-title">Lagos Solar Farm</h3>
-                                <p class="project-subtitle">Solar • Lagos, Nigeria</p>
-                            </div>
-                            <div class="project-status status-active">Active</div>
+                            <div class="project-title">Lagos Solar Farm</div>
+                            <div class="project-type">Solar</div>
                         </div>
-                        
                         <div class="project-metrics">
-                            <div class="project-metric">
-                                <div class="project-metric-value">16.8%</div>
-                                <div class="project-metric-label">IRR</div>
-                            </div>
                             <div class="project-metric">
                                 <div class="project-metric-value">5.0 MW</div>
                                 <div class="project-metric-label">Capacity</div>
                             </div>
                             <div class="project-metric">
-                                <div class="project-metric-value">8.9</div>
-                                <div class="project-metric-label">ESG Score</div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-footer">
-                            <div class="project-meta">
-                                <span><i class="bi bi-calendar"></i> Started Jun 2023</span>
-                            </div>
-                            <div class="project-actions">
-                                <button class="project-btn" aria-label="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="project-btn" aria-label="View Details">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <h3 class="project-title">Abuja Wind Project</h3>
-                                <p class="project-subtitle">Wind • Abuja, Nigeria</p>
-                            </div>
-                            <div class="project-status status-pending">Pending</div>
-                        </div>
-                        
-                        <div class="project-metrics">
-                            <div class="project-metric">
-                                <div class="project-metric-value">14.5%</div>
+                                <div class="project-metric-value">16.8%</div>
                                 <div class="project-metric-label">IRR</div>
                             </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Low</div>
+                                <div class="project-metric-label">Risk</div>
+                            </div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Abuja Wind Project</div>
+                            <div class="project-type">Wind</div>
+                        </div>
+                        <div class="project-metrics">
                             <div class="project-metric">
                                 <div class="project-metric-value">2.5 MW</div>
                                 <div class="project-metric-label">Capacity</div>
                             </div>
                             <div class="project-metric">
-                                <div class="project-metric-value">8.2</div>
-                                <div class="project-metric-label">ESG Score</div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-footer">
-                            <div class="project-meta">
-                                <span><i class="bi bi-calendar"></i> Started Aug 2023</span>
-                            </div>
-                            <div class="project-actions">
-                                <button class="project-btn" aria-label="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="project-btn" aria-label="View Details">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <h3 class="project-title">Kano Solar Array</h3>
-                                <p class="project-subtitle">Solar • Kano, Nigeria</p>
-                            </div>
-                            <div class="project-status status-completed">Completed</div>
-                        </div>
-                        
-                        <div class="project-metrics">
-                            <div class="project-metric">
-                                <div class="project-metric-value">15.2%</div>
+                                <div class="project-metric-value">14.5%</div>
                                 <div class="project-metric-label">IRR</div>
                             </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Medium</div>
+                                <div class="project-metric-label">Risk</div>
+                            </div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Kano Solar Array</div>
+                            <div class="project-type">Solar</div>
+                        </div>
+                        <div class="project-metrics">
                             <div class="project-metric">
                                 <div class="project-metric-value">3.2 MW</div>
                                 <div class="project-metric-label">Capacity</div>
                             </div>
                             <div class="project-metric">
-                                <div class="project-metric-value">8.5</div>
-                                <div class="project-metric-label">ESG Score</div>
+                                <div class="project-metric-value">15.2%</div>
+                                <div class="project-metric-label">IRR</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Low</div>
+                                <div class="project-metric-label">Risk</div>
                             </div>
                         </div>
-                        
-                        <div class="project-footer">
-                            <div class="project-meta">
-                                <span><i class="bi bi-calendar"></i> Completed Apr 2023</span>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Port Harcourt Hydro</div>
+                            <div class="project-type">Hydro</div>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="project-metric">
+                                <div class="project-metric-value">1.8 MW</div>
+                                <div class="project-metric-label">Capacity</div>
                             </div>
-                            <div class="project-actions">
-                                <button class="project-btn" aria-label="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="project-btn" aria-label="View Details">
-                                    <i class="bi bi-eye"></i>
-                                </button>
+                            <div class="project-metric">
+                                <div class="project-metric-value">13.8%</div>
+                                <div class="project-metric-label">IRR</div>
                             </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Medium</div>
+                                <div class="project-metric-label">Risk</div>
+                            </div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-title">Ibadan Solar Park</div>
+                            <div class="project-type">Solar</div>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="project-metric">
+                                <div class="project-metric-value">4.2 MW</div>
+                                <div class="project-metric-label">Capacity</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">15.9%</div>
+                                <div class="project-metric-label">IRR</div>
+                            </div>
+                            <div class="project-metric">
+                                <div class="project-metric-value">Low</div>
+                                <div class="project-metric-label">Risk</div>
+                            </div>
+                        </div>
+                        <div class="project-progress">
+                            <div class="progress-bar" style="width: 85%;"></div>
                         </div>
                     </div>
                 </div>
@@ -2245,59 +1950,57 @@
                 </button>
             </div>
             
-            <!-- ESG Scoring Page -->
+            <!-- ESG Page -->
             <div id="esg-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">ESG Scoring</h2>
-                    <p class="page-subtitle">Environmental, Social, and Governance assessment</p>
+                    <p class="page-subtitle">Environmental, Social & Governance assessment</p>
                 </div>
                 
-                <div class="esg-dashboard-container">
-                    <div class="esg-score-cards">
-                        <div class="esg-score-card environmental">
-                            <div class="esg-score-value" id="environmental-score">8.7</div>
-                            <div class="esg-score-label">Environmental</div>
-                        </div>
-                        <div class="esg-score-card social">
-                            <div class="esg-score-value" id="social-score">7.9</div>
-                            <div class="esg-score-label">Social</div>
-                        </div>
-                        <div class="esg-score-card governance">
-                            <div class="esg-score-value" id="governance-score">8.4</div>
-                            <div class="esg-score-label">Governance</div>
-                        </div>
-                        <div class="esg-score-card overall">
-                            <div class="esg-score-value" id="overall-esg-score">8.4</div>
-                            <div class="esg-score-label">Overall Score</div>
-                        </div>
+                <div class="esg-scores">
+                    <div class="esg-score-card environmental">
+                        <div class="esg-score-value" id="environmental-score">8.7</div>
+                        <div class="esg-score-label">Environmental</div>
                     </div>
-                    
-                    <div class="esg-chart-card">
-                        <div class="esg-chart-title">ESG Score Trend</div>
-                        <div class="esg-chart-container esg-trend-chart-container">
-                            <canvas id="esg-trend-chart"></canvas>
-                        </div>
+                    <div class="esg-score-card social">
+                        <div class="esg-score-value" id="social-score">7.9</div>
+                        <div class="esg-score-label">Social</div>
                     </div>
-                    
-                    <div class="esg-chart-card">
-                        <div class="esg-chart-title">ESG Score Breakdown</div>
-                        <div class="esg-chart-container esg-breakdown-chart-container">
-                            <canvas id="esg-breakdown-chart"></canvas>
-                        </div>
+                    <div class="esg-score-card governance">
+                        <div class="esg-score-value" id="governance-score">8.4</div>
+                        <div class="esg-score-label">Governance</div>
                     </div>
-                    
-                    <div class="esg-chart-card">
-                        <div class="esg-chart-title">Peer Comparison</div>
-                        <div class="esg-chart-container peer-comparison-chart-container">
-                            <canvas id="peer-comparison-chart"></canvas>
-                        </div>
+                    <div class="esg-score-card overall">
+                        <div class="esg-score-value" id="overall-esg-score">8.4</div>
+                        <div class="esg-score-label">Overall ESG</div>
                     </div>
-                    
-                    <div class="esg-chart-card">
-                        <div class="esg-chart-title">ESG Factor Impact</div>
-                        <div class="esg-chart-container esg-factor-impact-chart-container">
-                            <canvas id="esg-factor-impact-chart"></canvas>
-                        </div>
+                </div>
+                
+                <div class="esg-chart-card">
+                    <div class="esg-chart-title">ESG Score Trend</div>
+                    <div class="esg-chart-container">
+                        <canvas id="esg-trend-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="esg-chart-card">
+                    <div class="esg-chart-title">ESG Breakdown</div>
+                    <div class="esg-chart-container">
+                        <canvas id="esg-breakdown-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="esg-chart-card">
+                    <div class="esg-chart-title">Peer Comparison</div>
+                    <div class="esg-chart-container">
+                        <canvas id="peer-comparison-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="esg-chart-card">
+                    <div class="esg-chart-title">ESG Factor Impact</div>
+                    <div class="esg-chart-container">
+                        <canvas id="esg-factor-impact-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -2305,13 +2008,13 @@
             <!-- Blog Page -->
             <div id="blog-page" class="page">
                 <div class="page-header">
-                    <h2 class="page-title">Blog</h2>
-                    <p class="page-subtitle">Insights on renewable energy investment</p>
+                    <h2 class="page-title">Blog & Insights</h2>
+                    <p class="page-subtitle">Expert analysis and industry trends</p>
                 </div>
                 
                 <div class="featured-post-mobile">
                     <div class="post-image">
-                        <img src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg" alt="XGBoost Model Development">
+                        <img src="https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg" alt="XGBoost Model Development" class="img-fluid">
                         <div class="post-category">AI & Technology</div>
                     </div>
                     <div class="post-content">
@@ -2335,12 +2038,10 @@
                 <div class="section-header">
                     <h3 class="section-title">Recent Articles</h3>
                 </div>
-                
                 <div class="blog-posts-mobile">
                     <div class="blog-post-mobile" data-post-id="post-1">
                         <div class="post-image-small">
-                            <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="AI Revolution">
-                            <div class="post-category-small">AI & Technology</div>
+                            <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg" alt="AI Revolution in Renewable Energy">
                         </div>
                         <div class="post-content-small">
                             <div class="post-meta-small">
@@ -2359,11 +2060,9 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="blog-post-mobile" data-post-id="post-2">
                         <div class="post-image-small">
-                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring">
-                            <div class="post-category-small">ESG & Sustainability</div>
+                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg" alt="ESG Scoring Revolution">
                         </div>
                         <div class="post-content-small">
                             <div class="post-meta-small">
@@ -2382,18 +2081,16 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="blog-post-mobile" data-post-id="post-3">
                         <div class="post-image-small">
-                            <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Emerging Markets">
-                            <div class="post-category-small">Emerging Markets</div>
+                            <img src="https://images.pexels.com/photos/7413915/pexels-photo-7413915.jpeg" alt="Emerging Markets Opportunity">
                         </div>
                         <div class="post-content-small">
                             <div class="post-meta-small">
                                 <span><i class="bi bi-calendar"></i> Dec 10, 2024</span>
                                 <span><i class="bi bi-clock"></i> 6 min</span>
                             </div>
-                            <h4>The $2.8 Trillion Opportunity: Why Emerging Markets Are the Future</h4>
+                            <h4>The $2.8 Trillion Opportunity in Emerging Markets</h4>
                             <p>Why emerging markets represent the future of renewable energy investment.</p>
                             <div class="post-actions-small">
                                 <button class="btn btn-primary btn-sm" onclick="mobileBlog.readPost('post-3')">
@@ -2408,12 +2105,12 @@
                 </div>
                 
                 <div class="newsletter-mobile">
-                    <h3>Subscribe to Our Newsletter</h3>
+                    <h3>Subscribe to Updates</h3>
                     <p>Get weekly insights on renewable energy investment</p>
                     <div class="newsletter-form">
                         <input type="email" id="newsletter-email" class="form-control" placeholder="Your email address">
-                        <button class="btn btn-secondary" onclick="mobileBlog.subscribeNewsletter()">
-                            <i class="bi bi-envelope"></i>
+                        <button class="btn" onclick="mobileBlog.subscribeNewsletter()">
+                            <i class="bi bi-send"></i>
                         </button>
                     </div>
                 </div>
@@ -2422,18 +2119,22 @@
             <!-- XGBoost Model Page -->
             <div id="xgboost-page" class="page">
                 <div class="page-header">
-                    <h2 class="page-title">XGBoost Model</h2>
-                    <p class="page-subtitle">AI-powered project success prediction</p>
+                    <h2 class="page-title">XGBoost AI Model</h2>
+                    <p class="page-subtitle">Advanced machine learning for project success prediction</p>
                 </div>
                 
-                <div id="model-status">
-                    <div class="model-status-badge warning">
-                        <i class="bi bi-hourglass-split"></i>
-                        <span>Loading Model...</span>
+                <div class="model-header">
+                    <h3 class="model-title">AI-Powered Risk Intelligence</h3>
+                    <p class="model-description">Our XGBoost model predicts renewable energy project success with 87% accuracy, identifying key risk factors and opportunities.</p>
+                    <div id="model-status">
+                        <div class="model-status-badge warning">
+                            <i class="bi bi-hourglass-split"></i>
+                            <span>Loading Model...</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="model-stats">
+                <div class="model-stats-grid">
                     <div class="model-stat">
                         <div class="model-stat-value">92%</div>
                         <div class="model-stat-label">AUC Score</div>
@@ -2448,13 +2149,11 @@
                     </div>
                 </div>
                 
-                <div class="card">
-                    <h3 class="card-title">Feature Importance</h3>
-                    <p class="card-subtitle">Key factors affecting project success</p>
-                    
-                    <div class="form-group">
+                <div class="model-section">
+                    <h3 class="model-section-title">Feature Importance</h3>
+                    <div class="form-group mb-3">
                         <label for="project-type-xgboost" class="form-label">Project Type</label>
-                        <select id="project-type-xgboost" class="form-select">
+                        <select id="project-type-xgboost" class="form-control">
                             <option value="solar">Solar</option>
                             <option value="wind">Wind</option>
                             <option value="hydro">Hydro</option>
@@ -2462,205 +2161,150 @@
                             <option value="geothermal">Geothermal</option>
                         </select>
                     </div>
-                    
                     <div class="feature-importance">
-                        <div class="feature-item">
-                            <div class="feature-name">Grid Stability</div>
-                            <div class="feature-bar-container">
-                                <div class="feature-bar" style="width: 92%"></div>
-                                <span class="feature-value">92%</span>
-                            </div>
-                            <div class="feature-impact">Critical for project success</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-name">Community Engagement</div>
-                            <div class="feature-bar-container">
-                                <div class="feature-bar" style="width: 85%"></div>
-                                <span class="feature-value">85%</span>
-                            </div>
-                            <div class="feature-impact">Directly correlates with +2.3% IRR</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-name">Regulatory Navigation</div>
-                            <div class="feature-bar-container">
-                                <div class="feature-bar" style="width: 78%"></div>
-                                <span class="feature-value">78%</span>
-                            </div>
-                            <div class="feature-impact">Reduces delays by 35%</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-name">Solar Irradiation</div>
-                            <div class="feature-bar-container">
-                                <div class="feature-bar" style="width: 65%"></div>
-                                <span class="feature-value">65%</span>
-                            </div>
-                            <div class="feature-impact">Fundamental resource factor</div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-name">Equipment Quality</div>
-                            <div class="feature-bar-container">
-                                <div class="feature-bar" style="width: 61%"></div>
-                                <span class="feature-value">61%</span>
-                            </div>
-                            <div class="feature-impact">Optimized for local conditions</div>
-                        </div>
+                        <!-- Feature importance bars will be inserted here by JavaScript -->
                     </div>
                 </div>
                 
-                <div class="card">
-                    <h3 class="card-title">Model Performance</h3>
-                    <p class="card-subtitle">ROC curve with AUC = 0.92</p>
-                    
+                <div class="model-section">
+                    <h3 class="model-section-title">Model Performance</h3>
                     <div id="model-performance-chart" class="chart-placeholder">
                         <canvas id="roc-curve-chart"></canvas>
                     </div>
                 </div>
                 
-                <div class="model-form">
-                    <h3 class="card-title">Run Prediction</h3>
-                    <p class="card-subtitle">Enter project details to predict success</p>
-                    
-                    <div class="form-group">
-                        <label for="project-location" class="form-label">Project Location</label>
-                        <select id="project-location" class="form-select">
-                            <option value="lagos">Lagos</option>
-                            <option value="abuja">Abuja</option>
-                            <option value="kano">Kano</option>
-                            <option value="port_harcourt">Port Harcourt</option>
-                            <option value="ibadan">Ibadan</option>
-                        </select>
+                <div class="model-section">
+                    <h3 class="model-section-title">Run Prediction</h3>
+                    <div class="prediction-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project-location" class="form-label">Location</label>
+                                <select id="project-location" class="form-control">
+                                    <option value="lagos">Lagos</option>
+                                    <option value="abuja">Abuja</option>
+                                    <option value="kano">Kano</option>
+                                    <option value="port_harcourt">Port Harcourt</option>
+                                    <option value="ibadan">Ibadan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-size" class="form-label">Project Size (MW)</label>
+                                <input type="number" id="project-size" class="form-control" value="5" min="0.1" step="0.1">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="grid-stability" class="form-label">Grid Stability</label>
+                                <select id="grid-stability" class="form-control">
+                                    <option value="high">High</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="community-engagement" class="form-label">Community Engagement</label>
+                                <select id="community-engagement" class="form-control">
+                                    <option value="extensive">Extensive</option>
+                                    <option value="moderate" selected>Moderate</option>
+                                    <option value="minimal">Minimal</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button id="predict-btn" class="btn btn-primary btn-block">
+                            <i class="bi bi-cpu"></i>
+                            Run AI Prediction
+                        </button>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="grid-stability" class="form-label">Grid Stability</label>
-                        <select id="grid-stability" class="form-select">
-                            <option value="high">High</option>
-                            <option value="medium" selected>Medium</option>
-                            <option value="low">Low</option>
-                        </select>
+                    <div id="prediction-result" class="prediction-result">
+                        <h4 class="prediction-result-title">Prediction Results</h4>
+                        
+                        <div class="prediction-metrics">
+                            <div class="prediction-metric">
+                                <div class="prediction-icon">
+                                    <i class="bi bi-graph-up"></i>
+                                </div>
+                                <div class="prediction-value" id="predicted-irr">15.8%</div>
+                                <div class="prediction-label">Predicted IRR</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-icon">
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+                                <div class="prediction-value" id="success-probability">85%</div>
+                                <div class="prediction-label">Success Probability</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+                                <div class="prediction-value" id="risk-level">Low Risk</div>
+                                <div class="prediction-label">Risk Level</div>
+                            </div>
+                            <div class="prediction-metric">
+                                <div class="prediction-icon">
+                                    <i class="bi bi-star"></i>
+                                </div>
+                                <div class="prediction-value" id="confidence-score">High</div>
+                                <div class="prediction-label">Confidence Score</div>
+                            </div>
+                        </div>
+                        
+                        <div class="key-factors">
+                            <h4>Key Factors</h4>
+                            <div id="key-factors-list">
+                                <!-- Key factors will be inserted here by JavaScript -->
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="community-engagement" class="form-label">Community Engagement</label>
-                        <select id="community-engagement" class="form-select">
-                            <option value="extensive">Extensive</option>
-                            <option value="moderate" selected>Moderate</option>
-                            <option value="minimal">Minimal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-size" class="form-label">Project Size (MW)</label>
-                        <input type="number" id="project-size" class="form-control" value="5" min="0.1" max="100">
-                    </div>
-                    
-                    <button id="predict-btn" class="btn btn-primary btn-block">
-                        <i class="bi bi-cpu"></i>
-                        Run AI Prediction
-                    </button>
                 </div>
                 
-                <div id="prediction-result" class="prediction-result">
-                    <h3 class="card-title">Prediction Results</h3>
+                <div class="model-section">
+                    <h3 class="model-section-title">Case Studies</h3>
                     
-                    <div class="prediction-metrics">
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-graph-up"></i>
+                    <div class="case-study">
+                        <h4>Lagos Solar Farm (5MW)</h4>
+                        <p>Our model predicted an IRR of 16.5% for this solar project in Lagos, with the actual IRR coming in at 16.8% - just 0.3% difference.</p>
+                        <div class="case-study-metrics">
+                            <div class="case-metric">
+                                <div class="metric-label">Predicted IRR</div>
+                                <div class="metric-value">16.5%</div>
                             </div>
-                            <div class="prediction-value" id="predicted-irr">16.5%</div>
-                            <div class="prediction-label">Predicted IRR</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-check-circle"></i>
+                            <div class="case-metric">
+                                <div class="metric-label">Actual IRR</div>
+                                <div class="metric-value">16.8%</div>
                             </div>
-                            <div class="prediction-value" id="success-probability">92%</div>
-                            <div class="prediction-label">Success Probability</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-shield-check"></i>
+                            <div class="case-metric">
+                                <div class="metric-label">Success Probability</div>
+                                <div class="metric-value">92%</div>
                             </div>
-                            <div class="prediction-value" id="risk-level">Low Risk</div>
-                            <div class="prediction-label">Risk Level</div>
-                        </div>
-                        <div class="prediction-metric">
-                            <div class="prediction-icon">
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="prediction-value" id="confidence-score">High</div>
-                            <div class="prediction-label">Confidence Score</div>
                         </div>
                     </div>
                     
-                    <div class="key-factors">
-                        <h4>Key Factors</h4>
-                        <div id="key-factors-list">
-                            <div class="factor-item">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <span>Grid stability is a critical factor for project success</span>
+                    <div class="case-study">
+                        <h4>Abuja Wind Project (2.5MW)</h4>
+                        <p>For this wind project in Abuja, our model predicted 14.2% IRR with the actual result at 14.5%, demonstrating consistent accuracy across different project types.</p>
+                        <div class="case-study-metrics">
+                            <div class="case-metric">
+                                <div class="metric-label">Predicted IRR</div>
+                                <div class="metric-value">14.2%</div>
                             </div>
-                            <div class="factor-item">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <span>Community engagement directly correlates with +2.3% IRR</span>
+                            <div class="case-metric">
+                                <div class="metric-label">Actual IRR</div>
+                                <div class="metric-value">14.5%</div>
                             </div>
-                            <div class="factor-item">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <span>Regulatory navigation expertise reduces delays by 35%</span>
-                            </div>
-                            <div class="factor-item">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <span>Equipment quality is optimized for local conditions</span>
-                            </div>
-                            <div class="factor-item">
-                                <i class="bi bi-arrow-right-circle"></i>
-                                <span>Political stability provides favorable investment climate</span>
+                            <div class="case-metric">
+                                <div class="metric-label">Success Probability</div>
+                                <div class="metric-value">85%</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Legal Page -->
-            <div id="legal-page" class="page">
-                <div class="page-header">
-                    <h2 class="page-title">Legal Documents</h2>
-                    <p class="page-subtitle">Privacy, terms, and security information</p>
-                </div>
-                
-                <a href="privacy.html" class="legal-link-card">
-                    <div class="legal-icon">
-                        <i class="bi bi-shield-lock"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h3 class="legal-title">Privacy Policy</h3>
-                        <p class="legal-description">Learn how we collect, use, and protect your data</p>
-                    </div>
-                </a>
-                
-                <a href="terms.html" class="legal-link-card">
-                    <div class="legal-icon">
-                        <i class="bi bi-file-text"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h3 class="legal-title">Terms of Service</h3>
-                        <p class="legal-description">Rules and guidelines for using our platform</p>
-                    </div>
-                </a>
-                
-                <a href="security.html" class="legal-link-card">
-                    <div class="legal-icon">
-                        <i class="bi bi-shield-check"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h3 class="legal-title">Security Policy</h3>
-                        <p class="legal-description">How we protect your information and data</p>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Analytics Dashboard Page -->
+            <!-- Analytics Page -->
             <div id="analytics-page" class="page">
                 <div class="page-header">
                     <h2 class="page-title">Analytics Dashboard</h2>
@@ -2682,7 +2326,7 @@
                             </div>
                             <div class="analytics-metric-card">
                                 <div class="analytics-metric-value" id="project-count">5</div>
-                                <div class="analytics-metric-label">Total Projects</div>
+                                <div class="analytics-metric-label">Projects</div>
                             </div>
                             <div class="analytics-metric-card">
                                 <div class="analytics-metric-value" id="low-risk-percentage">60%</div>
@@ -2698,7 +2342,7 @@
                         </div>
                         
                         <div class="analytics-chart-card">
-                            <div class="analytics-chart-title">Portfolio Performance</div>
+                            <div class="analytics-chart-title">IRR Performance Trend</div>
                             <div class="analytics-chart-container portfolio-performance-chart-container">
                                 <canvas id="portfolio-performance-chart"></canvas>
                             </div>
@@ -2711,7 +2355,7 @@
                         <div class="analytics-metrics">
                             <div class="analytics-metric-card">
                                 <div class="analytics-metric-value" id="avg-risk-score">7.8</div>
-                                <div class="analytics-metric-label">Average Risk Score</div>
+                                <div class="analytics-metric-label">Avg. Risk Score</div>
                             </div>
                             <div class="analytics-metric-card">
                                 <div class="analytics-metric-value" id="high-impact-factors">3</div>
@@ -2729,7 +2373,7 @@
                         <div class="analytics-chart-card">
                             <div class="analytics-chart-title">Project Risk Matrix</div>
                             <div class="analytics-chart-container risk-matrix-chart-container">
-                                <canvas id="risk-matrix-chart"></canvas>
+                                <!-- Risk matrix will be inserted here by JavaScript -->
                             </div>
                         </div>
                         
@@ -2742,6 +2386,46 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Legal Page -->
+            <div id="legal-page" class="page">
+                <div class="page-header">
+                    <h2 class="page-title">Legal Documents</h2>
+                    <p class="page-subtitle">Terms, privacy, and security information</p>
+                </div>
+                
+                <div class="legal-links">
+                    <a href="terms.html" class="legal-link-card">
+                        <div class="legal-icon">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <div class="legal-content">
+                            <h3>Terms of Service</h3>
+                            <p>Legal terms and conditions for using our platform</p>
+                        </div>
+                    </a>
+                    
+                    <a href="privacy.html" class="legal-link-card">
+                        <div class="legal-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <div class="legal-content">
+                            <h3>Privacy Policy</h3>
+                            <p>How we collect, use, and protect your data</p>
+                        </div>
+                    </a>
+                    
+                    <a href="security.html" class="legal-link-card">
+                        <div class="legal-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="legal-content">
+                            <h3>Security Policy</h3>
+                            <p>Our security measures and best practices</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </main>
         
         <!-- Bottom Navigation -->
@@ -2752,7 +2436,7 @@
             </button>
             <button class="nav-btn" data-page="calculator">
                 <i class="bi bi-calculator"></i>
-                <span>Calculate</span>
+                <span>Calculator</span>
             </button>
             <button class="nav-btn" data-page="projects">
                 <i class="bi bi-kanban"></i>
@@ -2762,9 +2446,9 @@
                 <i class="bi bi-shield-check"></i>
                 <span>ESG</span>
             </button>
-            <button class="nav-btn" data-page="analytics">
-                <i class="bi bi-graph-up"></i>
-                <span>Analytics</span>
+            <button class="nav-btn" data-page="blog">
+                <i class="bi bi-journal-text"></i>
+                <span>Blog</span>
             </button>
         </nav>
     </div>
@@ -2775,10 +2459,10 @@
     <script src="scripts/charts.js"></script>
     <script src="scripts/blog-integration.js"></script>
     <script src="scripts/xgboost-model.js"></script>
-    <script src="scripts/cross-platform-navigation.js"></script>
-    <script src="scripts/dashboard.js"></script>
-    <script src="scripts/esg-dashboard.js"></script>
     <script src="scripts/analytics-dashboard.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/email-integration.js"></script>
+    <script src="scripts/cross-platform-navigation.js"></script>
     
     <!-- Service Worker Registration -->
     <script>
