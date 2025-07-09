@@ -405,9 +405,6 @@ class XGBoostModelManager {
                                 },
                                 ticks: {
                                     color: '#004d40'
-                                    font: {
-                                        family: "'Poppins', sans-serif"
-                                    }
                                 }
                             },
                             y: {
@@ -426,9 +423,6 @@ class XGBoostModelManager {
                                 },
                                 ticks: {
                                     color: '#004d40'
-                                    font: {
-                                        family: "'Poppins', sans-serif"
-                                    }
                                 }
                             }
                         },
