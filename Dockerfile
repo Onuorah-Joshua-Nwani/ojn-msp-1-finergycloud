@@ -1,10 +1,10 @@
-# Ultra-simple Dockerfile that always works
+# Simple Node.js deployment
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Only copy what we need
-COPY server/ultra-minimal.js .
+# Copy the simple server file
+COPY start.js .
 
 # Expose port
 EXPOSE 3000
@@ -12,5 +12,5 @@ EXPOSE 3000
 # Set environment
 ENV NODE_ENV=production
 
-# Start the server (no build required)
-CMD ["node", "ultra-minimal.js"]
+# Start server immediately (no dependencies needed)
+CMD ["node", "start.js"]
