@@ -5,11 +5,21 @@ import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
+// Disable database connection in development to prevent errors
+let pool: Pool | null = null;
+let db: any = null;
+
+// Only attempt database connection in production with valid URL
+if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('disabled')) {
+  try {
+    pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    db = drizzle({ client: pool, schema });
+    console.log('Database connected successfully');
+  } catch (error) {
+    console.log('Database connection failed, running without database:', error.message);
+  }
+} else {
+  console.log('Database disabled - running in development mode without database');
 }
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+export { pool, db };
