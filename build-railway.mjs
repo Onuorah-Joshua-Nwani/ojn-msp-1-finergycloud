@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 import { execSync } from 'child_process';
-import { existsSync, mkdirSync, copyFileSync } from 'fs';
+import { existsSync } from 'fs';
 
 console.log('Railway Build Script Starting...');
 
+// Check if client/index.html exists
+if (!existsSync('./client/index.html')) {
+  console.error('ERROR: client/index.html not found!');
+  console.log('Current directory:', process.cwd());
+  console.log('Directory contents:');
+  execSync('ls -la', { stdio: 'inherit' });
+  console.log('\nClient directory contents:');
+  execSync('ls -la client/', { stdio: 'inherit' });
+  process.exit(1);
+}
+
 try {
-  // Check if index.html is in root (GitHub structure)
-  if (existsSync('./index.html') && !existsSync('./client/index.html')) {
-    console.log('Found index.html in root, setting up client directory...');
-    
-    // Create client directory if it doesn't exist
-    if (!existsSync('./client')) {
-      mkdirSync('./client', { recursive: true });
-    }
-    
-    // Copy index.html to client directory
-    copyFileSync('./index.html', './client/index.html');
-    console.log('Copied index.html to client directory');
-  }
+  // Clean npm cache to avoid version conflicts
+  console.log('Cleaning npm cache...');
+  execSync('npm cache clean --force || true', { stdio: 'inherit' });
   
-  // Verify client/index.html now exists
-  if (!existsSync('./client/index.html')) {
-    console.error('ERROR: client/index.html not found after setup!');
-    process.exit(1);
-  }
+  // Remove any existing lock files that might have version conflicts
+  execSync('rm -f package-lock.json || true', { stdio: 'inherit' });
+  
+  // Install fresh dependencies
+  console.log('Installing dependencies with clean slate...');
+  execSync('npm install --legacy-peer-deps', { stdio: 'inherit' });
   
   // Build using the production config
   console.log('Building client with vite...');
